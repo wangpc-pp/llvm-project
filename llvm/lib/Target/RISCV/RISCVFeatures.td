@@ -1270,6 +1270,16 @@ def HasVendorXwchc
       AssemblerPredicate<(all_of FeatureVendorXwchc),
                          "'Xwchc' (WCH/QingKe additional compressed opcodes)">;
 
+// ByteDance Extensions
+
+def FeatureStdExtZvmedia
+    : RISCVExtension<"zvmedia", 1, 0,
+                     "'Zvmedia' (RVV extensions for media scenarios like video/audio)">;
+def HasStdExtZvmedia
+    : Predicate<"Subtarget->hasStdExtZvmedia()">,
+      AssemblerPredicate<(all_of FeatureStdExtZvmedia),
+                         "'Zvmedia' (RVV extensions for media scenarios like video/audio)">;
+
 //===----------------------------------------------------------------------===//
 // LLVM specific features and extensions
 //===----------------------------------------------------------------------===//

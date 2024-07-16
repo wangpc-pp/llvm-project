@@ -964,6 +964,7 @@ R"(All available -march extensions for RISC-V
     zvl64b               1.0
     zvl65536b            1.0
     zvl8192b             1.0
+    zvmedia              1.0
     zhinx                1.0
     zhinxmin             1.0
     shcounterenw         1.0

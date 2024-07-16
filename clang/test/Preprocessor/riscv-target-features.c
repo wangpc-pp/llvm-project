@@ -172,6 +172,7 @@
 // CHECK-NOT: __riscv_zvl16384b {{.*$}}
 // CHECK-NOT: __riscv_zvl32768b {{.*$}}
 // CHECK-NOT: __riscv_zvl65536b {{.*$}}
+// CHECK-NOT: __riscv_zvmedia {{.*$}}
 
 // Experimental extensions
 
@@ -1616,6 +1617,14 @@
 // RUN:   -march=rv64i_zve32x_zvkt1p0 -E -dM %s \
 // RUN:   -o - | FileCheck --check-prefix=CHECK-ZVKT-EXT %s
 // CHECK-ZVKT-EXT: __riscv_zvkt 1000000{{$}}
+
+// RUN: %clang --target=riscv32 \
+// RUN:   -march=rv32i_zve64x_zvmedia1p0 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZVMEDIA-EXT %s
+// RUN: %clang --target=riscv64 \
+// RUN:   -march=rv64i_zve64x_zvmedia1p0 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZVMEDIA-EXT %s
+// CHECK-ZVMEDIA-EXT: __riscv_zvmedia  1000000{{$}}
 
 // Experimental extensions
 // RUN: %clang --target=riscv32 -menable-experimental-extensions \

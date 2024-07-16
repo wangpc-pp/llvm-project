@@ -107,6 +107,7 @@
 // CHECK-NEXT:     zvl64b               1.0       'Zvl' (Minimum Vector Length) 64
 // CHECK-NEXT:     zvl65536b            1.0       'Zvl' (Minimum Vector Length) 65536
 // CHECK-NEXT:     zvl8192b             1.0       'Zvl' (Minimum Vector Length) 8192
+// CHECK-NEXT:     zvmedia              1.0       'Zvmedia' (RVV extensions for media scenarios like video/audio)
 // CHECK-NEXT:     zhinx                1.0       'Zhinx' (Half Float in Integer)
 // CHECK-NEXT:     zhinxmin             1.0       'Zhinxmin' (Half Float in Integer Minimal)
 // CHECK-NEXT:     shcounterenw         1.0       'Shcounterenw' (Support writeable hcounteren enable bit for any hpmcounter that is not read-only zero)
