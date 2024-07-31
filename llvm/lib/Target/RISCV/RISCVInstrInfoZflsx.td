@@ -63,3 +63,21 @@ def FSXD  : IndexStoreF<0b10, "fsxd", FPR64>, Sched<[WriteFST64, ReadStoreData, 
 def : InstAlias<"flxd $rd, $rs1, $rs2", (FLXD FPR64:$rd, GPRMemZeroOffset:$rs1, GPR:$rs2, 0)>;
 def : InstAlias<"fsxd $rs3, $rs1, $rs2", (FSXD FPR64:$rs3, GPRMemZeroOffset:$rs1, GPR:$rs2, 0)>;
 } // Predicates = [HasStdExtZflsx, HasStdExtD]
+
+
+// Patterns
+// We reuse Pattern classes defined in RISCVInstrInfoXTHead.td.
+let Predicates = [HasStdExtZflsx, HasStdExtZfhmin] in {
+defm : LdIdxPat<load, FLXH, f16>;
+defm : StIdxPat<store, FSXH, FPR16, f16>;
+} // Predicates = [HasStdExtZflsx, HasStdExtZfhmin]
+
+let Predicates = [HasStdExtZflsx, HasStdExtF] in {
+defm : LdIdxPat<load, FLXW, f32>;
+defm : StIdxPat<store, FSXW, FPR32, f32>;
+} // Predicates = [HasStdExtZflsx, HasStdExtF]
+
+let Predicates = [HasStdExtZflsx, HasStdExtD] in {
+defm : LdIdxPat<load, FLXD, f64>;
+defm : StIdxPat<store, FSXD, FPR64, f64>;
+} // Predicates = [HasStdExtZflsx, HasStdExtD]

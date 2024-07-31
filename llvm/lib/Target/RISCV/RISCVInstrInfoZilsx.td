@@ -72,3 +72,33 @@ def : InstAlias<"lxwu $rd, $rs1, $rs2", (LXWU GPR:$rd, GPRMemZeroOffset:$rs1, GP
 def : InstAlias<"lxd $rd, $rs1, $rs2", (LXD GPR:$rd, GPRMemZeroOffset:$rs1, GPR:$rs2, 0)>;
 def : InstAlias<"sxd $rs3, $rs1, $rs2", (SXD GPR:$rs3, GPRMemZeroOffset:$rs1, GPR:$rs2, 0)>;
 } // Predicates = [HasStdExtZilsx, IsRV64]
+
+
+// Patterns
+// We reuse Pattern classes defined in RISCVInstrInfoXTHead.td.
+let Predicates = [HasStdExtZilsx] in {
+defm : LdIdxPat<extloadi8, LXB>;
+defm : LdIdxPat<sextloadi8, LXB>;
+defm : LdIdxPat<zextloadi8, LXBU>;
+
+defm : LdIdxPat<extloadi16, LXH>;
+defm : LdIdxPat<sextloadi16, LXH>;
+defm : LdIdxPat<zextloadi16, LXHU>;
+
+defm : StIdxPat<truncstorei8, SXB, GPR>;
+defm : StIdxPat<truncstorei16, SXH, GPR>;
+
+defm : LdIdxPat<load, LXW, i32>;
+defm : StIdxPat<store, SXW, GPR, i32>;
+} // Predicates = [HasStdExtZilsx]
+
+let Predicates = [HasStdExtZilsx, IsRV64] in {
+defm : LdIdxPat<extloadi32, LXW, i64>;
+defm : LdIdxPat<sextloadi32, LXW, i64>;
+defm : LdIdxPat<zextloadi32, LXWU, i64>;
+
+defm : LdIdxPat<load, LXD, i64>;
+
+defm : StIdxPat<truncstorei32, SXW, GPR, i64>;
+defm : StIdxPat<store, SXD, GPR, i64>;
+} // Predicates = [HasStdExtZilsx, IsRV64]
