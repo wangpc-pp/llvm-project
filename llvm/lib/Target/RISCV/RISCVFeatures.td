@@ -1642,6 +1642,19 @@ def HasVendorXAndesVDot
       AssemblerPredicate<(all_of FeatureVendorXAndesVDot),
                          "'XAndesVDot' (Andes Vector Dot Product Extension)">;
 
+// ByteDance Experimental Extensions
+def FeatureStdExtZilsx
+    : RISCVExtension<1, 0, "Index Load/Store for Integer">;
+def HasStdExtZilsx
+    : Predicate<"Subtarget->hasStdExtZilsx()">,
+      AssemblerPredicate<(all_of FeatureStdExtZilsx), "'Zilsx' (Index Load/Store for Integer)">;
+
+def FeatureStdExtZflsx
+    : RISCVExtension<1, 0, "Index Load/Store for Floating-Point">;
+def HasStdExtZflsx
+    : Predicate<"Subtarget->hasStdExtZflsx()">,
+      AssemblerPredicate<(all_of FeatureStdExtZflsx), "'Zflsx' (Index Load/Store for Floating-Point)">;
+
 //===----------------------------------------------------------------------===//
 // LLVM specific features and extensions
 //===----------------------------------------------------------------------===//

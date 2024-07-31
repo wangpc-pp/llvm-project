@@ -94,6 +94,7 @@
 // CHECK-NOT: __riscv_zfh {{.*$}}
 // CHECK-NOT: __riscv_zfhmin {{.*$}}
 // CHECK-NOT: __riscv_zfinx {{.*$}}
+// CHECK-NOT: __riscv_zflsx {{.*$}}
 // CHECK-NOT: __riscv_zhinx {{.*$}}
 // CHECK-NOT: __riscv_zhinxmin {{.*$}}
 // CHECK-NOT: __riscv_zic64b {{.*$}}
@@ -113,6 +114,7 @@
 // CHECK-NOT: __riscv_zihintpause {{.*$}}
 // CHECK-NOT: __riscv_zihpm {{.*$}}
 // CHECK-NOT: __riscv_zilsd {{.*$}}
+// CHECK-NOT: __riscv_zilsx {{.*$}}
 // CHECK-NOT: __riscv_zimop {{.*$}}
 // CHECK-NOT: __riscv_zk {{.*$}}
 // CHECK-NOT: __riscv_zkn {{.*$}}
@@ -796,6 +798,14 @@
 // RUN:   -o - | FileCheck --check-prefix=CHECK-ZFINX-EXT %s
 // CHECK-ZFINX-EXT: __riscv_zfinx 1000000{{$}}
 
+// RUN: %clang --target=riscv32 \
+// RUN:   -march=rv32ifd_zflsx1p0 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZFLSX-EXT %s
+// RUN: %clang --target=riscv64 \
+// RUN:   -march=rv64ifd_zflsx1p0 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZFLSX-EXT %s
+// CHECK-ZFLSX-EXT: __riscv_zflsx  1000000{{$}}
+
 // RUN: %clang --target=riscv32-unknown-linux-gnu \
 // RUN:   -march=rv32izhinx1p0 -E -dM %s \
 // RUN:   -o - | FileCheck --check-prefix=CHECK-ZHINX-EXT %s
@@ -938,6 +948,14 @@
 // RUN:   -march=rv64izihpm -E -dM %s \
 // RUN:   -o - | FileCheck --check-prefix=CHECK-ZIHPM-EXT %s
 // CHECK-ZIHPM-EXT: __riscv_zihpm 2000000{{$}}
+
+// RUN: %clang --target=riscv32 \
+// RUN:   -march=rv32i_zilsx1p0 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZILSX-EXT %s
+// RUN: %clang --target=riscv64 \
+// RUN:   -march=rv64i_zilsx1p0 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZILSX-EXT %s
+// CHECK-ZILSX-EXT: __riscv_zilsx  1000000{{$}}
 
 // RUN: %clang --target=riscv32-unknown-linux-gnu \
 // RUN:   -march=rv32i_zilsd1p0 -E -dM %s \
