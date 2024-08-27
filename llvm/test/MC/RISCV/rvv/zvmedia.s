@@ -223,3 +223,9 @@ vwabdau.vx v10, v9, a0, v0.t
 # CHECK-ENCODING: [0x57,0x65,0x95,0x58]
 # CHECK-ERROR: instruction requires the following: 'Zvmedia' (RVV extensions for media scenarios like video/audio){{$}}
 # CHECK-UNKNOWN: 58956557 <unknown>
+
+vtrn.vv v10, v9, v8
+# CHECK-INST: vtrn.vv v10, v9, v8
+# CHECK-ENCODING: [0x57,0x05,0x94,0xea]
+# CHECK-ERROR: instruction requires the following: 'Zvmedia' (RVV extensions for media scenarios like video/audio){{$}}
+# CHECK-UNKNOWN: ea940557 <unknown>

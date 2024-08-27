@@ -27,4 +27,12 @@ defm VWABDAU_V : VALU_MV_V_X<"vwabdau", 0b010110, "v">;
 } // RVVConstraint = WidenV
 } // Constraints = "@earlyclobber $vd"
 
+// vtrn.vv vd, vs2, vs1
+let hasSideEffects = 0, mayLoad = 0, mayStore = 0 in
+def VTRN_VV : VALUVVNoVm<0b111010, OPIVV, "vtrn.vv"> {
+  let RVVConstraint = RISCVVConstraint<!or(VS2Constraint.Value,
+                                           VS1Constraint.Value)>;
+  let vm = 1; // Unmasked
+}
+
 } // Predicates = [HasStdExtZvmedia]

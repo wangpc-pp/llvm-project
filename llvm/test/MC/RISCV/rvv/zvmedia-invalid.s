@@ -48,3 +48,11 @@ vwabdau.vv v9, v9, v8
 vwabdau.vx v9, v9, a0
 # CHECK-ERROR: [[@LINE-1]]:12: error: the destination vector register group cannot overlap the source vector register group
 # CHECK-ERROR-LABEL: vwabdau.vx v9, v9, a0
+
+vtrn.vv v8, v9, v8
+# CHECK-ERROR: [[@LINE-1]]:9: error: the destination vector register group cannot overlap the source vector register group
+# CHECK-ERROR-LABEL: vtrn.vv v8, v9, v8
+
+vtrn.vv v9, v9, v8
+# CHECK-ERROR: [[@LINE-1]]:9: error: the destination vector register group cannot overlap the source vector register group
+# CHECK-ERROR-LABEL: vtrn.vv v9, v9, v8
