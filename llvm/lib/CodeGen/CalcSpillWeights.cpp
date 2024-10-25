@@ -188,6 +188,7 @@ float VirtRegAuxInfo::weightCalcHelper(LiveInterval &LI, SlotIndex *Start,
   // Do not update future local split artifacts.
   bool ShouldUpdateLI = !IsLocalSplitArtifact;
 
+  unsigned Factor = TRI.getSpillWeightScaleFactor(MRI.getRegClass(LI.reg()));
   if (IsLocalSplitArtifact) {
     MachineBasicBlock *LocalMBB = LIS.getMBBFromIndex(*End);
     assert(LocalMBB == LIS.getMBBFromIndex(*Start) &&
@@ -198,10 +199,10 @@ float VirtRegAuxInfo::weightCalcHelper(LiveInterval &LI, SlotIndex *Start,
     // localLI = COPY other
     // ...
     // other   = COPY localLI
-    TotalWeight +=
-        LiveIntervals::getSpillWeight(true, false, &MBFI, LocalMBB, PSI);
-    TotalWeight +=
-        LiveIntervals::getSpillWeight(false, true, &MBFI, LocalMBB, PSI);
+    TotalWeight += LiveIntervals::getSpillWeight(true, false, &MBFI, LocalMBB,
+                                                 Factor, PSI);
+    TotalWeight += LiveIntervals::getSpillWeight(false, true, &MBFI, LocalMBB,
+                                                 Factor, PSI);
 
     NumInstr += 2;
   }
@@ -271,7 +272,8 @@ float VirtRegAuxInfo::weightCalcHelper(LiveInterval &LI, SlotIndex *Start,
       // Calculate instr weight.
       bool Reads, Writes;
       std::tie(Reads, Writes) = MI->readsWritesVirtualRegister(LI.reg());
-      Weight = LiveIntervals::getSpillWeight(Writes, Reads, &MBFI, *MI, PSI);
+      Weight =
+          LiveIntervals::getSpillWeight(Writes, Reads, &MBFI, *MI, Factor, PSI);
 
       // Give extra weight to what looks like a loop induction variable update.
       if (Writes && IsExiting && LIS.isLiveOutOfMBB(LI, MBB))
