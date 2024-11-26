@@ -58,6 +58,10 @@ enum LiveRangeStage {
   /// progress.
   RS_Split2,
 
+  /// (new for llvm-mos) Attempt to spill to a wider register class to hopefully
+  /// avoid spilling to the stack.
+  RS_LightSpill,
+
   /// Live range will be spilled.  No more splitting will be attempted.
   RS_Spill,
 

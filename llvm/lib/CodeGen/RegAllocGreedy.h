@@ -374,7 +374,7 @@ private:
   unsigned tryBlockSplit(const LiveInterval &, AllocationOrder &,
                          SmallVectorImpl<Register> &);
   unsigned tryInstructionSplit(const LiveInterval &, AllocationOrder &,
-                               SmallVectorImpl<Register> &);
+                               SmallVectorImpl<Register> &, bool LightSpill);
   unsigned tryLocalSplit(const LiveInterval &, AllocationOrder &,
                          SmallVectorImpl<Register> &);
   unsigned trySplit(const LiveInterval &, AllocationOrder &,

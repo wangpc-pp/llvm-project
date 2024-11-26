@@ -78,6 +78,9 @@ private:
   /// ScannedRemattable - true when remattable values have been identified.
   bool ScannedRemattable = false;
 
+  // EnableRemat - true when rematerializing is enabled.
+  bool EnableRemat = true;
+
   /// DeadRemats - The saved instructions which have already been dead after
   /// rematerialization but not deleted yet -- to be done in postOptimization.
   SmallPtrSet<MachineInstr *, 32> *DeadRemats;
@@ -197,6 +200,9 @@ public:
   /// OrigIdx are also available with the same value at UseIdx.
   bool allUsesAvailableAt(const MachineInstr *OrigMI, SlotIndex OrigIdx,
                           SlotIndex UseIdx) const;
+
+  /// setRematEnable - Set whether rematerializing is enabled.
+  void setRematEnable(bool Enable);
 
   /// canRematerializeAt - Determine if ParentVNI can be rematerialized at
   /// UseIdx. It is assumed that parent_.getVNINfoAt(UseIdx) == ParentVNI.
