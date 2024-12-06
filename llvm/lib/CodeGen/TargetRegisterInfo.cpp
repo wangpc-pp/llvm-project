@@ -414,11 +414,6 @@ bool TargetRegisterInfo::shouldRewriteCopySrc(const TargetRegisterClass *DefRC,
   return shareSameRegisterFile(*this, DefRC, DefSubReg, SrcRC, SrcSubReg);
 }
 
-unsigned TargetRegisterInfo::getSpillWeightScaleFactor(
-    const TargetRegisterClass *RC) const {
-  return 1;
-}
-
 // Compute target-independent register allocator hints to help eliminate copies.
 bool TargetRegisterInfo::getRegAllocationHints(
     Register VirtReg, ArrayRef<MCPhysReg> Order,

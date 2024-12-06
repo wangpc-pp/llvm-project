@@ -188,7 +188,9 @@ float VirtRegAuxInfo::weightCalcHelper(LiveInterval &LI, SlotIndex *Start,
   // Do not update future local split artifacts.
   bool ShouldUpdateLI = !IsLocalSplitArtifact;
 
-  unsigned Factor = TRI.getSpillWeightScaleFactor(MRI.getRegClass(LI.reg()));
+  // We will scale the weight by the register weight of register class.
+  unsigned Factor =
+      TRI.getRegClassWeight((MRI.getRegClass(LI.reg()))).RegWeight;
   if (IsLocalSplitArtifact) {
     MachineBasicBlock *LocalMBB = LIS.getMBBFromIndex(*End);
     assert(LocalMBB == LIS.getMBBFromIndex(*Start) &&

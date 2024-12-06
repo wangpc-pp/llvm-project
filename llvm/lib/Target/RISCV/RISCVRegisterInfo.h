@@ -127,9 +127,6 @@ struct RISCVRegisterInfo : public RISCVGenRegisterInfo {
 
   unsigned getRegisterCostTableIndex(const MachineFunction &MF) const override;
 
-  unsigned
-  getSpillWeightScaleFactor(const TargetRegisterClass *RC) const override;
-
   bool getRegAllocationHints(Register VirtReg, ArrayRef<MCPhysReg> Order,
                              SmallVectorImpl<MCPhysReg> &Hints,
                              const MachineFunction &MF, const VirtRegMap *VRM,

@@ -926,10 +926,6 @@ public:
   /// Returns a -1 terminated array of pressure set IDs.
   virtual const int *getRegUnitPressureSets(unsigned RegUnit) const = 0;
 
-  /// Get the factor of spill weight for this register class.
-  virtual unsigned
-  getSpillWeightScaleFactor(const TargetRegisterClass *RC) const;
-
   /// Get a list of 'hint' registers that the register allocator should try
   /// first when allocating a physical register for the virtual register
   /// VirtReg. These registers are effectively moved to the front of the
