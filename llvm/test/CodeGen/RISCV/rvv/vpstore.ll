@@ -462,6 +462,7 @@ declare void @llvm.vp.store.nxv17f64.p0(<vscale x 17 x double>, ptr, <vscale x 1
 define void @vpstore_nxv17f64(<vscale x 17 x double> %val, ptr %ptr, <vscale x 17 x i1> %m, i32 zeroext %evl) {
 ; CHECK-LABEL: vpstore_nxv17f64:
 ; CHECK:       # %bb.0:
+; CHECK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; CHECK-NEXT:    vmv1r.v v7, v0
 ; CHECK-NEXT:    csrr a3, vlenb
 ; CHECK-NEXT:    slli a4, a3, 1

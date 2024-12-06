@@ -1582,11 +1582,11 @@ declare <vscale x 64 x i16> @llvm.vp.bswap.nxv64i16(<vscale x 64 x i16>, <vscale
 define <vscale x 64 x i16> @vp_bswap_nxv64i16(<vscale x 64 x i16> %va, <vscale x 64 x i1> %m, i32 zeroext %evl) {
 ; CHECK-LABEL: vp_bswap_nxv64i16:
 ; CHECK:       # %bb.0:
+; CHECK-NEXT:    vsetvli a1, zero, e8, m1, ta, ma
 ; CHECK-NEXT:    vmv1r.v v7, v0
 ; CHECK-NEXT:    csrr a1, vlenb
 ; CHECK-NEXT:    srli a2, a1, 1
 ; CHECK-NEXT:    slli a1, a1, 2
-; CHECK-NEXT:    vsetvli a3, zero, e8, m1, ta, ma
 ; CHECK-NEXT:    vslidedown.vx v0, v0, a2
 ; CHECK-NEXT:    sub a2, a0, a1
 ; CHECK-NEXT:    sltu a3, a0, a2
@@ -1609,11 +1609,11 @@ define <vscale x 64 x i16> @vp_bswap_nxv64i16(<vscale x 64 x i16> %va, <vscale x
 ;
 ; CHECK-ZVKB-LABEL: vp_bswap_nxv64i16:
 ; CHECK-ZVKB:       # %bb.0:
+; CHECK-ZVKB-NEXT:    vsetvli a1, zero, e8, m1, ta, ma
 ; CHECK-ZVKB-NEXT:    vmv1r.v v24, v0
 ; CHECK-ZVKB-NEXT:    csrr a1, vlenb
 ; CHECK-ZVKB-NEXT:    srli a2, a1, 1
 ; CHECK-ZVKB-NEXT:    slli a1, a1, 2
-; CHECK-ZVKB-NEXT:    vsetvli a3, zero, e8, m1, ta, ma
 ; CHECK-ZVKB-NEXT:    vslidedown.vx v0, v0, a2
 ; CHECK-ZVKB-NEXT:    sub a2, a0, a1
 ; CHECK-ZVKB-NEXT:    sltu a3, a0, a2

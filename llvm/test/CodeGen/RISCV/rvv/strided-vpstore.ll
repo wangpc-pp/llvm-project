@@ -609,6 +609,7 @@ declare void @llvm.experimental.vp.strided.store.nxv16f64.p0.i32(<vscale x 16 x 
 define void @strided_store_nxv17f64(<vscale x 17 x double> %v, ptr %ptr, i32 signext %stride, <vscale x 17 x i1> %mask, i32 zeroext %evl) {
 ; CHECK-LABEL: strided_store_nxv17f64:
 ; CHECK:       # %bb.0:
+; CHECK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; CHECK-NEXT:    vmv1r.v v7, v0
 ; CHECK-NEXT:    csrr a4, vlenb
 ; CHECK-NEXT:    slli a6, a4, 1

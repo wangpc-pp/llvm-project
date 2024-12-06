@@ -703,10 +703,10 @@ define <vscale x 16 x i32> @fshl_v16i32(<vscale x 16 x i32> %a, <vscale x 16 x i
 ; CHECK-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x10, 0x22, 0x11, 0x08, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 16 + 8 * vlenb
 ; CHECK-NEXT:    addi a2, sp, 16
 ; CHECK-NEXT:    vs8r.v v16, (a2) # Unknown-size Folded Spill
+; CHECK-NEXT:    vsetvli zero, a1, e32, m8, ta, ma
 ; CHECK-NEXT:    vmv8r.v v16, v8
 ; CHECK-NEXT:    vl8re32.v v24, (a0)
 ; CHECK-NEXT:    li a0, 31
-; CHECK-NEXT:    vsetvli zero, a1, e32, m8, ta, ma
 ; CHECK-NEXT:    vand.vx v8, v24, a0, v0.t
 ; CHECK-NEXT:    vsll.vv v8, v16, v8, v0.t
 ; CHECK-NEXT:    vnot.v v16, v24, v0.t
@@ -882,10 +882,10 @@ define <vscale x 7 x i64> @fshl_v7i64(<vscale x 7 x i64> %a, <vscale x 7 x i64> 
 ; CHECK-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x10, 0x22, 0x11, 0x08, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 16 + 8 * vlenb
 ; CHECK-NEXT:    addi a2, sp, 16
 ; CHECK-NEXT:    vs8r.v v16, (a2) # Unknown-size Folded Spill
+; CHECK-NEXT:    vsetvli zero, a1, e64, m8, ta, ma
 ; CHECK-NEXT:    vmv8r.v v16, v8
 ; CHECK-NEXT:    vl8re64.v v24, (a0)
 ; CHECK-NEXT:    li a0, 63
-; CHECK-NEXT:    vsetvli zero, a1, e64, m8, ta, ma
 ; CHECK-NEXT:    vand.vx v8, v24, a0, v0.t
 ; CHECK-NEXT:    vsll.vv v8, v16, v8, v0.t
 ; CHECK-NEXT:    vnot.v v16, v24, v0.t
@@ -953,10 +953,10 @@ define <vscale x 8 x i64> @fshl_v8i64(<vscale x 8 x i64> %a, <vscale x 8 x i64> 
 ; CHECK-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x10, 0x22, 0x11, 0x08, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 16 + 8 * vlenb
 ; CHECK-NEXT:    addi a2, sp, 16
 ; CHECK-NEXT:    vs8r.v v16, (a2) # Unknown-size Folded Spill
+; CHECK-NEXT:    vsetvli zero, a1, e64, m8, ta, ma
 ; CHECK-NEXT:    vmv8r.v v16, v8
 ; CHECK-NEXT:    vl8re64.v v24, (a0)
 ; CHECK-NEXT:    li a0, 63
-; CHECK-NEXT:    vsetvli zero, a1, e64, m8, ta, ma
 ; CHECK-NEXT:    vand.vx v8, v24, a0, v0.t
 ; CHECK-NEXT:    vsll.vv v8, v16, v8, v0.t
 ; CHECK-NEXT:    vnot.v v16, v24, v0.t
@@ -987,6 +987,7 @@ define <vscale x 16 x i64> @fshr_v16i64(<vscale x 16 x i64> %a, <vscale x 16 x i
 ; CHECK-NEXT:    slli a1, a1, 5
 ; CHECK-NEXT:    sub sp, sp, a1
 ; CHECK-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x10, 0x22, 0x11, 0x20, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 16 + 32 * vlenb
+; CHECK-NEXT:    vsetvli a1, zero, e8, mf4, ta, ma
 ; CHECK-NEXT:    vmv1r.v v7, v0
 ; CHECK-NEXT:    csrr a1, vlenb
 ; CHECK-NEXT:    slli a1, a1, 4
@@ -1010,7 +1011,6 @@ define <vscale x 16 x i64> @fshr_v16i64(<vscale x 16 x i64> %a, <vscale x 16 x i
 ; CHECK-NEXT:    srli a6, a1, 3
 ; CHECK-NEXT:    add a3, a0, a3
 ; CHECK-NEXT:    vl8re64.v v16, (a3)
-; CHECK-NEXT:    vsetvli a3, zero, e8, mf4, ta, ma
 ; CHECK-NEXT:    vslidedown.vx v0, v0, a6
 ; CHECK-NEXT:    li a3, 63
 ; CHECK-NEXT:    vsetvli zero, a5, e64, m8, ta, ma
@@ -1093,6 +1093,7 @@ define <vscale x 16 x i64> @fshl_v16i64(<vscale x 16 x i64> %a, <vscale x 16 x i
 ; CHECK-NEXT:    mul a1, a1, a3
 ; CHECK-NEXT:    sub sp, sp, a1
 ; CHECK-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x10, 0x22, 0x11, 0x18, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 16 + 24 * vlenb
+; CHECK-NEXT:    vsetvli a1, zero, e8, mf4, ta, ma
 ; CHECK-NEXT:    vmv1r.v v7, v0
 ; CHECK-NEXT:    csrr a1, vlenb
 ; CHECK-NEXT:    slli a1, a1, 4
@@ -1103,7 +1104,6 @@ define <vscale x 16 x i64> @fshl_v16i64(<vscale x 16 x i64> %a, <vscale x 16 x i
 ; CHECK-NEXT:    slli a5, a1, 3
 ; CHECK-NEXT:    srli a3, a1, 3
 ; CHECK-NEXT:    sub a6, a4, a1
-; CHECK-NEXT:    vsetvli a7, zero, e8, mf4, ta, ma
 ; CHECK-NEXT:    vslidedown.vx v0, v0, a3
 ; CHECK-NEXT:    add a3, a2, a5
 ; CHECK-NEXT:    vl8re64.v v8, (a3)

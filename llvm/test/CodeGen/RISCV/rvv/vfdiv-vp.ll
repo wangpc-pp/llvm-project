@@ -373,11 +373,11 @@ define <vscale x 32 x bfloat> @vfdiv_vv_nxv32bf16(<vscale x 32 x bfloat> %va, <v
 ; CHECK-NEXT:    slli a1, a1, 3
 ; CHECK-NEXT:    sub sp, sp, a1
 ; CHECK-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x10, 0x22, 0x11, 0x08, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 16 + 8 * vlenb
+; CHECK-NEXT:    vsetvli a1, zero, e16, m4, ta, ma
 ; CHECK-NEXT:    vmv1r.v v7, v0
 ; CHECK-NEXT:    csrr a2, vlenb
 ; CHECK-NEXT:    addi a1, sp, 16
 ; CHECK-NEXT:    vs8r.v v16, (a1) # Unknown-size Folded Spill
-; CHECK-NEXT:    vsetvli a1, zero, e16, m4, ta, ma
 ; CHECK-NEXT:    vfwcvtbf16.f.f.v v24, v20
 ; CHECK-NEXT:    slli a1, a2, 1
 ; CHECK-NEXT:    srli a2, a2, 2
@@ -480,10 +480,10 @@ define <vscale x 32 x bfloat> @vfdiv_vf_nxv32bf16(<vscale x 32 x bfloat> %va, bf
 ; CHECK-NEXT:    add a1, a2, a1
 ; CHECK-NEXT:    sub sp, sp, a1
 ; CHECK-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x10, 0x22, 0x11, 0x09, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 16 + 9 * vlenb
+; CHECK-NEXT:    vsetvli a1, zero, e16, m4, ta, ma
 ; CHECK-NEXT:    vmv1r.v v24, v0
 ; CHECK-NEXT:    fmv.x.h a1, fa0
 ; CHECK-NEXT:    csrr a2, vlenb
-; CHECK-NEXT:    vsetvli a3, zero, e16, m4, ta, ma
 ; CHECK-NEXT:    vfwcvtbf16.f.f.v v16, v12
 ; CHECK-NEXT:    vsetvli a3, zero, e16, m8, ta, ma
 ; CHECK-NEXT:    vmv.v.x v0, a1
@@ -1085,11 +1085,11 @@ define <vscale x 32 x half> @vfdiv_vv_nxv32f16(<vscale x 32 x half> %va, <vscale
 ; ZVFHMIN-NEXT:    slli a1, a1, 3
 ; ZVFHMIN-NEXT:    sub sp, sp, a1
 ; ZVFHMIN-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x10, 0x22, 0x11, 0x08, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 16 + 8 * vlenb
+; ZVFHMIN-NEXT:    vsetvli a1, zero, e16, m4, ta, ma
 ; ZVFHMIN-NEXT:    vmv1r.v v7, v0
 ; ZVFHMIN-NEXT:    csrr a2, vlenb
 ; ZVFHMIN-NEXT:    addi a1, sp, 16
 ; ZVFHMIN-NEXT:    vs8r.v v16, (a1) # Unknown-size Folded Spill
-; ZVFHMIN-NEXT:    vsetvli a1, zero, e16, m4, ta, ma
 ; ZVFHMIN-NEXT:    vfwcvt.f.f.v v24, v20
 ; ZVFHMIN-NEXT:    slli a1, a2, 1
 ; ZVFHMIN-NEXT:    srli a2, a2, 2
@@ -1204,10 +1204,10 @@ define <vscale x 32 x half> @vfdiv_vf_nxv32f16(<vscale x 32 x half> %va, half %b
 ; ZVFHMIN-NEXT:    add a1, a2, a1
 ; ZVFHMIN-NEXT:    sub sp, sp, a1
 ; ZVFHMIN-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x10, 0x22, 0x11, 0x09, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 16 + 9 * vlenb
+; ZVFHMIN-NEXT:    vsetvli a1, zero, e16, m4, ta, ma
 ; ZVFHMIN-NEXT:    vmv1r.v v24, v0
 ; ZVFHMIN-NEXT:    fmv.x.h a1, fa0
 ; ZVFHMIN-NEXT:    csrr a2, vlenb
-; ZVFHMIN-NEXT:    vsetvli a3, zero, e16, m4, ta, ma
 ; ZVFHMIN-NEXT:    vfwcvt.f.f.v v16, v12
 ; ZVFHMIN-NEXT:    vsetvli a3, zero, e16, m8, ta, ma
 ; ZVFHMIN-NEXT:    vmv.v.x v0, a1
