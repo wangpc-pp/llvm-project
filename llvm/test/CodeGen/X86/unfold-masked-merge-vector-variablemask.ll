@@ -1745,6 +1745,7 @@ define <16 x i16> @out_v16i16(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-BASELINE-NEXT:    pushq %r13
 ; CHECK-BASELINE-NEXT:    pushq %r12
 ; CHECK-BASELINE-NEXT:    pushq %rbx
+; CHECK-BASELINE-NEXT:    movq %rdi, %rax
 ; CHECK-BASELINE-NEXT:    movzwl 18(%rdx), %r15d
 ; CHECK-BASELINE-NEXT:    movzwl 16(%rdx), %r14d
 ; CHECK-BASELINE-NEXT:    movzwl 14(%rdx), %ebp
@@ -1755,71 +1756,71 @@ define <16 x i16> @out_v16i16(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-BASELINE-NEXT:    movzwl 4(%rdx), %r9d
 ; CHECK-BASELINE-NEXT:    movzwl (%rdx), %r8d
 ; CHECK-BASELINE-NEXT:    movzwl 2(%rdx), %r12d
-; CHECK-BASELINE-NEXT:    movzwl (%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %r8w, %ax
-; CHECK-BASELINE-NEXT:    andw (%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %r8d
+; CHECK-BASELINE-NEXT:    movzwl (%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %r8w, %di
+; CHECK-BASELINE-NEXT:    andw (%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %r8d
 ; CHECK-BASELINE-NEXT:    movl %r8d, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-BASELINE-NEXT:    movzwl 2(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %r12w, %ax
-; CHECK-BASELINE-NEXT:    andw 2(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %r12d
-; CHECK-BASELINE-NEXT:    movzwl 4(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %r9w, %ax
-; CHECK-BASELINE-NEXT:    andw 4(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %r9d
+; CHECK-BASELINE-NEXT:    movzwl 2(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %r12w, %di
+; CHECK-BASELINE-NEXT:    andw 2(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %r12d
+; CHECK-BASELINE-NEXT:    movzwl 4(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %r9w, %di
+; CHECK-BASELINE-NEXT:    andw 4(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %r9d
 ; CHECK-BASELINE-NEXT:    movl %r9d, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-BASELINE-NEXT:    movzwl 6(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %r10w, %ax
-; CHECK-BASELINE-NEXT:    andw 6(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %r10d
+; CHECK-BASELINE-NEXT:    movzwl 6(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %r10w, %di
+; CHECK-BASELINE-NEXT:    andw 6(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %r10d
 ; CHECK-BASELINE-NEXT:    movl %r10d, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-BASELINE-NEXT:    movzwl 8(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %r11w, %ax
-; CHECK-BASELINE-NEXT:    andw 8(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %r11d
+; CHECK-BASELINE-NEXT:    movzwl 8(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %r11w, %di
+; CHECK-BASELINE-NEXT:    andw 8(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %r11d
 ; CHECK-BASELINE-NEXT:    movl %r11d, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-BASELINE-NEXT:    movzwl 10(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %r13w, %ax
-; CHECK-BASELINE-NEXT:    andw 10(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %r13d
+; CHECK-BASELINE-NEXT:    movzwl 10(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %r13w, %di
+; CHECK-BASELINE-NEXT:    andw 10(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %r13d
 ; CHECK-BASELINE-NEXT:    movl %r13d, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-BASELINE-NEXT:    movzwl 12(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %bx, %ax
-; CHECK-BASELINE-NEXT:    andw 12(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %ebx
-; CHECK-BASELINE-NEXT:    movzwl 14(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %bp, %ax
-; CHECK-BASELINE-NEXT:    andw 14(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %ebp
-; CHECK-BASELINE-NEXT:    movzwl 16(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %r14w, %ax
-; CHECK-BASELINE-NEXT:    andw 16(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %r14d
-; CHECK-BASELINE-NEXT:    movzwl 18(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %r15w, %ax
-; CHECK-BASELINE-NEXT:    andw 18(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %r15d
+; CHECK-BASELINE-NEXT:    movzwl 12(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %bx, %di
+; CHECK-BASELINE-NEXT:    andw 12(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %ebx
+; CHECK-BASELINE-NEXT:    movzwl 14(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %bp, %di
+; CHECK-BASELINE-NEXT:    andw 14(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %ebp
+; CHECK-BASELINE-NEXT:    movzwl 16(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %r14w, %di
+; CHECK-BASELINE-NEXT:    andw 16(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %r14d
+; CHECK-BASELINE-NEXT:    movzwl 18(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %r15w, %di
+; CHECK-BASELINE-NEXT:    andw 18(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %r15d
 ; CHECK-BASELINE-NEXT:    movzwl 20(%rdx), %r13d
-; CHECK-BASELINE-NEXT:    movzwl 20(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %r13w, %ax
-; CHECK-BASELINE-NEXT:    andw 20(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %r13d
+; CHECK-BASELINE-NEXT:    movzwl 20(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %r13w, %di
+; CHECK-BASELINE-NEXT:    andw 20(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %r13d
 ; CHECK-BASELINE-NEXT:    movzwl 22(%rdx), %r9d
-; CHECK-BASELINE-NEXT:    movzwl 22(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %r9w, %ax
-; CHECK-BASELINE-NEXT:    andw 22(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %r9d
+; CHECK-BASELINE-NEXT:    movzwl 22(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %r9w, %di
+; CHECK-BASELINE-NEXT:    andw 22(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %r9d
 ; CHECK-BASELINE-NEXT:    movzwl 24(%rdx), %r8d
-; CHECK-BASELINE-NEXT:    movzwl 24(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorw %r8w, %ax
-; CHECK-BASELINE-NEXT:    andw 24(%rcx), %ax
-; CHECK-BASELINE-NEXT:    xorl %eax, %r8d
-; CHECK-BASELINE-NEXT:    movzwl 26(%rdx), %eax
+; CHECK-BASELINE-NEXT:    movzwl 24(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorw %r8w, %di
+; CHECK-BASELINE-NEXT:    andw 24(%rcx), %di
+; CHECK-BASELINE-NEXT:    xorl %edi, %r8d
+; CHECK-BASELINE-NEXT:    movzwl 26(%rdx), %edi
 ; CHECK-BASELINE-NEXT:    movzwl 26(%rsi), %r10d
-; CHECK-BASELINE-NEXT:    xorw %ax, %r10w
+; CHECK-BASELINE-NEXT:    xorw %di, %r10w
 ; CHECK-BASELINE-NEXT:    andw 26(%rcx), %r10w
-; CHECK-BASELINE-NEXT:    xorl %r10d, %eax
+; CHECK-BASELINE-NEXT:    xorl %r10d, %edi
 ; CHECK-BASELINE-NEXT:    movzwl 28(%rdx), %r10d
 ; CHECK-BASELINE-NEXT:    movzwl 28(%rsi), %r11d
 ; CHECK-BASELINE-NEXT:    xorw %r10w, %r11w
@@ -1830,28 +1831,27 @@ define <16 x i16> @out_v16i16(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-BASELINE-NEXT:    xorw %dx, %si
 ; CHECK-BASELINE-NEXT:    andw 30(%rcx), %si
 ; CHECK-BASELINE-NEXT:    xorl %esi, %edx
-; CHECK-BASELINE-NEXT:    movw %dx, 30(%rdi)
-; CHECK-BASELINE-NEXT:    movw %r10w, 28(%rdi)
-; CHECK-BASELINE-NEXT:    movw %ax, 26(%rdi)
-; CHECK-BASELINE-NEXT:    movw %r8w, 24(%rdi)
-; CHECK-BASELINE-NEXT:    movw %r9w, 22(%rdi)
-; CHECK-BASELINE-NEXT:    movw %r13w, 20(%rdi)
-; CHECK-BASELINE-NEXT:    movw %r15w, 18(%rdi)
-; CHECK-BASELINE-NEXT:    movw %r14w, 16(%rdi)
-; CHECK-BASELINE-NEXT:    movw %bp, 14(%rdi)
-; CHECK-BASELINE-NEXT:    movw %bx, 12(%rdi)
-; CHECK-BASELINE-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
-; CHECK-BASELINE-NEXT:    movw %ax, 10(%rdi)
-; CHECK-BASELINE-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
-; CHECK-BASELINE-NEXT:    movw %ax, 8(%rdi)
-; CHECK-BASELINE-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
-; CHECK-BASELINE-NEXT:    movw %ax, 6(%rdi)
-; CHECK-BASELINE-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
-; CHECK-BASELINE-NEXT:    movw %ax, 4(%rdi)
-; CHECK-BASELINE-NEXT:    movw %r12w, 2(%rdi)
-; CHECK-BASELINE-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
-; CHECK-BASELINE-NEXT:    movw %ax, (%rdi)
-; CHECK-BASELINE-NEXT:    movq %rdi, %rax
+; CHECK-BASELINE-NEXT:    movw %dx, 30(%rax)
+; CHECK-BASELINE-NEXT:    movw %r10w, 28(%rax)
+; CHECK-BASELINE-NEXT:    movw %di, 26(%rax)
+; CHECK-BASELINE-NEXT:    movw %r8w, 24(%rax)
+; CHECK-BASELINE-NEXT:    movw %r9w, 22(%rax)
+; CHECK-BASELINE-NEXT:    movw %r13w, 20(%rax)
+; CHECK-BASELINE-NEXT:    movw %r15w, 18(%rax)
+; CHECK-BASELINE-NEXT:    movw %r14w, 16(%rax)
+; CHECK-BASELINE-NEXT:    movw %bp, 14(%rax)
+; CHECK-BASELINE-NEXT:    movw %bx, 12(%rax)
+; CHECK-BASELINE-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %ecx # 4-byte Reload
+; CHECK-BASELINE-NEXT:    movw %cx, 10(%rax)
+; CHECK-BASELINE-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %ecx # 4-byte Reload
+; CHECK-BASELINE-NEXT:    movw %cx, 8(%rax)
+; CHECK-BASELINE-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %ecx # 4-byte Reload
+; CHECK-BASELINE-NEXT:    movw %cx, 6(%rax)
+; CHECK-BASELINE-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %ecx # 4-byte Reload
+; CHECK-BASELINE-NEXT:    movw %cx, 4(%rax)
+; CHECK-BASELINE-NEXT:    movw %r12w, 2(%rax)
+; CHECK-BASELINE-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %ecx # 4-byte Reload
+; CHECK-BASELINE-NEXT:    movw %cx, (%rax)
 ; CHECK-BASELINE-NEXT:    popq %rbx
 ; CHECK-BASELINE-NEXT:    popq %r12
 ; CHECK-BASELINE-NEXT:    popq %r13
@@ -1868,6 +1868,7 @@ define <16 x i16> @out_v16i16(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-SSE1-NEXT:    pushq %r13
 ; CHECK-SSE1-NEXT:    pushq %r12
 ; CHECK-SSE1-NEXT:    pushq %rbx
+; CHECK-SSE1-NEXT:    movq %rdi, %rax
 ; CHECK-SSE1-NEXT:    movzwl 18(%rdx), %r15d
 ; CHECK-SSE1-NEXT:    movzwl 16(%rdx), %r14d
 ; CHECK-SSE1-NEXT:    movzwl 14(%rdx), %ebp
@@ -1878,71 +1879,71 @@ define <16 x i16> @out_v16i16(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-SSE1-NEXT:    movzwl 4(%rdx), %r9d
 ; CHECK-SSE1-NEXT:    movzwl (%rdx), %r8d
 ; CHECK-SSE1-NEXT:    movzwl 2(%rdx), %r12d
-; CHECK-SSE1-NEXT:    movzwl (%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %r8w, %ax
-; CHECK-SSE1-NEXT:    andw (%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %r8d
+; CHECK-SSE1-NEXT:    movzwl (%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %r8w, %di
+; CHECK-SSE1-NEXT:    andw (%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %r8d
 ; CHECK-SSE1-NEXT:    movl %r8d, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-SSE1-NEXT:    movzwl 2(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %r12w, %ax
-; CHECK-SSE1-NEXT:    andw 2(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %r12d
-; CHECK-SSE1-NEXT:    movzwl 4(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %r9w, %ax
-; CHECK-SSE1-NEXT:    andw 4(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %r9d
+; CHECK-SSE1-NEXT:    movzwl 2(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %r12w, %di
+; CHECK-SSE1-NEXT:    andw 2(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %r12d
+; CHECK-SSE1-NEXT:    movzwl 4(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %r9w, %di
+; CHECK-SSE1-NEXT:    andw 4(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %r9d
 ; CHECK-SSE1-NEXT:    movl %r9d, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-SSE1-NEXT:    movzwl 6(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %r10w, %ax
-; CHECK-SSE1-NEXT:    andw 6(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %r10d
+; CHECK-SSE1-NEXT:    movzwl 6(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %r10w, %di
+; CHECK-SSE1-NEXT:    andw 6(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %r10d
 ; CHECK-SSE1-NEXT:    movl %r10d, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-SSE1-NEXT:    movzwl 8(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %r11w, %ax
-; CHECK-SSE1-NEXT:    andw 8(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %r11d
+; CHECK-SSE1-NEXT:    movzwl 8(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %r11w, %di
+; CHECK-SSE1-NEXT:    andw 8(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %r11d
 ; CHECK-SSE1-NEXT:    movl %r11d, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-SSE1-NEXT:    movzwl 10(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %r13w, %ax
-; CHECK-SSE1-NEXT:    andw 10(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %r13d
+; CHECK-SSE1-NEXT:    movzwl 10(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %r13w, %di
+; CHECK-SSE1-NEXT:    andw 10(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %r13d
 ; CHECK-SSE1-NEXT:    movl %r13d, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-SSE1-NEXT:    movzwl 12(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %bx, %ax
-; CHECK-SSE1-NEXT:    andw 12(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %ebx
-; CHECK-SSE1-NEXT:    movzwl 14(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %bp, %ax
-; CHECK-SSE1-NEXT:    andw 14(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %ebp
-; CHECK-SSE1-NEXT:    movzwl 16(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %r14w, %ax
-; CHECK-SSE1-NEXT:    andw 16(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %r14d
-; CHECK-SSE1-NEXT:    movzwl 18(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %r15w, %ax
-; CHECK-SSE1-NEXT:    andw 18(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %r15d
+; CHECK-SSE1-NEXT:    movzwl 12(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %bx, %di
+; CHECK-SSE1-NEXT:    andw 12(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %ebx
+; CHECK-SSE1-NEXT:    movzwl 14(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %bp, %di
+; CHECK-SSE1-NEXT:    andw 14(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %ebp
+; CHECK-SSE1-NEXT:    movzwl 16(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %r14w, %di
+; CHECK-SSE1-NEXT:    andw 16(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %r14d
+; CHECK-SSE1-NEXT:    movzwl 18(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %r15w, %di
+; CHECK-SSE1-NEXT:    andw 18(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %r15d
 ; CHECK-SSE1-NEXT:    movzwl 20(%rdx), %r13d
-; CHECK-SSE1-NEXT:    movzwl 20(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %r13w, %ax
-; CHECK-SSE1-NEXT:    andw 20(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %r13d
+; CHECK-SSE1-NEXT:    movzwl 20(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %r13w, %di
+; CHECK-SSE1-NEXT:    andw 20(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %r13d
 ; CHECK-SSE1-NEXT:    movzwl 22(%rdx), %r9d
-; CHECK-SSE1-NEXT:    movzwl 22(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %r9w, %ax
-; CHECK-SSE1-NEXT:    andw 22(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %r9d
+; CHECK-SSE1-NEXT:    movzwl 22(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %r9w, %di
+; CHECK-SSE1-NEXT:    andw 22(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %r9d
 ; CHECK-SSE1-NEXT:    movzwl 24(%rdx), %r8d
-; CHECK-SSE1-NEXT:    movzwl 24(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorw %r8w, %ax
-; CHECK-SSE1-NEXT:    andw 24(%rcx), %ax
-; CHECK-SSE1-NEXT:    xorl %eax, %r8d
-; CHECK-SSE1-NEXT:    movzwl 26(%rdx), %eax
+; CHECK-SSE1-NEXT:    movzwl 24(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorw %r8w, %di
+; CHECK-SSE1-NEXT:    andw 24(%rcx), %di
+; CHECK-SSE1-NEXT:    xorl %edi, %r8d
+; CHECK-SSE1-NEXT:    movzwl 26(%rdx), %edi
 ; CHECK-SSE1-NEXT:    movzwl 26(%rsi), %r10d
-; CHECK-SSE1-NEXT:    xorw %ax, %r10w
+; CHECK-SSE1-NEXT:    xorw %di, %r10w
 ; CHECK-SSE1-NEXT:    andw 26(%rcx), %r10w
-; CHECK-SSE1-NEXT:    xorl %r10d, %eax
+; CHECK-SSE1-NEXT:    xorl %r10d, %edi
 ; CHECK-SSE1-NEXT:    movzwl 28(%rdx), %r10d
 ; CHECK-SSE1-NEXT:    movzwl 28(%rsi), %r11d
 ; CHECK-SSE1-NEXT:    xorw %r10w, %r11w
@@ -1953,28 +1954,27 @@ define <16 x i16> @out_v16i16(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-SSE1-NEXT:    xorw %dx, %si
 ; CHECK-SSE1-NEXT:    andw 30(%rcx), %si
 ; CHECK-SSE1-NEXT:    xorl %esi, %edx
-; CHECK-SSE1-NEXT:    movw %dx, 30(%rdi)
-; CHECK-SSE1-NEXT:    movw %r10w, 28(%rdi)
-; CHECK-SSE1-NEXT:    movw %ax, 26(%rdi)
-; CHECK-SSE1-NEXT:    movw %r8w, 24(%rdi)
-; CHECK-SSE1-NEXT:    movw %r9w, 22(%rdi)
-; CHECK-SSE1-NEXT:    movw %r13w, 20(%rdi)
-; CHECK-SSE1-NEXT:    movw %r15w, 18(%rdi)
-; CHECK-SSE1-NEXT:    movw %r14w, 16(%rdi)
-; CHECK-SSE1-NEXT:    movw %bp, 14(%rdi)
-; CHECK-SSE1-NEXT:    movw %bx, 12(%rdi)
-; CHECK-SSE1-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
-; CHECK-SSE1-NEXT:    movw %ax, 10(%rdi)
-; CHECK-SSE1-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
-; CHECK-SSE1-NEXT:    movw %ax, 8(%rdi)
-; CHECK-SSE1-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
-; CHECK-SSE1-NEXT:    movw %ax, 6(%rdi)
-; CHECK-SSE1-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
-; CHECK-SSE1-NEXT:    movw %ax, 4(%rdi)
-; CHECK-SSE1-NEXT:    movw %r12w, 2(%rdi)
-; CHECK-SSE1-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
-; CHECK-SSE1-NEXT:    movw %ax, (%rdi)
-; CHECK-SSE1-NEXT:    movq %rdi, %rax
+; CHECK-SSE1-NEXT:    movw %dx, 30(%rax)
+; CHECK-SSE1-NEXT:    movw %r10w, 28(%rax)
+; CHECK-SSE1-NEXT:    movw %di, 26(%rax)
+; CHECK-SSE1-NEXT:    movw %r8w, 24(%rax)
+; CHECK-SSE1-NEXT:    movw %r9w, 22(%rax)
+; CHECK-SSE1-NEXT:    movw %r13w, 20(%rax)
+; CHECK-SSE1-NEXT:    movw %r15w, 18(%rax)
+; CHECK-SSE1-NEXT:    movw %r14w, 16(%rax)
+; CHECK-SSE1-NEXT:    movw %bp, 14(%rax)
+; CHECK-SSE1-NEXT:    movw %bx, 12(%rax)
+; CHECK-SSE1-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %ecx # 4-byte Reload
+; CHECK-SSE1-NEXT:    movw %cx, 10(%rax)
+; CHECK-SSE1-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %ecx # 4-byte Reload
+; CHECK-SSE1-NEXT:    movw %cx, 8(%rax)
+; CHECK-SSE1-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %ecx # 4-byte Reload
+; CHECK-SSE1-NEXT:    movw %cx, 6(%rax)
+; CHECK-SSE1-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %ecx # 4-byte Reload
+; CHECK-SSE1-NEXT:    movw %cx, 4(%rax)
+; CHECK-SSE1-NEXT:    movw %r12w, 2(%rax)
+; CHECK-SSE1-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %ecx # 4-byte Reload
+; CHECK-SSE1-NEXT:    movw %cx, (%rax)
 ; CHECK-SSE1-NEXT:    popq %rbx
 ; CHECK-SSE1-NEXT:    popq %r12
 ; CHECK-SSE1-NEXT:    popq %r13
@@ -4087,12 +4087,13 @@ define <8 x i32> @in_v8i32(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-BASELINE-NEXT:    pushq %r13
 ; CHECK-BASELINE-NEXT:    pushq %r12
 ; CHECK-BASELINE-NEXT:    pushq %rbx
-; CHECK-BASELINE-NEXT:    movl 28(%rdx), %eax
-; CHECK-BASELINE-NEXT:    movl %eax, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-BASELINE-NEXT:    movl 24(%rdx), %eax
-; CHECK-BASELINE-NEXT:    movl %eax, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-BASELINE-NEXT:    movl 20(%rdx), %eax
-; CHECK-BASELINE-NEXT:    movl %eax, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; CHECK-BASELINE-NEXT:    movq %rdi, %rax
+; CHECK-BASELINE-NEXT:    movl 28(%rdx), %edi
+; CHECK-BASELINE-NEXT:    movl %edi, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; CHECK-BASELINE-NEXT:    movl 24(%rdx), %edi
+; CHECK-BASELINE-NEXT:    movl %edi, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; CHECK-BASELINE-NEXT:    movl 20(%rdx), %edi
+; CHECK-BASELINE-NEXT:    movl %edi, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
 ; CHECK-BASELINE-NEXT:    movl 16(%rdx), %ebx
 ; CHECK-BASELINE-NEXT:    movl 12(%rdx), %ebp
 ; CHECK-BASELINE-NEXT:    movl 8(%rdx), %r15d
@@ -4108,15 +4109,15 @@ define <8 x i32> @in_v8i32(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-BASELINE-NEXT:    xorl %ebp, %r14d
 ; CHECK-BASELINE-NEXT:    movl 16(%rsi), %r12d
 ; CHECK-BASELINE-NEXT:    xorl %ebx, %r12d
-; CHECK-BASELINE-NEXT:    movl 20(%rsi), %edx
-; CHECK-BASELINE-NEXT:    xorl %eax, %edx
-; CHECK-BASELINE-NEXT:    movl 24(%rsi), %eax
-; CHECK-BASELINE-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Folded Reload
+; CHECK-BASELINE-NEXT:    movl 20(%rsi), %edi
+; CHECK-BASELINE-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %edi # 4-byte Folded Reload
+; CHECK-BASELINE-NEXT:    movl 24(%rsi), %edx
+; CHECK-BASELINE-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %edx # 4-byte Folded Reload
 ; CHECK-BASELINE-NEXT:    movl 28(%rsi), %esi
 ; CHECK-BASELINE-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %esi # 4-byte Folded Reload
 ; CHECK-BASELINE-NEXT:    andl 28(%rcx), %esi
-; CHECK-BASELINE-NEXT:    andl 24(%rcx), %eax
-; CHECK-BASELINE-NEXT:    andl 20(%rcx), %edx
+; CHECK-BASELINE-NEXT:    andl 24(%rcx), %edx
+; CHECK-BASELINE-NEXT:    andl 20(%rcx), %edi
 ; CHECK-BASELINE-NEXT:    andl 16(%rcx), %r12d
 ; CHECK-BASELINE-NEXT:    andl 12(%rcx), %r14d
 ; CHECK-BASELINE-NEXT:    andl 8(%rcx), %r11d
@@ -4127,18 +4128,17 @@ define <8 x i32> @in_v8i32(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-BASELINE-NEXT:    xorl %r15d, %r11d
 ; CHECK-BASELINE-NEXT:    xorl %ebp, %r14d
 ; CHECK-BASELINE-NEXT:    xorl %ebx, %r12d
+; CHECK-BASELINE-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %edi # 4-byte Folded Reload
 ; CHECK-BASELINE-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %edx # 4-byte Folded Reload
-; CHECK-BASELINE-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Folded Reload
 ; CHECK-BASELINE-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %esi # 4-byte Folded Reload
-; CHECK-BASELINE-NEXT:    movl %esi, 28(%rdi)
-; CHECK-BASELINE-NEXT:    movl %eax, 24(%rdi)
-; CHECK-BASELINE-NEXT:    movl %edx, 20(%rdi)
-; CHECK-BASELINE-NEXT:    movl %r12d, 16(%rdi)
-; CHECK-BASELINE-NEXT:    movl %r14d, 12(%rdi)
-; CHECK-BASELINE-NEXT:    movl %r11d, 8(%rdi)
-; CHECK-BASELINE-NEXT:    movl %r9d, 4(%rdi)
-; CHECK-BASELINE-NEXT:    movl %r8d, (%rdi)
-; CHECK-BASELINE-NEXT:    movq %rdi, %rax
+; CHECK-BASELINE-NEXT:    movl %esi, 28(%rax)
+; CHECK-BASELINE-NEXT:    movl %edx, 24(%rax)
+; CHECK-BASELINE-NEXT:    movl %edi, 20(%rax)
+; CHECK-BASELINE-NEXT:    movl %r12d, 16(%rax)
+; CHECK-BASELINE-NEXT:    movl %r14d, 12(%rax)
+; CHECK-BASELINE-NEXT:    movl %r11d, 8(%rax)
+; CHECK-BASELINE-NEXT:    movl %r9d, 4(%rax)
+; CHECK-BASELINE-NEXT:    movl %r8d, (%rax)
 ; CHECK-BASELINE-NEXT:    popq %rbx
 ; CHECK-BASELINE-NEXT:    popq %r12
 ; CHECK-BASELINE-NEXT:    popq %r13
@@ -4155,12 +4155,13 @@ define <8 x i32> @in_v8i32(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-SSE1-NEXT:    pushq %r13
 ; CHECK-SSE1-NEXT:    pushq %r12
 ; CHECK-SSE1-NEXT:    pushq %rbx
-; CHECK-SSE1-NEXT:    movl 28(%rdx), %eax
-; CHECK-SSE1-NEXT:    movl %eax, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-SSE1-NEXT:    movl 24(%rdx), %eax
-; CHECK-SSE1-NEXT:    movl %eax, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; CHECK-SSE1-NEXT:    movl 20(%rdx), %eax
-; CHECK-SSE1-NEXT:    movl %eax, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; CHECK-SSE1-NEXT:    movq %rdi, %rax
+; CHECK-SSE1-NEXT:    movl 28(%rdx), %edi
+; CHECK-SSE1-NEXT:    movl %edi, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; CHECK-SSE1-NEXT:    movl 24(%rdx), %edi
+; CHECK-SSE1-NEXT:    movl %edi, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; CHECK-SSE1-NEXT:    movl 20(%rdx), %edi
+; CHECK-SSE1-NEXT:    movl %edi, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
 ; CHECK-SSE1-NEXT:    movl 16(%rdx), %ebx
 ; CHECK-SSE1-NEXT:    movl 12(%rdx), %ebp
 ; CHECK-SSE1-NEXT:    movl 8(%rdx), %r15d
@@ -4176,15 +4177,15 @@ define <8 x i32> @in_v8i32(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-SSE1-NEXT:    xorl %ebp, %r14d
 ; CHECK-SSE1-NEXT:    movl 16(%rsi), %r12d
 ; CHECK-SSE1-NEXT:    xorl %ebx, %r12d
-; CHECK-SSE1-NEXT:    movl 20(%rsi), %edx
-; CHECK-SSE1-NEXT:    xorl %eax, %edx
-; CHECK-SSE1-NEXT:    movl 24(%rsi), %eax
-; CHECK-SSE1-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Folded Reload
+; CHECK-SSE1-NEXT:    movl 20(%rsi), %edi
+; CHECK-SSE1-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %edi # 4-byte Folded Reload
+; CHECK-SSE1-NEXT:    movl 24(%rsi), %edx
+; CHECK-SSE1-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %edx # 4-byte Folded Reload
 ; CHECK-SSE1-NEXT:    movl 28(%rsi), %esi
 ; CHECK-SSE1-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %esi # 4-byte Folded Reload
 ; CHECK-SSE1-NEXT:    andl 28(%rcx), %esi
-; CHECK-SSE1-NEXT:    andl 24(%rcx), %eax
-; CHECK-SSE1-NEXT:    andl 20(%rcx), %edx
+; CHECK-SSE1-NEXT:    andl 24(%rcx), %edx
+; CHECK-SSE1-NEXT:    andl 20(%rcx), %edi
 ; CHECK-SSE1-NEXT:    andl 16(%rcx), %r12d
 ; CHECK-SSE1-NEXT:    andl 12(%rcx), %r14d
 ; CHECK-SSE1-NEXT:    andl 8(%rcx), %r11d
@@ -4195,18 +4196,17 @@ define <8 x i32> @in_v8i32(ptr%px, ptr%py, ptr%pmask) nounwind {
 ; CHECK-SSE1-NEXT:    xorl %r15d, %r11d
 ; CHECK-SSE1-NEXT:    xorl %ebp, %r14d
 ; CHECK-SSE1-NEXT:    xorl %ebx, %r12d
+; CHECK-SSE1-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %edi # 4-byte Folded Reload
 ; CHECK-SSE1-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %edx # 4-byte Folded Reload
-; CHECK-SSE1-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Folded Reload
 ; CHECK-SSE1-NEXT:    xorl {{[-0-9]+}}(%r{{[sb]}}p), %esi # 4-byte Folded Reload
-; CHECK-SSE1-NEXT:    movl %esi, 28(%rdi)
-; CHECK-SSE1-NEXT:    movl %eax, 24(%rdi)
-; CHECK-SSE1-NEXT:    movl %edx, 20(%rdi)
-; CHECK-SSE1-NEXT:    movl %r12d, 16(%rdi)
-; CHECK-SSE1-NEXT:    movl %r14d, 12(%rdi)
-; CHECK-SSE1-NEXT:    movl %r11d, 8(%rdi)
-; CHECK-SSE1-NEXT:    movl %r9d, 4(%rdi)
-; CHECK-SSE1-NEXT:    movl %r8d, (%rdi)
-; CHECK-SSE1-NEXT:    movq %rdi, %rax
+; CHECK-SSE1-NEXT:    movl %esi, 28(%rax)
+; CHECK-SSE1-NEXT:    movl %edx, 24(%rax)
+; CHECK-SSE1-NEXT:    movl %edi, 20(%rax)
+; CHECK-SSE1-NEXT:    movl %r12d, 16(%rax)
+; CHECK-SSE1-NEXT:    movl %r14d, 12(%rax)
+; CHECK-SSE1-NEXT:    movl %r11d, 8(%rax)
+; CHECK-SSE1-NEXT:    movl %r9d, 4(%rax)
+; CHECK-SSE1-NEXT:    movl %r8d, (%rax)
 ; CHECK-SSE1-NEXT:    popq %rbx
 ; CHECK-SSE1-NEXT:    popq %r12
 ; CHECK-SSE1-NEXT:    popq %r13

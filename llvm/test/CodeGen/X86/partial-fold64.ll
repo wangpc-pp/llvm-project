@@ -2,8 +2,9 @@
 
 define i32 @fold64to32(i64 %add, i32 %spill) {
 ; CHECK-LABEL: fold64to32:
-; CHECK:    movq %rdi, -{{[0-9]+}}(%rsp) # 8-byte Spill
-; CHECK:    subl -{{[0-9]+}}(%rsp), %esi # 4-byte Folded Reload
+; CHECK:    movl %esi, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; CHECK:    movq %rdi, %rsi
+; CHECK:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
 entry:
   tail call void asm sideeffect "", "~{rax},~{rbx},~{rcx},~{rdx},~{rdi},~{rbp},~{r8},~{r9},~{r10},~{r11},~{r12},~{r13},~{r14},~{r15},~{dirflag},~{fpsr},~{flags}"()
   %trunc = trunc i64 %add to i32
@@ -13,8 +14,8 @@ entry:
 
 define i8 @fold64to8(i64 %add, i8 %spill) {
 ; CHECK-LABEL: fold64to8:
-; CHECK:    movq %rdi, -{{[0-9]+}}(%rsp) # 8-byte Spill
-; CHECK:    subb -{{[0-9]+}}(%rsp), %sil # 1-byte Folded Reload
+; CHECK:    movl %esi, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; CHECK:    movl {{[-0-9]+}}(%r{{[sb]}}p), %eax # 4-byte Reload
 entry:
   tail call void asm sideeffect "", "~{rax},~{rbx},~{rcx},~{rdx},~{rdi},~{rbp},~{r8},~{r9},~{r10},~{r11},~{r12},~{r13},~{r14},~{r15},~{dirflag},~{fpsr},~{flags}"()
   %trunc = trunc i64 %add to i8

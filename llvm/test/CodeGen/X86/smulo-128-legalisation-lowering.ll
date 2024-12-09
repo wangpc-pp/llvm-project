@@ -391,18 +391,19 @@ define zeroext i1 @smuloi256(i256 %v1, i256 %v2, ptr %res) {
 ; X64-NEXT:    addq %r9, %rbp
 ; X64-NEXT:    movzbl %r12b, %eax
 ; X64-NEXT:    adcq %rax, %r13
-; X64-NEXT:    movq {{[0-9]+}}(%rsp), %r12
+; X64-NEXT:    movq {{[0-9]+}}(%rsp), %rdx
 ; X64-NEXT:    addq %r11, %rbp
 ; X64-NEXT:    adcq %rbx, %r13
 ; X64-NEXT:    adcq $0, %rsi
 ; X64-NEXT:    adcq $0, %rcx
 ; X64-NEXT:    movq %rdi, {{[-0-9]+}}(%r{{[sb]}}p) ## 8-byte Spill
 ; X64-NEXT:    movq %rdi, %rax
-; X64-NEXT:    mulq %r12
+; X64-NEXT:    movq %rdx, %r11
+; X64-NEXT:    mulq %rdx
 ; X64-NEXT:    movq %rdx, %r9
 ; X64-NEXT:    movq %rax, %rbx
 ; X64-NEXT:    movq %r10, %rax
-; X64-NEXT:    mulq %r12
+; X64-NEXT:    mulq %r11
 ; X64-NEXT:    movq %rdx, %r11
 ; X64-NEXT:    movq %rax, %r10
 ; X64-NEXT:    addq %r9, %r10

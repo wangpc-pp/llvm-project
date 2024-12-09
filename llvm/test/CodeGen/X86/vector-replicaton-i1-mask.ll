@@ -843,7 +843,8 @@ define void @mask_replication_factor3_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kmovd %eax, %k4
 ; AVX512BW-NEXT:    kmovw (%rdi), %k2
 ; AVX512BW-NEXT:    kandw %k4, %k2, %k3
-; AVX512BW-NEXT:    kmovq %k4, %k7
+; AVX512BW-NEXT:    kmovq %k4, %k6
+; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
@@ -861,9 +862,9 @@ define void @mask_replication_factor3_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $12, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-17, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k5
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw %k5, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $11, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-33, %ax
@@ -916,22 +917,22 @@ define void @mask_replication_factor3_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kmovd %eax, %k2
 ; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrd $4, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k2
-; AVX512BW-NEXT:    kshiftrw $3, %k2, %k3
-; AVX512BW-NEXT:    korw %k3, %k1, %k1
-; AVX512BW-NEXT:    movw $-8193, %ax # imm = 0xDFFF
-; AVX512BW-NEXT:    kmovd %eax, %k6
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw %k6, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    movw $-16385, %ax # imm = 0xBFFF
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k4, %k4
+; AVX512BW-NEXT:    kshiftrd $4, %k0, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k3
+; AVX512BW-NEXT:    kshiftrw $3, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
+; AVX512BW-NEXT:    movw $-8193, %ax # imm = 0xDFFF
+; AVX512BW-NEXT:    kmovd %eax, %k4
+; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $2, %k3, %k3
+; AVX512BW-NEXT:    korw %k3, %k1, %k1
+; AVX512BW-NEXT:    movw $-16385, %ax # imm = 0xBFFF
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrd $5, %k0, %k2
@@ -941,84 +942,84 @@ define void @mask_replication_factor3_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 (%rsi), %zmm0 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrd $27, %k0, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k4
-; AVX512BW-NEXT:    kshiftrd $26, %k0, %k1
-; AVX512BW-NEXT:    kmovd %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kmovq %k7, %k2
-; AVX512BW-NEXT:    kmovw %k7, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $14, %k4, %k7
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k5
+; AVX512BW-NEXT:    kshiftrd $26, %k0, %k2
+; AVX512BW-NEXT:    kandw %k6, %k2, %k1
+; AVX512BW-NEXT:    kshiftrw $14, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k4, %k7
+; AVX512BW-NEXT:    kshiftrw $13, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
-; AVX512BW-NEXT:    kshiftrd $28, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $11, %k4, %k7
+; AVX512BW-NEXT:    kshiftrw $12, %k5, %k5
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kshiftrd $28, %k0, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $11, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $10, %k4, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrd $29, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $8, %k4, %k7
+; AVX512BW-NEXT:    kshiftrw $10, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k4, %k7
+; AVX512BW-NEXT:    kshiftrw $9, %k5, %k5
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kshiftrd $29, %k0, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $8, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $6, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrd $30, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $5, %k4, %k7
+; AVX512BW-NEXT:    kshiftrw $7, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $4, %k4, %k7
+; AVX512BW-NEXT:    kshiftrw $6, %k5, %k5
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kshiftrd $30, %k0, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $5, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $3, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrd $31, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k7
+; AVX512BW-NEXT:    kshiftrw $4, %k5, %k7
+; AVX512BW-NEXT:    korw %k7, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $3, %k5, %k5
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kshiftrd $31, %k0, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k5, %k7
 ; AVX512BW-NEXT:    kshiftrw $2, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k1, %k1
+; AVX512BW-NEXT:    kshiftlw $14, %k5, %k5
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 320(%rsi), %zmm1 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrd $21, %k0, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
 ; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k6, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrd $22, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $13, %k6, %k7
@@ -1027,8 +1028,7 @@ define void @mask_replication_factor3_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
@@ -1037,44 +1037,44 @@ define void @mask_replication_factor3_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $10, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrd $24, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrd $25, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 4-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
@@ -1088,33 +1088,33 @@ define void @mask_replication_factor3_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $13, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k2, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrd $17, %k0, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrd $18, %k0, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
@@ -1152,134 +1152,135 @@ define void @mask_replication_factor3_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    vmovdqa32 192(%rsi), %zmm3 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrd $11, %k0, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k2
-; AVX512BW-NEXT:    kshiftrd $10, %k0, %k4
-; AVX512BW-NEXT:    kmovd %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kshiftrd $10, %k0, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k5
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $12, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k4, %k2
-; AVX512BW-NEXT:    kandw %k3, %k2, %k2
-; AVX512BW-NEXT:    kshiftrd $12, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $11, %k4, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $10, %k4, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $9, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrd $13, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $8, %k4, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k5, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $7, %k4, %k6
+; AVX512BW-NEXT:    kshiftrd $12, %k0, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $11, %k5, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $10, %k5, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k5, %k5
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrd $13, %k0, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $8, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $6, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrd $14, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $5, %k4, %k6
+; AVX512BW-NEXT:    kshiftrw $7, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $4, %k4, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $6, %k5, %k5
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrd $14, %k0, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $5, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $3, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $4, %k5, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $3, %k5, %k5
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kandw %k7, %k2, %k2
-; AVX512BW-NEXT:    kshiftrd $15, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k6
+; AVX512BW-NEXT:    kshiftrd $15, %k0, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k5, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k7, %k2, %k2
-; AVX512BW-NEXT:    kshiftlw $14, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k5, %k5
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
 ; AVX512BW-NEXT:    vmovdqa32 128(%rsi), %zmm4 {%k2} {z}
 ; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 4-byte Reload
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kshiftrw $14, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
-; AVX512BW-NEXT:    kshiftrd $6, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $13, %k4, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $12, %k4, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $11, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
-; AVX512BW-NEXT:    kshiftrd $7, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $10, %k4, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $9, %k4, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $8, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
-; AVX512BW-NEXT:    kshiftrd $8, %k0, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $7, %k4, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kandw %k3, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $6, %k4, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $5, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kshiftrw $14, %k3, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrd $6, %k0, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $13, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k3, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrd $7, %k0, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $10, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $8, %k3, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrd $8, %k0, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $7, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $6, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $5, %k3, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrd $9, %k0, %k0
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k0, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $3, %k0, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $4, %k0, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $3, %k0, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k2, %k0
 ; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k2
 ; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
@@ -1450,7 +1451,8 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kmovd %eax, %k4
 ; AVX512BW-NEXT:    kmovw (%rdi), %k2
 ; AVX512BW-NEXT:    kandw %k4, %k2, %k3
-; AVX512BW-NEXT:    kmovq %k4, %k7
+; AVX512BW-NEXT:    kmovq %k4, %k6
+; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
@@ -1489,9 +1491,8 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
 ; AVX512BW-NEXT:    movw $-129, %ax
 ; AVX512BW-NEXT:    kmovd %eax, %k3
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kmovq %k3, %k5
 ; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k2, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
 ; AVX512BW-NEXT:    movw $-257, %ax # imm = 0xFEFF
@@ -1502,8 +1503,9 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    movw $-513, %ax # imm = 0xFDFF
 ; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovq %k2, %k5
+; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftrq $3, %k0, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $6, %k2, %k3
@@ -1529,9 +1531,9 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $3, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
 ; AVX512BW-NEXT:    movw $-8193, %ax # imm = 0xDFFF
-; AVX512BW-NEXT:    kmovd %eax, %k6
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw %k6, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovd %eax, %k4
+; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
 ; AVX512BW-NEXT:    movw $-16385, %ax # imm = 0xBFFF
@@ -1551,143 +1553,141 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrq $59, %k0, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k2
 ; AVX512BW-NEXT:    kshiftrq $58, %k0, %k1
-; AVX512BW-NEXT:    kmovq %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 8-byte Spill
-; AVX512BW-NEXT:    kmovq %k7, %k3
-; AVX512BW-NEXT:    kmovw %k7, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
+; AVX512BW-NEXT:    kandw %k6, %k1, %k3
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $13, %k2, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
-; AVX512BW-NEXT:    kshiftrq $60, %k0, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $11, %k2, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $10, %k2, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
-; AVX512BW-NEXT:    kshiftrq $61, %k0, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $8, %k2, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k2, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrq $62, %k0, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $5, %k2, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $4, %k2, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $3, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrq $63, %k0, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k7
-; AVX512BW-NEXT:    kshiftrw $2, %k7, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    korw %k2, %k3, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrq $60, %k0, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $11, %k3, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 704(%rsi), %zmm1 {%k1} {z}
-; AVX512BW-NEXT:    kshiftrq $53, %k0, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k6
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k6, %k1
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $10, %k3, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k3, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrq $61, %k0, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $8, %k3, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k3, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $6, %k3, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrq $62, %k0, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $5, %k3, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $4, %k3, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $3, %k3, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrq $63, %k0, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k7
+; AVX512BW-NEXT:    kshiftrw $2, %k7, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k3, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    vmovdqa32 704(%rsi), %zmm1 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrq $53, %k0, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kshiftrw $14, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kandw %k2, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrq $54, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $13, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k3, %k3
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrq $55, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $10, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $8, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrq $56, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k3, %k3
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrq $57, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k3, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
-; AVX512BW-NEXT:    korw %k3, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
+; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    korw %k6, %k3, %k3
+; AVX512BW-NEXT:    kshiftlw $1, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $1, %k3, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
+; AVX512BW-NEXT:    korw %k1, %k3, %k1
 ; AVX512BW-NEXT:    vmovdqa32 640(%rsi), %zmm2 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrq $48, %k0, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
@@ -1695,30 +1695,29 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k3, %k3
+; AVX512BW-NEXT:    kandw %k2, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $13, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k3, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrq $49, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrq $50, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
@@ -1726,21 +1725,21 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrq $51, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $6, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrq $52, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
@@ -1749,7 +1748,8 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
@@ -1760,31 +1760,29 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrq $43, %k0, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k2
 ; AVX512BW-NEXT:    kshiftrq $42, %k0, %k1
-; AVX512BW-NEXT:    kmovq %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 8-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k3
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k3, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrq $44, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $10, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $9, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
@@ -1801,17 +1799,17 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $6, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrq $46, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $5, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $4, %k3, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $4, %k3, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $3, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kandw %k7, %k2, %k2
@@ -1819,8 +1817,8 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $14, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
@@ -1828,7 +1826,8 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
 ; AVX512BW-NEXT:    vmovdqa32 512(%rsi), %zmm4 {%k2} {z}
 ; AVX512BW-NEXT:    kshiftrq $37, %k0, %k2
-; AVX512BW-NEXT:    kandw %k4, %k2, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k6
@@ -1839,57 +1838,56 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $13, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrq $39, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $10, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $8, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrq $40, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrq $41, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 8-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftlw $1, %k3, %k3
@@ -1898,8 +1896,8 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k1, %k3, %k1
 ; AVX512BW-NEXT:    vmovdqa32 448(%rsi), %zmm5 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrq $32, %k0, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
@@ -1907,26 +1905,26 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $13, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k3, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrq $33, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrq $34, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
@@ -1947,7 +1945,8 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrq $36, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
@@ -1956,8 +1955,8 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
@@ -1967,49 +1966,48 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    vmovdqa32 384(%rsi), %zmm6 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrq $27, %k0, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k2
-; AVX512BW-NEXT:    kshiftrq $26, %k0, %k3
-; AVX512BW-NEXT:    kmovq %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 8-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kshiftrq $26, %k0, %k1
+; AVX512BW-NEXT:    kandw %k5, %k1, %k3
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k3, %k2
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrq $28, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $10, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $9, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrq $29, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $8, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $7, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $6, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrq $30, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $5, %k3, %k6
@@ -2027,7 +2025,8 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k2, %k2
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $14, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
@@ -2035,69 +2034,68 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
 ; AVX512BW-NEXT:    vmovdqa32 320(%rsi), %zmm7 {%k2} {z}
 ; AVX512BW-NEXT:    kshiftrq $21, %k0, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k2, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrq $22, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $13, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrq $23, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $10, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $8, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrq $24, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrq $25, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 8-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftlw $1, %k3, %k3
@@ -2106,29 +2104,30 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k1, %k3, %k1
 ; AVX512BW-NEXT:    vmovdqa32 256(%rsi), %zmm8 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrq $16, %k0, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $13, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k3, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrq $17, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrq $18, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k3, %k6
@@ -2137,20 +2136,19 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrq $19, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $6, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
@@ -2175,54 +2173,55 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    vmovdqa32 192(%rsi), %zmm9 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrq $11, %k0, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k2
-; AVX512BW-NEXT:    kshiftrq $10, %k0, %k3
-; AVX512BW-NEXT:    kmovq %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 8-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kshiftrq $10, %k0, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k3
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k3, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrq $12, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $10, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $9, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrq $13, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $8, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $7, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $6, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovq %k4, %k5
 ; AVX512BW-NEXT:    kshiftrq $14, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $5, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $4, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
@@ -2230,6 +2229,7 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $3, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovq %k7, %k4
 ; AVX512BW-NEXT:    kshiftrq $15, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
@@ -2290,19 +2290,19 @@ define void @mask_replication_factor3_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $5, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrq $9, %k0, %k0
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k2, %k0
 ; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 8-byte Reload
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k2
 ; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
@@ -3584,12 +3584,13 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ;
 ; AVX512BW-LABEL: mask_replication_factor5_vf32:
 ; AVX512BW:       # %bb.0:
-; AVX512BW-NEXT:    kmovd (%rdi), %k5
-; AVX512BW-NEXT:    kshiftrd $1, %k5, %k1
+; AVX512BW-NEXT:    kmovd (%rdi), %k0
+; AVX512BW-NEXT:    kshiftrd $1, %k0, %k1
 ; AVX512BW-NEXT:    movw $-3, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k6
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kmovw (%rdi), %k2
-; AVX512BW-NEXT:    kandw %k6, %k2, %k3
+; AVX512BW-NEXT:    kandw %k3, %k2, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
@@ -3613,21 +3614,23 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k2, %k3, %k2
 ; AVX512BW-NEXT:    movw $-33, %ax
 ; AVX512BW-NEXT:    kmovd %eax, %k3
-; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovq %k3, %k5
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-65, %ax
 ; AVX512BW-NEXT:    kmovd %eax, %k3
-; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovq %k3, %k6
 ; AVX512BW-NEXT:    kshiftrw $9, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-129, %ax
 ; AVX512BW-NEXT:    kmovd %eax, %k3
-; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovq %k3, %k7
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftrw $8, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-257, %ax # imm = 0xFEFF
@@ -3637,16 +3640,16 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $7, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-513, %ax # imm = 0xFDFF
-; AVX512BW-NEXT:    kmovd %eax, %k7
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
-; AVX512BW-NEXT:    kmovw %k7, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k2, %k1
 ; AVX512BW-NEXT:    movw $-1025, %ax # imm = 0xFBFF
 ; AVX512BW-NEXT:    kmovd %eax, %k2
 ; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k3
-; AVX512BW-NEXT:    kshiftrd $2, %k5, %k1
+; AVX512BW-NEXT:    kshiftrd $2, %k0, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k2
 ; AVX512BW-NEXT:    kshiftrw $5, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
@@ -3676,238 +3679,232 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k1, %k2, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrd $3, %k5, %k2
+; AVX512BW-NEXT:    kshiftrd $3, %k0, %k2
 ; AVX512BW-NEXT:    kmovd %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 (%rsi), %zmm0 {%k1} {z}
-; AVX512BW-NEXT:    kshiftrd $29, %k5, %k1
+; AVX512BW-NEXT:    kshiftrd $29, %k0, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k2
-; AVX512BW-NEXT:    kshiftrd $28, %k5, %k1
-; AVX512BW-NEXT:    kmovd %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kandw %k6, %k1, %k3
-; AVX512BW-NEXT:    kmovw %k6, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kshiftrd $28, %k0, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k3
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $13, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $10, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k3, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrd $30, %k5, %k3
+; AVX512BW-NEXT:    kmovq %k6, %k5
+; AVX512BW-NEXT:    kmovw %k6, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrd $30, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kandw %k7, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $8, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $7, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $6, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $5, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrd $31, %k5, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrd $31, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k4
 ; AVX512BW-NEXT:    kshiftrw $4, %k4, %k7
 ; AVX512BW-NEXT:    korw %k7, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $3, %k4, %k7
 ; AVX512BW-NEXT:    korw %k7, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $2, %k4, %k7
 ; AVX512BW-NEXT:    korw %k7, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $14, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
 ; AVX512BW-NEXT:    korw %k4, %k2, %k2
 ; AVX512BW-NEXT:    vmovdqa32 576(%rsi), %zmm1 {%k2} {z}
-; AVX512BW-NEXT:    kshiftrd $25, %k5, %k2
-; AVX512BW-NEXT:    kmovd %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kandw %k6, %k2, %k3
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k2, %k7
+; AVX512BW-NEXT:    kshiftrd $25, %k0, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k4
+; AVX512BW-NEXT:    kshiftrw $14, %k4, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
-; AVX512BW-NEXT:    kshiftrd $26, %k5, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
+; AVX512BW-NEXT:    kshiftrd $26, %k0, %k7
 ; AVX512BW-NEXT:    kshiftlw $15, %k7, %k7
 ; AVX512BW-NEXT:    kshiftrw $13, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $10, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
-; AVX512BW-NEXT:    kshiftrd $27, %k5, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftrd $27, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $8, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k3, %k3
-; AVX512BW-NEXT:    kshiftlw $14, %k0, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k3, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 512(%rsi), %zmm2 {%k1} {z}
-; AVX512BW-NEXT:    kshiftrd $22, %k5, %k0
-; AVX512BW-NEXT:    kmovd %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k6
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k7
+; AVX512BW-NEXT:    kshiftrd $22, %k0, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k3
+; AVX512BW-NEXT:    kshiftrw $14, %k3, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k6, %k6
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k6, %k6
+; AVX512BW-NEXT:    kshiftrw $13, %k3, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k6, %k6
-; AVX512BW-NEXT:    kshiftrd $23, %k5, %k7
-; AVX512BW-NEXT:    kmovq %k5, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k6, %k6
+; AVX512BW-NEXT:    kshiftrd $23, %k0, %k7
 ; AVX512BW-NEXT:    kshiftlw $15, %k7, %k7
 ; AVX512BW-NEXT:    kshiftrw $12, %k7, %k5
 ; AVX512BW-NEXT:    korw %k5, %k6, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $11, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $10, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $9, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $8, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k2, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrd $24, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kshiftrw $2, %k7, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $2, %k4, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k4, %k5, %k5
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 4-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k5, %k2
 ; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
-; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    korw %k4, %k2, %k2
 ; AVX512BW-NEXT:    vmovdqa32 448(%rsi), %zmm3 {%k2} {z}
 ; AVX512BW-NEXT:    kshiftrd $19, %k0, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k7, %k2, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
-; AVX512BW-NEXT:    kmovw %k6, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $14, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrd $20, %k0, %k5
 ; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $11, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $10, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
@@ -3922,34 +3919,34 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $7, %k5, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrd $21, %k0, %k5
 ; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $6, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kandw %k3, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $5, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $4, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $3, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $2, %k5, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k4, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 384(%rsi), %zmm4 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrd $16, %k0, %k1
@@ -3969,58 +3966,57 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k3, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrd $17, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $10, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrd $18, %k0, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k4
 ; AVX512BW-NEXT:    kshiftrw $5, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k4, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 320(%rsi), %zmm5 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrd $13, %k0, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrd $12, %k0, %k3
-; AVX512BW-NEXT:    kmovd %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k3, %k2
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k4
@@ -4035,8 +4031,8 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k7, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $11, %k1, %k4
 ; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $10, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k2, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
@@ -4045,20 +4041,20 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $9, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
@@ -4067,8 +4063,8 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k4
 ; AVX512BW-NEXT:    kshiftrw $4, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
@@ -4084,11 +4080,9 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 256(%rsi), %zmm6 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrd $9, %k0, %k2
-; AVX512BW-NEXT:    kmovd %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k2, %k4
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kandw %k6, %k4, %k4
@@ -4096,92 +4090,90 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $13, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $12, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kandw %k7, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $11, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $10, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $9, %k5, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrd $11, %k0, %k5
 ; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $8, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $7, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $6, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $5, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $4, %k5, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
-; AVX512BW-NEXT:    kandw %k3, %k4, %k4
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $15, %k7, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k5
 ; AVX512BW-NEXT:    kshiftrw $3, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $2, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k4, %k4
-; AVX512BW-NEXT:    kshiftlw $14, %k7, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
+; AVX512BW-NEXT:    kshiftlw $14, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k4, %k3
 ; AVX512BW-NEXT:    kshiftlw $1, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $1, %k3, %k3
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
 ; AVX512BW-NEXT:    vmovdqa32 192(%rsi), %zmm7 {%k3} {z}
 ; AVX512BW-NEXT:    kshiftrd $6, %k0, %k4
-; AVX512BW-NEXT:    kmovd %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k4, %k5
-; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
-; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k4, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k4, %k3
+; AVX512BW-NEXT:    kshiftrw $14, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $13, %k4, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $13, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrd $7, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $10, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $9, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $8, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
@@ -4198,20 +4190,20 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kandw %k2, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $2, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 4-byte Reload
 ; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k5, %k2
 ; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
@@ -4242,14 +4234,16 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
@@ -4274,13 +4268,11 @@ define void @mask_replication_factor5_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
+; AVX512BW-NEXT:    kshiftlw $14, %k4, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    korw %k1, %k0, %k1
+; AVX512BW-NEXT:    korw %k3, %k0, %k1
 ; AVX512BW-NEXT:    vmovdqa32 64(%rsi), %zmm9 {%k1} {z}
 ; AVX512BW-NEXT:    vmovdqa64 %zmm9, 64(%rdx)
 ; AVX512BW-NEXT:    vmovdqa64 %zmm8, 128(%rdx)
@@ -4511,1317 +4503,1323 @@ define void @mask_replication_factor5_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ;
 ; AVX512BW-LABEL: mask_replication_factor5_vf64:
 ; AVX512BW:       # %bb.0:
-; AVX512BW-NEXT:    kmovq (%rdi), %k5
-; AVX512BW-NEXT:    kshiftrq $1, %k5, %k0
+; AVX512BW-NEXT:    kmovq (%rdi), %k1
+; AVX512BW-NEXT:    kshiftrq $1, %k1, %k0
 ; AVX512BW-NEXT:    movw $-3, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovd %eax, %k4
 ; AVX512BW-NEXT:    kmovw (%rdi), %k2
-; AVX512BW-NEXT:    kandw %k1, %k2, %k3
+; AVX512BW-NEXT:    kandw %k4, %k2, %k3
+; AVX512BW-NEXT:    kmovq %k4, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $14, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
 ; AVX512BW-NEXT:    movw $-5, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovd %eax, %k5
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $13, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
 ; AVX512BW-NEXT:    movw $-9, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovd %eax, %k4
+; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
 ; AVX512BW-NEXT:    movw $-17, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovd %eax, %k4
+; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k3, %k2
 ; AVX512BW-NEXT:    movw $-33, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-65, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-129, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-257, %ax # imm = 0xFEFF
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-513, %ax # imm = 0xFDFF
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k2, %k0
 ; AVX512BW-NEXT:    movw $-1025, %ax # imm = 0xFBFF
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k0, %k3
-; AVX512BW-NEXT:    kshiftrq $2, %k5, %k0
+; AVX512BW-NEXT:    kmovd %eax, %k2
+; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k2, %k0, %k3
+; AVX512BW-NEXT:    kshiftrq $2, %k1, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k2
 ; AVX512BW-NEXT:    kshiftrw $5, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
 ; AVX512BW-NEXT:    movw $-2049, %ax # imm = 0xF7FF
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovd %eax, %k4
+; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $4, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
 ; AVX512BW-NEXT:    movw $-4097, %ax # imm = 0xEFFF
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovd %eax, %k4
+; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $3, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k7
 ; AVX512BW-NEXT:    movw $-8193, %ax # imm = 0xDFFF
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k7, %k7
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k7, %k7
 ; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k7, %k7
 ; AVX512BW-NEXT:    movw $-16385, %ax # imm = 0xBFFF
-; AVX512BW-NEXT:    kmovd %eax, %k6
-; AVX512BW-NEXT:    kandw %k6, %k7, %k7
-; AVX512BW-NEXT:    kmovw %k6, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovd %eax, %k2
+; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k2, %k7, %k7
 ; AVX512BW-NEXT:    kshiftlw $14, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k7, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $3, %k5, %k7
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k2
+; AVX512BW-NEXT:    kshiftrq $3, %k1, %k7
 ; AVX512BW-NEXT:    kshiftlw $15, %k7, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 (%rsi), %zmm0 {%k1} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k7, %k1
+; AVX512BW-NEXT:    korw %k0, %k2, %k2
+; AVX512BW-NEXT:    vmovdqa32 (%rsi), %zmm0 {%k2} {z}
+; AVX512BW-NEXT:    kandw %k6, %k7, %k2
+; AVX512BW-NEXT:    kmovq %k6, %k4
+; AVX512BW-NEXT:    kmovw %k6, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $4, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k7
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $4, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $5, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $6, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $5, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $6, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k7
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k6
 ; AVX512BW-NEXT:    vmovdqa32 64(%rsi), %zmm1 {%k6} {z}
-; AVX512BW-NEXT:    kandw %k2, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k7, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k7, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $7, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k7, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k7, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
+; AVX512BW-NEXT:    kmovq %k3, %k4
+; AVX512BW-NEXT:    kshiftrq $7, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $8, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $8, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $9, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $9, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 128(%rsi), %zmm2 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $10, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $10, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $11, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
+; AVX512BW-NEXT:    kmovq %k3, %k4
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $11, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $12, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $12, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k6
 ; AVX512BW-NEXT:    vmovdqa32 192(%rsi), %zmm3 {%k6} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrq $13, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $14, %k1, %k6
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrq $13, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $14, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw %k5, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $14, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $14, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $15, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $15, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    korw %k6, %k0, %k1
-; AVX512BW-NEXT:    vmovdqa32 256(%rsi), %zmm4 {%k1} {z}
-; AVX512BW-NEXT:    kshiftrq $16, %k5, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
+; AVX512BW-NEXT:    korw %k6, %k0, %k2
+; AVX512BW-NEXT:    vmovdqa32 256(%rsi), %zmm4 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrq $16, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $17, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $17, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $18, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $18, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $19, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $19, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 320(%rsi), %zmm5 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $20, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $21, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $20, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $22, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $21, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $22, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 384(%rsi), %zmm6 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $23, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $24, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $25, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $23, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $24, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $25, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 448(%rsi), %zmm7 {%k7} {z}
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $26, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $27, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $26, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $27, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $28, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $28, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k6
 ; AVX512BW-NEXT:    vmovdqa32 512(%rsi), %zmm8 {%k6} {z}
-; AVX512BW-NEXT:    kandw %k2, %k1, %k0
-; AVX512BW-NEXT:    kshiftrq $29, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $14, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $30, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $31, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    korw %k6, %k0, %k1
-; AVX512BW-NEXT:    vmovdqa32 576(%rsi), %zmm9 {%k1} {z}
-; AVX512BW-NEXT:    kshiftrq $32, %k5, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $33, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $34, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $35, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k7
-; AVX512BW-NEXT:    vmovdqa32 640(%rsi), %zmm10 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $36, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrq $29, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $30, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $37, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $38, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k7
-; AVX512BW-NEXT:    vmovdqa32 704(%rsi), %zmm11 {%k7} {z}
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $39, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $40, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $41, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $31, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
+; AVX512BW-NEXT:    korw %k6, %k0, %k2
+; AVX512BW-NEXT:    vmovdqa32 576(%rsi), %zmm9 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrq $32, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $33, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $34, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $35, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k7
+; AVX512BW-NEXT:    vmovdqa32 640(%rsi), %zmm10 {%k7} {z}
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $36, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $37, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $38, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k7
+; AVX512BW-NEXT:    vmovdqa32 704(%rsi), %zmm11 {%k7} {z}
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $39, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $40, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovq %k5, %k3
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $41, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 768(%rsi), %zmm12 {%k7} {z}
-; AVX512BW-NEXT:    kandw %k3, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $42, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $43, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
+; AVX512BW-NEXT:    kandw %k4, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $42, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $44, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $43, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $44, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k6
 ; AVX512BW-NEXT:    vmovdqa32 832(%rsi), %zmm13 {%k6} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrq $45, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $14, %k1, %k6
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrq $45, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $46, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $47, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $46, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $47, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
+; AVX512BW-NEXT:    korw %k6, %k0, %k2
+; AVX512BW-NEXT:    vmovdqa32 896(%rsi), %zmm14 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrq $48, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $49, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $50, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    korw %k6, %k0, %k1
-; AVX512BW-NEXT:    vmovdqa32 896(%rsi), %zmm14 {%k1} {z}
-; AVX512BW-NEXT:    kshiftrq $48, %k5, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $49, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $50, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $51, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $51, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 960(%rsi), %zmm15 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $52, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $53, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $12, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $52, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $53, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $54, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $54, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 1024(%rsi), %zmm16 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $55, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $55, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $56, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $57, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kshiftrq $56, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $57, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 1088(%rsi), %zmm17 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $58, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $59, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $60, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $58, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $59, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $60, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k6
 ; AVX512BW-NEXT:    vmovdqa32 1152(%rsi), %zmm18 {%k6} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrq $61, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $14, %k1, %k6
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrq $61, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $62, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $63, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k5, %k1
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k4
-; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k5, %k2
+; AVX512BW-NEXT:    kshiftrq $62, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $63, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k2
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k5
+; AVX512BW-NEXT:    korw %k5, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
+; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    korw %k1, %k0, %k1
+; AVX512BW-NEXT:    korw %k2, %k0, %k1
 ; AVX512BW-NEXT:    vmovdqa32 1216(%rsi), %zmm19 {%k1} {z}
 ; AVX512BW-NEXT:    vmovdqa64 %zmm19, 1216(%rdx)
 ; AVX512BW-NEXT:    vmovdqa64 %zmm18, 1152(%rdx)
@@ -6368,82 +6366,85 @@ define void @mask_replication_factor6_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ;
 ; AVX512BW-LABEL: mask_replication_factor6_vf32:
 ; AVX512BW:       # %bb.0:
-; AVX512BW-NEXT:    kmovd (%rdi), %k5
+; AVX512BW-NEXT:    kmovd (%rdi), %k0
 ; AVX512BW-NEXT:    movw $-3, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovd %eax, %k3
 ; AVX512BW-NEXT:    kmovw (%rdi), %k1
-; AVX512BW-NEXT:    kandw %k0, %k1, %k2
+; AVX512BW-NEXT:    kandw %k3, %k1, %k2
+; AVX512BW-NEXT:    kmovq %k3, %k7
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-5, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k0, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $13, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-9, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k0, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $12, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-17, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k7
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
-; AVX512BW-NEXT:    kmovw %k7, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $11, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-33, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k0, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $10, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k2, %k1
 ; AVX512BW-NEXT:    movw $-65, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k0, %k1, %k2
-; AVX512BW-NEXT:    kshiftrd $1, %k5, %k1
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kandw %k3, %k1, %k2
+; AVX512BW-NEXT:    kmovq %k3, %k5
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kshiftrd $1, %k0, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-129, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k0, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovq %k3, %k6
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftrw $8, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-257, %ax # imm = 0xFEFF
-; AVX512BW-NEXT:    kmovd %eax, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k0, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $7, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-513, %ax # imm = 0xFDFF
-; AVX512BW-NEXT:    kmovd %eax, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k0, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $6, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-1025, %ax # imm = 0xFBFF
-; AVX512BW-NEXT:    kmovd %eax, %k6
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw %k6, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $5, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-2049, %ax # imm = 0xF7FF
-; AVX512BW-NEXT:    kmovd %eax, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k0, %k2, %k2
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k2, %k1
 ; AVX512BW-NEXT:    movw $-4097, %ax # imm = 0xEFFF
-; AVX512BW-NEXT:    kmovd %eax, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k0, %k1, %k1
-; AVX512BW-NEXT:    kshiftrd $2, %k5, %k4
+; AVX512BW-NEXT:    kmovd %eax, %k2
+; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kshiftrd $2, %k0, %k4
 ; AVX512BW-NEXT:    kshiftlw $15, %k4, %k3
 ; AVX512BW-NEXT:    kmovd %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
 ; AVX512BW-NEXT:    kshiftrw $3, %k3, %k2
@@ -6465,142 +6466,135 @@ define void @mask_replication_factor6_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 (%rsi), %zmm0 {%k1} {z}
-; AVX512BW-NEXT:    kshiftrd $29, %k5, %k0
-; AVX512BW-NEXT:    kmovd %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k4
+; AVX512BW-NEXT:    kshiftrd $29, %k0, %k2
+; AVX512BW-NEXT:    kandw %k7, %k2, %k1
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k3
+; AVX512BW-NEXT:    kshiftrw $14, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k4
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $13, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k0, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $12, %k3, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
-; AVX512BW-NEXT:    kshiftrd $30, %k5, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kshiftrd $30, %k0, %k4
 ; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $11, %k4, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k4, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k1
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k4, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k1
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k4, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k4, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k4, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kandw %k6, %k1, %k4
-; AVX512BW-NEXT:    kshiftrd $31, %k5, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k4
+; AVX512BW-NEXT:    kshiftrd $31, %k0, %k7
 ; AVX512BW-NEXT:    kshiftlw $15, %k7, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $2, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftlw $14, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftlw $1, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $1, %k4, %k4
 ; AVX512BW-NEXT:    korw %k1, %k4, %k1
 ; AVX512BW-NEXT:    vmovdqa32 704(%rsi), %zmm1 {%k1} {z}
-; AVX512BW-NEXT:    kshiftrd $26, %k5, %k4
-; AVX512BW-NEXT:    kmovd %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; AVX512BW-NEXT:    kshiftrd $26, %k0, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k4, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k4, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kandw %k2, %k6, %k6
-; AVX512BW-NEXT:    kshiftrd $27, %k5, %k7
-; AVX512BW-NEXT:    kmovq %k5, %k2
-; AVX512BW-NEXT:    kmovd %k5, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k6, %k6
+; AVX512BW-NEXT:    kshiftrd $27, %k0, %k7
 ; AVX512BW-NEXT:    kshiftlw $15, %k7, %k7
 ; AVX512BW-NEXT:    kshiftrw $13, %k7, %k5
 ; AVX512BW-NEXT:    korw %k5, %k6, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $12, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $11, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $10, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $9, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $8, %k7, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrd $28, %k2, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrd $28, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k2, %k3
-; AVX512BW-NEXT:    korw %k3, %k5, %k3
-; AVX512BW-NEXT:    kshiftlw $1, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $1, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    korw %k2, %k3, %k2
+; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k5, %k2
+; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    vmovdqa32 640(%rsi), %zmm2 {%k2} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 4-byte Reload
 ; AVX512BW-NEXT:    kshiftrd $24, %k0, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k2, %k3
@@ -6611,15 +6605,16 @@ define void @mask_replication_factor6_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $13, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $12, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $10, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k3, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
@@ -6628,78 +6623,74 @@ define void @mask_replication_factor6_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k3, %k5
 ; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $8, %k3, %k5
 ; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $7, %k3, %k5
 ; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $6, %k3, %k5
 ; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $5, %k3, %k5
 ; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $4, %k3, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kshiftrw $3, %k4, %k3
+; AVX512BW-NEXT:    kshiftrw $3, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $2, %k4, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $2, %k1, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k0, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k4, %k3
 ; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
-; AVX512BW-NEXT:    korw %k4, %k2, %k1
+; AVX512BW-NEXT:    korw %k1, %k2, %k1
 ; AVX512BW-NEXT:    vmovdqa32 576(%rsi), %zmm3 {%k1} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $21, %k7, %k2
-; AVX512BW-NEXT:    kmovd %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k2, %k3
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k2, %k4
+; AVX512BW-NEXT:    kshiftrd $21, %k0, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k2, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k1
+; AVX512BW-NEXT:    kshiftrw $14, %k1, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $13, %k2, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $13, %k1, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $12, %k2, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $12, %k1, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kandw %k6, %k3, %k3
-; AVX512BW-NEXT:    kshiftrd $22, %k7, %k4
+; AVX512BW-NEXT:    kshiftrd $22, %k0, %k4
 ; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $11, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $10, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $8, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $7, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
@@ -6708,7 +6699,7 @@ define void @mask_replication_factor6_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k3, %k4
-; AVX512BW-NEXT:    kshiftrd $23, %k7, %k5
+; AVX512BW-NEXT:    kshiftrd $23, %k0, %k5
 ; AVX512BW-NEXT:    kshiftlw $15, %k5, %k3
 ; AVX512BW-NEXT:    kshiftrw $5, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
@@ -6732,76 +6723,73 @@ define void @mask_replication_factor6_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $1, %k4, %k4
 ; AVX512BW-NEXT:    korw %k3, %k4, %k3
 ; AVX512BW-NEXT:    vmovdqa32 512(%rsi), %zmm4 {%k3} {z}
-; AVX512BW-NEXT:    kmovq %k7, %k4
-; AVX512BW-NEXT:    kshiftrd $18, %k7, %k6
-; AVX512BW-NEXT:    kmovd %k6, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; AVX512BW-NEXT:    kshiftrd $18, %k0, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k6, %k5
-; AVX512BW-NEXT:    kshiftlw $15, %k6, %k3
-; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k4, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k4, %k3
 ; AVX512BW-NEXT:    kshiftrw $14, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrd $19, %k7, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrd $19, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $13, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $10, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $9, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $8, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k2, %k5, %k5
-; AVX512BW-NEXT:    kshiftrd $20, %k4, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrd $20, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k5, %k2
 ; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    korw %k0, %k2, %k1
+; AVX512BW-NEXT:    korw %k1, %k2, %k1
 ; AVX512BW-NEXT:    vmovdqa32 448(%rsi), %zmm5 {%k1} {z}
-; AVX512BW-NEXT:    kmovq %k4, %k0
-; AVX512BW-NEXT:    kshiftrd $16, %k4, %k1
+; AVX512BW-NEXT:    kshiftrd $16, %k0, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
@@ -6819,12 +6807,12 @@ define void @mask_replication_factor6_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $11, %k1, %k5
 ; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $10, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k2, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrd $17, %k0, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $9, %k2, %k5
@@ -6841,264 +6829,257 @@ define void @mask_replication_factor6_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k3, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k3, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k1
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k0, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kshiftlw $14, %k4, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
 ; AVX512BW-NEXT:    korw %k3, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 384(%rsi), %zmm6 {%k1} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $13, %k0, %k3
-; AVX512BW-NEXT:    kmovd %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; AVX512BW-NEXT:    kshiftrd $13, %k0, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k3, %k5
-; AVX512BW-NEXT:    kmovw %k5, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k5, %k3
-; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $13, %k5, %k3
-; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $12, %k5, %k3
-; AVX512BW-NEXT:    korw %k3, %k2, %k2
+; AVX512BW-NEXT:    kandw %k1, %k2, %k1
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k4
+; AVX512BW-NEXT:    kshiftrw $14, %k4, %k3
+; AVX512BW-NEXT:    korw %k3, %k1, %k1
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $13, %k4, %k3
+; AVX512BW-NEXT:    korw %k3, %k1, %k1
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $12, %k4, %k3
+; AVX512BW-NEXT:    korw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrd $14, %k0, %k3
-; AVX512BW-NEXT:    kmovq %k0, %k7
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $11, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k3, %k3
-; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k2, %k3
-; AVX512BW-NEXT:    kshiftrd $15, %k7, %k5
-; AVX512BW-NEXT:    kshiftlw $15, %k5, %k2
-; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k3
+; AVX512BW-NEXT:    kshiftrd $15, %k0, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k5, %k1
+; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $2, %k2, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $2, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k3, %k3
 ; AVX512BW-NEXT:    kshiftlw $14, %k5, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftlw $1, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $1, %k3, %k3
-; AVX512BW-NEXT:    korw %k2, %k3, %k2
-; AVX512BW-NEXT:    vmovdqa32 320(%rsi), %zmm7 {%k2} {z}
-; AVX512BW-NEXT:    kmovq %k7, %k2
-; AVX512BW-NEXT:    kshiftrd $10, %k7, %k0
-; AVX512BW-NEXT:    kmovd %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k0, %k5
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
+; AVX512BW-NEXT:    korw %k1, %k3, %k1
+; AVX512BW-NEXT:    vmovdqa32 320(%rsi), %zmm7 {%k1} {z}
+; AVX512BW-NEXT:    kshiftrd $10, %k0, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k3
+; AVX512BW-NEXT:    kshiftrw $14, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kshiftrd $11, %k7, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrd $11, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $13, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $10, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $9, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $8, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k4, %k5, %k5
-; AVX512BW-NEXT:    kshiftrd $12, %k2, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrd $12, %k0, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k4
-; AVX512BW-NEXT:    korw %k4, %k5, %k4
-; AVX512BW-NEXT:    kshiftlw $1, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $1, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    korw %k1, %k4, %k1
-; AVX512BW-NEXT:    vmovdqa32 256(%rsi), %zmm8 {%k1} {z}
-; AVX512BW-NEXT:    kshiftrd $8, %k2, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $14, %k1, %k5
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k5, %k2
+; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
+; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    vmovdqa32 256(%rsi), %zmm8 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrd $8, %k0, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k4
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $14, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k5
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k5
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
-; AVX512BW-NEXT:    kandw %k0, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k5
 ; AVX512BW-NEXT:    korw %k5, %k4, %k4
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k4, %k4
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k4, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k1
-; AVX512BW-NEXT:    kshiftrd $9, %k2, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k4, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrd $9, %k0, %k4
 ; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $9, %k4, %k5
-; AVX512BW-NEXT:    korw %k5, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k1
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $8, %k4, %k5
-; AVX512BW-NEXT:    korw %k5, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k1
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $7, %k4, %k5
-; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $6, %k4, %k5
-; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $5, %k4, %k5
-; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    korw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $4, %k4, %k4
-; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kshiftrw $3, %k5, %k4
-; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $2, %k5, %k4
-; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
+; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $3, %k3, %k4
+; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $2, %k3, %k4
+; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
+; AVX512BW-NEXT:    korw %k1, %k2, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    korw %k3, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 192(%rsi), %zmm9 {%k1} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $5, %k1, %k2
-; AVX512BW-NEXT:    kmovd %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; AVX512BW-NEXT:    kshiftrd $5, %k0, %k2
 ; AVX512BW-NEXT:    kandw %k6, %k2, %k3
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k7
-; AVX512BW-NEXT:    kshiftrw $14, %k7, %k4
+; AVX512BW-NEXT:    kmovq %k6, %k7
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k1
+; AVX512BW-NEXT:    kshiftrw $14, %k1, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $13, %k7, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $13, %k1, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $12, %k7, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $12, %k1, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
-; AVX512BW-NEXT:    kshiftrd $6, %k1, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kshiftrd $6, %k0, %k4
 ; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $11, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $10, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $8, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $7, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
@@ -7107,7 +7088,7 @@ define void @mask_replication_factor6_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k3, %k4
-; AVX512BW-NEXT:    kshiftrd $7, %k1, %k5
+; AVX512BW-NEXT:    kshiftrd $7, %k0, %k5
 ; AVX512BW-NEXT:    kshiftlw $15, %k5, %k3
 ; AVX512BW-NEXT:    kshiftrw $5, %k3, %k6
 ; AVX512BW-NEXT:    korw %k6, %k4, %k4
@@ -7132,14 +7113,13 @@ define void @mask_replication_factor6_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k3, %k4, %k3
 ; AVX512BW-NEXT:    vmovdqa32 128(%rsi), %zmm10 {%k3} {z}
 ; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 4-byte Reload
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kshiftrw $14, %k4, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k3, %k3
-; AVX512BW-NEXT:    kshiftrd $3, %k1, %k4
+; AVX512BW-NEXT:    kshiftrd $3, %k0, %k4
 ; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $13, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
@@ -7159,41 +7139,42 @@ define void @mask_replication_factor6_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $9, %k4, %k5
 ; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $8, %k4, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
-; AVX512BW-NEXT:    kshiftrd $4, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kshiftrd $4, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k3, %k0
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
 ; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    korw %k7, %k0, %k1
+; AVX512BW-NEXT:    korw %k1, %k0, %k1
 ; AVX512BW-NEXT:    vmovdqa32 64(%rsi), %zmm11 {%k1} {z}
 ; AVX512BW-NEXT:    vmovdqa64 %zmm11, 64(%rdx)
 ; AVX512BW-NEXT:    vmovdqa64 %zmm10, 128(%rdx)
@@ -7460,1562 +7441,1547 @@ define void @mask_replication_factor6_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ;
 ; AVX512BW-LABEL: mask_replication_factor6_vf64:
 ; AVX512BW:       # %bb.0:
-; AVX512BW-NEXT:    kmovq (%rdi), %k5
+; AVX512BW-NEXT:    kmovq (%rdi), %k1
 ; AVX512BW-NEXT:    movw $-3, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovd %eax, %k3
 ; AVX512BW-NEXT:    kmovw (%rdi), %k0
-; AVX512BW-NEXT:    kandw %k1, %k0, %k3
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
-; AVX512BW-NEXT:    kshiftrw $14, %k1, %k0
-; AVX512BW-NEXT:    korw %k0, %k3, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k2
+; AVX512BW-NEXT:    kmovq %k3, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k0, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-5, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k0, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-9, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k0, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-17, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k0, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-33, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
 ; AVX512BW-NEXT:    movw $-65, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $1, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovd %eax, %k2
+; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftrq $1, %k1, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k0, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-129, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $8, %k0, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-257, %ax # imm = 0xFEFF
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k0, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-513, %ax # imm = 0xFDFF
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $6, %k0, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-1025, %ax # imm = 0xFBFF
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $5, %k0, %k3
+; AVX512BW-NEXT:    korw %k3, %k2, %k2
 ; AVX512BW-NEXT:    movw $-2049, %ax # imm = 0xF7FF
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $4, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
+; AVX512BW-NEXT:    movw $-4097, %ax # imm = 0xEFFF
 ; AVX512BW-NEXT:    kmovd %eax, %k2
 ; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    movw $-4097, %ax # imm = 0xEFFF
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k0, %k3
-; AVX512BW-NEXT:    kshiftrq $2, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k0, %k4
+; AVX512BW-NEXT:    kandw %k2, %k0, %k3
+; AVX512BW-NEXT:    kshiftrq $2, %k1, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k2
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k4
 ; AVX512BW-NEXT:    korw %k4, %k3, %k3
 ; AVX512BW-NEXT:    movw $-8193, %ax # imm = 0xDFFF
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
+; AVX512BW-NEXT:    kmovd %eax, %k4
+; AVX512BW-NEXT:    kandw %k4, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k3, %k7
 ; AVX512BW-NEXT:    movw $-16385, %ax # imm = 0xBFFF
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k7, %k7
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k7, %k7
+; AVX512BW-NEXT:    kshiftlw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k7, %k6
 ; AVX512BW-NEXT:    kshiftlw $1, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $1, %k6, %k6
-; AVX512BW-NEXT:    korw %k0, %k6, %k6
+; AVX512BW-NEXT:    korw %k2, %k6, %k6
 ; AVX512BW-NEXT:    vmovdqa32 (%rsi), %zmm0 {%k6} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k5, %k3
-; AVX512BW-NEXT:    kshiftrq $3, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $4, %k3, %k1
-; AVX512BW-NEXT:    kmovq %k3, %k7
-; AVX512BW-NEXT:    kmovq %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 8-byte Spill
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw %k5, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kshiftrw $14, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $3, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $5, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $4, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $5, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 64(%rsi), %zmm1 {%k7} {z}
-; AVX512BW-NEXT:    kandw %k4, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $6, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $6, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $7, %k7, %k6
-; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k0, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 128(%rsi), %zmm2 {%k1} {z}
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $8, %k7, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $9, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftrq $7, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k6, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
+; AVX512BW-NEXT:    korw %k0, %k2, %k2
+; AVX512BW-NEXT:    vmovdqa32 128(%rsi), %zmm2 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrq $8, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kmovq %k3, %k5
+; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $9, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $10, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $10, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 192(%rsi), %zmm3 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $11, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $12, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $13, %k7, %k1
-; AVX512BW-NEXT:    kmovq %k7, %k2
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $11, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $12, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $13, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 256(%rsi), %zmm4 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k2, %k7
-; AVX512BW-NEXT:    kshiftrq $14, %k2, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $12, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $14, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
+; AVX512BW-NEXT:    kmovq %k3, %k5
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $15, %k7, %k6
-; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k0, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 320(%rsi), %zmm5 {%k1} {z}
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $16, %k7, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $17, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftrq $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k6, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
+; AVX512BW-NEXT:    korw %k0, %k2, %k2
+; AVX512BW-NEXT:    vmovdqa32 320(%rsi), %zmm5 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrq $16, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k7, %k4
-; AVX512BW-NEXT:    kshiftrq $18, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $17, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kshiftrq $18, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 384(%rsi), %zmm6 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $19, %k4, %k1
-; AVX512BW-NEXT:    kmovq %k4, %k7
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $19, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $20, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $20, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $21, %k7, %k1
-; AVX512BW-NEXT:    kmovq %k7, %k3
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $21, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 448(%rsi), %zmm7 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k3, %k5
-; AVX512BW-NEXT:    kshiftrq $22, %k3, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $12, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $22, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $23, %k5, %k6
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftrq $23, %k1, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $14, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k0, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 512(%rsi), %zmm8 {%k1} {z}
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $24, %k5, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
+; AVX512BW-NEXT:    korw %k0, %k2, %k2
+; AVX512BW-NEXT:    vmovdqa32 512(%rsi), %zmm8 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrq $24, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $25, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $25, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $26, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $26, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 576(%rsi), %zmm9 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k5, %k7
-; AVX512BW-NEXT:    kshiftrq $27, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $27, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $28, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $28, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $29, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $29, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 640(%rsi), %zmm10 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $30, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $30, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $31, %k7, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftrq $31, %k1, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovq %k4, %k3
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $14, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k0, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 704(%rsi), %zmm11 {%k1} {z}
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $32, %k7, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
+; AVX512BW-NEXT:    korw %k0, %k2, %k2
+; AVX512BW-NEXT:    vmovdqa32 704(%rsi), %zmm11 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrq $32, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $33, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $33, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k7, %k5
-; AVX512BW-NEXT:    kshiftrq $34, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $34, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 768(%rsi), %zmm12 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $35, %k5, %k1
-; AVX512BW-NEXT:    kmovq %k5, %k7
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $36, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovq %k4, %k3
+; AVX512BW-NEXT:    kandw %k4, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $35, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $37, %k7, %k1
-; AVX512BW-NEXT:    kmovq %k7, %k3
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $36, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $37, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 832(%rsi), %zmm13 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k3, %k7
-; AVX512BW-NEXT:    kshiftrq $38, %k3, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
+; AVX512BW-NEXT:    kandw %k3, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $38, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftrq $39, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k6, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
+; AVX512BW-NEXT:    korw %k0, %k2, %k2
+; AVX512BW-NEXT:    vmovdqa32 896(%rsi), %zmm14 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrq $40, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $41, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $39, %k7, %k6
-; AVX512BW-NEXT:    kmovq %k7, %k5
-; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k0, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 896(%rsi), %zmm14 {%k1} {z}
-; AVX512BW-NEXT:    kshiftrq $40, %k5, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $41, %k5, %k1
-; AVX512BW-NEXT:    kmovq %k5, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $42, %k4, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $42, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 960(%rsi), %zmm15 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k4, %k7
-; AVX512BW-NEXT:    kshiftrq $43, %k4, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $44, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $43, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $45, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $44, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $45, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 1024(%rsi), %zmm16 {%k7} {z}
-; AVX512BW-NEXT:    kandw %k5, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $46, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $47, %k5, %k6
-; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k0, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 1088(%rsi), %zmm17 {%k1} {z}
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $48, %k7, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $49, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $46, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k7, %k5
-; AVX512BW-NEXT:    kshiftrq $50, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
-; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftrq $47, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k6, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
+; AVX512BW-NEXT:    korw %k0, %k2, %k2
+; AVX512BW-NEXT:    vmovdqa32 1088(%rsi), %zmm17 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrq $48, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $49, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $50, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
+; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 1152(%rsi), %zmm18 {%k7} {z}
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $51, %k5, %k1
-; AVX512BW-NEXT:    kmovq %k5, %k7
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $52, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $51, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $53, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $52, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k7
-; AVX512BW-NEXT:    vmovdqa32 1216(%rsi), %zmm19 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $54, %k7, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $53, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k7
+; AVX512BW-NEXT:    vmovdqa32 1216(%rsi), %zmm19 {%k7} {z}
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k0, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $54, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $55, %k7, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k2
+; AVX512BW-NEXT:    kshiftrq $55, %k1, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    korw %k7, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftlw $14, %k6, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k0, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 1280(%rsi), %zmm20 {%k1} {z}
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $56, %k5, %k0
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
+; AVX512BW-NEXT:    korw %k0, %k2, %k2
+; AVX512BW-NEXT:    vmovdqa32 1280(%rsi), %zmm20 {%k2} {z}
+; AVX512BW-NEXT:    kshiftrq $56, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k1
+; AVX512BW-NEXT:    kandw %k2, %k0, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k5, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $57, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $57, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $58, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $58, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 1344(%rsi), %zmm21 {%k7} {z}
-; AVX512BW-NEXT:    kandw %k2, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $59, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $59, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $13, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $60, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $60, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $61, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
+; AVX512BW-NEXT:    kshiftrw $2, %k2, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $61, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $14, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 1408(%rsi), %zmm22 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $62, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k5, %k2, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k6, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k6
+; AVX512BW-NEXT:    kshiftrq $62, %k1, %k2
+; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k6
-; AVX512BW-NEXT:    kshiftrq $63, %k5, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
+; AVX512BW-NEXT:    korw %k6, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k6
+; AVX512BW-NEXT:    kshiftrq $63, %k1, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k2, %k1
 ; AVX512BW-NEXT:    korw %k1, %k6, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k2
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $3, %k1, %k5
 ; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k2, %k2
 ; AVX512BW-NEXT:    kshiftrw $2, %k1, %k4
 ; AVX512BW-NEXT:    korw %k4, %k2, %k2
@@ -9689,15 +9655,15 @@ define void @mask_replication_factor7_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kmovd %eax, %k2
 ; AVX512BW-NEXT:    kmovw (%rdi), %k0
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k1
-; AVX512BW-NEXT:    kmovq %k2, %k3
+; AVX512BW-NEXT:    kmovq %k2, %k4
 ; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    movw $-5, %ax
 ; AVX512BW-NEXT:    kmovd %eax, %k2
+; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovq %k2, %k4
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    movw $-9, %ax
@@ -9726,584 +9692,438 @@ define void @mask_replication_factor7_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    movw $-129, %ax
 ; AVX512BW-NEXT:    kmovd %eax, %k1
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
+; AVX512BW-NEXT:    kmovq %k1, %k6
 ; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovd (%rdi), %k6
-; AVX512BW-NEXT:    kshiftrd $1, %k6, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k0, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovd (%rdi), %k2
+; AVX512BW-NEXT:    kshiftrd $1, %k2, %k1
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $8, %k1, %k3
+; AVX512BW-NEXT:    korw %k3, %k0, %k0
 ; AVX512BW-NEXT:    movw $-257, %ax # imm = 0xFEFF
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovq %k2, %k7
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $7, %k0, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovq %k3, %k7
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kshiftrw $7, %k1, %k3
+; AVX512BW-NEXT:    korw %k3, %k0, %k0
 ; AVX512BW-NEXT:    movw $-513, %ax # imm = 0xFDFF
-; AVX512BW-NEXT:    kmovd %eax, %k5
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
-; AVX512BW-NEXT:    kmovw %k5, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $6, %k0, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $6, %k1, %k3
+; AVX512BW-NEXT:    korw %k3, %k0, %k0
 ; AVX512BW-NEXT:    movw $-1025, %ax # imm = 0xFBFF
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $5, %k0, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $5, %k1, %k3
+; AVX512BW-NEXT:    korw %k3, %k0, %k0
 ; AVX512BW-NEXT:    movw $-2049, %ax # imm = 0xF7FF
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $4, %k0, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k1, %k3
+; AVX512BW-NEXT:    korw %k3, %k0, %k0
 ; AVX512BW-NEXT:    movw $-4097, %ax # imm = 0xEFFF
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $3, %k0, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k1, %k3
+; AVX512BW-NEXT:    korw %k3, %k0, %k0
 ; AVX512BW-NEXT:    movw $-8193, %ax # imm = 0xDFFF
-; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $2, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k1, %k0
+; AVX512BW-NEXT:    kmovd %eax, %k3
+; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
+; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    movw $-16385, %ax # imm = 0xBFFF
 ; AVX512BW-NEXT:    kmovd %eax, %k1
 ; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrd $2, %k6, %k2
-; AVX512BW-NEXT:    kmovd %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kshiftlw $14, %k2, %k1
+; AVX512BW-NEXT:    kshiftrd $2, %k2, %k3
+; AVX512BW-NEXT:    kmovd %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; AVX512BW-NEXT:    kshiftlw $14, %k3, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k1
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k1
 ; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    korw %k1, %k0, %k1
 ; AVX512BW-NEXT:    vmovdqa32 (%rsi), %zmm0 {%k1} {z}
-; AVX512BW-NEXT:    kmovq %k6, %k2
-; AVX512BW-NEXT:    kshiftrd $29, %k6, %k1
-; AVX512BW-NEXT:    kmovd %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kandw %k3, %k1, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k4, %k6
-; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kshiftrd $29, %k2, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k5
+; AVX512BW-NEXT:    kshiftrw $14, %k5, %k3
+; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrd $30, %k2, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $13, %k3, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrd $30, %k2, %k1
-; AVX512BW-NEXT:    kmovq %k2, %k4
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k3, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k3, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k3, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $9, %k3, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $8, %k3, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k7, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k5, %k0, %k3
-; AVX512BW-NEXT:    kshiftrd $31, %k4, %k0
-; AVX512BW-NEXT:    kmovd %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $3, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $2, %k1, %k7
-; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $7, %k3, %k3
+; AVX512BW-NEXT:    korw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k4
+; AVX512BW-NEXT:    kshiftrd $31, %k2, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k3
+; AVX512BW-NEXT:    kshiftrw $6, %k3, %k7
+; AVX512BW-NEXT:    korw %k7, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $5, %k3, %k7
+; AVX512BW-NEXT:    korw %k7, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $4, %k3, %k7
+; AVX512BW-NEXT:    korw %k7, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $3, %k3, %k7
+; AVX512BW-NEXT:    korw %k7, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $2, %k3, %k7
+; AVX512BW-NEXT:    korw %k7, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftlw $14, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k3, %k0
+; AVX512BW-NEXT:    korw %k0, %k4, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    korw %k1, %k0, %k1
-; AVX512BW-NEXT:    vmovdqa32 832(%rsi), %zmm1 {%k1} {z}
-; AVX512BW-NEXT:    kshiftrd $27, %k4, %k1
-; AVX512BW-NEXT:    kmovd %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; AVX512BW-NEXT:    korw %k3, %k0, %k3
+; AVX512BW-NEXT:    vmovdqa32 832(%rsi), %zmm1 {%k3} {z}
+; AVX512BW-NEXT:    kshiftrd $27, %k2, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k3
-; AVX512BW-NEXT:    kmovw %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k0, %k4, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k4, %k3
 ; AVX512BW-NEXT:    kshiftrw $14, %k3, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $13, %k3, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k3, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k7
-; AVX512BW-NEXT:    kshiftrd $28, %k4, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k7
+; AVX512BW-NEXT:    kshiftrd $28, %k2, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k7, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kandw %k5, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k6, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kshiftrw $4, %k7, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $4, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k2, %k4
-; AVX512BW-NEXT:    kshiftrw $3, %k7, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $2, %k7, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k5, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k2, %k5
-; AVX512BW-NEXT:    korw %k5, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
+; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    korw %k7, %k0, %k2
-; AVX512BW-NEXT:    vmovdqa32 768(%rsi), %zmm2 {%k2} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $25, %k6, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k2
+; AVX512BW-NEXT:    korw %k5, %k0, %k1
+; AVX512BW-NEXT:    vmovdqa32 768(%rsi), %zmm2 {%k1} {z}
+; AVX512BW-NEXT:    kshiftrd $25, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
+; AVX512BW-NEXT:    kshiftrw $14, %k1, %k0
+; AVX512BW-NEXT:    korw %k0, %k5, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k5
+; AVX512BW-NEXT:    kshiftrd $26, %k2, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $12, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kandw %k3, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $11, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $10, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k2, %k5
-; AVX512BW-NEXT:    kshiftrd $26, %k6, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
+; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k4, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $3, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k5, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kshiftrw $2, %k6, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k3
-; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
-; AVX512BW-NEXT:    korw %k6, %k2, %k1
-; AVX512BW-NEXT:    vmovdqa32 704(%rsi), %zmm3 {%k1} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $23, %k6, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k3
-; AVX512BW-NEXT:    kshiftrd $22, %k6, %k5
-; AVX512BW-NEXT:    kmovd %k5, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k2
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $4, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $3, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k5, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k4, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
+; AVX512BW-NEXT:    korw %k3, %k0, %k3
+; AVX512BW-NEXT:    vmovdqa32 704(%rsi), %zmm3 {%k3} {z}
+; AVX512BW-NEXT:    kshiftrd $23, %k2, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k3
+; AVX512BW-NEXT:    kshiftrd $22, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k4
 ; AVX512BW-NEXT:    kshiftrw $14, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $13, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $12, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $11, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kandw %k7, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $10, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    kandw %k7, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $9, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $8, %k3, %k3
-; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k2, %k2
-; AVX512BW-NEXT:    kshiftrd $24, %k6, %k3
+; AVX512BW-NEXT:    korw %k3, %k4, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k4
+; AVX512BW-NEXT:    kshiftrd $24, %k2, %k3
 ; AVX512BW-NEXT:    kshiftlw $15, %k3, %k5
 ; AVX512BW-NEXT:    kshiftrw $7, %k5, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    korw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $6, %k5, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    korw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $5, %k5, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    korw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $4, %k5, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
+; AVX512BW-NEXT:    korw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $3, %k5, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    korw %k6, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
 ; AVX512BW-NEXT:    kshiftrw $2, %k5, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftlw $14, %k3, %k3
-; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
-; AVX512BW-NEXT:    korw %k0, %k2, %k2
-; AVX512BW-NEXT:    vmovdqa32 640(%rsi), %zmm4 {%k2} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $20, %k3, %k5
-; AVX512BW-NEXT:    kmovd %k5, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k5, %k6
-; AVX512BW-NEXT:    kmovw %k6, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k6, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kandw %k1, %k2, %k5
-; AVX512BW-NEXT:    kshiftrd $21, %k3, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k7, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k5, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k2, %k5
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $15, %k7, %k2
-; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    korw %k3, %k4, %k3
+; AVX512BW-NEXT:    kshiftlw $1, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $1, %k3, %k3
+; AVX512BW-NEXT:    korw %k1, %k3, %k1
+; AVX512BW-NEXT:    vmovdqa32 640(%rsi), %zmm4 {%k1} {z}
+; AVX512BW-NEXT:    kshiftrd $20, %k2, %k3
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $2, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k4, %k5, %k5
-; AVX512BW-NEXT:    kshiftlw $14, %k7, %k1
-; AVX512BW-NEXT:    korw %k1, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 576(%rsi), %zmm5 {%k1} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $18, %k2, %k4
-; AVX512BW-NEXT:    kmovd %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k4, %k5
+; AVX512BW-NEXT:    kandw %k1, %k3, %k4
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k1
+; AVX512BW-NEXT:    kshiftrw $14, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $13, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k5
+; AVX512BW-NEXT:    kshiftrd $21, %k2, %k4
 ; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
-; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k4, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $13, %k4, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $12, %k4, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $11, %k4, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $10, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $9, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $8, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $7, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $6, %k4, %k4
+; AVX512BW-NEXT:    korw %k4, %k5, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k4
+; AVX512BW-NEXT:    kshiftrw $5, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $4, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $3, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $2, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftlw $14, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k5, %k0
+; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
+; AVX512BW-NEXT:    korw %k4, %k0, %k4
+; AVX512BW-NEXT:    vmovdqa32 576(%rsi), %zmm5 {%k4} {z}
+; AVX512BW-NEXT:    kshiftrd $18, %k2, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k0, %k4, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k4, %k0
+; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k6
 ; AVX512BW-NEXT:    kshiftrd $19, %k2, %k5
 ; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $10, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $9, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $8, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $6, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $5, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kandw %k3, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $4, %k5, %k5
 ; AVX512BW-NEXT:    korw %k5, %k6, %k5
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kshiftrw $3, %k7, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $2, %k7, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k0, %k3
-; AVX512BW-NEXT:    korw %k3, %k5, %k3
-; AVX512BW-NEXT:    kshiftlw $1, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $1, %k3, %k3
-; AVX512BW-NEXT:    korw %k7, %k3, %k3
-; AVX512BW-NEXT:    vmovdqa32 512(%rsi), %zmm6 {%k3} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $16, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k3
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $12, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $11, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $10, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $9, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k3, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k3
-; AVX512BW-NEXT:    kshiftrd $17, %k1, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $8, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $7, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $6, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $5, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $4, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $3, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $2, %k0, %k0
-; AVX512BW-NEXT:    korw %k0, %k3, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k2
-; AVX512BW-NEXT:    korw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    korw %k1, %k0, %k1
-; AVX512BW-NEXT:    vmovdqa32 448(%rsi), %zmm7 {%k1} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $13, %k0, %k2
-; AVX512BW-NEXT:    kmovd %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kandw %k6, %k2, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
-; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
-; AVX512BW-NEXT:    kshiftrw $14, %k2, %k3
-; AVX512BW-NEXT:    korw %k3, %k1, %k1
-; AVX512BW-NEXT:    kandw %k7, %k1, %k3
-; AVX512BW-NEXT:    kshiftrd $14, %k0, %k1
-; AVX512BW-NEXT:    kmovq %k0, %k6
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k1, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $12, %k1, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $11, %k1, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k5
-; AVX512BW-NEXT:    korw %k5, %k3, %k3
-; AVX512BW-NEXT:    kandw %k4, %k3, %k3
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k3, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k5
-; AVX512BW-NEXT:    kshiftrd $15, %k6, %k3
-; AVX512BW-NEXT:    kmovq %k6, %k0
-; AVX512BW-NEXT:    kshiftlw $15, %k3, %k1
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k5, %k5
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $2, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
@@ -10313,331 +10133,451 @@ define void @mask_replication_factor7_vf32(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $1, %k3, %k3
 ; AVX512BW-NEXT:    kshiftrw $1, %k3, %k3
 ; AVX512BW-NEXT:    korw %k1, %k3, %k1
-; AVX512BW-NEXT:    vmovdqa32 384(%rsi), %zmm8 {%k1} {z}
-; AVX512BW-NEXT:    kmovq %k0, %k3
-; AVX512BW-NEXT:    kshiftrd $11, %k0, %k0
-; AVX512BW-NEXT:    kmovd %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
+; AVX512BW-NEXT:    vmovdqa32 512(%rsi), %zmm6 {%k1} {z}
+; AVX512BW-NEXT:    kshiftrd $16, %k2, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k3
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $14, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $13, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $12, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $11, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $10, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $9, %k1, %k1
+; AVX512BW-NEXT:    korw %k1, %k3, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k3
+; AVX512BW-NEXT:    kshiftrd $17, %k2, %k1
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $8, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $7, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $6, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $5, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $4, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $3, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k3, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $2, %k1, %k1
+; AVX512BW-NEXT:    korw %k1, %k3, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kshiftlw $14, %k4, %k3
+; AVX512BW-NEXT:    korw %k3, %k1, %k1
+; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
+; AVX512BW-NEXT:    korw %k0, %k1, %k1
+; AVX512BW-NEXT:    vmovdqa32 448(%rsi), %zmm7 {%k1} {z}
+; AVX512BW-NEXT:    kshiftrd $13, %k2, %k3
+; AVX512BW-NEXT:    kandw %k6, %k3, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k4
+; AVX512BW-NEXT:    kshiftrw $14, %k4, %k1
+; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kandw %k7, %k0, %k1
+; AVX512BW-NEXT:    kshiftrd $14, %k2, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k0, %k5
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $12, %k0, %k5
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $11, %k0, %k5
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $10, %k0, %k5
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $9, %k0, %k5
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $8, %k0, %k5
+; AVX512BW-NEXT:    korw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $7, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k5
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
+; AVX512BW-NEXT:    kshiftrd $15, %k2, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
+; AVX512BW-NEXT:    kshiftrw $6, %k1, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $5, %k1, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $4, %k1, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $3, %k1, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $2, %k1, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftlw $14, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k5, %k0
+; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
+; AVX512BW-NEXT:    korw %k1, %k0, %k1
+; AVX512BW-NEXT:    vmovdqa32 384(%rsi), %zmm8 {%k1} {z}
+; AVX512BW-NEXT:    kshiftrd $11, %k2, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k0, %k1, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kmovw %k0, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kandw %k7, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k6
-; AVX512BW-NEXT:    kshiftrd $12, %k3, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k6
+; AVX512BW-NEXT:    kshiftrd $12, %k2, %k5
 ; AVX512BW-NEXT:    kshiftlw $15, %k5, %k5
 ; AVX512BW-NEXT:    kshiftrw $11, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $10, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $9, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $8, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $6, %k5, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $5, %k5, %k5
 ; AVX512BW-NEXT:    korw %k5, %k6, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kshiftrw $4, %k3, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $3, %k3, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k2, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $2, %k3, %k6
-; AVX512BW-NEXT:    kmovq %k3, %k0
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k5, %k2
-; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
-; AVX512BW-NEXT:    korw %k0, %k2, %k2
-; AVX512BW-NEXT:    vmovdqa32 320(%rsi), %zmm9 {%k2} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $9, %k6, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $12, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $11, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $10, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k5
-; AVX512BW-NEXT:    kshiftrd $10, %k6, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $6, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k4, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $3, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k5, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kshiftrw $2, %k4, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kandw %k3, %k2, %k2
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k2, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k4, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 256(%rsi), %zmm10 {%k1} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $7, %k4, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k3
-; AVX512BW-NEXT:    kshiftrd $6, %k4, %k2
-; AVX512BW-NEXT:    kmovd %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $14, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $13, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $12, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $11, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $10, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $9, %k3, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $8, %k3, %k3
-; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrd $8, %k4, %k3
-; AVX512BW-NEXT:    kshiftlw $15, %k3, %k5
-; AVX512BW-NEXT:    kshiftrw $7, %k5, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $6, %k5, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $5, %k5, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $4, %k5, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $3, %k5, %k6
-; AVX512BW-NEXT:    korw %k6, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $2, %k5, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k2, %k2
-; AVX512BW-NEXT:    kshiftlw $14, %k3, %k3
-; AVX512BW-NEXT:    korw %k3, %k2, %k2
-; AVX512BW-NEXT:    kshiftlw $1, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $1, %k2, %k2
-; AVX512BW-NEXT:    korw %k0, %k2, %k2
-; AVX512BW-NEXT:    vmovdqa32 192(%rsi), %zmm11 {%k2} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $4, %k6, %k3
-; AVX512BW-NEXT:    kmovd %k3, {{[-0-9]+}}(%r{{[sb]}}p) # 4-byte Spill
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k3, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k3, %k0
-; AVX512BW-NEXT:    kshiftrw $14, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $13, %k0, %k5
-; AVX512BW-NEXT:    korw %k5, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k2, %k5
-; AVX512BW-NEXT:    kshiftrd $5, %k6, %k2
-; AVX512BW-NEXT:    kshiftlw $15, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $12, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $11, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $10, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $9, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $8, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $7, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k1, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $6, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k5, %k2
-; AVX512BW-NEXT:    kandw %k4, %k2, %k5
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k2
-; AVX512BW-NEXT:    kshiftrw $5, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kandw %k7, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $4, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $3, %k2, %k6
-; AVX512BW-NEXT:    korw %k6, %k5, %k5
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k5, %k5
-; AVX512BW-NEXT:    kshiftrw $2, %k2, %k6
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $4, %k4, %k6
 ; AVX512BW-NEXT:    korw %k6, %k5, %k5
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $3, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $2, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftlw $14, %k3, %k3
+; AVX512BW-NEXT:    korw %k3, %k5, %k3
+; AVX512BW-NEXT:    kshiftlw $1, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $1, %k3, %k3
+; AVX512BW-NEXT:    korw %k4, %k3, %k3
+; AVX512BW-NEXT:    vmovdqa32 320(%rsi), %zmm9 {%k3} {z}
+; AVX512BW-NEXT:    kshiftrd $9, %k2, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k3, %k4
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k3
+; AVX512BW-NEXT:    kshiftrw $14, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $13, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $12, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $11, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $10, %k3, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k5
+; AVX512BW-NEXT:    kshiftrd $10, %k2, %k4
+; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $9, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $8, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $7, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $6, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $5, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $4, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $3, %k4, %k4
+; AVX512BW-NEXT:    korw %k4, %k5, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $2, %k0, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    vmovdqa32 128(%rsi), %zmm12 {%k1} {z}
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kshiftrw $14, %k4, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $13, %k4, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $12, %k4, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $11, %k4, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k2
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftrd $3, %k1, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $10, %k1, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $9, %k1, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $8, %k1, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $7, %k1, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $6, %k1, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $5, %k1, %k4
-; AVX512BW-NEXT:    korw %k4, %k2, %k2
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k2, %k2
-; AVX512BW-NEXT:    kshiftrw $4, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k2, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $3, %k0, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $2, %k0, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 4-byte Reload
-; AVX512BW-NEXT:    kshiftlw $14, %k2, %k2
-; AVX512BW-NEXT:    korw %k2, %k1, %k1
+; AVX512BW-NEXT:    korw %k1, %k4, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
 ; AVX512BW-NEXT:    korw %k0, %k1, %k1
+; AVX512BW-NEXT:    vmovdqa32 256(%rsi), %zmm10 {%k1} {z}
+; AVX512BW-NEXT:    kshiftrd $7, %k2, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
+; AVX512BW-NEXT:    kshiftrd $6, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k4
+; AVX512BW-NEXT:    kshiftrw $14, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $13, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $12, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kandw %k7, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $11, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $10, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $9, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $8, %k1, %k1
+; AVX512BW-NEXT:    korw %k1, %k4, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k4
+; AVX512BW-NEXT:    kshiftrd $8, %k2, %k1
+; AVX512BW-NEXT:    kshiftlw $15, %k1, %k5
+; AVX512BW-NEXT:    kshiftrw $7, %k5, %k6
+; AVX512BW-NEXT:    korw %k6, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $6, %k5, %k6
+; AVX512BW-NEXT:    korw %k6, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $5, %k5, %k6
+; AVX512BW-NEXT:    korw %k6, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $4, %k5, %k6
+; AVX512BW-NEXT:    korw %k6, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $3, %k5, %k6
+; AVX512BW-NEXT:    korw %k6, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $2, %k5, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
+; AVX512BW-NEXT:    korw %k1, %k4, %k1
+; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
+; AVX512BW-NEXT:    korw %k3, %k1, %k1
+; AVX512BW-NEXT:    vmovdqa32 192(%rsi), %zmm11 {%k1} {z}
+; AVX512BW-NEXT:    kshiftrd $4, %k2, %k3
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k3, %k4
+; AVX512BW-NEXT:    kshiftlw $15, %k3, %k1
+; AVX512BW-NEXT:    kshiftrw $14, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $13, %k1, %k5
+; AVX512BW-NEXT:    korw %k5, %k4, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k5
+; AVX512BW-NEXT:    kshiftrd $5, %k2, %k4
+; AVX512BW-NEXT:    kshiftlw $15, %k4, %k4
+; AVX512BW-NEXT:    kshiftrw $12, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $11, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $10, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $9, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $8, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $7, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kandw %k7, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $6, %k4, %k4
+; AVX512BW-NEXT:    korw %k4, %k5, %k4
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k5, %k4, %k5
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k4
+; AVX512BW-NEXT:    kshiftrw $5, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $4, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $3, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftrw $2, %k4, %k6
+; AVX512BW-NEXT:    korw %k6, %k5, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k5, %k5
+; AVX512BW-NEXT:    kshiftlw $14, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k5, %k0
+; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
+; AVX512BW-NEXT:    korw %k4, %k0, %k4
+; AVX512BW-NEXT:    vmovdqa32 128(%rsi), %zmm12 {%k4} {z}
+; AVX512BW-NEXT:    kmovd {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 4-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
+; AVX512BW-NEXT:    kshiftrw $14, %k5, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k5, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $12, %k5, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $11, %k5, %k4
+; AVX512BW-NEXT:    korw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k4
+; AVX512BW-NEXT:    kshiftrd $3, %k2, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $10, %k0, %k2
+; AVX512BW-NEXT:    korw %k2, %k4, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $9, %k0, %k4
+; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $8, %k0, %k4
+; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $7, %k0, %k4
+; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    kandw %k7, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $6, %k0, %k4
+; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $5, %k0, %k4
+; AVX512BW-NEXT:    korw %k4, %k2, %k2
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k2, %k2
+; AVX512BW-NEXT:    kshiftrw $4, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k2, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $3, %k1, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $2, %k1, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $14, %k3, %k2
+; AVX512BW-NEXT:    korw %k2, %k0, %k0
+; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
+; AVX512BW-NEXT:    korw %k1, %k0, %k1
 ; AVX512BW-NEXT:    vmovdqa32 64(%rsi), %zmm13 {%k1} {z}
 ; AVX512BW-NEXT:    vmovdqa64 %zmm13, 64(%rdx)
 ; AVX512BW-NEXT:    vmovdqa64 %zmm12, 128(%rdx)
@@ -10941,18 +10881,18 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-LABEL: mask_replication_factor7_vf64:
 ; AVX512BW:       # %bb.0:
 ; AVX512BW-NEXT:    movw $-3, %ax
-; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovd %eax, %k2
 ; AVX512BW-NEXT:    kmovw (%rdi), %k0
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
+; AVX512BW-NEXT:    kandw %k2, %k0, %k1
+; AVX512BW-NEXT:    kmovq %k2, %k3
+; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    movw $-5, %ax
 ; AVX512BW-NEXT:    kmovd %eax, %k2
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kmovq %k2, %k3
 ; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    movw $-9, %ax
@@ -10983,8 +10923,8 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kmovd %eax, %k1
 ; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq (%rdi), %k4
-; AVX512BW-NEXT:    kshiftrq $1, %k4, %k0
+; AVX512BW-NEXT:    kmovq (%rdi), %k5
+; AVX512BW-NEXT:    kshiftrq $1, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
@@ -11001,9 +10941,9 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    movw $-1025, %ax # imm = 0xFBFF
-; AVX512BW-NEXT:    kmovd %eax, %k5
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
-; AVX512BW-NEXT:    kmovw %k5, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kmovd %eax, %k2
+; AVX512BW-NEXT:    kmovw %k2, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k2
 ; AVX512BW-NEXT:    korw %k2, %k1, %k1
 ; AVX512BW-NEXT:    movw $-2049, %ax # imm = 0xF7FF
@@ -11026,9 +10966,9 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    movw $-16385, %ax # imm = 0xBFFF
 ; AVX512BW-NEXT:    kmovd %eax, %k1
-; AVX512BW-NEXT:    kmovw %k1, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $2, %k4, %k1
+; AVX512BW-NEXT:    kmovq %k1, %k4
+; AVX512BW-NEXT:    kshiftrq $2, %k5, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
@@ -11036,15 +10976,15 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k0, %k6
 ; AVX512BW-NEXT:    vmovdqa32 (%rsi), %zmm0 {%k6} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k0
+; AVX512BW-NEXT:    kandw %k3, %k1, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k7, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $13, %k7, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k7, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
@@ -11053,168 +10993,167 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq %k4, %k7
-; AVX512BW-NEXT:    kmovq %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 8-byte Spill
-; AVX512BW-NEXT:    kshiftrq $3, %k4, %k0
+; AVX512BW-NEXT:    kshiftrq $3, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $4, %k7, %k6
+; AVX512BW-NEXT:    kshiftrq $4, %k5, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
+; AVX512BW-NEXT:    kmovq %k4, %k3
+; AVX512BW-NEXT:    kmovw %k4, {{[-0-9]+}}(%r{{[sb]}}p) # 2-byte Spill
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
 ; AVX512BW-NEXT:    korw %k0, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 64(%rsi), %zmm1 {%k1} {z}
-; AVX512BW-NEXT:    kandw %k2, %k6, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k6, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $5, %k7, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $5, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k6
-; AVX512BW-NEXT:    kshiftrq $6, %k7, %k0
+; AVX512BW-NEXT:    kshiftrq $6, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kandw %k5, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $4, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kandw %k3, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $14, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $1, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $1, %k6, %k6
 ; AVX512BW-NEXT:    korw %k1, %k6, %k1
 ; AVX512BW-NEXT:    vmovdqa32 128(%rsi), %zmm2 {%k1} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $7, %k4, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $7, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $8, %k4, %k0
-; AVX512BW-NEXT:    kmovq %k4, %k5
+; AVX512BW-NEXT:    kshiftrq $8, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
@@ -11227,23 +11166,22 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 192(%rsi), %zmm3 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
+; AVX512BW-NEXT:    kandw %k3, %k1, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $10, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
@@ -11252,22 +11190,22 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
@@ -11275,14 +11213,14 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrq $11, %k5, %k6
-; AVX512BW-NEXT:    kmovq %k5, %k4
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
@@ -11293,38 +11231,37 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k1, %k6, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k1
-; AVX512BW-NEXT:    kmovq %k4, %k7
-; AVX512BW-NEXT:    kshiftrq $12, %k4, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $12, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
@@ -11333,59 +11270,59 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k6
-; AVX512BW-NEXT:    kshiftrq $13, %k7, %k0
+; AVX512BW-NEXT:    kshiftrq $13, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k6, %k6
+; AVX512BW-NEXT:    kandw %k4, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kandw %k5, %k6, %k6
+; AVX512BW-NEXT:    kandw %k3, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $14, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $1, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $1, %k6, %k6
 ; AVX512BW-NEXT:    korw %k1, %k6, %k6
 ; AVX512BW-NEXT:    vmovdqa32 320(%rsi), %zmm5 {%k6} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 8-byte Reload
 ; AVX512BW-NEXT:    kshiftrq $14, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k6
 ; AVX512BW-NEXT:    kshiftrq $15, %k5, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k0
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k7
@@ -11398,16 +11335,16 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k3, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k6, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
@@ -11424,53 +11361,51 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrq $17, %k5, %k0
-; AVX512BW-NEXT:    kmovq %k5, %k7
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $18, %k7, %k1
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $18, %k5, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
@@ -11478,183 +11413,183 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 448(%rsi), %zmm7 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $19, %k7, %k0
+; AVX512BW-NEXT:    kshiftrq $19, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $20, %k7, %k6
+; AVX512BW-NEXT:    kshiftrq $20, %k5, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
 ; AVX512BW-NEXT:    korw %k0, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 512(%rsi), %zmm8 {%k1} {z}
-; AVX512BW-NEXT:    kandw %k5, %k6, %k1
+; AVX512BW-NEXT:    kandw %k4, %k6, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $21, %k7, %k0
+; AVX512BW-NEXT:    kshiftrq $21, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k6
-; AVX512BW-NEXT:    kshiftrq $22, %k7, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k0, %k6
+; AVX512BW-NEXT:    kshiftrq $22, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $4, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $14, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $1, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $1, %k6, %k6
 ; AVX512BW-NEXT:    korw %k1, %k6, %k1
 ; AVX512BW-NEXT:    vmovdqa32 576(%rsi), %zmm9 {%k1} {z}
-; AVX512BW-NEXT:    kandw %k5, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $23, %k7, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $23, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $24, %k7, %k0
+; AVX512BW-NEXT:    kshiftrq $24, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
@@ -11663,67 +11598,65 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $25, %k2, %k1
+; AVX512BW-NEXT:    kshiftrq $25, %k5, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 640(%rsi), %zmm10 {%k7} {z}
-; AVX512BW-NEXT:    kandw %k5, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
+; AVX512BW-NEXT:    korw %k1, %k0, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k0
-; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
-; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $10, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq %k2, %k7
-; AVX512BW-NEXT:    kshiftrq $26, %k2, %k0
+; AVX512BW-NEXT:    kshiftrq $26, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $27, %k7, %k6
+; AVX512BW-NEXT:    kandw %k3, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $27, %k5, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
@@ -11734,88 +11667,87 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k1, %k6, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $28, %k7, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $28, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k6
-; AVX512BW-NEXT:    kshiftrq $29, %k7, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k6
+; AVX512BW-NEXT:    kshiftrq $29, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kandw %k5, %k6, %k6
+; AVX512BW-NEXT:    kandw %k2, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kmovq %k3, %k2
 ; AVX512BW-NEXT:    kandw %k3, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $14, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $1, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $1, %k6, %k6
 ; AVX512BW-NEXT:    korw %k1, %k6, %k6
 ; AVX512BW-NEXT:    vmovdqa32 768(%rsi), %zmm12 {%k6} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 8-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrq $30, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
@@ -11844,11 +11776,11 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kandw %k3, %k6, %k6
+; AVX512BW-NEXT:    kandw %k2, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k6, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
@@ -11856,63 +11788,61 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k0, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 832(%rsi), %zmm13 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrq $32, %k5, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrq $33, %k5, %k0
-; AVX512BW-NEXT:    kmovq %k5, %k7
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
-; AVX512BW-NEXT:    kmovq %k7, %k3
-; AVX512BW-NEXT:    kshiftrq $34, %k7, %k1
+; AVX512BW-NEXT:    kandw %k7, %k0, %k0
+; AVX512BW-NEXT:    kshiftrq $34, %k5, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
@@ -11920,45 +11850,43 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 896(%rsi), %zmm14 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
+; AVX512BW-NEXT:    kandw %k2, %k1, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $35, %k3, %k0
-; AVX512BW-NEXT:    kmovq %k3, %k7
+; AVX512BW-NEXT:    kandw %k4, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $35, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
@@ -11967,7 +11895,7 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $36, %k7, %k6
+; AVX512BW-NEXT:    kshiftrq $36, %k5, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
@@ -11991,37 +11919,37 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $37, %k7, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $37, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovq %k3, %k4
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k5, %k0, %k6
-; AVX512BW-NEXT:    kshiftrq $38, %k7, %k0
-; AVX512BW-NEXT:    kmovq %k7, %k5
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k6
+; AVX512BW-NEXT:    kshiftrq $38, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
@@ -12029,8 +11957,8 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k3, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $4, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
@@ -12045,74 +11973,71 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $1, %k6, %k6
 ; AVX512BW-NEXT:    korw %k1, %k6, %k1
 ; AVX512BW-NEXT:    vmovdqa32 1024(%rsi), %zmm16 {%k1} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq %k5, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrq $39, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $40, %k7, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $40, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $41, %k4, %k1
+; AVX512BW-NEXT:    kshiftrq $41, %k5, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 1088(%rsi), %zmm17 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
+; AVX512BW-NEXT:    kandw %k3, %k1, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
@@ -12123,126 +12048,123 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $10, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $42, %k4, %k0
-; AVX512BW-NEXT:    kmovq %k4, %k3
+; AVX512BW-NEXT:    kshiftrq $42, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $43, %k3, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $43, %k5, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
 ; AVX512BW-NEXT:    korw %k0, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 1152(%rsi), %zmm18 {%k1} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k6, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k6, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq %k3, %k7
-; AVX512BW-NEXT:    kshiftrq $44, %k3, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $44, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k4, %k0, %k6
-; AVX512BW-NEXT:    kshiftrq $45, %k7, %k0
+; AVX512BW-NEXT:    kandw %k2, %k0, %k6
+; AVX512BW-NEXT:    kshiftrq $45, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k7, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $14, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftlw $1, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $1, %k6, %k6
 ; AVX512BW-NEXT:    korw %k1, %k6, %k6
 ; AVX512BW-NEXT:    vmovdqa32 1216(%rsi), %zmm19 {%k6} {z}
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 8-byte Reload
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrq $46, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
@@ -12270,33 +12192,34 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k6
-; AVX512BW-NEXT:    kshiftrq $47, %k5, %k1
-; AVX512BW-NEXT:    kshiftlw $15, %k1, %k0
-; AVX512BW-NEXT:    kshiftrw $6, %k0, %k7
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k6
+; AVX512BW-NEXT:    kshiftrq $47, %k5, %k0
+; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
+; AVX512BW-NEXT:    kshiftrw $6, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k3, %k6, %k6
-; AVX512BW-NEXT:    kshiftrw $5, %k0, %k7
+; AVX512BW-NEXT:    kshiftrw $5, %k1, %k7
+; AVX512BW-NEXT:    korw %k7, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k6, %k6
+; AVX512BW-NEXT:    kshiftrw $4, %k1, %k7
+; AVX512BW-NEXT:    korw %k7, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k6, %k6
+; AVX512BW-NEXT:    kshiftrw $3, %k1, %k7
+; AVX512BW-NEXT:    korw %k7, %k6, %k6
+; AVX512BW-NEXT:    kandw %k2, %k6, %k6
+; AVX512BW-NEXT:    kshiftrw $2, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k6, %k6
-; AVX512BW-NEXT:    kshiftrw $4, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
-; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k6, %k6
-; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
-; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k6, %k6
-; AVX512BW-NEXT:    kshiftlw $14, %k1, %k1
-; AVX512BW-NEXT:    korw %k1, %k6, %k1
-; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
-; AVX512BW-NEXT:    korw %k0, %k1, %k1
+; AVX512BW-NEXT:    kshiftlw $14, %k0, %k0
+; AVX512BW-NEXT:    korw %k0, %k6, %k0
+; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
+; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
+; AVX512BW-NEXT:    korw %k1, %k0, %k1
 ; AVX512BW-NEXT:    vmovdqa32 1280(%rsi), %zmm20 {%k1} {z}
 ; AVX512BW-NEXT:    kshiftrq $48, %k5, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
@@ -12304,12 +12227,11 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
@@ -12327,35 +12249,35 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrq $49, %k5, %k0
-; AVX512BW-NEXT:    kmovq %k5, %k7
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kandw %k2, %k0, %k0
-; AVX512BW-NEXT:    kshiftrq $50, %k7, %k1
+; AVX512BW-NEXT:    kshiftrq $50, %k5, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
@@ -12363,25 +12285,23 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 1344(%rsi), %zmm21 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kandw %k4, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $13, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k0
+; AVX512BW-NEXT:    kandw %k3, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $51, %k7, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $51, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
@@ -12393,8 +12313,8 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
@@ -12405,79 +12325,79 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $52, %k7, %k6
+; AVX512BW-NEXT:    kshiftrq $52, %k5, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
 ; AVX512BW-NEXT:    korw %k0, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 1408(%rsi), %zmm22 {%k1} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k6, %k1
+; AVX512BW-NEXT:    kandw %k2, %k6, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kandw %k2, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $53, %k7, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $53, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
+; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k6
-; AVX512BW-NEXT:    kshiftrq $54, %k7, %k0
+; AVX512BW-NEXT:    kshiftrq $54, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $4, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $2, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
@@ -12488,46 +12408,45 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $1, %k6, %k6
 ; AVX512BW-NEXT:    korw %k1, %k6, %k1
 ; AVX512BW-NEXT:    vmovdqa32 1472(%rsi), %zmm23 {%k1} {z}
-; AVX512BW-NEXT:    kandw %k3, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $55, %k7, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $55, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $56, %k7, %k0
+; AVX512BW-NEXT:    kandw %k4, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $56, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k6
 ; AVX512BW-NEXT:    kshiftrw $7, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
@@ -12538,22 +12457,22 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $2, %k6, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kshiftlw $1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $1, %k0, %k0
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 8-byte Reload
-; AVX512BW-NEXT:    kshiftrq $57, %k4, %k1
+; AVX512BW-NEXT:    kshiftrq $57, %k5, %k1
 ; AVX512BW-NEXT:    kshiftlw $15, %k1, %k6
 ; AVX512BW-NEXT:    korw %k6, %k0, %k7
 ; AVX512BW-NEXT:    vmovdqa32 1536(%rsi), %zmm24 {%k7} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k0 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k0, %k1, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
@@ -12564,34 +12483,33 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $12, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k0, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $10, %k6, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k0, %k1
-; AVX512BW-NEXT:    kmovq %k4, %k7
-; AVX512BW-NEXT:    kshiftrq $58, %k4, %k0
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k1
+; AVX512BW-NEXT:    kshiftrq $58, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
-; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
-; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
+; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
@@ -12604,65 +12522,65 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kshiftrq $59, %k7, %k6
+; AVX512BW-NEXT:    kshiftrq $59, %k5, %k6
 ; AVX512BW-NEXT:    kshiftlw $15, %k6, %k0
 ; AVX512BW-NEXT:    kshiftrw $2, %k0, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $14, %k6, %k7
 ; AVX512BW-NEXT:    korw %k7, %k1, %k1
 ; AVX512BW-NEXT:    kshiftlw $1, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $1, %k1, %k1
 ; AVX512BW-NEXT:    korw %k0, %k1, %k1
 ; AVX512BW-NEXT:    vmovdqa32 1600(%rsi), %zmm25 {%k1} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k1, %k6, %k1
+; AVX512BW-NEXT:    kandw %k2, %k6, %k1
 ; AVX512BW-NEXT:    kshiftrw $14, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k5, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k1, %k0, %k1
-; AVX512BW-NEXT:    kmovq {{[-0-9]+}}(%r{{[sb]}}p), %k5 # 8-byte Reload
 ; AVX512BW-NEXT:    kshiftrq $60, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k6, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k3 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k4 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k4, %k0, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k1, %k0, %k6
 ; AVX512BW-NEXT:    kshiftrq $61, %k5, %k0
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k2, %k6, %k6
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kshiftrw $3, %k1, %k7
 ; AVX512BW-NEXT:    korw %k7, %k6, %k6
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k7 # 2-byte Reload
@@ -12677,8 +12595,7 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftrw $1, %k6, %k6
 ; AVX512BW-NEXT:    korw %k1, %k6, %k6
 ; AVX512BW-NEXT:    vmovdqa32 1664(%rsi), %zmm26 {%k6} {z}
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k0, %k0
+; AVX512BW-NEXT:    kandw %k2, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $14, %k1, %k1
 ; AVX512BW-NEXT:    korw %k1, %k0, %k0
 ; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k1 # 2-byte Reload
@@ -12687,28 +12604,27 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k0, %k0
 ; AVX512BW-NEXT:    kshiftrw $13, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $12, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $11, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $10, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $9, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kandw %k3, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $8, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k6 # 2-byte Reload
-; AVX512BW-NEXT:    kandw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $7, %k0, %k0
 ; AVX512BW-NEXT:    korw %k0, %k1, %k0
 ; AVX512BW-NEXT:    kshiftrq $63, %k5, %k5
@@ -12717,12 +12633,14 @@ define void @mask_replication_factor7_vf64(ptr %in.maskvec, ptr %in.vec, ptr %ou
 ; AVX512BW-NEXT:    kshiftlw $15, %k5, %k0
 ; AVX512BW-NEXT:    kshiftrw $6, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k3, %k1, %k1
+; AVX512BW-NEXT:    kandw %k4, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $5, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
-; AVX512BW-NEXT:    kandw %k4, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
+; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $4, %k0, %k6
 ; AVX512BW-NEXT:    korw %k6, %k1, %k1
+; AVX512BW-NEXT:    kmovw {{[-0-9]+}}(%r{{[sb]}}p), %k2 # 2-byte Reload
 ; AVX512BW-NEXT:    kandw %k2, %k1, %k1
 ; AVX512BW-NEXT:    kshiftrw $3, %k0, %k4
 ; AVX512BW-NEXT:    korw %k4, %k1, %k1

@@ -1178,7 +1178,7 @@ define void @store_i64_stride4_vf16(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ;
 ; AVX-LABEL: store_i64_stride4_vf16:
 ; AVX:       # %bb.0:
-; AVX-NEXT:    subq $152, %rsp
+; AVX-NEXT:    subq $120, %rsp
 ; AVX-NEXT:    vmovaps 96(%rdx), %ymm7
 ; AVX-NEXT:    vmovaps 64(%rdx), %ymm5
 ; AVX-NEXT:    vmovaps 32(%rdx), %ymm3
@@ -1221,12 +1221,10 @@ define void @store_i64_stride4_vf16(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ; AVX-NEXT:    vmovaps 112(%rsi), %xmm9
 ; AVX-NEXT:    vmovaps 112(%rdi), %xmm10
 ; AVX-NEXT:    vmovlhps {{.*#+}} xmm11 = xmm10[0],xmm9[0]
-; AVX-NEXT:    vblendps {{.*#+}} ymm0 = ymm11[0,1,2,3],ymm6[4,5,6,7]
-; AVX-NEXT:    vmovups %ymm0, {{[-0-9]+}}(%r{{[sb]}}p) # 32-byte Spill
+; AVX-NEXT:    vblendps {{.*#+}} ymm6 = ymm11[0,1,2,3],ymm6[4,5,6,7]
 ; AVX-NEXT:    vunpckhpd {{.*#+}} ymm7 = ymm7[1],ymm8[1],ymm7[3],ymm8[3]
 ; AVX-NEXT:    vunpckhpd {{.*#+}} xmm8 = xmm10[1],xmm9[1]
-; AVX-NEXT:    vblendps {{.*#+}} ymm0 = ymm8[0,1,2,3],ymm7[4,5,6,7]
-; AVX-NEXT:    vmovups %ymm0, {{[-0-9]+}}(%r{{[sb]}}p) # 32-byte Spill
+; AVX-NEXT:    vblendps {{.*#+}} ymm7 = ymm8[0,1,2,3],ymm7[4,5,6,7]
 ; AVX-NEXT:    vmovaps 64(%rsi), %xmm10
 ; AVX-NEXT:    vmovaps 64(%rdi), %xmm11
 ; AVX-NEXT:    vmovlhps {{.*#+}} xmm0 = xmm11[0],xmm10[0]
@@ -1234,20 +1232,22 @@ define void @store_i64_stride4_vf16(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ; AVX-NEXT:    vmovaps 32(%rcx), %xmm14
 ; AVX-NEXT:    vmovaps 64(%rcx), %xmm12
 ; AVX-NEXT:    vmovaps 64(%rdx), %xmm13
-; AVX-NEXT:    vmovlhps {{.*#+}} xmm9 = xmm13[0],xmm12[0]
-; AVX-NEXT:    vunpckhpd {{.*#+}} xmm10 = xmm11[1],xmm10[1]
+; AVX-NEXT:    vmovlhps {{.*#+}} xmm0 = xmm13[0],xmm12[0]
+; AVX-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
+; AVX-NEXT:    vunpckhpd {{.*#+}} xmm0 = xmm11[1],xmm10[1]
+; AVX-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; AVX-NEXT:    vunpckhpd {{.*#+}} xmm11 = xmm13[1],xmm12[1]
 ; AVX-NEXT:    vmovaps 32(%rsi), %xmm13
 ; AVX-NEXT:    vmovaps 32(%rdi), %xmm15
 ; AVX-NEXT:    vmovlhps {{.*#+}} xmm12 = xmm15[0],xmm13[0]
 ; AVX-NEXT:    vunpckhpd {{.*#+}} xmm13 = xmm15[1],xmm13[1]
 ; AVX-NEXT:    vmovaps 32(%rdx), %xmm15
-; AVX-NEXT:    vmovlhps {{.*#+}} xmm8 = xmm15[0],xmm14[0]
+; AVX-NEXT:    vmovlhps {{.*#+}} xmm10 = xmm15[0],xmm14[0]
 ; AVX-NEXT:    vunpckhpd {{.*#+}} xmm14 = xmm15[1],xmm14[1]
 ; AVX-NEXT:    vmovaps 96(%rsi), %xmm15
 ; AVX-NEXT:    vmovaps 96(%rdi), %xmm0
-; AVX-NEXT:    vmovlhps {{.*#+}} xmm7 = xmm0[0],xmm15[0]
-; AVX-NEXT:    vunpckhpd {{.*#+}} xmm6 = xmm0[1],xmm15[1]
+; AVX-NEXT:    vmovlhps {{.*#+}} xmm9 = xmm0[0],xmm15[0]
+; AVX-NEXT:    vunpckhpd {{.*#+}} xmm8 = xmm0[1],xmm15[1]
 ; AVX-NEXT:    vmovaps 96(%rcx), %xmm15
 ; AVX-NEXT:    vmovaps 96(%rdx), %xmm0
 ; AVX-NEXT:    vmovlhps {{.*#+}} xmm5 = xmm0[0],xmm15[0]
@@ -1265,22 +1265,22 @@ define void @store_i64_stride4_vf16(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ; AVX-NEXT:    vmovaps %xmm1, 16(%r8)
 ; AVX-NEXT:    vmovaps %xmm3, (%r8)
 ; AVX-NEXT:    vmovaps %xmm4, 432(%r8)
-; AVX-NEXT:    vmovaps %xmm6, 416(%r8)
+; AVX-NEXT:    vmovaps %xmm8, 416(%r8)
 ; AVX-NEXT:    vmovaps %xmm5, 400(%r8)
-; AVX-NEXT:    vmovaps %xmm7, 384(%r8)
+; AVX-NEXT:    vmovaps %xmm9, 384(%r8)
 ; AVX-NEXT:    vmovaps %xmm14, 176(%r8)
 ; AVX-NEXT:    vmovaps %xmm13, 160(%r8)
-; AVX-NEXT:    vmovaps %xmm8, 144(%r8)
+; AVX-NEXT:    vmovaps %xmm10, 144(%r8)
 ; AVX-NEXT:    vmovaps %xmm12, 128(%r8)
 ; AVX-NEXT:    vmovaps %xmm11, 304(%r8)
-; AVX-NEXT:    vmovaps %xmm10, 288(%r8)
-; AVX-NEXT:    vmovaps %xmm9, 272(%r8)
+; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
+; AVX-NEXT:    vmovaps %xmm0, 288(%r8)
+; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
+; AVX-NEXT:    vmovaps %xmm0, 272(%r8)
 ; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; AVX-NEXT:    vmovaps %xmm0, 256(%r8)
-; AVX-NEXT:    vmovups {{[-0-9]+}}(%r{{[sb]}}p), %ymm0 # 32-byte Reload
-; AVX-NEXT:    vmovaps %ymm0, 480(%r8)
-; AVX-NEXT:    vmovups {{[-0-9]+}}(%r{{[sb]}}p), %ymm0 # 32-byte Reload
-; AVX-NEXT:    vmovaps %ymm0, 448(%r8)
+; AVX-NEXT:    vmovaps %ymm7, 480(%r8)
+; AVX-NEXT:    vmovaps %ymm6, 448(%r8)
 ; AVX-NEXT:    vmovups {{[-0-9]+}}(%r{{[sb]}}p), %ymm0 # 32-byte Reload
 ; AVX-NEXT:    vmovaps %ymm0, 352(%r8)
 ; AVX-NEXT:    vmovups {{[-0-9]+}}(%r{{[sb]}}p), %ymm0 # 32-byte Reload
@@ -1293,7 +1293,7 @@ define void @store_i64_stride4_vf16(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ; AVX-NEXT:    vmovaps %ymm0, 96(%r8)
 ; AVX-NEXT:    vmovups {{[-0-9]+}}(%r{{[sb]}}p), %ymm0 # 32-byte Reload
 ; AVX-NEXT:    vmovaps %ymm0, 64(%r8)
-; AVX-NEXT:    addq $152, %rsp
+; AVX-NEXT:    addq $120, %rsp
 ; AVX-NEXT:    vzeroupper
 ; AVX-NEXT:    retq
 ;
@@ -2412,7 +2412,7 @@ define void @store_i64_stride4_vf32(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ;
 ; AVX-LABEL: store_i64_stride4_vf32:
 ; AVX:       # %bb.0:
-; AVX-NEXT:    subq $664, %rsp # imm = 0x298
+; AVX-NEXT:    subq $648, %rsp # imm = 0x288
 ; AVX-NEXT:    vmovaps 160(%rdx), %ymm0
 ; AVX-NEXT:    vmovaps 128(%rdx), %ymm2
 ; AVX-NEXT:    vmovaps 96(%rdx), %ymm4
@@ -2507,8 +2507,7 @@ define void @store_i64_stride4_vf32(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ; AVX-NEXT:    vmovups %ymm1, {{[-0-9]+}}(%r{{[sb]}}p) # 32-byte Spill
 ; AVX-NEXT:    vunpckhpd {{.*#+}} ymm0 = ymm2[1],ymm0[1],ymm2[3],ymm0[3]
 ; AVX-NEXT:    vunpckhpd {{.*#+}} xmm1 = xmm4[1],xmm3[1]
-; AVX-NEXT:    vblendps {{.*#+}} ymm0 = ymm1[0,1,2,3],ymm0[4,5,6,7]
-; AVX-NEXT:    vmovups %ymm0, {{[-0-9]+}}(%r{{[sb]}}p) # 32-byte Spill
+; AVX-NEXT:    vblendps {{.*#+}} ymm15 = ymm1[0,1,2,3],ymm0[4,5,6,7]
 ; AVX-NEXT:    vmovaps 128(%rsi), %xmm0
 ; AVX-NEXT:    vmovaps 128(%rdi), %xmm1
 ; AVX-NEXT:    vmovlhps {{.*#+}} xmm2 = xmm1[0],xmm0[0]
@@ -2536,9 +2535,9 @@ define void @store_i64_stride4_vf32(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ; AVX-NEXT:    vmovaps 32(%rsi), %xmm0
 ; AVX-NEXT:    vmovaps 32(%rdi), %xmm1
 ; AVX-NEXT:    vmovlhps {{.*#+}} xmm2 = xmm1[0],xmm0[0]
-; AVX-NEXT:    vmovaps %xmm2, (%rsp) # 16-byte Spill
+; AVX-NEXT:    vmovaps %xmm2, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; AVX-NEXT:    vunpckhpd {{.*#+}} xmm0 = xmm1[1],xmm0[1]
-; AVX-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
+; AVX-NEXT:    vmovaps %xmm0, (%rsp) # 16-byte Spill
 ; AVX-NEXT:    vmovaps 32(%rcx), %xmm0
 ; AVX-NEXT:    vmovaps 32(%rdx), %xmm1
 ; AVX-NEXT:    vmovlhps {{.*#+}} xmm2 = xmm1[0],xmm0[0]
@@ -2561,7 +2560,8 @@ define void @store_i64_stride4_vf32(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ; AVX-NEXT:    vmovaps 160(%rdi), %xmm1
 ; AVX-NEXT:    vmovlhps {{.*#+}} xmm2 = xmm1[0],xmm0[0]
 ; AVX-NEXT:    vmovaps %xmm2, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; AVX-NEXT:    vunpckhpd {{.*#+}} xmm15 = xmm1[1],xmm0[1]
+; AVX-NEXT:    vunpckhpd {{.*#+}} xmm0 = xmm1[1],xmm0[1]
+; AVX-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; AVX-NEXT:    vmovaps 160(%rcx), %xmm0
 ; AVX-NEXT:    vmovaps 160(%rdx), %xmm1
 ; AVX-NEXT:    vmovlhps {{.*#+}} xmm14 = xmm1[0],xmm0[0]
@@ -2603,7 +2603,8 @@ define void @store_i64_stride4_vf32(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ; AVX-NEXT:    vmovaps %xmm10, 912(%r8)
 ; AVX-NEXT:    vmovaps %xmm12, 896(%r8)
 ; AVX-NEXT:    vmovaps %xmm13, 688(%r8)
-; AVX-NEXT:    vmovaps %xmm15, 672(%r8)
+; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
+; AVX-NEXT:    vmovaps %xmm0, 672(%r8)
 ; AVX-NEXT:    vmovaps %xmm14, 656(%r8)
 ; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; AVX-NEXT:    vmovaps %xmm0, 640(%r8)
@@ -2617,11 +2618,11 @@ define void @store_i64_stride4_vf32(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ; AVX-NEXT:    vmovaps %xmm0, 384(%r8)
 ; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; AVX-NEXT:    vmovaps %xmm0, 176(%r8)
-; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
+; AVX-NEXT:    vmovaps (%rsp), %xmm0 # 16-byte Reload
 ; AVX-NEXT:    vmovaps %xmm0, 160(%r8)
 ; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; AVX-NEXT:    vmovaps %xmm0, 144(%r8)
-; AVX-NEXT:    vmovaps (%rsp), %xmm0 # 16-byte Reload
+; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; AVX-NEXT:    vmovaps %xmm0, 128(%r8)
 ; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; AVX-NEXT:    vmovaps %xmm0, 304(%r8)
@@ -2639,8 +2640,7 @@ define void @store_i64_stride4_vf32(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ; AVX-NEXT:    vmovaps %xmm0, 528(%r8)
 ; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; AVX-NEXT:    vmovaps %xmm0, 512(%r8)
-; AVX-NEXT:    vmovups {{[-0-9]+}}(%r{{[sb]}}p), %ymm0 # 32-byte Reload
-; AVX-NEXT:    vmovaps %ymm0, 992(%r8)
+; AVX-NEXT:    vmovaps %ymm15, 992(%r8)
 ; AVX-NEXT:    vmovups {{[-0-9]+}}(%r{{[sb]}}p), %ymm0 # 32-byte Reload
 ; AVX-NEXT:    vmovaps %ymm0, 960(%r8)
 ; AVX-NEXT:    vmovups {{[-0-9]+}}(%r{{[sb]}}p), %ymm0 # 32-byte Reload
@@ -2671,7 +2671,7 @@ define void @store_i64_stride4_vf32(ptr %in.vecptr0, ptr %in.vecptr1, ptr %in.ve
 ; AVX-NEXT:    vmovaps %ymm0, 96(%r8)
 ; AVX-NEXT:    vmovups {{[-0-9]+}}(%r{{[sb]}}p), %ymm0 # 32-byte Reload
 ; AVX-NEXT:    vmovaps %ymm0, 64(%r8)
-; AVX-NEXT:    addq $664, %rsp # imm = 0x298
+; AVX-NEXT:    addq $648, %rsp # imm = 0x288
 ; AVX-NEXT:    vzeroupper
 ; AVX-NEXT:    retq
 ;

@@ -5,7 +5,7 @@
 ; and then immediately reloads %rcx with a value based on the wrong %rax
 
 ; CHECK-NOT: xorl %ecx, %ecx
-; CHECK: leaq 1(%rax), %rcx
+; CHECK: leaq 1(%rax), %r13
 
 
 %struct.planet = type { double, double, double }
