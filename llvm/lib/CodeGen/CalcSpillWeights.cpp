@@ -131,11 +131,11 @@ bool VirtRegAuxInfo::isRematerializable(const LiveInterval &LI,
 bool VirtRegAuxInfo::isLiveAtStatepointVarArg(LiveInterval &LI) {
   return any_of(VRM.getRegInfo().reg_operands(LI.reg()),
                 [](MachineOperand &MO) {
-    MachineInstr *MI = MO.getParent();
-    if (MI->getOpcode() != TargetOpcode::STATEPOINT)
-      return false;
-    return StatepointOpers(MI).getVarIdx() <= MO.getOperandNo();
-  });
+                  MachineInstr *MI = MO.getParent();
+                  if (MI->getOpcode() != TargetOpcode::STATEPOINT)
+                    return false;
+                  return StatepointOpers(MI).getVarIdx() <= MO.getOperandNo();
+                });
 }
 
 void VirtRegAuxInfo::calculateSpillWeightAndHint(LiveInterval &LI) {
@@ -188,8 +188,6 @@ float VirtRegAuxInfo::weightCalcHelper(LiveInterval &LI, SlotIndex *Start,
   // Do not update future local split artifacts.
   bool ShouldUpdateLI = !IsLocalSplitArtifact;
 
-  // We will scale the weight by the register weight of register class.
-  unsigned Factor = MRI.getRegClass(LI.reg())->getLaneMask().getNumLanes();
   if (IsLocalSplitArtifact) {
     MachineBasicBlock *LocalMBB = LIS.getMBBFromIndex(*End);
     assert(LocalMBB == LIS.getMBBFromIndex(*Start) &&
@@ -200,10 +198,10 @@ float VirtRegAuxInfo::weightCalcHelper(LiveInterval &LI, SlotIndex *Start,
     // localLI = COPY other
     // ...
     // other   = COPY localLI
-    TotalWeight += LiveIntervals::getSpillWeight(true, false, &MBFI, LocalMBB,
-                                                 Factor, PSI);
-    TotalWeight += LiveIntervals::getSpillWeight(false, true, &MBFI, LocalMBB,
-                                                 Factor, PSI);
+    TotalWeight +=
+        LiveIntervals::getSpillWeight(true, false, &MBFI, LocalMBB, PSI);
+    TotalWeight +=
+        LiveIntervals::getSpillWeight(false, true, &MBFI, LocalMBB, PSI);
 
     NumInstr += 2;
   }
@@ -273,8 +271,7 @@ float VirtRegAuxInfo::weightCalcHelper(LiveInterval &LI, SlotIndex *Start,
       // Calculate instr weight.
       bool Reads, Writes;
       std::tie(Reads, Writes) = MI->readsWritesVirtualRegister(LI.reg());
-      Weight =
-          LiveIntervals::getSpillWeight(Writes, Reads, &MBFI, *MI, Factor, PSI);
+      Weight = LiveIntervals::getSpillWeight(Writes, Reads, &MBFI, *MI, PSI);
 
       // Give extra weight to what looks like a loop induction variable update.
       if (Writes && IsExiting && LIS.isLiveOutOfMBB(LI, MBB))
@@ -337,6 +334,10 @@ float VirtRegAuxInfo::weightCalcHelper(LiveInterval &LI, SlotIndex *Start,
   // re-materialization.
   if (isRematerializable(LI, LIS, VRM, *MF.getSubtarget().getInstrInfo()))
     TotalWeight *= 0.5F;
+
+  // Finally, we scale the weight by the number of register lanes.
+  unsigned Lanes = MRI.getRegClass(LI.reg())->getLaneMask().getNumLanes();
+  TotalWeight *= Lanes;
 
   if (IsLocalSplitArtifact)
     return normalize(TotalWeight, Start->distance(*End), NumInstr);

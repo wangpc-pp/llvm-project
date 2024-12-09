@@ -117,14 +117,14 @@ public:
   /// If \p PSI is provided the calculation is altered for optsize functions.
   static float getSpillWeight(bool isDef, bool isUse,
                               const MachineBlockFrequencyInfo *MBFI,
-                              const MachineInstr &MI, unsigned Factor = 1,
+                              const MachineInstr &MI,
                               ProfileSummaryInfo *PSI = nullptr);
 
   /// Calculate the spill weight to assign to a single instruction.
   /// If \p PSI is provided the calculation is altered for optsize functions.
   static float getSpillWeight(bool isDef, bool isUse,
                               const MachineBlockFrequencyInfo *MBFI,
-                              const MachineBasicBlock *MBB, unsigned Factor = 1,
+                              const MachineBasicBlock *MBB,
                               ProfileSummaryInfo *PSI = nullptr);
 
   LiveInterval &getInterval(Register Reg) {

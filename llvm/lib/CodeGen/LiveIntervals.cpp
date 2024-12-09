@@ -886,22 +886,22 @@ LiveIntervals::hasPHIKill(const LiveInterval &LI, const VNInfo *VNI) const {
 
 float LiveIntervals::getSpillWeight(bool isDef, bool isUse,
                                     const MachineBlockFrequencyInfo *MBFI,
-                                    const MachineInstr &MI, unsigned Factor,
+                                    const MachineInstr &MI,
                                     ProfileSummaryInfo *PSI) {
-  return getSpillWeight(isDef, isUse, MBFI, MI.getParent(), Factor, PSI);
+  return getSpillWeight(isDef, isUse, MBFI, MI.getParent(), PSI);
 }
 
 float LiveIntervals::getSpillWeight(bool isDef, bool isUse,
                                     const MachineBlockFrequencyInfo *MBFI,
                                     const MachineBasicBlock *MBB,
-                                    unsigned Factor, ProfileSummaryInfo *PSI) {
+                                    ProfileSummaryInfo *PSI) {
   float Weight = isDef + isUse;
   const auto *MF = MBB->getParent();
   // When optimizing for size we only consider the codesize impact of spilling
   // the register, not the runtime impact.
   if (PSI && llvm::shouldOptimizeForSize(MF, PSI, MBFI))
     return Weight;
-  return Weight * MBFI->getBlockFreqRelativeToEntryBlock(MBB) * Factor;
+  return Weight * MBFI->getBlockFreqRelativeToEntryBlock(MBB);
 }
 
 LiveRange::Segment
