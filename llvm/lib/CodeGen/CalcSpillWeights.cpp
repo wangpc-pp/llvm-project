@@ -131,11 +131,11 @@ bool VirtRegAuxInfo::isRematerializable(const LiveInterval &LI,
 bool VirtRegAuxInfo::isLiveAtStatepointVarArg(LiveInterval &LI) {
   return any_of(VRM.getRegInfo().reg_operands(LI.reg()),
                 [](MachineOperand &MO) {
-                  MachineInstr *MI = MO.getParent();
-                  if (MI->getOpcode() != TargetOpcode::STATEPOINT)
-                    return false;
-                  return StatepointOpers(MI).getVarIdx() <= MO.getOperandNo();
-                });
+    MachineInstr *MI = MO.getParent();
+    if (MI->getOpcode() != TargetOpcode::STATEPOINT)
+      return false;
+    return StatepointOpers(MI).getVarIdx() <= MO.getOperandNo();
+  });
 }
 
 void VirtRegAuxInfo::calculateSpillWeightAndHint(LiveInterval &LI) {
