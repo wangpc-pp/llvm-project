@@ -1292,14 +1292,14 @@ define void @store_i32_stride2_vf64(ptr %in.vecptr0, ptr %in.vecptr1, ptr %out.v
 ; AVX-NEXT:    vmovaps 176(%rdi), %xmm15
 ; AVX-NEXT:    vunpckhps {{.*#+}} xmm0 = xmm15[2],xmm14[2],xmm15[3],xmm14[3]
 ; AVX-NEXT:    vunpcklps {{.*#+}} xmm14 = xmm15[0],xmm14[0],xmm15[1],xmm14[1]
-; AVX-NEXT:    vinsertf128 $1, %xmm0, %ymm14, %ymm0
+; AVX-NEXT:    vinsertf128 $1, %xmm0, %ymm14, %ymm1
 ; AVX-NEXT:    vmovaps 208(%rsi), %xmm14
 ; AVX-NEXT:    vmovaps 208(%rdi), %xmm15
-; AVX-NEXT:    vunpckhps {{.*#+}} xmm1 = xmm15[2],xmm14[2],xmm15[3],xmm14[3]
+; AVX-NEXT:    vunpckhps {{.*#+}} xmm0 = xmm15[2],xmm14[2],xmm15[3],xmm14[3]
 ; AVX-NEXT:    vunpcklps {{.*#+}} xmm14 = xmm15[0],xmm14[0],xmm15[1],xmm14[1]
-; AVX-NEXT:    vinsertf128 $1, %xmm1, %ymm14, %ymm1
-; AVX-NEXT:    vmovaps %ymm1, 416(%rdx)
-; AVX-NEXT:    vmovaps %ymm0, 352(%rdx)
+; AVX-NEXT:    vinsertf128 $1, %xmm0, %ymm14, %ymm0
+; AVX-NEXT:    vmovaps %ymm0, 416(%rdx)
+; AVX-NEXT:    vmovaps %ymm1, 352(%rdx)
 ; AVX-NEXT:    vmovaps %ymm9, 224(%rdx)
 ; AVX-NEXT:    vmovaps %ymm8, 32(%rdx)
 ; AVX-NEXT:    vmovaps %ymm11, 96(%rdx)

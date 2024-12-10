@@ -335,8 +335,9 @@ float VirtRegAuxInfo::weightCalcHelper(LiveInterval &LI, SlotIndex *Start,
   if (isRematerializable(LI, LIS, VRM, *MF.getSubtarget().getInstrInfo()))
     TotalWeight *= 0.5F;
 
-  // Finally, we scale the weight by the spill size.
-  TotalWeight *= TRI.getSpillSize(*MRI.getRegClass(LI.reg()));
+  // Finally, we scale the weight by the number of register lanes.
+  unsigned Lanes = MRI.getRegClass(LI.reg())->getLaneMask().getNumLanes();
+  TotalWeight *= Lanes;
 
   if (IsLocalSplitArtifact)
     return normalize(TotalWeight, Start->distance(*End), NumInstr);

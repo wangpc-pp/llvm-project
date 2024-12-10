@@ -44,45 +44,46 @@ define void @test(ptr %0, ptr %1, i64 %2) {
 ; NOREMAT-NEXT:    addi a5, a7, 512
 ; NOREMAT-NEXT:    addi a4, a7, 1024
 ; NOREMAT-NEXT:    addi a6, a7, 1536
-; NOREMAT-NEXT:    li t0, 1
-; NOREMAT-NEXT:    li a3, 5
+; NOREMAT-NEXT:    li t4, 1
+; NOREMAT-NEXT:    li a2, 5
 ; NOREMAT-NEXT:    li t1, 3
-; NOREMAT-NEXT:    li a2, 7
-; NOREMAT-NEXT:    lui t2, 1
+; NOREMAT-NEXT:    li t0, 7
+; NOREMAT-NEXT:    lui t5, 1
 ; NOREMAT-NEXT:    li s4, 9
 ; NOREMAT-NEXT:    li s6, 11
+; NOREMAT-NEXT:    li s9, 13
 ; NOREMAT-NEXT:    li ra, 15
+; NOREMAT-NEXT:    lui t2, 2
 ; NOREMAT-NEXT:    lui s1, 3
 ; NOREMAT-NEXT:    lui t3, 4
 ; NOREMAT-NEXT:    lui s0, 5
 ; NOREMAT-NEXT:    lui s3, 6
 ; NOREMAT-NEXT:    lui s7, 7
 ; NOREMAT-NEXT:    vsetvli zero, a0, e32, m2, ta, ma
-; NOREMAT-NEXT:    slli t4, t0, 11
+; NOREMAT-NEXT:    slli t4, t4, 11
 ; NOREMAT-NEXT:    sd t4, 512(sp) # 8-byte Folded Spill
-; NOREMAT-NEXT:    slli a0, a3, 9
-; NOREMAT-NEXT:    sd a0, 504(sp) # 8-byte Folded Spill
+; NOREMAT-NEXT:    slli a3, a2, 9
+; NOREMAT-NEXT:    sd a3, 504(sp) # 8-byte Folded Spill
 ; NOREMAT-NEXT:    slli t6, t1, 10
-; NOREMAT-NEXT:    slli s2, a2, 9
-; NOREMAT-NEXT:    add t2, a7, t2
+; NOREMAT-NEXT:    slli s2, t0, 9
+; NOREMAT-NEXT:    add a0, a7, t5
 ; NOREMAT-NEXT:    lui s11, 1
 ; NOREMAT-NEXT:    slli s4, s4, 9
-; NOREMAT-NEXT:    slli s5, a3, 10
+; NOREMAT-NEXT:    slli s5, a2, 10
 ; NOREMAT-NEXT:    slli s6, s6, 9
 ; NOREMAT-NEXT:    slli s8, t1, 11
 ; NOREMAT-NEXT:    vle32.v v8, (a5)
-; NOREMAT-NEXT:    li t0, 13
-; NOREMAT-NEXT:    slli s9, t0, 9
+; NOREMAT-NEXT:    slli s9, s9, 9
+; NOREMAT-NEXT:    li t5, 13
 ; NOREMAT-NEXT:    vle32.v v10, (a4)
 ; NOREMAT-NEXT:    vle32.v v2, (a4)
-; NOREMAT-NEXT:    slli s10, a2, 10
+; NOREMAT-NEXT:    slli s10, t0, 10
 ; NOREMAT-NEXT:    vle32.v v0, (a6)
 ; NOREMAT-NEXT:    vle32.v v12, (a6)
 ; NOREMAT-NEXT:    slli ra, ra, 9
-; NOREMAT-NEXT:    vle32.v v4, (t2)
-; NOREMAT-NEXT:    vle32.v v20, (t2)
-; NOREMAT-NEXT:    lui a4, 2
-; NOREMAT-NEXT:    add a4, a7, a4
+; NOREMAT-NEXT:    vle32.v v4, (a0)
+; NOREMAT-NEXT:    vle32.v v20, (a0)
+; NOREMAT-NEXT:    add a4, a7, t2
 ; NOREMAT-NEXT:    vle32.v v6, (a4)
 ; NOREMAT-NEXT:    vle32.v v30, (a4)
 ; NOREMAT-NEXT:    add a4, a7, s1
@@ -100,13 +101,13 @@ define void @test(ptr %0, ptr %1, i64 %2) {
 ; NOREMAT-NEXT:    vle32.v v14, (a4)
 ; NOREMAT-NEXT:    sf.vc.vv 3, 0, v8, v10
 ; NOREMAT-NEXT:    vle32.v v8, (a4)
-; NOREMAT-NEXT:    addi a4, sp, 640
-; NOREMAT-NEXT:    vs2r.v v8, (a4) # Unknown-size Folded Spill
+; NOREMAT-NEXT:    addi a0, sp, 640
+; NOREMAT-NEXT:    vs2r.v v8, (a0) # Unknown-size Folded Spill
 ; NOREMAT-NEXT:    add a4, a7, t4
 ; NOREMAT-NEXT:    vle32.v v10, (a4)
 ; NOREMAT-NEXT:    sf.vc.vv 3, 0, v2, v0
 ; NOREMAT-NEXT:    vle32.v v2, (a4)
-; NOREMAT-NEXT:    add a4, a7, a0
+; NOREMAT-NEXT:    add a4, a7, a3
 ; NOREMAT-NEXT:    vle32.v v0, (a4)
 ; NOREMAT-NEXT:    sf.vc.vv 3, 0, v12, v10
 ; NOREMAT-NEXT:    vle32.v v10, (a4)
@@ -176,7 +177,7 @@ define void @test(ptr %0, ptr %1, i64 %2) {
 ; NOREMAT-NEXT:    add a4, a7, a4
 ; NOREMAT-NEXT:    vle32.v v8, (a4)
 ; NOREMAT-NEXT:    vle32.v v30, (a4)
-; NOREMAT-NEXT:    slli a3, a3, 11
+; NOREMAT-NEXT:    slli a3, a2, 11
 ; NOREMAT-NEXT:    sd a3, 600(sp) # 8-byte Folded Spill
 ; NOREMAT-NEXT:    sf.vc.vv 3, 0, v4, v12
 ; NOREMAT-NEXT:    add a3, a7, a3
@@ -211,9 +212,8 @@ define void @test(ptr %0, ptr %1, i64 %2) {
 ; NOREMAT-NEXT:    vle32.v v12, (a3)
 ; NOREMAT-NEXT:    vle32.v v6, (a3)
 ; NOREMAT-NEXT:    sf.vc.vv 3, 0, v30, v8
-; NOREMAT-NEXT:    slli a3, t0, 10
+; NOREMAT-NEXT:    slli a3, t5, 10
 ; NOREMAT-NEXT:    sd a3, 560(sp) # 8-byte Folded Spill
-; NOREMAT-NEXT:    li t5, 13
 ; NOREMAT-NEXT:    add a3, a7, a3
 ; NOREMAT-NEXT:    vle32.v v8, (a3)
 ; NOREMAT-NEXT:    vle32.v v30, (a3)
@@ -224,7 +224,7 @@ define void @test(ptr %0, ptr %1, i64 %2) {
 ; NOREMAT-NEXT:    add a3, a7, a3
 ; NOREMAT-NEXT:    vle32.v v28, (a3)
 ; NOREMAT-NEXT:    vle32.v v4, (a3)
-; NOREMAT-NEXT:    slli a2, a2, 11
+; NOREMAT-NEXT:    slli a2, t0, 11
 ; NOREMAT-NEXT:    sd a2, 544(sp) # 8-byte Folded Spill
 ; NOREMAT-NEXT:    sf.vc.vv 3, 0, v26, v12
 ; NOREMAT-NEXT:    add a2, a7, a2

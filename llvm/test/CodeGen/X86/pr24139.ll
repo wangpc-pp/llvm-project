@@ -3,6 +3,7 @@
 ; Check that we do not get excessive spilling from splitting of constant live ranges.
 
 ; CHECK-LABEL: PR24139:
+; CHECK: # 16-byte Spill
 ; CHECK-NOT: # 16-byte Spill
 ; CHECK: retq
 

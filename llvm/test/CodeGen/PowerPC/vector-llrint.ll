@@ -3106,9 +3106,9 @@ define <32 x i64> @llrint_v32i64_v32f16(<32 x half> %x) {
 ; FAST-LABEL: llrint_v32i64_v32f16:
 ; FAST:       # %bb.0:
 ; FAST-NEXT:    mflr r0
-; FAST-NEXT:    stdu r1, -416(r1)
-; FAST-NEXT:    std r0, 432(r1)
-; FAST-NEXT:    .cfi_def_cfa_offset 416
+; FAST-NEXT:    stdu r1, -480(r1)
+; FAST-NEXT:    std r0, 496(r1)
+; FAST-NEXT:    .cfi_def_cfa_offset 480
 ; FAST-NEXT:    .cfi_offset lr, 16
 ; FAST-NEXT:    .cfi_offset r30, -160
 ; FAST-NEXT:    .cfi_offset f14, -144
@@ -3141,72 +3141,135 @@ define <32 x i64> @llrint_v32i64_v32f16(<32 x half> %x) {
 ; FAST-NEXT:    .cfi_offset v29, -208
 ; FAST-NEXT:    .cfi_offset v30, -192
 ; FAST-NEXT:    .cfi_offset v31, -176
-; FAST-NEXT:    li r4, 64
-; FAST-NEXT:    std r30, 256(r1) # 8-byte Folded Spill
-; FAST-NEXT:    stfd f14, 272(r1) # 8-byte Folded Spill
-; FAST-NEXT:    mr r30, r3
-; FAST-NEXT:    stfd f15, 280(r1) # 8-byte Folded Spill
-; FAST-NEXT:    stfd f16, 288(r1) # 8-byte Folded Spill
-; FAST-NEXT:    fmr f15, f6
-; FAST-NEXT:    stfd f17, 296(r1) # 8-byte Folded Spill
-; FAST-NEXT:    stvx v20, r1, r4 # 16-byte Folded Spill
-; FAST-NEXT:    li r4, 80
-; FAST-NEXT:    fmr f17, f3
-; FAST-NEXT:    stfd f18, 304(r1) # 8-byte Folded Spill
-; FAST-NEXT:    stfd f19, 312(r1) # 8-byte Folded Spill
-; FAST-NEXT:    fmr f18, f9
-; FAST-NEXT:    stfd f20, 320(r1) # 8-byte Folded Spill
-; FAST-NEXT:    fmr f20, f4
-; FAST-NEXT:    stvx v21, r1, r4 # 16-byte Folded Spill
-; FAST-NEXT:    li r4, 96
-; FAST-NEXT:    stfd f21, 328(r1) # 8-byte Folded Spill
-; FAST-NEXT:    stfd f22, 336(r1) # 8-byte Folded Spill
-; FAST-NEXT:    fmr f22, f5
-; FAST-NEXT:    stfd f23, 344(r1) # 8-byte Folded Spill
-; FAST-NEXT:    fmr f23, f7
-; FAST-NEXT:    stfd f24, 352(r1) # 8-byte Folded Spill
-; FAST-NEXT:    fmr f24, f8
-; FAST-NEXT:    stvx v22, r1, r4 # 16-byte Folded Spill
-; FAST-NEXT:    li r4, 112
-; FAST-NEXT:    stfd f25, 360(r1) # 8-byte Folded Spill
-; FAST-NEXT:    stfd f26, 368(r1) # 8-byte Folded Spill
-; FAST-NEXT:    fmr f26, f10
-; FAST-NEXT:    stfd f27, 376(r1) # 8-byte Folded Spill
-; FAST-NEXT:    fmr f27, f11
-; FAST-NEXT:    stvx v23, r1, r4 # 16-byte Folded Spill
 ; FAST-NEXT:    li r4, 128
-; FAST-NEXT:    stfd f28, 384(r1) # 8-byte Folded Spill
-; FAST-NEXT:    fmr f28, f12
-; FAST-NEXT:    stfd f29, 392(r1) # 8-byte Folded Spill
-; FAST-NEXT:    fmr f29, f13
-; FAST-NEXT:    stfd f30, 400(r1) # 8-byte Folded Spill
-; FAST-NEXT:    stfd f31, 408(r1) # 8-byte Folded Spill
-; FAST-NEXT:    stvx v24, r1, r4 # 16-byte Folded Spill
+; FAST-NEXT:    std r30, 320(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f14, 336(r1) # 8-byte Folded Spill
+; FAST-NEXT:    fmr f14, f5
+; FAST-NEXT:    stfd f15, 344(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f16, 352(r1) # 8-byte Folded Spill
+; FAST-NEXT:    fmr f16, f4
+; FAST-NEXT:    mr r30, r3
+; FAST-NEXT:    stvx v20, r1, r4 # 16-byte Folded Spill
 ; FAST-NEXT:    li r4, 144
-; FAST-NEXT:    stvx v25, r1, r4 # 16-byte Folded Spill
+; FAST-NEXT:    stfd f17, 360(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f18, 368(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f19, 376(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f20, 384(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f21, 392(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f22, 400(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stvx v21, r1, r4 # 16-byte Folded Spill
 ; FAST-NEXT:    li r4, 160
-; FAST-NEXT:    stvx v26, r1, r4 # 16-byte Folded Spill
+; FAST-NEXT:    stfd f23, 408(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f24, 416(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f25, 424(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f26, 432(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f27, 440(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f28, 448(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stvx v22, r1, r4 # 16-byte Folded Spill
 ; FAST-NEXT:    li r4, 176
-; FAST-NEXT:    stvx v27, r1, r4 # 16-byte Folded Spill
+; FAST-NEXT:    xxlor v22, f3, f3
+; FAST-NEXT:    stfd f29, 456(r1) # 8-byte Folded Spill
+; FAST-NEXT:    fmr f29, f9
+; FAST-NEXT:    stfd f30, 464(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stfd f31, 472(r1) # 8-byte Folded Spill
+; FAST-NEXT:    stvx v23, r1, r4 # 16-byte Folded Spill
 ; FAST-NEXT:    li r4, 192
-; FAST-NEXT:    stvx v28, r1, r4 # 16-byte Folded Spill
+; FAST-NEXT:    xxlor v23, f2, f2
+; FAST-NEXT:    stvx v24, r1, r4 # 16-byte Folded Spill
 ; FAST-NEXT:    li r4, 208
-; FAST-NEXT:    stvx v29, r1, r4 # 16-byte Folded Spill
+; FAST-NEXT:    stvx v25, r1, r4 # 16-byte Folded Spill
 ; FAST-NEXT:    li r4, 224
-; FAST-NEXT:    stvx v30, r1, r4 # 16-byte Folded Spill
+; FAST-NEXT:    xxlor v25, f13, f13
+; FAST-NEXT:    stvx v26, r1, r4 # 16-byte Folded Spill
 ; FAST-NEXT:    li r4, 240
+; FAST-NEXT:    xxlor v26, f12, f12
+; FAST-NEXT:    stvx v27, r1, r4 # 16-byte Folded Spill
+; FAST-NEXT:    li r4, 256
+; FAST-NEXT:    xxlor v27, f11, f11
+; FAST-NEXT:    stvx v28, r1, r4 # 16-byte Folded Spill
+; FAST-NEXT:    li r4, 272
+; FAST-NEXT:    xxlor v28, f10, f10
+; FAST-NEXT:    stvx v29, r1, r4 # 16-byte Folded Spill
+; FAST-NEXT:    li r4, 288
+; FAST-NEXT:    xxlor v29, f8, f8
+; FAST-NEXT:    stvx v30, r1, r4 # 16-byte Folded Spill
+; FAST-NEXT:    li r4, 304
+; FAST-NEXT:    xxlor v30, f7, f7
 ; FAST-NEXT:    stvx v31, r1, r4 # 16-byte Folded Spill
-; FAST-NEXT:    li r4, 56
-; FAST-NEXT:    stxsspx f2, r1, r4 # 4-byte Folded Spill
-; FAST-NEXT:    li r4, 60
+; FAST-NEXT:    li r4, 44
+; FAST-NEXT:    xxlor v31, f6, f6
 ; FAST-NEXT:    stxsspx f1, r1, r4 # 4-byte Folded Spill
+; FAST-NEXT:    lfs f1, 768(r1)
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    li r3, 120
+; FAST-NEXT:    stxsdx f1, r1, r3 # 8-byte Folded Spill
+; FAST-NEXT:    lfs f1, 760(r1)
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    li r3, 112
+; FAST-NEXT:    stxsdx f1, r1, r3 # 8-byte Folded Spill
+; FAST-NEXT:    lfs f1, 752(r1)
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    li r3, 104
+; FAST-NEXT:    stxsdx f1, r1, r3 # 8-byte Folded Spill
+; FAST-NEXT:    lfs f1, 744(r1)
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    li r3, 96
+; FAST-NEXT:    stxsdx f1, r1, r3 # 8-byte Folded Spill
+; FAST-NEXT:    lfs f1, 736(r1)
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    li r3, 88
+; FAST-NEXT:    stxsdx f1, r1, r3 # 8-byte Folded Spill
+; FAST-NEXT:    lfs f1, 728(r1)
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    li r3, 80
+; FAST-NEXT:    stxsdx f1, r1, r3 # 8-byte Folded Spill
+; FAST-NEXT:    lfs f1, 720(r1)
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    li r3, 72
+; FAST-NEXT:    stxsdx f1, r1, r3 # 8-byte Folded Spill
+; FAST-NEXT:    lfs f1, 712(r1)
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    li r3, 64
+; FAST-NEXT:    stxsdx f1, r1, r3 # 8-byte Folded Spill
 ; FAST-NEXT:    lfs f1, 704(r1)
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    li r3, 48
+; FAST-NEXT:    li r3, 56
 ; FAST-NEXT:    stxsdx f1, r1, r3 # 8-byte Folded Spill
 ; FAST-NEXT:    lfs f1, 696(r1)
 ; FAST-NEXT:    bl __gnu_f2h_ieee
@@ -3214,211 +3277,155 @@ define <32 x i64> @llrint_v32i64_v32f16(<32 x half> %x) {
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v27, f1, f1
+; FAST-NEXT:    li r3, 48
+; FAST-NEXT:    stxsdx f1, r1, r3 # 8-byte Folded Spill
 ; FAST-NEXT:    lfs f1, 688(r1)
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v26, f1, f1
+; FAST-NEXT:    xxlor v21, f1, f1
 ; FAST-NEXT:    lfs f1, 680(r1)
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v25, f1, f1
+; FAST-NEXT:    xxlor v20, f1, f1
 ; FAST-NEXT:    lfs f1, 672(r1)
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v22, f1, f1
+; FAST-NEXT:    xxlor v24, f1, f1
 ; FAST-NEXT:    lfs f1, 664(r1)
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v31, f1, f1
+; FAST-NEXT:    fmr f31, f1
 ; FAST-NEXT:    lfs f1, 656(r1)
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v29, f1, f1
+; FAST-NEXT:    fmr f30, f1
 ; FAST-NEXT:    lfs f1, 648(r1)
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v28, f1, f1
+; FAST-NEXT:    fmr f28, f1
 ; FAST-NEXT:    lfs f1, 640(r1)
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v24, f1, f1
+; FAST-NEXT:    fmr f27, f1
 ; FAST-NEXT:    lfs f1, 632(r1)
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v23, f1, f1
+; FAST-NEXT:    fmr f26, f1
 ; FAST-NEXT:    lfs f1, 624(r1)
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v21, f1, f1
-; FAST-NEXT:    lfs f1, 616(r1)
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v30, f1, f1
-; FAST-NEXT:    lfs f1, 608(r1)
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    xxlor v20, f1, f1
-; FAST-NEXT:    lfs f1, 600(r1)
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    fmr f21, f1
-; FAST-NEXT:    lfs f1, 592(r1)
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    fmr f19, f1
-; FAST-NEXT:    lfs f1, 584(r1)
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    fmr f16, f1
-; FAST-NEXT:    lfs f1, 576(r1)
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    fmr f14, f1
-; FAST-NEXT:    lfs f1, 568(r1)
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    fmr f31, f1
-; FAST-NEXT:    lfs f1, 560(r1)
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    fmr f30, f1
-; FAST-NEXT:    fmr f1, f29
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    fmr f29, f1
-; FAST-NEXT:    fmr f1, f28
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    fmr f28, f1
-; FAST-NEXT:    fmr f1, f27
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    fmr f27, f1
-; FAST-NEXT:    fmr f1, f26
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    fmr f26, f1
-; FAST-NEXT:    fmr f1, f18
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
 ; FAST-NEXT:    fmr f25, f1
-; FAST-NEXT:    fmr f1, f24
+; FAST-NEXT:    xxlor f1, v25, v25
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    fmr f24, f1
-; FAST-NEXT:    fmr f1, f23
+; FAST-NEXT:    xxlor f1, v26, v26
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    fmr f23, f1
-; FAST-NEXT:    fmr f1, f15
-; FAST-NEXT:    bl __gnu_f2h_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    clrldi r3, r3, 48
-; FAST-NEXT:    bl __gnu_h2f_ieee
-; FAST-NEXT:    nop
-; FAST-NEXT:    fmr f18, f1
-; FAST-NEXT:    fmr f1, f22
+; FAST-NEXT:    xxlor f1, v27, v27
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    fmr f22, f1
-; FAST-NEXT:    fmr f1, f20
+; FAST-NEXT:    xxlor f1, v28, v28
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    fmr f21, f1
+; FAST-NEXT:    fmr f1, f29
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    fmr f20, f1
-; FAST-NEXT:    fmr f1, f17
+; FAST-NEXT:    xxlor f1, v29, v29
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    li r3, 56
+; FAST-NEXT:    fmr f19, f1
+; FAST-NEXT:    xxlor f1, v30, v30
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    fmr f18, f1
+; FAST-NEXT:    xxlor f1, v31, v31
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    fmr f29, f1
+; FAST-NEXT:    fmr f1, f14
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    fmr f14, f1
+; FAST-NEXT:    fmr f1, f16
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    fmr f16, f1
+; FAST-NEXT:    xxlor f1, v22, v22
+; FAST-NEXT:    bl __gnu_f2h_ieee
+; FAST-NEXT:    nop
+; FAST-NEXT:    clrldi r3, r3, 48
+; FAST-NEXT:    bl __gnu_h2f_ieee
+; FAST-NEXT:    nop
 ; FAST-NEXT:    fmr f17, f1
-; FAST-NEXT:    lxsspx f1, r1, r3 # 4-byte Folded Reload
+; FAST-NEXT:    xxlor f1, v23, v23
 ; FAST-NEXT:    bl __gnu_f2h_ieee
 ; FAST-NEXT:    nop
 ; FAST-NEXT:    clrldi r3, r3, 48
 ; FAST-NEXT:    bl __gnu_h2f_ieee
 ; FAST-NEXT:    nop
-; FAST-NEXT:    li r3, 60
+; FAST-NEXT:    li r3, 44
 ; FAST-NEXT:    fmr f15, f1
 ; FAST-NEXT:    lxsspx f1, r1, r3 # 4-byte Folded Reload
 ; FAST-NEXT:    bl __gnu_f2h_ieee
@@ -3429,21 +3436,17 @@ define <32 x i64> @llrint_v32i64_v32f16(<32 x half> %x) {
 ; FAST-NEXT:    fctid f3, f15
 ; FAST-NEXT:    fctid f4, f17
 ; FAST-NEXT:    mffprd r3, f3
-; FAST-NEXT:    fctid f5, f20
-; FAST-NEXT:    fctid f6, f22
-; FAST-NEXT:    fctid f7, f23
-; FAST-NEXT:    fctid f8, f24
+; FAST-NEXT:    fctid f5, f16
+; FAST-NEXT:    fctid f6, f14
+; FAST-NEXT:    fctid f7, f18
+; FAST-NEXT:    fctid f8, f19
 ; FAST-NEXT:    fctid f13, f1
-; FAST-NEXT:    fctid f9, f25
-; FAST-NEXT:    fctid f10, f27
-; FAST-NEXT:    fctid f11, f29
-; FAST-NEXT:    fctid f12, f30
-; FAST-NEXT:    xxlor f30, v31, v31
-; FAST-NEXT:    fctid f30, f30
-; FAST-NEXT:    xxlor f29, v25, v25
-; FAST-NEXT:    fctid f29, f29
-; FAST-NEXT:    fctid f2, f28
-; FAST-NEXT:    fctid f0, f26
+; FAST-NEXT:    fctid f9, f20
+; FAST-NEXT:    fctid f10, f22
+; FAST-NEXT:    fctid f11, f24
+; FAST-NEXT:    fctid f12, f25
+; FAST-NEXT:    fctid f2, f23
+; FAST-NEXT:    fctid f0, f21
 ; FAST-NEXT:    mtvsrd v2, r3
 ; FAST-NEXT:    mffprd r3, f4
 ; FAST-NEXT:    mtvsrd v3, r3
@@ -3460,39 +3463,43 @@ define <32 x i64> @llrint_v32i64_v32f16(<32 x half> %x) {
 ; FAST-NEXT:    mffprd r3, f10
 ; FAST-NEXT:    mtfprd f4, r3
 ; FAST-NEXT:    mffprd r3, f11
-; FAST-NEXT:    fctid f11, f21
+; FAST-NEXT:    fctid f11, f31
+; FAST-NEXT:    lfd f31, 56(r1) # 8-byte Folded Reload
 ; FAST-NEXT:    mtfprd f8, r3
 ; FAST-NEXT:    mffprd r3, f12
-; FAST-NEXT:    xxlor f12, v20, v20
+; FAST-NEXT:    xxlor f12, v24, v24
+; FAST-NEXT:    fctid f31, f31
 ; FAST-NEXT:    fctid f12, f12
 ; FAST-NEXT:    mtfprd f9, r3
 ; FAST-NEXT:    mffprd r3, f13
-; FAST-NEXT:    xxlor f13, v23, v23
-; FAST-NEXT:    fctid f13, f13
+; FAST-NEXT:    lfd f13, 48(r1) # 8-byte Folded Reload
 ; FAST-NEXT:    mtfprd f10, r3
+; FAST-NEXT:    fctid f13, f13
 ; FAST-NEXT:    xxmrghd v3, vs5, v3
-; FAST-NEXT:    fctid f5, f31
+; FAST-NEXT:    fctid f5, f26
 ; FAST-NEXT:    mffprd r3, f5
-; FAST-NEXT:    xxlor f31, v24, v24
-; FAST-NEXT:    fctid f31, f31
 ; FAST-NEXT:    mtfprd f5, r3
 ; FAST-NEXT:    xxmrghd v4, vs7, vs6
-; FAST-NEXT:    fctid f6, f14
-; FAST-NEXT:    fctid f7, f16
+; FAST-NEXT:    fctid f6, f27
+; FAST-NEXT:    fctid f7, f28
 ; FAST-NEXT:    mffprd r3, f6
+; FAST-NEXT:    lfd f28, 96(r1) # 8-byte Folded Reload
+; FAST-NEXT:    fctid f28, f28
 ; FAST-NEXT:    mtfprd f6, r3
 ; FAST-NEXT:    mffprd r3, f7
 ; FAST-NEXT:    mtfprd f7, r3
 ; FAST-NEXT:    xxmrghd v2, v2, vs10
-; FAST-NEXT:    fctid f10, f19
+; FAST-NEXT:    fctid f10, f30
 ; FAST-NEXT:    mffprd r3, f10
+; FAST-NEXT:    lfd f30, 80(r1) # 8-byte Folded Reload
+; FAST-NEXT:    fctid f30, f30
 ; FAST-NEXT:    mtfprd f10, r3
 ; FAST-NEXT:    mffprd r3, f11
 ; FAST-NEXT:    mtfprd f11, r3
 ; FAST-NEXT:    mffprd r3, f12
 ; FAST-NEXT:    mtfprd f12, r3
 ; FAST-NEXT:    xxmrghd v5, vs12, vs11
-; FAST-NEXT:    xxlor f11, v30, v30
+; FAST-NEXT:    xxlor f11, v20, v20
 ; FAST-NEXT:    xxlor f12, v21, v21
 ; FAST-NEXT:    fctid f11, f11
 ; FAST-NEXT:    fctid f12, f12
@@ -3503,35 +3510,35 @@ define <32 x i64> @llrint_v32i64_v32f16(<32 x half> %x) {
 ; FAST-NEXT:    mffprd r3, f13
 ; FAST-NEXT:    mtfprd f13, r3
 ; FAST-NEXT:    mffprd r3, f31
-; FAST-NEXT:    xxlor f31, v28, v28
+; FAST-NEXT:    lfd f31, 64(r1) # 8-byte Folded Reload
 ; FAST-NEXT:    fctid f31, f31
 ; FAST-NEXT:    mtvsrd v0, r3
 ; FAST-NEXT:    mffprd r3, f31
-; FAST-NEXT:    xxlor f31, v29, v29
-; FAST-NEXT:    fctid f31, f31
+; FAST-NEXT:    lfd f31, 72(r1) # 8-byte Folded Reload
 ; FAST-NEXT:    mtvsrd v1, r3
 ; FAST-NEXT:    mffprd r3, f30
-; FAST-NEXT:    xxlor f30, v22, v22
-; FAST-NEXT:    fctid f30, f30
+; FAST-NEXT:    lfd f30, 88(r1) # 8-byte Folded Reload
+; FAST-NEXT:    fctid f31, f31
 ; FAST-NEXT:    mtvsrd v6, r3
-; FAST-NEXT:    mffprd r3, f29
-; FAST-NEXT:    xxlor f29, v26, v26
-; FAST-NEXT:    fctid f29, f29
+; FAST-NEXT:    mffprd r3, f28
+; FAST-NEXT:    lfd f28, 104(r1) # 8-byte Folded Reload
+; FAST-NEXT:    fctid f30, f30
+; FAST-NEXT:    fctid f28, f28
 ; FAST-NEXT:    mtvsrd v7, r3
-; FAST-NEXT:    mffprd r3, f29
-; FAST-NEXT:    xxlor f29, v27, v27
-; FAST-NEXT:    fctid f29, f29
+; FAST-NEXT:    mffprd r3, f28
+; FAST-NEXT:    lfd f28, 112(r1) # 8-byte Folded Reload
+; FAST-NEXT:    fctid f28, f28
 ; FAST-NEXT:    mtvsrd v8, r3
-; FAST-NEXT:    mffprd r3, f29
-; FAST-NEXT:    lfd f29, 48(r1) # 8-byte Folded Reload
-; FAST-NEXT:    fctid f29, f29
+; FAST-NEXT:    mffprd r3, f28
+; FAST-NEXT:    lfd f28, 120(r1) # 8-byte Folded Reload
+; FAST-NEXT:    fctid f28, f28
 ; FAST-NEXT:    xxmrghd v10, vs12, vs11
 ; FAST-NEXT:    xxmrghd v0, v0, vs13
 ; FAST-NEXT:    xxswapd vs12, v0
 ; FAST-NEXT:    xxmrghd v0, vs9, vs8
 ; FAST-NEXT:    xxmrghd v7, v8, v7
 ; FAST-NEXT:    mtvsrd v8, r3
-; FAST-NEXT:    mffprd r3, f29
+; FAST-NEXT:    mffprd r3, f28
 ; FAST-NEXT:    mtvsrd v9, r3
 ; FAST-NEXT:    mffprd r3, f30
 ; FAST-NEXT:    xxswapd v7, v7
@@ -3572,7 +3579,7 @@ define <32 x i64> @llrint_v32i64_v32f16(<32 x half> %x) {
 ; FAST-NEXT:    xxswapd vs6, v0
 ; FAST-NEXT:    stxvd2x vs2, r30, r3
 ; FAST-NEXT:    li r3, 96
-; FAST-NEXT:    fctid f2, f18
+; FAST-NEXT:    fctid f2, f29
 ; FAST-NEXT:    stxvd2x vs6, r30, r3
 ; FAST-NEXT:    mffprd r3, f0
 ; FAST-NEXT:    mtfprd f0, r3
@@ -3597,51 +3604,51 @@ define <32 x i64> @llrint_v32i64_v32f16(<32 x half> %x) {
 ; FAST-NEXT:    stxvd2x vs2, r30, r3
 ; FAST-NEXT:    li r3, 16
 ; FAST-NEXT:    stxvd2x vs3, r30, r3
-; FAST-NEXT:    li r3, 240
+; FAST-NEXT:    li r3, 304
 ; FAST-NEXT:    stxvd2x vs4, 0, r30
-; FAST-NEXT:    lfd f31, 408(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f30, 400(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f29, 392(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f28, 384(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f27, 376(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f26, 368(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f25, 360(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f24, 352(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f23, 344(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f22, 336(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f21, 328(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f20, 320(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f19, 312(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f18, 304(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f17, 296(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f16, 288(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f15, 280(r1) # 8-byte Folded Reload
-; FAST-NEXT:    lfd f14, 272(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f31, 472(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f30, 464(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f29, 456(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f28, 448(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f27, 440(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f26, 432(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f25, 424(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f24, 416(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f23, 408(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f22, 400(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f21, 392(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f20, 384(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f19, 376(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f18, 368(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f17, 360(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f16, 352(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f15, 344(r1) # 8-byte Folded Reload
+; FAST-NEXT:    lfd f14, 336(r1) # 8-byte Folded Reload
 ; FAST-NEXT:    lvx v31, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    li r3, 224
-; FAST-NEXT:    ld r30, 256(r1) # 8-byte Folded Reload
+; FAST-NEXT:    li r3, 288
+; FAST-NEXT:    ld r30, 320(r1) # 8-byte Folded Reload
 ; FAST-NEXT:    lvx v30, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    li r3, 208
+; FAST-NEXT:    li r3, 272
 ; FAST-NEXT:    lvx v29, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    li r3, 192
+; FAST-NEXT:    li r3, 256
 ; FAST-NEXT:    lvx v28, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    li r3, 176
+; FAST-NEXT:    li r3, 240
 ; FAST-NEXT:    lvx v27, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    li r3, 160
+; FAST-NEXT:    li r3, 224
 ; FAST-NEXT:    lvx v26, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    li r3, 144
+; FAST-NEXT:    li r3, 208
 ; FAST-NEXT:    lvx v25, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    li r3, 128
+; FAST-NEXT:    li r3, 192
 ; FAST-NEXT:    lvx v24, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    li r3, 112
+; FAST-NEXT:    li r3, 176
 ; FAST-NEXT:    lvx v23, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    li r3, 96
+; FAST-NEXT:    li r3, 160
 ; FAST-NEXT:    lvx v22, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    li r3, 80
+; FAST-NEXT:    li r3, 144
 ; FAST-NEXT:    lvx v21, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    li r3, 64
+; FAST-NEXT:    li r3, 128
 ; FAST-NEXT:    lvx v20, r1, r3 # 16-byte Folded Reload
-; FAST-NEXT:    addi r1, r1, 416
+; FAST-NEXT:    addi r1, r1, 480
 ; FAST-NEXT:    ld r0, 16(r1)
 ; FAST-NEXT:    mtlr r0
 ; FAST-NEXT:    blr
