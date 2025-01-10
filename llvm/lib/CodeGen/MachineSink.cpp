@@ -202,6 +202,7 @@ public:
     AU.addPreserved<MachineCycleInfoWrapperPass>();
     AU.addPreserved<MachineLoopInfoWrapperPass>();
     AU.addRequired<MachineRegisterClassInfoWrapperPass>();
+    AU.addPreserved<MachineRegisterClassInfoWrapperPass>();
     AU.addRequired<ProfileSummaryInfoWrapperPass>();
     if (UseBlockFreqInfo)
       AU.addRequired<MachineBlockFrequencyInfoWrapperPass>();

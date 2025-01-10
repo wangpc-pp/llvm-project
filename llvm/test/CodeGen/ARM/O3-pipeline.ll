@@ -97,6 +97,7 @@
 ; CHECK-NEXT:      Machine Common Subexpression Elimination
 ; CHECK-NEXT:      MachinePostDominator Tree Construction
 ; CHECK-NEXT:      Machine Cycle Info Analysis
+; CHECK-NEXT:      Machine Register Class Info Analysis
 ; CHECK-NEXT:      Machine code sinking
 ; CHECK-NEXT:      Peephole Optimizations
 ; CHECK-NEXT:      Remove dead machine instructions
@@ -125,8 +126,10 @@
 ; CHECK-NEXT:      Two-Address instruction pass
 ; CHECK-NEXT:      Slot index numbering
 ; CHECK-NEXT:      Live Interval Analysis
+; CHECK-NEXT:      Machine Register Class Info Analysis
 ; CHECK-NEXT:      Register Coalescer
 ; CHECK-NEXT:      Rename Disconnected Subregister Components
+; CHECK-NEXT:      Machine Register Class Info Analysis
 ; CHECK-NEXT:      Machine Instruction Scheduler
 ; CHECK-NEXT:      Machine Block Frequency Analysis
 ; CHECK-NEXT:      Debug Variable Analysis
@@ -151,6 +154,7 @@
 ; CHECK-NEXT:      MachinePostDominator Tree Construction
 ; CHECK-NEXT:      Lazy Machine Block Frequency Analysis
 ; CHECK-NEXT:      Machine Optimization Remark Emitter
+; CHECK-NEXT:      Machine Register Class Info Analysis
 ; CHECK-NEXT:      Shrink Wrapping analysis
 ; CHECK-NEXT:      Prologue/Epilogue Insertion & Frame Finalization
 ; CHECK-NEXT:      Machine Late Instructions Cleanup Pass
@@ -162,6 +166,7 @@
 ; CHECK-NEXT:      ARM load / store optimization pass
 ; CHECK-NEXT:      ReachingDefAnalysis
 ; CHECK-NEXT:      ARM Execution Domain Fix
+; CHECK-NEXT:      Machine Register Class Info Analysis
 ; CHECK-NEXT:      BreakFalseDeps
 ; CHECK-NEXT:      ARM pseudo instruction expansion pass
 ; CHECK-NEXT:      Thumb2 instruction size reduce pass
@@ -173,6 +178,7 @@
 ; CHECK-NEXT:      MachineDominator Tree Construction
 ; CHECK-NEXT:      Machine Natural Loop Construction
 ; CHECK-NEXT:      PostRA Machine Instruction Scheduler
+; CHECK-NEXT:      Machine Register Class Info Analysis
 ; CHECK-NEXT:      Post RA top-down list latency scheduler
 ; CHECK-NEXT:      MVE VPT block insertion pass
 ; CHECK-NEXT:      ARM Indirect Thunks

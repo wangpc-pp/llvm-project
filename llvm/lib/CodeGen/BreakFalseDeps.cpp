@@ -58,8 +58,8 @@ public:
 
   void getAnalysisUsage(AnalysisUsage &AU) const override {
     AU.setPreservesAll();
-    AU.addRequired<ReachingDefAnalysis>();
     AU.addRequired<MachineRegisterClassInfoWrapperPass>();
+    AU.addRequired<ReachingDefAnalysis>();
     MachineFunctionPass::getAnalysisUsage(AU);
   }
 
@@ -103,9 +103,10 @@ private:
 #define DEBUG_TYPE "break-false-deps"
 
 char BreakFalseDeps::ID = 0;
-INITIALIZE_PASS_BEGIN(BreakFalseDeps, DEBUG_TYPE, "BreakFalseDeps", false, false)
-INITIALIZE_PASS_DEPENDENCY(ReachingDefAnalysis)
+INITIALIZE_PASS_BEGIN(BreakFalseDeps, DEBUG_TYPE, "BreakFalseDeps", false,
+                      false)
 INITIALIZE_PASS_DEPENDENCY(MachineRegisterClassInfoWrapperPass)
+INITIALIZE_PASS_DEPENDENCY(ReachingDefAnalysis)
 INITIALIZE_PASS_END(BreakFalseDeps, DEBUG_TYPE, "BreakFalseDeps", false, false)
 
 FunctionPass *llvm::createBreakFalseDeps() { return new BreakFalseDeps(); }

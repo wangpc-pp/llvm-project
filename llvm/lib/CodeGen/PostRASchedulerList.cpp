@@ -91,6 +91,7 @@ namespace {
       AU.addRequired<MachineLoopInfoWrapperPass>();
       AU.addPreserved<MachineLoopInfoWrapperPass>();
       AU.addRequired<MachineRegisterClassInfoWrapperPass>();
+      AU.addPreserved<MachineRegisterClassInfoWrapperPass>();
       MachineFunctionPass::getAnalysisUsage(AU);
     }
 
