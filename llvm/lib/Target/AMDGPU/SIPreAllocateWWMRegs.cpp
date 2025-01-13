@@ -43,7 +43,7 @@ private:
   LiveIntervals *LIS;
   LiveRegMatrix *Matrix;
   VirtRegMap *VRM;
-  RegisterClassInfo *RegClassInfo;
+  const RegisterClassInfo &RegClassInfo;
 
   std::vector<unsigned> RegsToRewrite;
 #ifndef NDEBUG
@@ -54,7 +54,7 @@ private:
 
 public:
   SIPreAllocateWWMRegs(LiveIntervals *LIS, LiveRegMatrix *Matrix,
-                       VirtRegMap *VRM, RegisterClassInfo *RCI)
+                       VirtRegMap *VRM, const RegisterClassInfo &RCI)
       : LIS(LIS), Matrix(Matrix), VRM(VRM), RegClassInfo(RCI) {}
   bool run(MachineFunction &MF);
 };
@@ -109,7 +109,7 @@ bool SIPreAllocateWWMRegs::processDef(MachineOperand &MO) {
 
   LiveInterval &LI = LIS->getInterval(Reg);
 
-  for (MCRegister PhysReg : RegClassInfo->getOrder(MRI->getRegClass(Reg))) {
+  for (MCRegister PhysReg : RegClassInfo.getOrder(MRI->getRegClass(Reg))) {
     if (!MRI->isPhysRegUsed(PhysReg, /*SkipRegMaskTest=*/true) &&
         Matrix->checkInterference(LI, PhysReg) == LiveRegMatrix::IK_Free) {
       Matrix->assign(LI, PhysReg);
@@ -195,7 +195,7 @@ bool SIPreAllocateWWMRegsLegacy::runOnMachineFunction(MachineFunction &MF) {
   auto *LIS = &getAnalysis<LiveIntervalsWrapperPass>().getLIS();
   auto *Matrix = &getAnalysis<LiveRegMatrixWrapperLegacy>().getLRM();
   auto *VRM = &getAnalysis<VirtRegMapWrapperLegacy>().getVRM();
-  auto *RCI = &getAnalysis<MachineRegisterClassInfoWrapperPass>().getRCI();
+  const auto &RCI = getAnalysis<MachineRegisterClassInfoWrapperPass>().getRCI();
   return SIPreAllocateWWMRegs(LIS, Matrix, VRM, RCI).run(MF);
 }
 
@@ -267,7 +267,7 @@ SIPreAllocateWWMRegsPass::run(MachineFunction &MF,
   auto *LIS = &MFAM.getResult<LiveIntervalsAnalysis>(MF);
   auto *Matrix = &MFAM.getResult<LiveRegMatrixAnalysis>(MF);
   auto *VRM = &MFAM.getResult<VirtRegMapAnalysis>(MF);
-  auto *RCI = &MFAM.getResult<MachineRegisterClassInfoAnalysis>(MF);
+  const auto &RCI = MFAM.getResult<MachineRegisterClassInfoAnalysis>(MF);
   SIPreAllocateWWMRegs(LIS, Matrix, VRM, RCI).run(MF);
   return PreservedAnalyses::all();
 }
