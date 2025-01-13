@@ -122,7 +122,6 @@
 ; LAXX-NEXT:       Machine Register Class Info Analysis
 ; LAXX-NEXT:       Register Coalescer
 ; LAXX-NEXT:       Rename Disconnected Subregister Components
-; LAXX-NEXT:       Machine Register Class Info Analysis
 ; LAXX-NEXT:       Machine Instruction Scheduler
 ; LAXX-NEXT:       LoongArch Dead register definitions
 ; LAXX-NEXT:       Machine Block Frequency Analysis

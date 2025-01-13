@@ -16,12 +16,8 @@
 
 using namespace llvm;
 
-INITIALIZE_PASS_BEGIN(MachineRegisterClassInfoWrapperPass,
-                      "machine-reg-class-info",
-                      "Machine Register Class Info Analysis", false, true)
-INITIALIZE_PASS_END(MachineRegisterClassInfoWrapperPass,
-                    "machine-reg-class-info",
-                    "Machine Register Class Info Analysis", false, true)
+INITIALIZE_PASS(MachineRegisterClassInfoWrapperPass, "machine-reg-class-info",
+                "Machine Register Class Info Analysis", true, true)
 
 MachineRegisterClassInfoAnalysis::Result
 MachineRegisterClassInfoAnalysis::run(MachineFunction &MF,

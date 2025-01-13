@@ -164,7 +164,6 @@
 ; CHECK-NEXT:       Machine Register Class Info Analysis
 ; CHECK-NEXT:       Register Coalescer
 ; CHECK-NEXT:       Rename Disconnected Subregister Components
-; CHECK-NEXT:       Machine Register Class Info Analysis
 ; CHECK-NEXT:       Machine Instruction Scheduler
 ; CHECK-NEXT:       PowerPC VSX FMA Mutation
 ; CHECK-NEXT:       Machine Natural Loop Construction
