@@ -109,16 +109,17 @@ define {<vscale x 8 x i64>, <vscale x 8 x i64>} @vector_deinterleave_load_nxv8i6
 ; CHECK-NEXT:    slli a1, a1, 4
 ; CHECK-NEXT:    sub sp, sp, a1
 ; CHECK-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x10, 0x22, 0x11, 0x10, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 16 + 16 * vlenb
+; CHECK-NEXT:    li a1, 85
+; CHECK-NEXT:    vsetvli a2, zero, e8, mf8, ta, ma
+; CHECK-NEXT:    vmv.v.x v16, a1
 ; CHECK-NEXT:    csrr a1, vlenb
 ; CHECK-NEXT:    vl8re64.v v24, (a0)
-; CHECK-NEXT:    vsetvli a2, zero, e64, m8, ta, ma
-; CHECK-NEXT:    vid.v v8
 ; CHECK-NEXT:    slli a1, a1, 3
-; CHECK-NEXT:    vand.vi v8, v8, 1
 ; CHECK-NEXT:    add a0, a0, a1
-; CHECK-NEXT:    vmseq.vi v16, v8, 0
+; CHECK-NEXT:    li a1, 170
 ; CHECK-NEXT:    vl8re64.v v0, (a0)
-; CHECK-NEXT:    vmnot.m v17, v16
+; CHECK-NEXT:    vmv.v.x v17, a1
+; CHECK-NEXT:    vsetvli a0, zero, e64, m8, ta, ma
 ; CHECK-NEXT:    vcompress.vm v8, v24, v16
 ; CHECK-NEXT:    vmv1r.v v12, v16
 ; CHECK-NEXT:    vmv1r.v v13, v17

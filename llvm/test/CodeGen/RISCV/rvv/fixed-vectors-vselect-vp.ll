@@ -445,6 +445,7 @@ define <32 x i64> @select_evl_v32i64(<32 x i1> %a, <32 x i64> %b, <32 x i64> %c)
 ; CHECK-NEXT:    vmv8r.v v16, v8
 ; CHECK-NEXT:    addi a1, a0, 128
 ; CHECK-NEXT:    vle64.v v8, (a0)
+; CHECK-NEXT:    vsetivli zero, 1, e64, m8, ta, ma
 ; CHECK-NEXT:    vle64.v v24, (a1)
 ; CHECK-NEXT:    vsetivli zero, 2, e8, mf4, ta, ma
 ; CHECK-NEXT:    vslidedown.vi v7, v0, 2
