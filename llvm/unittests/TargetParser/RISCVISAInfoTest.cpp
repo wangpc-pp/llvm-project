@@ -1003,8 +1003,13 @@ R"(All available -march extensions for RISC-V
     zihintpause          2.0
     zihpm                2.0
     zilsd                1.0
-    zilsx                1.0
+    zilx                 1.0
+    zilxia               1.0
+    zilxib               1.0
     zimop                1.0
+    zisx                 1.0
+    zisxia               1.0
+    zisxib               1.0
     zmmul                1.0
     za128rs              1.0
     za64rs               1.0
@@ -1019,7 +1024,12 @@ R"(All available -march extensions for RISC-V
     zfh                  1.0
     zfhmin               1.0
     zfinx                1.0
-    zflsx                1.0
+    zflx                 1.0
+    zflxia               1.0
+    zflxib               1.0
+    zfsx                 1.0
+    zfsxia               1.0
+    zfsxib               1.0
     zdinx                1.0
     zca                  1.0
     zcb                  1.0

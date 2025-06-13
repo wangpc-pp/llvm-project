@@ -1569,6 +1569,38 @@ RISCVTargetLowering::RISCVTargetLowering(const TargetMachine &TM,
         XLenVT, LibCall);
   }
 
+  if (Subtarget.hasStdExtZilxib()) {
+    setIndexedLoadAction(ISD::PRE_INC, MVT::i8, Legal);
+    setIndexedLoadAction(ISD::PRE_INC, MVT::i16, Legal);
+    setIndexedLoadAction(ISD::PRE_INC, MVT::i32, Legal);
+    if (Subtarget.is64Bit())
+      setIndexedLoadAction(ISD::PRE_INC, MVT::i64, Legal);
+  }
+
+  if (Subtarget.hasStdExtZisxib()) {
+    setIndexedStoreAction(ISD::PRE_INC, MVT::i8, Legal);
+    setIndexedStoreAction(ISD::PRE_INC, MVT::i16, Legal);
+    setIndexedStoreAction(ISD::PRE_INC, MVT::i32, Legal);
+    if (Subtarget.is64Bit())
+      setIndexedStoreAction(ISD::PRE_INC, MVT::i64, Legal);
+  }
+
+  if (Subtarget.hasStdExtZilxia()) {
+    setIndexedLoadAction(ISD::POST_INC, MVT::i8, Legal);
+    setIndexedLoadAction(ISD::POST_INC, MVT::i16, Legal);
+    setIndexedLoadAction(ISD::POST_INC, MVT::i32, Legal);
+    if (Subtarget.is64Bit())
+      setIndexedLoadAction(ISD::POST_INC, MVT::i64, Legal);
+  }
+
+  if (Subtarget.hasStdExtZisxia()) {
+    setIndexedStoreAction(ISD::POST_INC, MVT::i8, Legal);
+    setIndexedStoreAction(ISD::POST_INC, MVT::i16, Legal);
+    setIndexedStoreAction(ISD::POST_INC, MVT::i32, Legal);
+    if (Subtarget.is64Bit())
+      setIndexedStoreAction(ISD::POST_INC, MVT::i64, Legal);
+  }
+
   if (Subtarget.hasVendorXTHeadMemIdx()) {
     for (unsigned im : {ISD::PRE_INC, ISD::POST_INC}) {
       setIndexedLoadAction(im, MVT::i8, Legal);
@@ -23829,9 +23861,12 @@ bool RISCVTargetLowering::isVScaleKnownToBeAPowerOfTwo() const {
 bool RISCVTargetLowering::getIndexedAddressParts(SDNode *Op, SDValue &Base,
                                                  SDValue &Offset,
                                                  ISD::MemIndexedMode &AM,
+                                                 EVT MemVT,
                                                  SelectionDAG &DAG) const {
   // Target does not support indexed loads.
-  if (!Subtarget.hasVendorXTHeadMemIdx())
+  if (!Subtarget.hasVendorXTHeadMemIdx() && !Subtarget.hasStdExtZilxib() &&
+      !Subtarget.hasStdExtZisxib() && !Subtarget.hasStdExtZilxia() &&
+      !Subtarget.hasStdExtZisxia())
     return false;
 
   if (Op->getOpcode() != ISD::ADD && Op->getOpcode() != ISD::SUB)
@@ -23846,11 +23881,17 @@ bool RISCVTargetLowering::getIndexedAddressParts(SDNode *Op, SDValue &Base,
     // The constants that can be encoded in the THeadMemIdx instructions
     // are of the form (sign_extend(imm5) << imm2).
     bool isLegalIndexedOffset = false;
-    for (unsigned i = 0; i < 4; i++)
-      if (isInt<5>(RHSC >> i) && ((RHSC % (1LL << i)) == 0)) {
+    if (Subtarget.hasVendorXTHeadMemIdx()) {
+      for (unsigned i = 0; i < 4; i++)
+        if (isInt<5>(RHSC >> i) && ((RHSC % (1LL << i)) == 0)) {
+          isLegalIndexedOffset = true;
+          break;
+        }
+    } else {
+      unsigned Width = Log2_64(MemVT.getScalarSizeInBits() / 8);
+      if (isInt<5>(RHSC >> Width) && ((RHSC % (1LL << Width)) == 0))
         isLegalIndexedOffset = true;
-        break;
-      }
+    }
 
     if (!isLegalIndexedOffset)
       return false;
@@ -23877,7 +23918,7 @@ bool RISCVTargetLowering::getPreIndexedAddressParts(SDNode *N, SDValue &Base,
   } else
     return false;
 
-  if (!getIndexedAddressParts(Ptr.getNode(), Base, Offset, AM, DAG))
+  if (!getIndexedAddressParts(Ptr.getNode(), Base, Offset, AM, VT, DAG))
     return false;
 
   AM = ISD::PRE_INC;
@@ -23920,7 +23961,7 @@ bool RISCVTargetLowering::getPostIndexedAddressParts(SDNode *N, SDNode *Op,
   } else
     return false;
 
-  if (!getIndexedAddressParts(Op, Base, Offset, AM, DAG))
+  if (!getIndexedAddressParts(Op, Base, Offset, AM, VT, DAG))
     return false;
   // Post-indexing updates the base, so it's not a valid transform
   // if that's not the same as the load's pointer.

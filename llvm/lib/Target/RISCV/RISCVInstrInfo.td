@@ -520,8 +520,13 @@ def AddrRegImm : ComplexPattern<iPTR, 2, "SelectAddrRegImm">;
 
 class AddrRegRegScale<int N>
     : ComplexPattern<iPTR, 3, "SelectAddrRegRegScale<"#N#">">;
+class AddrRegReg<int N>
+    : ComplexPattern<iPTR, 2, "SelectAddrRegRegFixedScale<"#N#">">;
 class AddrRegZextRegScale<int N>
     : ComplexPattern<i64, 3, "SelectAddrRegZextRegScale<"#N#", 32>",
+                     [], [], 10>;
+class AddrRegZextReg<int N>
+    : ComplexPattern<i64, 2, "SelectAddrRegZextRegFixedScale<"#N#", 32>",
                      [], [], 10>;
 
 // Return the negation of an immediate value.

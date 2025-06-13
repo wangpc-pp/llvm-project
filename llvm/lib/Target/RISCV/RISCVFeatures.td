@@ -1643,17 +1643,77 @@ def HasVendorXAndesVDot
                          "'XAndesVDot' (Andes Vector Dot Product Extension)">;
 
 // ByteDance Experimental Extensions
-def FeatureStdExtZilsx
-    : RISCVExtension<1, 0, "Index Load/Store for Integer">;
-def HasStdExtZilsx
-    : Predicate<"Subtarget->hasStdExtZilsx()">,
-      AssemblerPredicate<(all_of FeatureStdExtZilsx), "'Zilsx' (Index Load/Store for Integer)">;
+def FeatureStdExtZilx
+    : RISCVExtension<1, 0, "Index Load for Integer">;
+def HasStdExtZilx
+    : Predicate<"Subtarget->hasStdExtZilx()">,
+      AssemblerPredicate<(all_of FeatureStdExtZilx), "'Zilx' (Index Load for Integer)">;
 
-def FeatureStdExtZflsx
-    : RISCVExtension<1, 0, "Index Load/Store for Floating-Point">;
-def HasStdExtZflsx
-    : Predicate<"Subtarget->hasStdExtZflsx()">,
-      AssemblerPredicate<(all_of FeatureStdExtZflsx), "'Zflsx' (Index Load/Store for Floating-Point)">;
+def FeatureStdExtZisx
+    : RISCVExtension<1, 0, "Index Store for Integer">;
+def HasStdExtZisx
+    : Predicate<"Subtarget->hasStdExtZisx()">,
+      AssemblerPredicate<(all_of FeatureStdExtZisx), "'Zisx' (Index Store for Integer)">;
+
+def FeatureStdExtZilxib
+    : RISCVExtension<1, 0, "Pre-Increment Load for Integer">;
+def HasStdExtZilxib
+    : Predicate<"Subtarget->hasStdExtZilxib()">,
+      AssemblerPredicate<(all_of FeatureStdExtZilxib), "'Zilxib' (Pre-Increment Load for Integer)">;
+
+def FeatureStdExtZilxia
+    : RISCVExtension<1, 0, "Post-Increment Load for Integer">;
+def HasStdExtZilxia
+    : Predicate<"Subtarget->hasStdExtZilxia()">,
+      AssemblerPredicate<(all_of FeatureStdExtZilxia), "'Zilxia' (Post-Increment Load for Integer)">;
+
+def FeatureStdExtZisxib
+    : RISCVExtension<1, 0, "Pre-Increment Store for Integer">;
+def HasStdExtZisxib
+    : Predicate<"Subtarget->hasStdExtZisxib()">,
+      AssemblerPredicate<(all_of FeatureStdExtZisxib), "'Zisxib' (Pre-Increment Store for Integer)">;
+
+def FeatureStdExtZisxia
+    : RISCVExtension<1, 0, "Post-Increment Store for Integer">;
+def HasStdExtZisxia
+    : Predicate<"Subtarget->hasStdExtZisxia()">,
+      AssemblerPredicate<(all_of FeatureStdExtZisxia), "'Zisxia' (Post-Increment Store for Integer)">;
+
+def FeatureStdExtZflx
+    : RISCVExtension<1, 0, "Index Load for Floating-Point">;
+def HasStdExtZflx
+    : Predicate<"Subtarget->hasStdExtZflx()">,
+      AssemblerPredicate<(all_of FeatureStdExtZflx), "'Zflx' (Index Load for Floating-Point)">;
+
+def FeatureStdExtZfsx
+    : RISCVExtension<1, 0, "Index Store for Floating-Point">;
+def HasStdExtZfsx
+    : Predicate<"Subtarget->hasStdExtZfsx()">,
+      AssemblerPredicate<(all_of FeatureStdExtZfsx), "'Zfsx' (Index Store for Floating-Point)">;
+
+def FeatureStdExtZflxib
+    : RISCVExtension<1, 0, "Pre-Increment Load for Floating-Point">;
+def HasStdExtZflxib
+    : Predicate<"Subtarget->hasStdExtZflxib()">,
+      AssemblerPredicate<(all_of FeatureStdExtZflxib), "'Zflxib' (Pre-Increment Load for Floating-Point)">;
+
+def FeatureStdExtZflxia
+    : RISCVExtension<1, 0, "Post-Increment Load for Floating-Point">;
+def HasStdExtZflxia
+    : Predicate<"Subtarget->hasStdExtZflxia()">,
+      AssemblerPredicate<(all_of FeatureStdExtZflxia), "'Zflxia' (Post-Increment Load for Floating-Point)">;
+
+def FeatureStdExtZfsxib
+    : RISCVExtension<1, 0, "Pre-Increment Store for Floating-Point">;
+def HasStdExtZfsxib
+    : Predicate<"Subtarget->hasStdExtZfsxib()">,
+      AssemblerPredicate<(all_of FeatureStdExtZfsxib), "'Zfsxib' (Pre-Increment Store for Floating-Point)">;
+
+def FeatureStdExtZfsxia
+    : RISCVExtension<1, 0, "Post-Increment Store for Floating-Point">;
+def HasStdExtZfsxia
+    : Predicate<"Subtarget->hasStdExtZfsxia()">,
+      AssemblerPredicate<(all_of FeatureStdExtZfsxia), "'Zfsxia' (Post-Increment Store for Floating-Point)">;
 
 //===----------------------------------------------------------------------===//
 // LLVM specific features and extensions

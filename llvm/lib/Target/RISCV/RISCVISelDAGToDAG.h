@@ -16,6 +16,7 @@
 #include "RISCV.h"
 #include "RISCVTargetMachine.h"
 #include "llvm/CodeGen/SelectionDAGISel.h"
+#include "llvm/CodeGen/SelectionDAGNodes.h"
 #include "llvm/Support/KnownBits.h"
 
 // RISC-V specific code to select RISC-V machine instructions for
@@ -50,23 +51,50 @@ public:
   bool SelectAddrRegImm9(SDValue Addr, SDValue &Base, SDValue &Offset);
   bool SelectAddrRegImmLsb00000(SDValue Addr, SDValue &Base, SDValue &Offset);
 
-  bool SelectAddrRegRegScale(SDValue Addr, unsigned MaxShiftAmount,
+  bool SelectAddrRegRegScale(SDValue Addr, ArrayRef<unsigned> Amounts,
                              SDValue &Base, SDValue &Index, SDValue &Scale);
+
+  template <unsigned ShiftAmount>
+  bool SelectAddrRegRegFixedScale(SDValue Addr, SDValue &Base, SDValue &Index) {
+    SDValue Scale;
+    if (!SelectAddrRegRegScale(Addr, ShiftAmount, Base, Index, Scale))
+      return false;
+    assert(Scale->getAsZExtVal() == ShiftAmount &&
+           "ShiftAmount doesn't match!");
+    return true;
+  }
 
   template <unsigned MaxShift>
   bool SelectAddrRegRegScale(SDValue Addr, SDValue &Base, SDValue &Index,
                              SDValue &Scale) {
-    return SelectAddrRegRegScale(Addr, MaxShift, Base, Index, Scale);
+    SmallVector<unsigned, MaxShift> Amounts;
+    for (unsigned I = 0; I <= MaxShift; I++)
+      Amounts.push_back(I);
+    return SelectAddrRegRegScale(Addr, Amounts, Base, Index, Scale);
   }
 
-  bool SelectAddrRegZextRegScale(SDValue Addr, unsigned MaxShiftAmount,
+  bool SelectAddrRegZextRegScale(SDValue Addr, ArrayRef<unsigned> Amounts,
                                  unsigned Bits, SDValue &Base, SDValue &Index,
                                  SDValue &Scale);
+
+  template <unsigned ShiftAmount, unsigned Bits>
+  bool SelectAddrRegZextRegFixedScale(SDValue Addr, SDValue &Base,
+                                      SDValue &Index) {
+    SDValue Scale;
+    if (!SelectAddrRegZextRegScale(Addr, ShiftAmount, Bits, Base, Index, Scale))
+      return false;
+    assert(Scale->getAsZExtVal() == ShiftAmount &&
+           "ShiftAmount doesn't match!");
+    return true;
+  }
 
   template <unsigned MaxShift, unsigned Bits>
   bool SelectAddrRegZextRegScale(SDValue Addr, SDValue &Base, SDValue &Index,
                                  SDValue &Scale) {
-    return SelectAddrRegZextRegScale(Addr, MaxShift, Bits, Base, Index, Scale);
+    SmallVector<unsigned, MaxShift> Amounts;
+    for (unsigned I = 0; I <= MaxShift; I++)
+      Amounts.push_back(I);
+    return SelectAddrRegZextRegScale(Addr, Amounts, Bits, Base, Index, Scale);
   }
 
   bool SelectAddrRegReg(SDValue Addr, SDValue &Base, SDValue &Offset);
@@ -128,6 +156,11 @@ public:
   bool hasAllWUsers(SDNode *Node) const { return hasAllNBitUsers(Node, 32); }
 
   bool selectSimm5Shl2(SDValue N, SDValue &Simm5, SDValue &Shl2);
+
+  bool selectSimm5(SDValue N, SDValue &Simm5, unsigned Width);
+  template <unsigned Width> bool selectSimm5(SDValue N, SDValue &Simm5) {
+    return selectSimm5(N, Simm5, Width);
+  }
 
   bool selectVLOp(SDValue N, SDValue &VL);
 

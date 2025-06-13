@@ -252,6 +252,12 @@
 ; CHECK-NEXT:   zfh                              - 'Zfh' (Half-Precision Floating-Point).
 ; CHECK-NEXT:   zfhmin                           - 'Zfhmin' (Half-Precision Floating-Point Minimal).
 ; CHECK-NEXT:   zfinx                            - 'Zfinx' (Float in Integer).
+; CHECK-NEXT:   zflx                             - 'Zflx' (Index Load for Floating-Point).
+; CHECK-NEXT:   zflxia                           - 'Zflxia' (Post-Increment Load for Floating-Point).
+; CHECK-NEXT:   zflxib                           - 'Zflxib' (Pre-Increment Load for Floating-Point).
+; CHECK-NEXT:   zfsx                             - 'Zfsx' (Index Store for Floating-Point).
+; CHECK-NEXT:   zfsxia                           - 'Zfsxia' (Post-Increment Store for Floating-Point).
+; CHECK-NEXT:   zfsxib                           - 'Zfsxib' (Pre-Increment Store for Floating-Point).
 ; CHECK-NEXT:   zhinx                            - 'Zhinx' (Half Float in Integer).
 ; CHECK-NEXT:   zhinxmin                         - 'Zhinxmin' (Half Float in Integer Minimal).
 ; CHECK-NEXT:   zic64b                           - 'Zic64b' (Cache Block Size Is 64 Bytes).
@@ -271,7 +277,13 @@
 ; CHECK-NEXT:   zihintpause                      - 'Zihintpause' (Pause Hint).
 ; CHECK-NEXT:   zihpm                            - 'Zihpm' (Hardware Performance Counters).
 ; CHECK-NEXT:   zilsd                            - 'Zilsd' (Load/Store Pair Instructions).
+; CHECK-NEXT:   zilx                             - 'Zilx' (Index Load for Integer).
+; CHECK-NEXT:   zilxia                           - 'Zilxia' (Post-Increment Load for Integer).
+; CHECK-NEXT:   zilxib                           - 'Zilxib' (Pre-Increment Load for Integer).
 ; CHECK-NEXT:   zimop                            - 'Zimop' (May-Be-Operations).
+; CHECK-NEXT:   zisx                             - 'Zisx' (Index Store for Integer).
+; CHECK-NEXT:   zisxia                           - 'Zisxia' (Post-Increment Store for Integer).
+; CHECK-NEXT:   zisxib                           - 'Zisxib' (Pre-Increment Store for Integer).
 ; CHECK-NEXT:   zk                               - 'Zk' (Standard scalar cryptography extension).
 ; CHECK-NEXT:   zkn                              - 'Zkn' (NIST Algorithm Suite).
 ; CHECK-NEXT:   zknd                             - 'Zknd' (NIST Suite: AES Decryption).

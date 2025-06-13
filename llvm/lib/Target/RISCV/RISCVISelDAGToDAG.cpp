@@ -35,9 +35,6 @@ static cl::opt<bool> UsePseudoMovImm(
              "constant materialization"),
     cl::init(false));
 
-#define GET_DAGISEL_BODY RISCVDAGToDAGISel
-#include "RISCVGenDAGISel.inc"
-
 void RISCVDAGToDAGISel::PreprocessISelDAG() {
   SelectionDAG::allnodes_iterator Position = CurDAG->allnodes_end();
 
@@ -822,7 +819,8 @@ bool RISCVDAGToDAGISel::tryUnsignedBitfieldInsertInZero(SDNode *Node,
 
 bool RISCVDAGToDAGISel::tryIndexedLoad(SDNode *Node) {
   // Target does not support indexed loads.
-  if (!Subtarget->hasVendorXTHeadMemIdx())
+  if (!Subtarget->hasVendorXTHeadMemIdx() && !Subtarget->hasStdExtZilxia() &&
+      !Subtarget->hasStdExtZilxib())
     return false;
 
   LoadSDNode *Ld = cast<LoadSDNode>(Node);
@@ -844,40 +842,81 @@ bool RISCVDAGToDAGISel::tryIndexedLoad(SDNode *Node) {
   // The constants that can be encoded in the THeadMemIdx instructions
   // are of the form (sign_extend(imm5) << imm2).
   unsigned Shift;
-  for (Shift = 0; Shift < 4; Shift++)
-    if (isInt<5>(Offset >> Shift) && ((Offset % (1LL << Shift)) == 0))
-      break;
+  if (Subtarget->hasVendorXTHeadMemIdx()) {
+    for (Shift = 0; Shift < 4; Shift++)
+      if (isInt<5>(Offset >> Shift) && ((Offset % (1LL << Shift)) == 0))
+        break;
 
-  // Constant cannot be encoded.
-  if (Shift == 4)
-    return false;
+    // Constant cannot be encoded.
+    if (Shift == 4)
+      return false;
+  } else {
+    Shift = Log2_64(LoadVT.getScalarSizeInBits() / 8);
+    if (!isInt<5>(Offset >> Shift) || ((Offset % (1LL << Shift)) != 0))
+      return false;
+  }
 
   bool IsZExt = (Ld->getExtensionType() == ISD::ZEXTLOAD);
-  unsigned Opcode;
-  if (LoadVT == MVT::i8 && IsPre)
-    Opcode = IsZExt ? RISCV::TH_LBUIB : RISCV::TH_LBIB;
-  else if (LoadVT == MVT::i8 && IsPost)
-    Opcode = IsZExt ? RISCV::TH_LBUIA : RISCV::TH_LBIA;
-  else if (LoadVT == MVT::i16 && IsPre)
-    Opcode = IsZExt ? RISCV::TH_LHUIB : RISCV::TH_LHIB;
-  else if (LoadVT == MVT::i16 && IsPost)
-    Opcode = IsZExt ? RISCV::TH_LHUIA : RISCV::TH_LHIA;
-  else if (LoadVT == MVT::i32 && IsPre)
-    Opcode = IsZExt ? RISCV::TH_LWUIB : RISCV::TH_LWIB;
-  else if (LoadVT == MVT::i32 && IsPost)
-    Opcode = IsZExt ? RISCV::TH_LWUIA : RISCV::TH_LWIA;
-  else if (LoadVT == MVT::i64 && IsPre)
-    Opcode = RISCV::TH_LDIB;
-  else if (LoadVT == MVT::i64 && IsPost)
-    Opcode = RISCV::TH_LDIA;
-  else
+  auto getXTHeadMemIdxOpcode = [&](EVT LoadVT, bool IsPre,
+                                   bool IsPost) -> unsigned {
+    if (LoadVT == MVT::i8 && IsPre)
+      return IsZExt ? RISCV::TH_LBUIB : RISCV::TH_LBIB;
+    else if (LoadVT == MVT::i8 && IsPost)
+      return IsZExt ? RISCV::TH_LBUIA : RISCV::TH_LBIA;
+    else if (LoadVT == MVT::i16 && IsPre)
+      return IsZExt ? RISCV::TH_LHUIB : RISCV::TH_LHIB;
+    else if (LoadVT == MVT::i16 && IsPost)
+      return IsZExt ? RISCV::TH_LHUIA : RISCV::TH_LHIA;
+    else if (LoadVT == MVT::i32 && IsPre)
+      return IsZExt ? RISCV::TH_LWUIB : RISCV::TH_LWIB;
+    else if (LoadVT == MVT::i32 && IsPost)
+      return IsZExt ? RISCV::TH_LWUIA : RISCV::TH_LWIA;
+    else if (LoadVT == MVT::i64 && IsPre)
+      return RISCV::TH_LDIB;
+    else if (LoadVT == MVT::i64 && IsPost)
+      return RISCV::TH_LDIA;
+    else
+      return 0;
+  };
+
+  auto getStdZiIncOpcode = [&](EVT LoadVT, bool IsPre,
+                               bool IsPost) -> unsigned {
+    if (LoadVT == MVT::i8 && IsPre)
+      return IsZExt ? RISCV::LBUIB : RISCV::LBIB;
+    else if (LoadVT == MVT::i8 && IsPost)
+      return IsZExt ? RISCV::LBUIA : RISCV::LBIA;
+    else if (LoadVT == MVT::i16 && IsPre)
+      return IsZExt ? RISCV::LHUIB : RISCV::LHIB;
+    else if (LoadVT == MVT::i16 && IsPost)
+      return IsZExt ? RISCV::LHUIA : RISCV::LHIA;
+    else if (LoadVT == MVT::i32 && IsPre)
+      return IsZExt ? RISCV::LWUIB : RISCV::LWIB;
+    else if (LoadVT == MVT::i32 && IsPost)
+      return IsZExt ? RISCV::LWUIA : RISCV::LWIA;
+    else if (LoadVT == MVT::i64 && IsPre)
+      return RISCV::LDIB;
+    else if (LoadVT == MVT::i64 && IsPost)
+      return RISCV::LDIA;
+    else
+      return 0;
+  };
+
+  unsigned Opcode = Subtarget->hasVendorXTHeadMemIdx()
+                        ? getXTHeadMemIdxOpcode(LoadVT, IsPre, IsPost)
+                        : getStdZiIncOpcode(LoadVT, IsPre, IsPost);
+  if (!Opcode)
     return false;
 
   EVT Ty = Ld->getOffset().getValueType();
-  SDValue Ops[] = {
-      Ld->getBasePtr(),
-      CurDAG->getSignedTargetConstant(Offset >> Shift, SDLoc(Node), Ty),
-      CurDAG->getTargetConstant(Shift, SDLoc(Node), Ty), Ld->getChain()};
+
+  SmallVector<SDValue, 4> Ops;
+  Ops.push_back(Ld->getBasePtr());
+  Ops.push_back(
+      CurDAG->getSignedTargetConstant(Offset >> Shift, SDLoc(Node), Ty));
+  if (Subtarget->hasVendorXTHeadMemIdx())
+    Ops.push_back(CurDAG->getTargetConstant(Shift, SDLoc(Node), Ty));
+  Ops.push_back(Ld->getChain());
+
   SDNode *New = CurDAG->getMachineNode(Opcode, SDLoc(Node), Ld->getValueType(0),
                                        Ld->getValueType(1), MVT::Other, Ops);
 
@@ -3044,7 +3083,8 @@ static bool isRegRegScaleLoadOrStore(SDNode *User, SDValue Add,
     return false;
   EVT VT = cast<MemSDNode>(User)->getMemoryVT();
   if (!(VT.isScalarInteger() &&
-        (Subtarget.hasVendorXTHeadMemIdx() || Subtarget.hasVendorXqcisls())) &&
+        (Subtarget.hasStdExtZilx() || Subtarget.hasStdExtZisx() ||
+         Subtarget.hasVendorXTHeadMemIdx() || Subtarget.hasVendorXqcisls())) &&
       !((VT == MVT::f32 || VT == MVT::f64) &&
         Subtarget.hasVendorXTHeadFMemIdx()))
     return false;
@@ -3095,7 +3135,7 @@ static bool isWorthFoldingIntoRegRegScale(const RISCVSubtarget &Subtarget,
 }
 
 bool RISCVDAGToDAGISel::SelectAddrRegRegScale(SDValue Addr,
-                                              unsigned MaxShiftAmount,
+                                              ArrayRef<unsigned> Amounts,
                                               SDValue &Base, SDValue &Index,
                                               SDValue &Scale) {
   if (Addr.getOpcode() != ISD::ADD)
@@ -3104,14 +3144,14 @@ bool RISCVDAGToDAGISel::SelectAddrRegRegScale(SDValue Addr,
   SDValue RHS = Addr.getOperand(1);
 
   EVT VT = Addr.getSimpleValueType();
-  auto SelectShl = [this, VT, MaxShiftAmount](SDValue N, SDValue &Index,
-                                              SDValue &Shift) {
+  auto SelectShl = [this, VT, Amounts](SDValue N, SDValue &Index,
+                                       SDValue &Shift) {
     if (N.getOpcode() != ISD::SHL || !isa<ConstantSDNode>(N.getOperand(1)))
       return false;
 
     // Only match shifts by a value in range [0, MaxShiftAmount].
     unsigned ShiftAmt = N.getConstantOperandVal(1);
-    if (ShiftAmt > MaxShiftAmount)
+    if (!llvm::is_contained(Amounts, ShiftAmt))
       return false;
 
     Index = N.getOperand(0);
@@ -3171,6 +3211,10 @@ bool RISCVDAGToDAGISel::SelectAddrRegRegScale(SDValue Addr,
   if (!isWorthFoldingIntoRegRegScale(*Subtarget, Addr))
     return false;
 
+  // Bail out if 0 is not in candicate shift amounts.
+  if (!llvm::is_contained(Amounts, 0))
+    return false;
+
   Base = LHS;
   Index = RHS;
   Scale = CurDAG->getTargetConstant(0, SDLoc(Addr), VT);
@@ -3178,11 +3222,11 @@ bool RISCVDAGToDAGISel::SelectAddrRegRegScale(SDValue Addr,
 }
 
 bool RISCVDAGToDAGISel::SelectAddrRegZextRegScale(SDValue Addr,
-                                                  unsigned MaxShiftAmount,
+                                                  ArrayRef<unsigned> Amounts,
                                                   unsigned Bits, SDValue &Base,
                                                   SDValue &Index,
                                                   SDValue &Scale) {
-  if (!SelectAddrRegRegScale(Addr, MaxShiftAmount, Base, Index, Scale))
+  if (!SelectAddrRegRegScale(Addr, Amounts, Base, Index, Scale))
     return false;
 
   if (Index.getOpcode() == ISD::AND) {
@@ -3906,6 +3950,21 @@ bool RISCVDAGToDAGISel::selectSimm5Shl2(SDValue N, SDValue &Simm5,
       Shl2 = CurDAG->getTargetConstant(Shift, SDLoc(N), VT);
       return true;
     }
+  }
+
+  return false;
+}
+
+bool RISCVDAGToDAGISel::selectSimm5(SDValue N, SDValue &Simm5, unsigned Width) {
+  auto *C = dyn_cast<ConstantSDNode>(N);
+  if (!C)
+    return false;
+
+  int64_t Offset = C->getSExtValue();
+  if (isInt<5>(Offset >> Width) && ((Offset % (1LL << Width)) == 0)) {
+    EVT VT = N->getValueType(0);
+    Simm5 = CurDAG->getSignedTargetConstant(Offset >> Width, SDLoc(N), VT);
+    return true;
   }
 
   return false;
