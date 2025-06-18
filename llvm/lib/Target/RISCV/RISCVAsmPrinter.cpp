@@ -50,6 +50,124 @@ using namespace llvm;
 STATISTIC(RISCVNumInstrsCompressed,
           "Number of RISC-V Compressed instructions emitted");
 
+STATISTIC(RISCVNumInstrsIndexLoad,
+          "Number of RISC-V THead Index Load instructions emitted");
+STATISTIC(RISCVNumInstrsSExtIndexLoad,
+          "Number of RISC-V THead SExt Index Load instructions emitted");
+STATISTIC(RISCVNumInstrsZExtIndexLoad,
+          "Number of RISC-V THead ZExt Index Load instructions emitted");
+STATISTIC(RISCVNumInstrsIndexLoadMismatch,
+          "Number of RISC-V THead Index Load Mismatch instructions emitted");
+STATISTIC(RISCVNumInstrsSExtIndexLoadMismatch,
+          "Number of RISC-V THead SExt Index Load Mismatch instructions emitted");
+STATISTIC(RISCVNumInstrsZExtIndexLoadMismatch,
+          "Number of RISC-V THead ZExt Index Load Mismatch instructions emitted");
+
+STATISTIC(RISCVNumInstrsUnscaledIndexLoad,
+          "Number of RISC-V THead Unscaled Index Load instructions emitted");
+STATISTIC(RISCVNumInstrsUnscaledSExtIndexLoad,
+          "Number of RISC-V THead Unscaled SExt Index Load instructions emitted");
+STATISTIC(RISCVNumInstrsUnscaledZExtIndexLoad,
+          "Number of RISC-V THead Unscaled ZExt Index Load instructions emitted");
+STATISTIC(RISCVNumInstrsUnscaledIndexLoadMismatch,
+          "Number of RISC-V THead Unscaled Index Load Mismatch instructions emitted");
+STATISTIC(RISCVNumInstrsUnscaledSExtIndexLoadMismatch,
+          "Number of RISC-V THead Unscaled SExt Index Load Mismatch instructions emitted");
+STATISTIC(RISCVNumInstrsUnscaledZExtIndexLoadMismatch,
+          "Number of RISC-V THead Unscaled ZExt Index Load Mismatch instructions emitted");
+
+STATISTIC(RISCVNumInstrsIndexStore,
+          "Number of RISC-V THead Index Store instructions emitted");
+STATISTIC(RISCVNumInstrsSExtIndexStore,
+          "Number of RISC-V THead SExt Index Store instructions emitted");
+STATISTIC(RISCVNumInstrsZExtIndexStore,
+          "Number of RISC-V THead ZExt Index Store instructions emitted");
+STATISTIC(RISCVNumInstrsIndexStoreMismatch,
+          "Number of RISC-V THead Index Store Mismatch instructions emitted");
+STATISTIC(RISCVNumInstrsSExtIndexStoreMismatch,
+          "Number of RISC-V THead SExt Index Store Mismatch instructions emitted");
+STATISTIC(RISCVNumInstrsZExtIndexStoreMismatch,
+          "Number of RISC-V THead ZExt Index Store Mismatch instructions emitted");
+
+STATISTIC(RISCVNumInstrsUnscaledIndexStore,
+          "Number of RISC-V THead Unscaled Index Store instructions emitted");
+STATISTIC(RISCVNumInstrsUnscaledSExtIndexStore,
+          "Number of RISC-V THead Unscaled SExt Index Store instructions emitted");
+STATISTIC(RISCVNumInstrsUnscaledZExtIndexStore,
+          "Number of RISC-V THead Unscaled ZExt Index Store instructions emitted");
+STATISTIC(RISCVNumInstrsUnscaledIndexStoreMismatch,
+          "Number of RISC-V THead Unscaled Index Store Mismatch instructions emitted");
+STATISTIC(RISCVNumInstrsUnscaledSExtIndexStoreMismatch,
+          "Number of RISC-V THead Unscaled SExt Index Store Mismatch instructions emitted");
+STATISTIC(RISCVNumInstrsUnscaledZExtIndexStoreMismatch,
+          "Number of RISC-V THead Unscaled ZExt Index Store Mismatch instructions emitted");
+
+// Pre Increment
+STATISTIC(RISCVNumInstrsPreIndexLoad,
+          "Number of RISC-V THead Pre-Inc Index Load instructions emitted");
+STATISTIC(RISCVNumInstrsPreIndexLoadMismatch,
+          "Number of RISC-V THead Pre-Inc Index Load Mismatch instructions emitted");
+STATISTIC(RISCVNumInstrsPreIndexStore,
+          "Number of RISC-V THead Pre-Inc Index Store instructions emitted");
+STATISTIC(RISCVNumInstrsPreIndexStoreMismatch,
+          "Number of RISC-V THead Pre-Inc Index Store Mismatch instructions emitted");
+
+// Post Increment
+STATISTIC(RISCVNumInstrsPostIndexLoad,
+          "Number of RISC-V THead Post-Inc Index Load instructions emitted");
+STATISTIC(RISCVNumInstrsPostIndexLoadMismatch,
+          "Number of RISC-V THead Post-Inc Index Load Mismatch instructions emitted");
+STATISTIC(RISCVNumInstrsPostIndexStore,
+          "Number of RISC-V THead Post-Inc Index Store instructions emitted");
+STATISTIC(RISCVNumInstrsPostIndexStoreMismatch,
+          "Number of RISC-V THead Post-Inc Index Store Mismatch instructions emitted");
+
+STATISTIC(RISCVNumInstrsPreIndexLoadScale0, "");
+STATISTIC(RISCVNumInstrsPreIndexLoadScale1, "");
+STATISTIC(RISCVNumInstrsPreIndexLoadScale2, "");
+STATISTIC(RISCVNumInstrsPreIndexLoadScale3, "");
+STATISTIC(RISCVNumInstrsPreIndexStoreScale0, "");
+STATISTIC(RISCVNumInstrsPreIndexStoreScale1, "");
+STATISTIC(RISCVNumInstrsPreIndexStoreScale2, "");
+STATISTIC(RISCVNumInstrsPreIndexStoreScale3, "");
+STATISTIC(RISCVNumInstrsPostIndexLoadScale0, "");
+STATISTIC(RISCVNumInstrsPostIndexLoadScale1, "");
+STATISTIC(RISCVNumInstrsPostIndexLoadScale2, "");
+STATISTIC(RISCVNumInstrsPostIndexLoadScale3, "");
+STATISTIC(RISCVNumInstrsPostIndexStoreScale0, "");
+STATISTIC(RISCVNumInstrsPostIndexStoreScale1, "");
+STATISTIC(RISCVNumInstrsPostIndexStoreScale2, "");
+STATISTIC(RISCVNumInstrsPostIndexStoreScale3, "");
+
+STATISTIC(RISCVNumInstrsPreIndexLoadOffset1, "");
+STATISTIC(RISCVNumInstrsPreIndexLoadOffset2, "");
+STATISTIC(RISCVNumInstrsPreIndexLoadOffset3, "");
+STATISTIC(RISCVNumInstrsPreIndexLoadOffset4, "");
+STATISTIC(RISCVNumInstrsPreIndexLoadOffset5, "");
+STATISTIC(RISCVNumInstrsPreIndexLoadOffset6, "");
+STATISTIC(RISCVNumInstrsPreIndexLoadOffset7, "");
+STATISTIC(RISCVNumInstrsPreIndexStoreOffset1, "");
+STATISTIC(RISCVNumInstrsPreIndexStoreOffset2, "");
+STATISTIC(RISCVNumInstrsPreIndexStoreOffset3, "");
+STATISTIC(RISCVNumInstrsPreIndexStoreOffset4, "");
+STATISTIC(RISCVNumInstrsPreIndexStoreOffset5, "");
+STATISTIC(RISCVNumInstrsPreIndexStoreOffset6, "");
+STATISTIC(RISCVNumInstrsPreIndexStoreOffset7, "");
+
+STATISTIC(RISCVNumInstrsPostIndexLoadOffset1, "");
+STATISTIC(RISCVNumInstrsPostIndexLoadOffset2, "");
+STATISTIC(RISCVNumInstrsPostIndexLoadOffset3, "");
+STATISTIC(RISCVNumInstrsPostIndexLoadOffset4, "");
+STATISTIC(RISCVNumInstrsPostIndexLoadOffset5, "");
+STATISTIC(RISCVNumInstrsPostIndexLoadOffset6, "");
+STATISTIC(RISCVNumInstrsPostIndexLoadOffset7, "");
+STATISTIC(RISCVNumInstrsPostIndexStoreOffset1, "");
+STATISTIC(RISCVNumInstrsPostIndexStoreOffset2, "");
+STATISTIC(RISCVNumInstrsPostIndexStoreOffset3, "");
+STATISTIC(RISCVNumInstrsPostIndexStoreOffset4, "");
+STATISTIC(RISCVNumInstrsPostIndexStoreOffset5, "");
+STATISTIC(RISCVNumInstrsPostIndexStoreOffset6, "");
+STATISTIC(RISCVNumInstrsPostIndexStoreOffset7, "");
 namespace llvm {
 extern const SubtargetFeatureKV RISCVFeatureKV[RISCV::NumSubtargetFeatures];
 } // namespace llvm
@@ -1172,7 +1290,331 @@ static bool lowerRISCVVMachineInstrToMCInst(const MachineInstr *MI,
   return true;
 }
 
+static void analyseIndexLoadStore(const MachineInstr *MI) {
+  // clang-format off
+  static unsigned SExtIndexLoadOpcodes[] = {
+    RISCV::TH_LRB,
+    RISCV::TH_LRBU,
+    RISCV::TH_LRH,
+    RISCV::TH_LRHU,
+    RISCV::TH_LRW,
+    RISCV::TH_LRWU,
+    RISCV::TH_LRD,
+  };
+
+  static unsigned ZExtIndexLoadOpcodes[] = {
+    RISCV::TH_LURB,
+    RISCV::TH_LURBU,
+    RISCV::TH_LURH,
+    RISCV::TH_LURHU,
+    RISCV::TH_LURW,
+    RISCV::TH_LURWU,
+    RISCV::TH_LURD,
+  };
+
+  static unsigned SExtIndexStoreOpcodes[] = {
+    RISCV::TH_SRB,
+    RISCV::TH_SRH,
+    RISCV::TH_SRW,
+    RISCV::TH_SRD,
+  };
+
+  static unsigned ZExtIndexStoreOpcodes[] = {
+    RISCV::TH_SURB,
+    RISCV::TH_SURH,
+    RISCV::TH_SURW,
+    RISCV::TH_SURD,
+  };
+  // clang-format on
+
+  auto IsSExtIndexLoad = [](unsigned Opcode) -> bool {
+    return llvm::is_contained(SExtIndexLoadOpcodes, Opcode);
+  };
+  auto IsZExtIndexLoad = [](unsigned Opcode) -> bool {
+    return llvm::is_contained(ZExtIndexLoadOpcodes, Opcode);
+  };
+  auto IsSExtIndexStore = [](unsigned Opcode) -> bool {
+    return llvm::is_contained(SExtIndexStoreOpcodes, Opcode);
+  };
+  auto IsZExtIndexStore = [](unsigned Opcode) -> bool {
+    return llvm::is_contained(ZExtIndexStoreOpcodes, Opcode);
+  };
+
+  // Mismatch if scale is not the same as the memory width.
+  auto IsMismatch = [](const MachineInstr *MI) -> bool {
+    if (!MI->hasOneMemOperand())
+      return false;
+
+    const MachineMemOperand *MemOp = *MI->memoperands_begin();
+    const MachineOperand &ScaleOp = MI->getOperand(3);
+    assert(ScaleOp.isImm() && "Scale should be imm!");
+    return MemOp->getSize() != (1 << ScaleOp.getImm());
+  };
+
+  // Unscaled if scale is 0.
+  auto IsUnscaled = [](const MachineInstr *MI) -> bool {
+    const MachineOperand &ScaleOp = MI->getOperand(3);
+    assert(ScaleOp.isImm() && "Scale should be imm!");
+    return ScaleOp.getImm() == 0;
+  };
+
+  auto PrintMismatch = [](const MachineInstr *MI) {
+    if (MI->getMF()->size() <= 3 && MI->getParent()->size() <= 10) {
+      errs() << "===================Mismatch case===================\n";
+      MI->print(errs());
+      MI->getMF()->print(errs());
+    }
+  };
+
+  unsigned Opcode = MI->getOpcode();
+  if (!IsSExtIndexLoad(Opcode) && !IsZExtIndexLoad(Opcode) &&
+      !IsSExtIndexStore(Opcode) && !IsZExtIndexStore(Opcode))
+    return;
+
+  bool Mismatch = IsMismatch(MI);
+  bool Unscaled = IsUnscaled(MI);
+  if (IsSExtIndexLoad(Opcode)) {
+    RISCVNumInstrsIndexLoad++;
+    RISCVNumInstrsSExtIndexLoad++;
+    if (Unscaled) {
+      RISCVNumInstrsUnscaledIndexLoad++;
+      RISCVNumInstrsUnscaledSExtIndexLoad++;
+    }
+    if (Mismatch) {
+      PrintMismatch(MI);
+      RISCVNumInstrsIndexLoadMismatch++;
+      RISCVNumInstrsSExtIndexLoadMismatch++;
+      if (Unscaled) {
+        RISCVNumInstrsUnscaledIndexLoadMismatch++;
+        RISCVNumInstrsUnscaledSExtIndexLoadMismatch++;
+      }
+    }
+  }
+
+  if (IsZExtIndexLoad(Opcode)) {
+    RISCVNumInstrsIndexLoad++;
+    RISCVNumInstrsZExtIndexLoad++;
+    if (Unscaled) {
+      RISCVNumInstrsUnscaledIndexLoad++;
+      RISCVNumInstrsUnscaledZExtIndexLoad++;
+    }
+    if (Mismatch) {
+      PrintMismatch(MI);
+      RISCVNumInstrsIndexLoadMismatch++;
+      RISCVNumInstrsZExtIndexLoadMismatch++;
+      if (Unscaled) {
+        RISCVNumInstrsUnscaledIndexLoadMismatch++;
+        RISCVNumInstrsUnscaledZExtIndexLoadMismatch++;
+      }
+    }
+  }
+
+  if (IsSExtIndexStore(Opcode)) {
+    RISCVNumInstrsIndexStore++;
+    RISCVNumInstrsSExtIndexStore++;
+    if (Unscaled) {
+      RISCVNumInstrsUnscaledIndexStore++;
+      RISCVNumInstrsUnscaledSExtIndexStore++;
+    }
+    if (Mismatch) {
+      PrintMismatch(MI);
+      RISCVNumInstrsIndexStoreMismatch++;
+      RISCVNumInstrsSExtIndexStoreMismatch++;
+      if (Unscaled) {
+        RISCVNumInstrsUnscaledIndexStoreMismatch++;
+        RISCVNumInstrsUnscaledSExtIndexStoreMismatch++;
+      }
+    }
+  }
+
+  if (IsZExtIndexStore(Opcode)) {
+    RISCVNumInstrsIndexStore++;
+    RISCVNumInstrsZExtIndexStore++;
+    if (Unscaled) {
+      RISCVNumInstrsUnscaledIndexStore++;
+      RISCVNumInstrsUnscaledZExtIndexStore++;
+    }
+    if (Mismatch) {
+      PrintMismatch(MI);
+      RISCVNumInstrsIndexStoreMismatch++;
+      RISCVNumInstrsZExtIndexStoreMismatch++;
+      if (Unscaled) {
+        RISCVNumInstrsUnscaledIndexStoreMismatch++;
+        RISCVNumInstrsUnscaledZExtIndexStoreMismatch++;
+      }
+    }
+  }
+}
+
+static void analysePrePostIndexLoadStore(const MachineInstr *MI) {
+  // clang-format off
+  // Pre Increment
+  static unsigned PreIndexLoadOpcodes[] = {
+    RISCV::TH_LBIB,
+    RISCV::TH_LBUIB,
+    RISCV::TH_LHIB,
+    RISCV::TH_LHUIB,
+    RISCV::TH_LWIB,
+    RISCV::TH_LWUIB,
+    RISCV::TH_LDIB,
+  };
+
+  static unsigned PreIndexStoreOpcodes[] = {
+    RISCV::TH_SBIB,
+    RISCV::TH_SHIB,
+    RISCV::TH_SWIB,
+    RISCV::TH_SDIB,
+  };
+
+  // Post Increment
+  static unsigned PostIndexLoadOpcodes[] = {
+    RISCV::TH_LBIA,
+    RISCV::TH_LBUIA,
+    RISCV::TH_LHIA,
+    RISCV::TH_LHUIA,
+    RISCV::TH_LWIA,
+    RISCV::TH_LWUIA,
+    RISCV::TH_LDIA,
+  };
+
+  static unsigned PostIndexStoreOpcodes[] = {
+    RISCV::TH_SBIA,
+    RISCV::TH_SHIA,
+    RISCV::TH_SWIA,
+    RISCV::TH_SDIA,
+  };
+  // clang-format on
+
+  auto IsPreIndexLoad = [](unsigned Opcode) -> bool {
+    return llvm::is_contained(PreIndexLoadOpcodes, Opcode);
+  };
+  auto IsPostIndexLoad = [](unsigned Opcode) -> bool {
+    return llvm::is_contained(PostIndexLoadOpcodes, Opcode);
+  };
+  auto IsPreIndexStore = [](unsigned Opcode) -> bool {
+    return llvm::is_contained(PreIndexStoreOpcodes, Opcode);
+  };
+  auto IsPostIndexStore = [](unsigned Opcode) -> bool {
+    return llvm::is_contained(PostIndexStoreOpcodes, Opcode);
+  };
+
+  // Mismatch if scale is not the same as the memory width.
+  auto IsMismatch = [](const MachineInstr *MI) -> bool {
+    if (!MI->hasOneMemOperand())
+      return false;
+
+    const MachineMemOperand *MemOp = *MI->memoperands_begin();
+    const MachineOperand &Offset = MI->getOperand(3);
+    const MachineOperand &ScaleOp = MI->getOperand(4);
+    assert(Offset.isImm() && "Offset should be imm!");
+    assert(ScaleOp.isImm() && "Scale should be imm!");
+    return (Offset.getImm() << ScaleOp.getImm()) %
+               MemOp->getSize().getValue() !=
+           0;
+  };
+
+  auto PrintMismatch = [](const MachineInstr *MI) {
+    if (MI->getMF()->size() <= 5) {
+      errs() << "===================Mismatch case===================\n";
+      MI->print(errs());
+      MI->getMF()->print(errs());
+    }
+  };
+
+#define ProfileScale(Statistic)                                                \
+  do {                                                                         \
+    switch (MI->getOperand(4).getImm()) {                                      \
+    case 0:                                                                    \
+      Statistic##0 ++;                                                         \
+      break;                                                                   \
+    case 1:                                                                    \
+      Statistic##1 ++;                                                         \
+      break;                                                                   \
+    case 2:                                                                    \
+      Statistic##2 ++;                                                         \
+      break;                                                                   \
+    case 3:                                                                    \
+      Statistic##3 ++;                                                         \
+      break;                                                                   \
+    default:                                                                   \
+      MI->print(errs());                                                       \
+      llvm_unreachable("Impossible value!");                                   \
+    }                                                                          \
+  } while (0)
+
+#define ProfileOffsetBits(Statistic, Bit, Offset)                              \
+  if (isInt<Bit>(Offset)) {                                                    \
+    Statistic##Bit++;                                                          \
+    break;                                                                     \
+  }
+
+#define ProfileOffset(Statistic)                                               \
+  do {                                                                         \
+    unsigned Offset = MI->getOperand(3).getImm()                               \
+                      << MI->getOperand(4).getImm();                           \
+    ProfileOffsetBits(Statistic, 1, Offset)                                   \
+    ProfileOffsetBits(Statistic, 2, Offset)                                   \
+    ProfileOffsetBits(Statistic, 3, Offset)                                   \
+    ProfileOffsetBits(Statistic, 4, Offset)                                   \
+    ProfileOffsetBits(Statistic, 5, Offset)                                   \
+    ProfileOffsetBits(Statistic, 6, Offset)                                   \
+    ProfileOffsetBits(Statistic, 7, Offset)                                   \
+  } while (0)
+
+  unsigned Opcode = MI->getOpcode();
+  if (!IsPreIndexLoad(Opcode) && !IsPostIndexLoad(Opcode) &&
+      !IsPreIndexStore(Opcode) && !IsPostIndexStore(Opcode))
+    return;
+
+  bool Mismatch = IsMismatch(MI);
+  if (IsPreIndexLoad(Opcode)) {
+    RISCVNumInstrsPreIndexLoad++;
+    ProfileScale(RISCVNumInstrsPreIndexLoadScale);
+    ProfileOffset(RISCVNumInstrsPreIndexLoadOffset);
+    if (Mismatch) {
+      PrintMismatch(MI);
+      RISCVNumInstrsPreIndexLoadMismatch++;
+    }
+  }
+
+  if (IsPreIndexStore(Opcode)) {
+    RISCVNumInstrsPreIndexStore++;
+    ProfileScale(RISCVNumInstrsPreIndexStoreScale);
+    ProfileOffset(RISCVNumInstrsPreIndexStoreOffset);
+    if (Mismatch) {
+      PrintMismatch(MI);
+      RISCVNumInstrsPreIndexStoreMismatch++;
+    }
+  }
+
+  if (IsPostIndexLoad(Opcode)) {
+    RISCVNumInstrsPostIndexLoad++;
+    ProfileScale(RISCVNumInstrsPostIndexLoadScale);
+    ProfileOffset(RISCVNumInstrsPostIndexLoadOffset);
+    if (Mismatch) {
+      PrintMismatch(MI);
+      RISCVNumInstrsPostIndexLoadMismatch++;
+    }
+  }
+
+  if (IsPostIndexStore(Opcode)) {
+    RISCVNumInstrsPostIndexStore++;
+    ProfileScale(RISCVNumInstrsPostIndexStoreScale);
+    ProfileOffset(RISCVNumInstrsPostIndexStoreOffset);
+    if (Mismatch) {
+      PrintMismatch(MI);
+      RISCVNumInstrsPostIndexStoreMismatch++;
+    }
+  }
+}
+
+static void analyseMI(const MachineInstr *MI) {
+  // analyseIndexLoadStore(MI);
+  analysePrePostIndexLoadStore(MI);
+}
+
 bool RISCVAsmPrinter::lowerToMCInst(const MachineInstr *MI, MCInst &OutMI) {
+  analyseMI(MI);
   if (lowerRISCVVMachineInstrToMCInst(MI, OutMI, STI))
     return false;
 
