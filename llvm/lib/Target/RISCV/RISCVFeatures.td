@@ -1141,6 +1141,18 @@ def HasVendorXTHeadBb : Predicate<"Subtarget->hasVendorXTHeadBb()">,
                         AssemblerPredicate<(all_of FeatureVendorXTHeadBb),
                             "'XTHeadBb' (T-Head basic bit-manipulation instructions)">;
 
+def FeatureVendorXTHeadBext
+    : RISCVExtension<1, 0,
+                     "T-Head bitfield extraction instructions">;
+def HasVendorXTHeadBext : Predicate<"Subtarget->hasVendorXTHeadBext()">,
+                        AssemblerPredicate<(all_of FeatureVendorXTHeadBext),
+                            "'XTHeadBext' (T-Head bitfield extraction instructions)">;
+
+def HasVendorXTHeadBbOrBext : Predicate<"Subtarget->hasVendorXTHeadBb() || Subtarget->hasVendorXTHeadBext()">,
+                        AssemblerPredicate<(any_of FeatureVendorXTHeadBb, FeatureVendorXTHeadBext),
+                            "'XTHeadBb' (T-Head basic bit-manipulation instructions) or"
+                            "'XTHeadBext' (T-Head bitfield extraction instructions)">;
+
 def FeatureVendorXTHeadBs
     : RISCVExtension<1, 0,
                      "T-Head single-bit instructions">;

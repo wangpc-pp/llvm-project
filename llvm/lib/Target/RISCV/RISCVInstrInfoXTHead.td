@@ -276,13 +276,16 @@ def TH_ADDSL : THShiftALU_rri<0b001, "th.addsl">,
 
 let Predicates = [HasVendorXTHeadBb] in {
 def TH_SRRI : THShift_ri<0b00010, 0b001, "th.srri">;
-def TH_EXT : THBitfieldExtract_rii<0b010, "th.ext">;
-def TH_EXTU : THBitfieldExtract_rii<0b011, "th.extu">;
 def TH_FF0 : THRev_r<0b10000, 0b10, "th.ff0">;
 def TH_FF1 : THRev_r<0b10000, 0b11, "th.ff1">;
 def TH_REV : THRev_r<0b10000, 0b01, "th.rev">;
 def TH_TSTNBZ : THRev_r<0b10000, 0b00, "th.tstnbz">;
 } // Predicates = [HasVendorXTHeadBb]
+
+let Predicates = [HasVendorXTHeadBbOrBext] in {
+def TH_EXT : THBitfieldExtract_rii<0b010, "th.ext">;
+def TH_EXTU : THBitfieldExtract_rii<0b011, "th.extu">;
+} // Predicates = [HasVendorXTHeadBbOrBext]
 
 let Predicates = [HasVendorXTHeadBb, IsRV64],
     IsSignExtendingOpW = 1 in {
@@ -580,13 +583,16 @@ def : PatGprImm<rotr, TH_SRRI, uimmlog2xlen>;
 // it can be implemented with th.srri by negating the immediate.
 def : Pat<(rotl (XLenVT GPR:$rs1), uimmlog2xlen:$shamt),
           (TH_SRRI GPR:$rs1, (ImmSubFromXLen uimmlog2xlen:$shamt))>;
-def : Pat<(sext_inreg (XLenVT GPR:$rs1), i16), (TH_EXT GPR:$rs1, 15, 0)>;
-def : Pat<(sext_inreg (XLenVT GPR:$rs1), i8), (TH_EXT GPR:$rs1, 7, 0)>;
-def : Pat<(sext_inreg (XLenVT GPR:$rs1), i1), (TH_EXT GPR:$rs1, 0, 0)>;
 def : PatGpr<ctlz, TH_FF1>;
 def : Pat<(XLenVT (ctlz (xor (XLenVT GPR:$rs1), -1))), (TH_FF0 GPR:$rs1)>;
 def : PatGpr<bswap, TH_REV>;
 } // Predicates = [HasVendorXTHeadBb]
+
+let Predicates = [HasVendorXTHeadBbOrBext] in {
+def : Pat<(sext_inreg (XLenVT GPR:$rs1), i16), (TH_EXT GPR:$rs1, 15, 0)>;
+def : Pat<(sext_inreg (XLenVT GPR:$rs1), i8), (TH_EXT GPR:$rs1, 7, 0)>;
+def : Pat<(sext_inreg (XLenVT GPR:$rs1), i1), (TH_EXT GPR:$rs1, 0, 0)>;
+} // Predicates = [HasVendorXTHeadBbOrBext]
 
 let Predicates = [HasVendorXTHeadBb, IsRV64] in {
 def : PatGprImm<riscv_rorw, TH_SRRIW, uimm5>;

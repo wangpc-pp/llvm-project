@@ -223,6 +223,7 @@
 ; CHECK-NEXT:   xsmtvdot                         - 'XSMTVDot' (SpacemiT Vector Dot Product Extension).
 ; CHECK-NEXT:   xtheadba                         - 'XTHeadBa' (T-Head address calculation instructions).
 ; CHECK-NEXT:   xtheadbb                         - 'XTHeadBb' (T-Head basic bit-manipulation instructions).
+; CHECK-NEXT:   xtheadbext                       - 'XTHeadBext' (T-Head bitfield extraction instructions).
 ; CHECK-NEXT:   xtheadbs                         - 'XTHeadBs' (T-Head single-bit instructions).
 ; CHECK-NEXT:   xtheadcmo                        - 'XTHeadCmo' (T-Head cache management instructions).
 ; CHECK-NEXT:   xtheadcondmov                    - 'XTHeadCondMov' (T-Head conditional move instructions).

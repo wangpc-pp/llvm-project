@@ -597,7 +597,7 @@ bool RISCVDAGToDAGISel::tryShrinkShlLogicImm(SDNode *Node) {
 bool RISCVDAGToDAGISel::trySignedBitfieldExtract(SDNode *Node) {
   unsigned Opc;
 
-  if (Subtarget->hasVendorXTHeadBb())
+  if (Subtarget->hasVendorXTHeadBb() || Subtarget->hasVendorXTHeadBext())
     Opc = RISCV::TH_EXT;
   else if (Subtarget->hasVendorXAndesPerf())
     Opc = RISCV::NDS_BFOS;
@@ -825,7 +825,7 @@ bool RISCVDAGToDAGISel::tryUnsignedBitfieldExtract(SDNode *Node,
                                                    unsigned Lsb) {
   unsigned Opc;
 
-  if (Subtarget->hasVendorXTHeadBb()) {
+  if (Subtarget->hasVendorXTHeadBb() || Subtarget->hasVendorXTHeadBext()) {
     Opc = RISCV::TH_EXTU;
   } else if (Subtarget->hasVendorXAndesPerf()) {
     Opc = RISCV::NDS_BFOZ;
@@ -1739,14 +1739,17 @@ void RISCVDAGToDAGISel::Select(SDNode *Node) {
         isInt<12>(C2) ||
         (C2 == UINT64_C(0xFFFF) && Subtarget->hasStdExtZbb());
     // With XTHeadBb, we can use TH.EXTU.
-    IsANDIOrZExt |= C2 == UINT64_C(0xFFFF) && Subtarget->hasVendorXTHeadBb();
+    IsANDIOrZExt |=
+        C2 == UINT64_C(0xFFFF) &&
+        (Subtarget->hasVendorXTHeadBb() || Subtarget->hasVendorXTHeadBext());
     if (IsANDIOrZExt && (isInt<12>(N1C->getSExtValue()) || !N0.hasOneUse()))
       break;
     // If this can be a ZEXT.w, don't do this if the ZEXT has multiple users or
     // the constant is a simm32.
     bool IsZExtW = C2 == UINT64_C(0xFFFFFFFF) && Subtarget->hasStdExtZba();
     // With XTHeadBb, we can use TH.EXTU.
-    IsZExtW |= C2 == UINT64_C(0xFFFFFFFF) && Subtarget->hasVendorXTHeadBb();
+    IsZExtW |= C2 == UINT64_C(0xFFFFFFFF) && (Subtarget->hasVendorXTHeadBb() ||
+                                              Subtarget->hasVendorXTHeadBext());
     if (IsZExtW && (isInt<32>(N1C->getSExtValue()) || !N0.hasOneUse()))
       break;
 
