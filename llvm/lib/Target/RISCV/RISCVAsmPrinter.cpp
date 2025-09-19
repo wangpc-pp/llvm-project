@@ -50,6 +50,83 @@ using namespace llvm;
 STATISTIC(RISCVNumInstrsCompressed,
           "Number of RISC-V Compressed instructions emitted");
 
+#define SEQ(ACTION, NAME)                                                              \
+  ACTION(NAME, 0)                                                               \
+  ACTION(NAME, 1)                                                               \
+  ACTION(NAME, 2)                                                               \
+  ACTION(NAME, 3)                                                               \
+  ACTION(NAME, 4)                                                               \
+  ACTION(NAME, 5)                                                               \
+  ACTION(NAME, 6)                                                               \
+  ACTION(NAME, 7)                                                               \
+  ACTION(NAME, 8)                                                               \
+  ACTION(NAME, 9)                                                               \
+  ACTION(NAME, 10)                                                              \
+  ACTION(NAME, 11)                                                              \
+  ACTION(NAME, 12)                                                              \
+  ACTION(NAME, 13)                                                              \
+  ACTION(NAME, 14)                                                              \
+  ACTION(NAME, 15)                                                              \
+  ACTION(NAME, 16)                                                              \
+  ACTION(NAME, 17)                                                              \
+  ACTION(NAME, 18)                                                              \
+  ACTION(NAME, 19)                                                              \
+  ACTION(NAME, 20)                                                              \
+  ACTION(NAME, 21)                                                              \
+  ACTION(NAME, 22)                                                              \
+  ACTION(NAME, 23)                                                              \
+  ACTION(NAME, 24)                                                              \
+  ACTION(NAME, 25)                                                              \
+  ACTION(NAME, 26)                                                              \
+  ACTION(NAME, 27)                                                              \
+  ACTION(NAME, 28)                                                              \
+  ACTION(NAME, 29)                                                              \
+  ACTION(NAME, 30)                                                              \
+  ACTION(NAME, 31)                                                              \
+  ACTION(NAME, 32)                                                              \
+  ACTION(NAME, 33)                                                              \
+  ACTION(NAME, 34)                                                              \
+  ACTION(NAME, 35)                                                              \
+  ACTION(NAME, 36)                                                              \
+  ACTION(NAME, 37)                                                              \
+  ACTION(NAME, 38)                                                              \
+  ACTION(NAME, 39)                                                              \
+  ACTION(NAME, 40)                                                              \
+  ACTION(NAME, 41)                                                              \
+  ACTION(NAME, 42)                                                              \
+  ACTION(NAME, 43)                                                              \
+  ACTION(NAME, 44)                                                              \
+  ACTION(NAME, 45)                                                              \
+  ACTION(NAME, 46)                                                              \
+  ACTION(NAME, 47)                                                              \
+  ACTION(NAME, 48)                                                              \
+  ACTION(NAME, 49)                                                              \
+  ACTION(NAME, 50)                                                              \
+  ACTION(NAME, 51)                                                              \
+  ACTION(NAME, 52)                                                              \
+  ACTION(NAME, 53)                                                              \
+  ACTION(NAME, 54)                                                              \
+  ACTION(NAME, 55)                                                              \
+  ACTION(NAME, 56)                                                              \
+  ACTION(NAME, 57)                                                              \
+  ACTION(NAME, 58)                                                              \
+  ACTION(NAME, 59)                                                              \
+  ACTION(NAME, 60)                                                              \
+  ACTION(NAME, 61)                                                              \
+  ACTION(NAME, 62)                                                              \
+  ACTION(NAME, 63)
+
+#define STAT(NAME, BITS) STATISTIC(NAME##BITS, "");
+
+STATISTIC(RISCVNumEXT, "");
+SEQ(STAT, RISCVEXTStart)
+SEQ(STAT, RISCVEXTEnd)
+SEQ(STAT, RISCVEXTLen)
+STATISTIC(RISCVNumEXTU, "");
+SEQ(STAT, RISCVEXTUStart)
+SEQ(STAT, RISCVEXTUEnd)
+SEQ(STAT, RISCVEXTULen)
+
 namespace llvm {
 extern const SubtargetFeatureKV RISCVFeatureKV[RISCV::NumSubtargetFeatures];
 } // namespace llvm
@@ -1179,7 +1256,64 @@ static bool lowerRISCVVMachineInstrToMCInst(const MachineInstr *MI,
   return true;
 }
 
+static void analyseBitsExtraction(const MachineInstr *MI) {
+  static unsigned TargetOpcodes[] = {RISCV::TH_EXT, RISCV::TH_EXTU};
+
+  auto IsBitsExtraction = [](unsigned Opcode) -> bool {
+    return llvm::is_contained(TargetOpcodes, Opcode);
+  };
+
+#define ProfileStart(Name, Num)                                                \
+  if (Start == Num) {                                                          \
+    Name##Num++;                                                              \
+    break;                                                                     \
+  }
+
+#define ProfileEnd(Name, Num)                                                  \
+  if (End == Num) {                                                            \
+    Name##Num++;                                                              \
+    break;                                                                     \
+  }
+
+#define ProfileLen(Name, Num)                                                  \
+  if (Len == Num) {                                                            \
+    Name##Num++;                                                              \
+    break;                                                                     \
+  }
+
+#define Profile(Action, Statistic)                                             \
+  do {                                                                         \
+    SEQ(Action, Statistic)                                                     \
+  } while (0)
+
+  unsigned Opcode = MI->getOpcode();
+  if (!IsBitsExtraction(Opcode))
+    return;
+
+  unsigned Start = MI->getOperand(3).getImm();
+  unsigned End = MI->getOperand(2).getImm();
+  unsigned Len = End - Start;
+  if (Opcode == RISCV::TH_EXT) {
+    RISCVNumEXT++;
+    Profile(ProfileStart, RISCVEXTStart);
+    Profile(ProfileEnd, RISCVEXTEnd);
+    Profile(ProfileLen, RISCVEXTLen);
+  }
+
+  if (Opcode == RISCV::TH_EXTU) {
+    RISCVNumEXTU++;
+    Profile(ProfileStart, RISCVEXTUStart);
+    Profile(ProfileEnd, RISCVEXTUEnd);
+    Profile(ProfileLen, RISCVEXTULen);
+  }
+}
+
+static void analyseMI(const MachineInstr *MI) {
+  analyseBitsExtraction(MI);
+}
+
 void RISCVAsmPrinter::lowerToMCInst(const MachineInstr *MI, MCInst &OutMI) {
+  analyseMI(MI);
   if (lowerRISCVVMachineInstrToMCInst(MI, OutMI, STI))
     return;
 
