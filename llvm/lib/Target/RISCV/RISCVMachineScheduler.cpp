@@ -13,6 +13,58 @@ using namespace llvm;
 
 #define DEBUG_TYPE "riscv-prera-sched-strategy"
 
+static cl::opt<bool> EnableVTypeSchedHeuristic(
+    "riscv-enable-vtype-sched-heuristic", cl::init(false), cl::Hidden,
+    cl::desc("Enable scheduling RVV instructions based on vtype heuristic "
+             "(pick instruction with compatible vtype first)"));
+
+RISCV::VSETVLIInfo
+RISCVPreRAMachineSchedStrategy::getVSETVLIInfo(const MachineInstr *MI) const {
+  unsigned TSFlags = MI->getDesc().TSFlags;
+  if (!RISCVII::hasSEWOp(TSFlags))
+    return RISCV::VSETVLIInfo();
+  return VIA.computeInfoForInstr(*MI);
+}
+
+bool RISCVPreRAMachineSchedStrategy::tryVType(RISCV::VSETVLIInfo TryVType,
+                                              RISCV::VSETVLIInfo CandVtype,
+                                              SchedCandidate &TryCand,
+                                              SchedCandidate &Cand,
+                                              CandReason Reason) const {
+  // Do not compare the vtype changes between top and bottom
+  // boundary.
+  if (Cand.AtTop != TryCand.AtTop)
+    return false;
+
+  // Try Cand first.
+  // We prefer the top node as it is straightforward from the perspective of
+  // vtype dataflow.
+  if (CandVtype.isValid() && TopVType.isValid() && Cand.AtTop &&
+      CandVtype == TopVType) {
+    return true;
+  }
+
+  if (CandVtype.isValid() && BottomVType.isValid() && !Cand.AtTop &&
+      CandVtype == BottomVType) {
+    return true;
+  }
+
+  // Then try TryCand.
+  if (TryVType.isValid() && TopVType.isValid() && TryCand.AtTop &&
+      TryVType == TopVType) {
+    TryCand.Reason = Reason;
+    return true;
+  }
+
+  if (TryVType.isValid() && BottomVType.isValid() && !TryCand.AtTop &&
+      TryVType == BottomVType) {
+    TryCand.Reason = Reason;
+    return true;
+  }
+
+  return false;
+}
+
 bool RISCVPreRAMachineSchedStrategy::tryCandidate(SchedCandidate &Cand,
                                                   SchedCandidate &TryCand,
                                                   SchedBoundary *Zone) const {
@@ -114,9 +166,57 @@ bool RISCVPreRAMachineSchedStrategy::tryCandidate(SchedCandidate &Cand,
     if ((Zone->isTop() && TryCand.SU->NodeNum < Cand.SU->NodeNum) ||
         (!Zone->isTop() && TryCand.SU->NodeNum > Cand.SU->NodeNum)) {
       TryCand.Reason = NodeOrder;
-      return true;
     }
   }
 
-  return false;
+  //-------------------------------------------------------------------------//
+  // Below is RISC-V specific scheduling heuristics.
+  //-------------------------------------------------------------------------//
+
+  // Add RISC-V specific heuristic only when TryCand isn't selected or
+  // selected as node order.
+  if (TryCand.Reason != NodeOrder && TryCand.Reason != NoCand)
+    return true;
+
+  // TODO: We should not use `CandReason::Cluster` here, but is there a
+  // mechanism to extend this enum?
+  if (EnableVTypeSchedHeuristic &&
+      tryVType(getVSETVLIInfo(TryCand.SU->getInstr()),
+               getVSETVLIInfo(Cand.SU->getInstr()), TryCand, Cand, Cluster))
+    return TryCand.Reason != NoCand;
+
+  return TryCand.Reason != NoCand;
+}
+
+void RISCVPreRAMachineSchedStrategy::enterMBB(MachineBasicBlock *MBB) {
+  TopVType = RISCV::VSETVLIInfo();
+  BottomVType = RISCV::VSETVLIInfo();
+}
+
+void RISCVPreRAMachineSchedStrategy::leaveMBB() {
+  TopVType = RISCV::VSETVLIInfo();
+  BottomVType = RISCV::VSETVLIInfo();
+}
+
+void RISCVPreRAMachineSchedStrategy::schedNode(SUnit *SU, bool IsTopNode) {
+  GenericScheduler::schedNode(SU, IsTopNode);
+  if (EnableVTypeSchedHeuristic) {
+    MachineInstr *MI = SU->getInstr();
+    const RISCV::VSETVLIInfo &Info = getVSETVLIInfo(MI);
+    if (Info.isValid()) {
+      if (IsTopNode)
+        TopVType = Info;
+      else
+        BottomVType = Info;
+      LLVM_DEBUG({
+        dbgs() << "Previous scheduled Unit: \n";
+        dbgs() << "  IsTop: " << IsTopNode << "\n";
+        dbgs() << "  SU(" << SU->NodeNum << ") - ";
+        MI->dump();
+        dbgs() << "  \n";
+        Info.dump();
+        dbgs() << "  \n";
+      });
+    }
+  }
 }
