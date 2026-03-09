@@ -334,47 +334,63 @@ def TH_SDD : THStorePair<0b11111, "th.sdd", immfour>,
              Sched<[WriteSTD, WriteSTD, ReadStoreData, ReadMemBase]>;
 }
 
-let Predicates = [HasVendorXTHeadMemIdx] in {
+let Predicates = [HasVendorXTHeadMemIdxLXIA] in {
 // T-Head Load/Store + Update instructions.
 def TH_LBIA : THLoadUpdate<0b00011, "th.lbia">,
               Sched<[WriteLDB, ReadMemBase]>;
-def TH_LBIB : THLoadUpdate<0b00001, "th.lbib">,
-              Sched<[WriteLDB, ReadMemBase]>;
 def TH_LBUIA : THLoadUpdate<0b10011, "th.lbuia">,
-               Sched<[WriteLDB, ReadMemBase]>;
-def TH_LBUIB : THLoadUpdate<0b10001, "th.lbuib">,
                Sched<[WriteLDB, ReadMemBase]>;
 
 def TH_LHIA : THLoadUpdate<0b00111, "th.lhia">,
               Sched<[WriteLDH, ReadMemBase]>;
-def TH_LHIB : THLoadUpdate<0b00101, "th.lhib">,
-              Sched<[WriteLDH, ReadMemBase]>;
 def TH_LHUIA : THLoadUpdate<0b10111, "th.lhuia">,
-               Sched<[WriteLDH, ReadMemBase]>;
-def TH_LHUIB : THLoadUpdate<0b10101, "th.lhuib">,
                Sched<[WriteLDH, ReadMemBase]>;
 
 def TH_LWIA : THLoadUpdate<0b01011, "th.lwia">,
               Sched<[WriteLDW, ReadMemBase]>;
+}
+
+let Predicates = [HasVendorXTHeadMemIdxLXIB] in {
+def TH_LBIB : THLoadUpdate<0b00001, "th.lbib">,
+              Sched<[WriteLDB, ReadMemBase]>;
+
+def TH_LBUIB : THLoadUpdate<0b10001, "th.lbuib">,
+               Sched<[WriteLDB, ReadMemBase]>;
+
+def TH_LHIB : THLoadUpdate<0b00101, "th.lhib">,
+              Sched<[WriteLDH, ReadMemBase]>;
+
+def TH_LHUIB : THLoadUpdate<0b10101, "th.lhuib">,
+               Sched<[WriteLDH, ReadMemBase]>;
+
 def TH_LWIB : THLoadUpdate<0b01001, "th.lwib">,
               Sched<[WriteLDW, ReadMemBase]>;
+}
 
+let Predicates = [HasVendorXTHeadMemIdxSXIA] in {
 def TH_SBIA : THStoreUpdate<0b00011, "th.sbia">,
-              Sched<[WriteSTB, ReadStoreData, ReadMemBase]>;
-def TH_SBIB : THStoreUpdate<0b00001, "th.sbib">,
               Sched<[WriteSTB, ReadStoreData, ReadMemBase]>;
 
 def TH_SHIA : THStoreUpdate<0b00111, "th.shia">,
               Sched<[WriteSTH, ReadStoreData, ReadMemBase]>;
-def TH_SHIB : THStoreUpdate<0b00101, "th.shib">,
-              Sched<[WriteSTH, ReadStoreData, ReadMemBase]>;
 
 def TH_SWIA : THStoreUpdate<0b01011, "th.swia">,
               Sched<[WriteSTW, ReadStoreData, ReadMemBase]>;
+}
+
+let Predicates = [HasVendorXTHeadMemIdxSXIB] in {
+def TH_SBIB : THStoreUpdate<0b00001, "th.sbib">,
+              Sched<[WriteSTB, ReadStoreData, ReadMemBase]>;
+
+def TH_SHIB : THStoreUpdate<0b00101, "th.shib">,
+              Sched<[WriteSTH, ReadStoreData, ReadMemBase]>;
+
 def TH_SWIB : THStoreUpdate<0b01001, "th.swib">,
               Sched<[WriteSTW, ReadStoreData, ReadMemBase]>;
+}
 
 // T-Head Load/Store Indexed instructions.
+let Predicates = [HasVendorXTHeadMemIdxLX] in {
 def TH_LRB : THLoadIndexed<GPR, 0b00000, "th.lrb">,
              Sched<[WriteLDB, ReadMemBase]>;
 def TH_LRBU : THLoadIndexed<GPR, 0b10000, "th.lrbu">,
@@ -397,7 +413,9 @@ def TH_LRW : THLoadIndexed<GPR, 0b01000, "th.lrw">,
              Sched<[WriteLDW, ReadMemBase]>;
 def TH_LURW : THLoadIndexed<GPR, 0b01010, "th.lurw">,
               Sched<[WriteLDB, ReadMemBase]>;
+}
 
+let Predicates = [HasVendorXTHeadMemIdxSX] in {
 def TH_SRB : THStoreIndexed<GPR, 0b00000, "th.srb">,
              Sched<[WriteSTB, ReadStoreData, ReadMemBase]>;
 def TH_SURB : THStoreIndexed<GPR, 0b00010, "th.surb">,
@@ -414,23 +432,34 @@ def TH_SURW : THStoreIndexed<GPR, 0b01010, "th.surw">,
               Sched<[WriteLDB, ReadMemBase]>;
 }
 
-let Predicates = [HasVendorXTHeadMemIdx, IsRV64] in {
+let Predicates = [HasVendorXTHeadMemIdxLXIA, IsRV64] in {
 // T-Head Load/Store + Update instructions.
 def TH_LWUIA : THLoadUpdate<0b11011, "th.lwuia">,
-               Sched<[WriteLDH, ReadMemBase]>;
-def TH_LWUIB : THLoadUpdate<0b11001, "th.lwuib">,
                Sched<[WriteLDH, ReadMemBase]>;
 
 def TH_LDIA : THLoadUpdate<0b01111, "th.ldia">,
               Sched<[WriteLDW, ReadMemBase]>;
+}
+
+let Predicates = [HasVendorXTHeadMemIdxLXIB, IsRV64] in {
+def TH_LWUIB : THLoadUpdate<0b11001, "th.lwuib">,
+               Sched<[WriteLDH, ReadMemBase]>;
+
 def TH_LDIB : THLoadUpdate<0b01101, "th.ldib">,
               Sched<[WriteLDW, ReadMemBase]>;
+}
 
+let Predicates = [HasVendorXTHeadMemIdxSXIA, IsRV64] in {
 def TH_SDIA : THStoreUpdate<0b01111, "th.sdia">,
               Sched<[WriteSTW, ReadStoreData, ReadMemBase]>;
+}
+
+let Predicates = [HasVendorXTHeadMemIdxSXIB, IsRV64] in {
 def TH_SDIB : THStoreUpdate<0b01101, "th.sdib">,
               Sched<[WriteSTW, ReadStoreData, ReadMemBase]>;
+}
 
+let Predicates = [HasVendorXTHeadMemIdxLX, IsRV64] in {
 // T-Head Load/Store Indexed instructions.
 def TH_LRWU : THLoadIndexed<GPR, 0b11000, "th.lrwu">,
               Sched<[WriteLDW, ReadMemBase]>;
@@ -441,7 +470,9 @@ def TH_LRD : THLoadIndexed<GPR, 0b01100, "th.lrd">,
              Sched<[WriteLDW, ReadMemBase]>;
 def TH_LURD : THLoadIndexed<GPR, 0b01110, "th.lurd">,
               Sched<[WriteLDB, ReadMemBase]>;
+}
 
+let Predicates = [HasVendorXTHeadMemIdxSX, IsRV64] in {
 def TH_SRD : THStoreIndexed<GPR, 0b01100, "th.srd">,
              Sched<[WriteSTW, ReadStoreData, ReadMemBase]>;
 def TH_SURD : THStoreIndexed<GPR, 0b01110, "th.surd">,
@@ -450,30 +481,38 @@ def TH_SURD : THStoreIndexed<GPR, 0b01110, "th.surd">,
 
 // T-Head Load/Store Indexed instructions for floating point registers.
 
-let Predicates = [HasVendorXTHeadFMemIdx, HasStdExtF] in {
+let Predicates = [HasVendorXTHeadFMemIdxLX, HasStdExtF] in {
 def TH_FLRW : THLoadIndexed<FPR32, 0b01000, "th.flrw">,
               Sched<[WriteFLD32, ReadFMemBase]>;
+}
+let Predicates = [HasVendorXTHeadFMemIdxSX, HasStdExtF] in {
 def TH_FSRW : THStoreIndexed<FPR32, 0b01000, "th.fsrw">,
               Sched<[WriteFST32, ReadFStoreData, ReadFMemBase]>;
 }
 
-let Predicates = [HasVendorXTHeadFMemIdx, HasStdExtD] in {
+let Predicates = [HasVendorXTHeadFMemIdxLX, HasStdExtD] in {
 def TH_FLRD : THLoadIndexed<FPR64, 0b01100, "th.flrd">,
               Sched<[WriteFLD64, ReadFMemBase]>;
+}
+let Predicates = [HasVendorXTHeadFMemIdxSX, HasStdExtD] in {
 def TH_FSRD : THStoreIndexed<FPR64, 0b01100, "th.fsrd">,
               Sched<[WriteFST64, ReadFStoreData, ReadFMemBase]>;
 }
 
-let Predicates = [HasVendorXTHeadFMemIdx, HasStdExtF, IsRV64] in {
+let Predicates = [HasVendorXTHeadFMemIdxLX, HasStdExtF, IsRV64] in {
 def TH_FLURW : THLoadIndexed<FPR32, 0b01010, "th.flurw">,
                Sched<[WriteFLD32, ReadFMemBase]>;
+}
+let Predicates = [HasVendorXTHeadFMemIdxSX, HasStdExtF, IsRV64] in {
 def TH_FSURW : THStoreIndexed<FPR32, 0b01010, "th.fsurw">,
                Sched<[WriteFST32, ReadFStoreData, ReadFMemBase]>;
 }
 
-let Predicates = [HasVendorXTHeadFMemIdx, HasStdExtD, IsRV64] in {
+let Predicates = [HasVendorXTHeadFMemIdxLX, HasStdExtD, IsRV64] in {
 def TH_FLURD : THLoadIndexed<FPR64, 0b01110, "th.flurd">,
                Sched<[WriteFLD64, ReadFMemBase]>;
+}
+let Predicates = [HasVendorXTHeadFMemIdxSX, HasStdExtD, IsRV64] in {
 def TH_FSURD : THStoreIndexed<FPR64, 0b01110, "th.fsurd">,
                Sched<[WriteFST64, ReadFStoreData, ReadFMemBase]>;
 }
@@ -774,7 +813,7 @@ def : Pat<(StoreOp (vt StTy:$rd),
           (Inst StTy:$rd, GPR:$rs1, GPR:$rs2, uimm2:$uimm2)>;
 }
 
-let Predicates = [HasVendorXTHeadMemIdx] in {
+let Predicates = [HasVendorXTHeadMemIdxLX] in {
 defm : LdIdxPat<extloadi8, TH_LRB>;
 defm : LdIdxPat<sextloadi8, TH_LRB>;
 defm : LdIdxPat<zextloadi8, TH_LRBU>;
@@ -782,17 +821,21 @@ defm : LdIdxPat<zextloadi8, TH_LRBU>;
 defm : LdIdxPat<extloadi16, TH_LRH>;
 defm : LdIdxPat<sextloadi16, TH_LRH>;
 defm : LdIdxPat<zextloadi16, TH_LRHU>;
+}
 
+let Predicates = [HasVendorXTHeadMemIdxSX] in {
 defm : StIdxPat<truncstorei8, TH_SRB, GPR>;
 defm : StIdxPat<truncstorei16, TH_SRH, GPR>;
 }
 
-let Predicates = [HasVendorXTHeadMemIdx, IsRV32] in {
+let Predicates = [HasVendorXTHeadMemIdxLX, IsRV32] in {
 defm : LdIdxPat<load, TH_LRW, i32>;
+}
+let Predicates = [HasVendorXTHeadMemIdxSX, IsRV32] in {
 defm : StIdxPat<store, TH_SRW, GPR, i32>;
 }
 
-let Predicates = [HasVendorXTHeadMemIdx, IsRV64] in {
+let Predicates = [HasVendorXTHeadMemIdxLX, IsRV64] in {
 defm : LdZextIdxPat<extloadi8, TH_LURB>;
 defm : LdZextIdxPat<sextloadi8, TH_LURB>;
 defm : LdZextIdxPat<zextloadi8, TH_LURBU>;
@@ -811,7 +854,9 @@ defm : LdZextIdxPat<zextloadi32, TH_LURWU>;
 
 defm : LdIdxPat<load, TH_LRD, i64>;
 defm : LdZextIdxPat<load, TH_LURD>;
+}
 
+let Predicates = [HasVendorXTHeadMemIdxSX, IsRV64] in {
 defm : StZextIdxPat<truncstorei8, TH_SURB, GPR>;
 defm : StZextIdxPat<truncstorei16, TH_SURH, GPR>;
 defm : StIdxPat<truncstorei32, TH_SRW, GPR, i64>;
@@ -820,23 +865,32 @@ defm : StIdxPat<store, TH_SRD, GPR, i64>;
 defm : StZextIdxPat<store, TH_SURD, GPR>;
 }
 
-let Predicates = [HasVendorXTHeadFMemIdx, HasStdExtF] in {
+let Predicates = [HasVendorXTHeadFMemIdxLX, HasStdExtF] in {
 defm : LdIdxPat<load, TH_FLRW, f32>;
+}
+let Predicates = [HasVendorXTHeadFMemIdxSX, HasStdExtF] in {
 defm : StIdxPat<store, TH_FSRW, FPR32, f32>;
 }
 
-let Predicates = [HasVendorXTHeadFMemIdx, HasStdExtD] in {
+let Predicates = [HasVendorXTHeadFMemIdxLX, HasStdExtD] in {
 defm : LdIdxPat<load, TH_FLRD, f64>;
+}
+
+let Predicates = [HasVendorXTHeadFMemIdxSX, HasStdExtD] in {
 defm : StIdxPat<store, TH_FSRD, FPR64, f64>;
 }
 
-let Predicates = [HasVendorXTHeadFMemIdx, HasStdExtF, IsRV64] in {
+let Predicates = [HasVendorXTHeadFMemIdxLX, HasStdExtF, IsRV64] in {
 defm : LdZextIdxPat<load, TH_FLURW, f32>;
+}
+let Predicates = [HasVendorXTHeadFMemIdxSX, HasStdExtF, IsRV64] in {
 defm : StZextIdxPat<store, TH_FSURW, FPR32, f32>;
 }
 
-let Predicates = [HasVendorXTHeadFMemIdx, HasStdExtD, IsRV64] in {
+let Predicates = [HasVendorXTHeadFMemIdxLX, HasStdExtD, IsRV64] in {
 defm : LdZextIdxPat<load, TH_FLURD, f64>;
+}
+let Predicates = [HasVendorXTHeadFMemIdxSX, HasStdExtD, IsRV64] in {
 defm : StZextIdxPat<store, TH_FSURD, FPR64, f64>;
 }
 
@@ -847,19 +901,24 @@ def : Pat<(st (vt GPR:$rd), GPR:$rs1, (simm5shl2 simm5:$simm5, uimm2:$uimm2)),
           (Inst GPR:$rd, GPR:$rs1, simm5:$simm5, uimm2:$uimm2)>;
 }
 
-let Predicates = [HasVendorXTHeadMemIdx] in {
+let Predicates = [HasVendorXTHeadMemIdxSXIA] in {
 defm : StoreUpdatePat<post_truncsti8, TH_SBIA>;
-defm : StoreUpdatePat<pre_truncsti8, TH_SBIB>;
 defm : StoreUpdatePat<post_truncsti16, TH_SHIA>;
-defm : StoreUpdatePat<pre_truncsti16, TH_SHIB>;
-
 defm : StoreUpdatePat<post_store, TH_SWIA, i32>;
+}
+
+let Predicates = [HasVendorXTHeadMemIdxSXIB] in {
+defm : StoreUpdatePat<pre_truncsti8, TH_SBIB>;
+defm : StoreUpdatePat<pre_truncsti16, TH_SHIB>;
 defm : StoreUpdatePat<pre_store, TH_SWIB, i32>;
 }
 
-let Predicates = [HasVendorXTHeadMemIdx, IsRV64] in {
+let Predicates = [HasVendorXTHeadMemIdxSXIA, IsRV64] in {
 defm : StoreUpdatePat<post_truncsti32, TH_SWIA, i64>;
-defm : StoreUpdatePat<pre_truncsti32, TH_SWIB, i64>;
 defm : StoreUpdatePat<post_store, TH_SDIA, i64>;
+}
+
+let Predicates = [HasVendorXTHeadMemIdxSXIB, IsRV64] in {
+defm : StoreUpdatePat<pre_truncsti32, TH_SWIB, i64>;
 defm : StoreUpdatePat<pre_store, TH_SDIB, i64>;
 }

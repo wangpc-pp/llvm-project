@@ -1381,8 +1381,16 @@ R"(All available -march extensions for RISC-V
     xtheadcmo            1.0
     xtheadcondmov        1.0
     xtheadfmemidx        1.0
+    xtheadfmemidxlx      1.0
+    xtheadfmemidxsx      1.0
     xtheadmac            1.0
     xtheadmemidx         1.0
+    xtheadmemidxlx       1.0
+    xtheadmemidxlxia     1.0
+    xtheadmemidxlxib     1.0
+    xtheadmemidxsx       1.0
+    xtheadmemidxsxia     1.0
+    xtheadmemidxsxib     1.0
     xtheadmempair        1.0
     xtheadsync           1.0
     xtheadvdot           1.0

@@ -1168,9 +1168,21 @@ def HasVendorXTHeadCmo : Predicate<"Subtarget->hasVendorXTHeadCmo()">,
                          AssemblerPredicate<(all_of FeatureVendorXTHeadCmo),
                              "'XTHeadCmo' (T-Head cache management instructions)">;
 
+def FeatureVendorXTHeadFMemIdxLX
+    : RISCVExtension<1, 0, "T-Head FP Indexed Load Memory Operations">;
+def HasVendorXTHeadFMemIdxLX : Predicate<"Subtarget->hasVendorXTHeadFMemIdxLX()">,
+                               AssemblerPredicate<(all_of FeatureVendorXTHeadFMemIdxLX),
+                               "'XTHeadFMemIdxLX' (T-Head FP Indexed Load Memory Operations)">;
+
+def FeatureVendorXTHeadFMemIdxSX
+    : RISCVExtension<1, 0, "T-Head FP Indexed Store Memory Operations">;
+def HasVendorXTHeadFMemIdxSX : Predicate<"Subtarget->hasVendorXTHeadFMemIdxSX()">,
+                               AssemblerPredicate<(all_of FeatureVendorXTHeadFMemIdxSX),
+                               "'XTHeadFMemIdxSX' (T-Head FP Indexed Store Memory Operations)">;
+
 def FeatureVendorXTHeadFMemIdx
-    : RISCVExtension<1, 0,
-                     "T-Head FP Indexed Memory Operations">;
+    : RISCVExtension<1, 0, "T-Head FP Indexed Memory Operations",
+                     [FeatureVendorXTHeadFMemIdxLX, FeatureVendorXTHeadFMemIdxSX]>;
 def HasVendorXTHeadFMemIdx : Predicate<"Subtarget->hasVendorXTHeadFMemIdx()">,
                              AssemblerPredicate<(all_of FeatureVendorXTHeadFMemIdx),
                                  "'XTHeadFMemIdx' (T-Head FP Indexed Memory Operations)">;
@@ -1182,9 +1194,51 @@ def HasVendorXTHeadMac : Predicate<"Subtarget->hasVendorXTHeadMac()">,
                          AssemblerPredicate<(all_of FeatureVendorXTHeadMac),
                              "'XTHeadMac' (T-Head Multiply-Accumulate Instructions)">;
 
+def FeatureVendorXTHeadMemIdxLX
+    : RISCVExtension<1, 0, "T-Head Indexed Load Memory Operations">;
+def HasVendorXTHeadMemIdxLX : Predicate<"Subtarget->hasVendorXTHeadMemIdxLX()">,
+                              AssemblerPredicate<(all_of FeatureVendorXTHeadMemIdxLX),
+                              "'XTHeadMemIdxLX' (T-Head Indexed Load Memory Operations)">;
+
+def FeatureVendorXTHeadMemIdxSX
+    : RISCVExtension<1, 0, "T-Head Indexed Store Memory Operations">;
+def HasVendorXTHeadMemIdxSX : Predicate<"Subtarget->hasVendorXTHeadMemIdxSX()">,
+                              AssemblerPredicate<(all_of FeatureVendorXTHeadMemIdxSX),
+                              "'XTHeadMemIdxSX' (T-Head Indexed Store Memory Operations)">;
+
+def FeatureVendorXTHeadMemIdxLXIB
+    : RISCVExtension<1, 0, "T-Head Post-Increment Indexed Memory Operations">;
+def HasVendorXTHeadMemIdxLXIB : Predicate<"Subtarget->hasVendorXTHeadMemIdxLXIB()">,
+                            AssemblerPredicate<(all_of FeatureVendorXTHeadMemIdxLXIB),
+                                "'XTHeadMemIdxLXIB' (T-Head Pre-Increment Indexed Load Memory Operations)">;
+
+def FeatureVendorXTHeadMemIdxSXIB
+    : RISCVExtension<1, 0, "T-Head Post-Increment Indexed Memory Operations">;
+def HasVendorXTHeadMemIdxSXIB : Predicate<"Subtarget->hasVendorXTHeadMemIdxSXIB()">,
+                            AssemblerPredicate<(all_of FeatureVendorXTHeadMemIdxSXIB),
+                                "'XTHeadMemIdxSXIB' (T-Head Pre-Increment Indexed Store Memory Operations)">;
+
+def FeatureVendorXTHeadMemIdxLXIA
+    : RISCVExtension<1, 0, "T-Head Post-Increment Indexed Memory Operations">;
+def HasVendorXTHeadMemIdxLXIA : Predicate<"Subtarget->hasVendorXTHeadMemIdxLXIA()">,
+                            AssemblerPredicate<(all_of FeatureVendorXTHeadMemIdxLXIA),
+                                "'XTHeadMemIdxLXIA' (T-Head Post-Increment Indexed Load Memory Operations)">;
+
+def FeatureVendorXTHeadMemIdxSXIA
+    : RISCVExtension<1, 0, "T-Head Post-Increment Indexed Memory Operations">;
+def HasVendorXTHeadMemIdxSXIA : Predicate<"Subtarget->hasVendorXTHeadMemIdxSXIA()">,
+                            AssemblerPredicate<(all_of FeatureVendorXTHeadMemIdxSXIA),
+                                "'XTHeadMemIdxSXIA' (T-Head Post-Increment Indexed Store Memory Operations)">;
+
 def FeatureVendorXTHeadMemIdx
-    : RISCVExtension<1, 0,
-                     "T-Head Indexed Memory Operations">;
+    : RISCVExtension<1, 0, "T-Head Indexed Memory Operations",
+                     [FeatureVendorXTHeadMemIdxLX,
+                      FeatureVendorXTHeadMemIdxSX,
+                      FeatureVendorXTHeadMemIdxLXIB,
+                      FeatureVendorXTHeadMemIdxSXIB,
+                      FeatureVendorXTHeadMemIdxLXIA,
+                      FeatureVendorXTHeadMemIdxSXIA
+                     ]>;
 def HasVendorXTHeadMemIdx : Predicate<"Subtarget->hasVendorXTHeadMemIdx()">,
                             AssemblerPredicate<(all_of FeatureVendorXTHeadMemIdx),
                                 "'XTHeadMemIdx' (T-Head Indexed Memory Operations)">;

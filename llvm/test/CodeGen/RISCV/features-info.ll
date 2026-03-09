@@ -241,8 +241,16 @@
 ; CHECK-NEXT:   xtheadcmo                        - 'XTHeadCmo' (T-Head cache management instructions).
 ; CHECK-NEXT:   xtheadcondmov                    - 'XTHeadCondMov' (T-Head conditional move instructions).
 ; CHECK-NEXT:   xtheadfmemidx                    - 'XTHeadFMemIdx' (T-Head FP Indexed Memory Operations).
+; CHECK-NEXT:   xtheadfmemidxlx                  - 'XTHeadFMemIdxLX' (T-Head FP Indexed Load Memory Operations). 
+; CHECK-NEXT:   xtheadfmemidxsx                  - 'XTHeadFMemIdxSX' (T-Head FP Indexed Store Memory Operations). 
 ; CHECK-NEXT:   xtheadmac                        - 'XTHeadMac' (T-Head Multiply-Accumulate Instructions).
 ; CHECK-NEXT:   xtheadmemidx                     - 'XTHeadMemIdx' (T-Head Indexed Memory Operations).
+; CHECK-NEXT:   xtheadmemidxlx                   - 'XTHeadMemIdxLX' (T-Head Indexed Load Memory Operations). 
+; CHECK-NEXT:   xtheadmemidxlxia                 - 'XTHeadMemIdxLXIA' (T-Head Post-Increment Indexed Memory Operations).                                                                                            
+; CHECK-NEXT:   xtheadmemidxlxib                 - 'XTHeadMemIdxLXIB' (T-Head Post-Increment Indexed Memory Operations).                                                                                            
+; CHECK-NEXT:   xtheadmemidxsx                   - 'XTHeadMemIdxSX' (T-Head Indexed Store Memory Operations). 
+; CHECK-NEXT:   xtheadmemidxsxia                 - 'XTHeadMemIdxSXIA' (T-Head Post-Increment Indexed Memory Operations). 
+; CHECK-NEXT:   xtheadmemidxsxib                 - 'XTHeadMemIdxSXIB' (T-Head Post-Increment Indexed Memory Operations).
 ; CHECK-NEXT:   xtheadmempair                    - 'XTHeadMemPair' (T-Head two-GPR Memory Operations).
 ; CHECK-NEXT:   xtheadsync                       - 'XTHeadSync' (T-Head multicore synchronization instructions).
 ; CHECK-NEXT:   xtheadvdot                       - 'XTHeadVdot' (T-Head Vector Extensions for Dot).

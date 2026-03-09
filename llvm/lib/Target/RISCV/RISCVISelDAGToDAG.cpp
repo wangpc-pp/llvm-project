@@ -820,7 +820,8 @@ bool RISCVDAGToDAGISel::tryUnsignedBitfieldInsertInZero(SDNode *Node,
 
 bool RISCVDAGToDAGISel::tryIndexedLoad(SDNode *Node) {
   // Target does not support indexed loads.
-  if (!Subtarget->hasVendorXTHeadMemIdx())
+  if (!Subtarget->hasVendorXTHeadMemIdxLX() &&
+      !Subtarget->hasVendorXTHeadMemIdxSX())
     return false;
 
   LoadSDNode *Ld = cast<LoadSDNode>(Node);
@@ -3349,10 +3350,12 @@ static bool isRegRegScaleLoadOrStore(SDNode *User, SDValue Add,
   if (User->getOpcode() != ISD::LOAD && User->getOpcode() != ISD::STORE)
     return false;
   EVT VT = cast<MemSDNode>(User)->getMemoryVT();
-  if (!(VT.isScalarInteger() &&
-        (Subtarget.hasVendorXTHeadMemIdx() || Subtarget.hasVendorXqcisls())) &&
+  if (!(VT.isScalarInteger() && (Subtarget.hasVendorXTHeadMemIdxLX() ||
+                                 Subtarget.hasVendorXTHeadMemIdxSX() ||
+                                 Subtarget.hasVendorXqcisls())) &&
       !((VT == MVT::f32 || VT == MVT::f64) &&
-        Subtarget.hasVendorXTHeadFMemIdx()))
+        (Subtarget.hasVendorXTHeadFMemIdxLX() ||
+         Subtarget.hasVendorXTHeadFMemIdxSX())))
     return false;
   // Don't allow stores of the value. It must be used as the address.
   if (User->getOpcode() == ISD::STORE &&

@@ -1755,19 +1755,40 @@ RISCVTargetLowering::RISCVTargetLowering(const TargetMachine &TM,
         XLenVT, LibCall);
   }
 
-  if (Subtarget.hasVendorXTHeadMemIdx()) {
-    for (unsigned im : {ISD::PRE_INC, ISD::POST_INC}) {
-      setIndexedLoadAction(im, MVT::i8, Legal);
-      setIndexedStoreAction(im, MVT::i8, Legal);
-      setIndexedLoadAction(im, MVT::i16, Legal);
-      setIndexedStoreAction(im, MVT::i16, Legal);
-      setIndexedLoadAction(im, MVT::i32, Legal);
-      setIndexedStoreAction(im, MVT::i32, Legal);
+  if (Subtarget.hasVendorXTHeadMemIdxLXIB()) {
+    setIndexedLoadAction(ISD::PRE_INC, MVT::i8, Legal);
+    setIndexedLoadAction(ISD::PRE_INC, MVT::i16, Legal);
+    setIndexedLoadAction(ISD::PRE_INC, MVT::i32, Legal);
 
-      if (Subtarget.is64Bit()) {
-        setIndexedLoadAction(im, MVT::i64, Legal);
-        setIndexedStoreAction(im, MVT::i64, Legal);
-      }
+    if (Subtarget.is64Bit()) {
+      setIndexedLoadAction(ISD::PRE_INC, MVT::i64, Legal);
+    }
+  }
+  if (Subtarget.hasVendorXTHeadMemIdxSXIB()) {
+    setIndexedStoreAction(ISD::PRE_INC, MVT::i8, Legal);
+    setIndexedStoreAction(ISD::PRE_INC, MVT::i16, Legal);
+    setIndexedStoreAction(ISD::PRE_INC, MVT::i32, Legal);
+
+    if (Subtarget.is64Bit()) {
+      setIndexedStoreAction(ISD::PRE_INC, MVT::i64, Legal);
+    }
+  }
+  if (Subtarget.hasVendorXTHeadMemIdxLXIA()) {
+    setIndexedLoadAction(ISD::POST_INC, MVT::i8, Legal);
+    setIndexedLoadAction(ISD::POST_INC, MVT::i16, Legal);
+    setIndexedLoadAction(ISD::POST_INC, MVT::i32, Legal);
+
+    if (Subtarget.is64Bit()) {
+      setIndexedLoadAction(ISD::POST_INC, MVT::i64, Legal);
+    }
+  }
+  if (Subtarget.hasVendorXTHeadMemIdxSXIA()) {
+    setIndexedStoreAction(ISD::POST_INC, MVT::i8, Legal);
+    setIndexedStoreAction(ISD::POST_INC, MVT::i16, Legal);
+    setIndexedStoreAction(ISD::POST_INC, MVT::i32, Legal);
+
+    if (Subtarget.is64Bit()) {
+      setIndexedStoreAction(ISD::POST_INC, MVT::i64, Legal);
     }
   }
 
@@ -25174,7 +25195,8 @@ bool RISCVTargetLowering::getIndexedAddressParts(SDNode *Op, SDValue &Base,
                                                  ISD::MemIndexedMode &AM,
                                                  SelectionDAG &DAG) const {
   // Target does not support indexed loads.
-  if (!Subtarget.hasVendorXTHeadMemIdx())
+  if (!Subtarget.hasVendorXTHeadMemIdxLX() &&
+      !Subtarget.hasVendorXTHeadMemIdxSX())
     return false;
 
   if (Op->getOpcode() != ISD::ADD && Op->getOpcode() != ISD::SUB)
