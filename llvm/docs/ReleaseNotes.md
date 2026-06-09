@@ -255,6 +255,7 @@ Makes programs 10x faster by doing Special New Thing.
 * Adds experimental assembler support for batched dot-product extensions(Zvqwbdota8i, Zvqwbdota16i, Zvfwbdota16bf, Zvfqwbdota8f and Zvfbdota32f).
 * Adds experimental assembler support for dot-product extensions(Zvqwdota8i, Zvqwdota16i, Zvfwdota16bf and Zvfqwdota8f).
 * `-mtune=generic` now uses the scheduling model from SpacemiT X60 instead of an empty scheduling model.
+* Adds experimental assembler support for the 'Zilx` (Index Load For Integer) extension.
 
 ### Changes to the WebAssembly Backend
 
