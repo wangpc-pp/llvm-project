@@ -3670,7 +3670,8 @@ static bool isRegRegScaleLoadOrStore(SDNode *User, SDValue Add,
     return false;
   EVT VT = cast<MemSDNode>(User)->getMemoryVT();
   if (!(VT.isScalarInteger() &&
-        (Subtarget.hasVendorXTHeadMemIdx() || Subtarget.hasVendorXqcisls())) &&
+        (Subtarget.hasStdExtZilx() ||
+         Subtarget.hasVendorXTHeadMemIdx() || Subtarget.hasVendorXqcisls())) &&
       !((VT == MVT::f32 || VT == MVT::f64) &&
         Subtarget.hasVendorXTHeadFMemIdx()))
     return false;
@@ -3719,7 +3720,7 @@ static bool isWorthFoldingIntoRegRegScale(const RISCVSubtarget &Subtarget,
 }
 
 bool RISCVDAGToDAGISel::SelectAddrRegRegScale(SDValue Addr,
-                                              unsigned MaxShiftAmount,
+                                              ArrayRef<unsigned> Amounts,
                                               SDValue &Base, SDValue &Index,
                                               SDValue &Scale) {
   if (Addr.getOpcode() != ISD::ADD)
@@ -3728,14 +3729,14 @@ bool RISCVDAGToDAGISel::SelectAddrRegRegScale(SDValue Addr,
   SDValue RHS = Addr.getOperand(1);
 
   EVT VT = Addr.getSimpleValueType();
-  auto SelectShl = [this, VT, MaxShiftAmount](SDValue N, SDValue &Index,
-                                              SDValue &Shift) {
+  auto SelectShl = [this, VT, Amounts](SDValue N, SDValue &Index,
+                                       SDValue &Shift) {
     if (N.getOpcode() != ISD::SHL || !isa<ConstantSDNode>(N.getOperand(1)))
       return false;
 
     // Only match shifts by a value in range [0, MaxShiftAmount].
     unsigned ShiftAmt = N.getConstantOperandVal(1);
-    if (ShiftAmt > MaxShiftAmount)
+    if (!llvm::is_contained(Amounts, ShiftAmt))
       return false;
 
     Index = N.getOperand(0);
@@ -3795,6 +3796,10 @@ bool RISCVDAGToDAGISel::SelectAddrRegRegScale(SDValue Addr,
   if (!isWorthFoldingIntoRegRegScale(*Subtarget, Addr))
     return false;
 
+  // Bail out if 0 is not in candicate shift amounts.
+  if (!llvm::is_contained(Amounts, 0))
+    return false;
+
   Base = LHS;
   Index = RHS;
   Scale = CurDAG->getTargetConstant(0, SDLoc(Addr), VT);
@@ -3802,11 +3807,11 @@ bool RISCVDAGToDAGISel::SelectAddrRegRegScale(SDValue Addr,
 }
 
 bool RISCVDAGToDAGISel::SelectAddrRegZextRegScale(SDValue Addr,
-                                                  unsigned MaxShiftAmount,
+                                                  ArrayRef<unsigned> Amounts,
                                                   unsigned Bits, SDValue &Base,
                                                   SDValue &Index,
                                                   SDValue &Scale) {
-  if (!SelectAddrRegRegScale(Addr, MaxShiftAmount, Base, Index, Scale))
+  if (!SelectAddrRegRegScale(Addr, Amounts, Base, Index, Scale))
     return false;
 
   if (Index.getOpcode() == ISD::AND) {
