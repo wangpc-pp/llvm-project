@@ -2472,6 +2472,7 @@ void llvm::setProfMetadata(Instruction *TI, ArrayRef<uint64_t> EdgeCounts,
   misexpect::checkExpectAnnotations(*TI, Weights, /*IsFrontend=*/false);
 
   setBranchWeights(*TI, Weights, /*IsExpected=*/false);
+  setUnpredictableIfBalanced(*TI, Weights);
 
   if (EmitBranchProbability) {
     std::string BrCondStr = getBranchCondString(TI);

@@ -153,6 +153,15 @@ LLVM_ABI bool extractProfTotalWeight(const Instruction &I,
 LLVM_ABI void setBranchWeights(Instruction &I, ArrayRef<uint32_t> Weights,
                                bool IsExpected, bool ElideAllZero = false);
 
+/// If enabled via -pgo-unpredictable-hints, and \p I is a two-way conditional
+/// branch whose profile-derived \p Weights are close to 50:50 with enough
+/// samples, attach MD_unpredictable metadata to \p I. This lets PGO/AutoFDO
+/// inform the backend that a balanced branch is hard to predict.
+/// \param I the Instruction the branch weights were set on.
+/// \param Weights the (32-bit, ratio-preserving) branch weights just applied.
+LLVM_ABI void setUnpredictableIfBalanced(Instruction &I,
+                                         ArrayRef<uint32_t> Weights);
+
 /// Push the weights right to fit in uint32_t.
 LLVM_ABI SmallVector<uint32_t> fitWeights(ArrayRef<uint64_t> Weights);
 

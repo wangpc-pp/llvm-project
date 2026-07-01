@@ -1761,6 +1761,7 @@ void SampleProfileLoader::generateMDProfMetadata(Function &F) {
         (!TI->extractProfTotalWeight(TempWeight) || OverwriteExistingWeights)) {
       LLVM_DEBUG(dbgs() << "SUCCESS. Found non-zero weights.\n");
       setBranchWeights(*TI, Weights, /*IsExpected=*/false);
+      setUnpredictableIfBalanced(*TI, Weights);
       ORE->emit([&]() {
         return OptimizationRemark(DEBUG_TYPE, "PopularDest", MaxDestInst)
                << "most popular destination for conditional branches at "

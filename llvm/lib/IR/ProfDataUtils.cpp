@@ -333,6 +333,50 @@ void llvm::setBranchWeights(Instruction &I, ArrayRef<uint32_t> Weights,
   I.setMetadata(LLVMContext::MD_prof, BranchWeights);
 }
 
+static cl::opt<bool> PGOUnpredictableHints(
+    "pgo-unpredictable-hints", cl::init(false), cl::Hidden,
+    cl::desc("Mark near-50:50 two-way branches as unpredictable using PGO "
+             "branch weights"));
+
+// Half-width (in %) around 50% within which a branch is considered balanced.
+static cl::opt<unsigned> PGOUnpredictableTolerance(
+    "pgo-unpredictable-tolerance", cl::init(10), cl::Hidden,
+    cl::desc("Half-width (in %) around 50% within which a branch is "
+             "considered unpredictable"));
+
+// Minimum total branch weight required before marking a branch unpredictable,
+// to avoid acting on statistically insignificant sample sizes.
+static cl::opt<uint64_t> PGOUnpredictableMinCount(
+    "pgo-unpredictable-min-count", cl::init(100), cl::Hidden,
+    cl::desc("Minimum total branch weight required to mark unpredictable"));
+
+void llvm::setUnpredictableIfBalanced(Instruction &I,
+                                      ArrayRef<uint32_t> Weights) {
+  if (!PGOUnpredictableHints)
+    return;
+  // Only two-way conditional branches are handled.
+  if (!isa<CondBrInst>(&I) || Weights.size() != 2)
+    return;
+  // Don't overwrite an existing hint (e.g. from __builtin_unpredictable).
+  if (I.getMetadata(LLVMContext::MD_unpredictable))
+    return;
+
+  uint64_t W0 = Weights[0];
+  uint64_t W1 = Weights[1];
+  uint64_t Total = W0 + W1;
+  if (Total < PGOUnpredictableMinCount)
+    return;
+
+  // Mark unpredictable when the taken probability is close to 50%, i.e.
+  //   |W0/Total - 1/2| <= Tol%   <=>   |2*W0 - Total| * 100 <= 2*Tol*Total
+  uint64_t Tol = PGOUnpredictableTolerance;
+  uint64_t Diff = (2 * W0 > Total) ? (2 * W0 - Total) : (Total - 2 * W0);
+  if (Diff * 100 <= 2 * Tol * Total) {
+    MDBuilder MDB(I.getContext());
+    I.setMetadata(LLVMContext::MD_unpredictable, MDB.createUnpredictable());
+  }
+}
+
 void llvm::setFittedBranchWeights(Instruction &I, ArrayRef<uint64_t> Weights,
                                   bool IsExpected, bool ElideAllZero) {
   setBranchWeights(I, fitWeights(Weights), IsExpected, ElideAllZero);
