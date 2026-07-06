@@ -92,17 +92,17 @@ static bool isAddressMemOp(const MachineInstr &MI) {
 // register and therefore always pass.
 static bool isMemOpCheapToCluster(const MachineInstr &MI,
                                   const MachineRegisterInfo &MRI) {
-  for (const MachineOperand &MO : MI.defs()) {
-    if (!MO.isReg() || !MO.getReg().isVirtual())
-      continue;
-    const TargetRegisterClass *RC = MRI.getRegClass(MO.getReg());
-    // A vector register group spanning more than one physical register is
-    // expensive to keep live early.
-    if (RISCV::VRM2RegClass.hasSubClassEq(RC) ||
-        RISCV::VRM4RegClass.hasSubClassEq(RC) ||
-        RISCV::VRM8RegClass.hasSubClassEq(RC))
-      return false;
-  }
+  // for (const MachineOperand &MO : MI.defs()) {
+  //   if (!MO.isReg() || !MO.getReg().isVirtual())
+  //     continue;
+  //   const TargetRegisterClass *RC = MRI.getRegClass(MO.getReg());
+  //   // A vector register group spanning more than one physical register is
+  //   // expensive to keep live early.
+  //   if (RISCV::VRM2RegClass.hasSubClassEq(RC) ||
+  //       RISCV::VRM4RegClass.hasSubClassEq(RC) ||
+  //       RISCV::VRM8RegClass.hasSubClassEq(RC))
+  //     return false;
+  // }
   return true;
 }
 
@@ -158,7 +158,7 @@ public:
               LLVM_DEBUG(dbgs() << "Adding address/mem cluster edge from SU("
                                 << MemSU->NodeNum << ") to SU("
                                 << AdvSU->NodeNum << ")\n");
-              DAG->addEdge(AdvSU, SDep(MemSU, SDep::Artificial));
+              DAG->addEdge(AdvSU, SDep(MemSU, SDep::Cluster));
             }
           }
         }

@@ -621,38 +621,38 @@ define signext i32 @test_cse(ptr %p, iXLen %x) {
 ; RV32I:       # %bb.0: # %entry
 ; RV32I-NEXT:    slli a1, a1, 2
 ; RV32I-NEXT:    add a0, a0, a1
-; RV32I-NEXT:    lw a1, 1200(a0)
-; RV32I-NEXT:    addi a0, a0, 2047
-; RV32I-NEXT:    lw a0, 753(a0)
-; RV32I-NEXT:    add a0, a0, a1
+; RV32I-NEXT:    addi a1, a0, 2047
+; RV32I-NEXT:    lw a0, 1200(a0)
+; RV32I-NEXT:    lw a1, 753(a1)
+; RV32I-NEXT:    add a0, a1, a0
 ; RV32I-NEXT:    ret
 ;
 ; RV64I-LABEL: test_cse:
 ; RV64I:       # %bb.0: # %entry
 ; RV64I-NEXT:    slli a1, a1, 2
 ; RV64I-NEXT:    add a0, a0, a1
-; RV64I-NEXT:    lw a1, 1200(a0)
-; RV64I-NEXT:    addi a0, a0, 2047
-; RV64I-NEXT:    lw a0, 753(a0)
-; RV64I-NEXT:    addw a0, a0, a1
+; RV64I-NEXT:    addi a1, a0, 2047
+; RV64I-NEXT:    lw a0, 1200(a0)
+; RV64I-NEXT:    lw a1, 753(a1)
+; RV64I-NEXT:    addw a0, a1, a0
 ; RV64I-NEXT:    ret
 ;
 ; RV32ZBA-LABEL: test_cse:
 ; RV32ZBA:       # %bb.0: # %entry
 ; RV32ZBA-NEXT:    sh2add a0, a1, a0
-; RV32ZBA-NEXT:    lw a1, 1200(a0)
-; RV32ZBA-NEXT:    addi a0, a0, 2047
-; RV32ZBA-NEXT:    lw a0, 753(a0)
-; RV32ZBA-NEXT:    add a0, a0, a1
+; RV32ZBA-NEXT:    addi a1, a0, 2047
+; RV32ZBA-NEXT:    lw a0, 1200(a0)
+; RV32ZBA-NEXT:    lw a1, 753(a1)
+; RV32ZBA-NEXT:    add a0, a1, a0
 ; RV32ZBA-NEXT:    ret
 ;
 ; RV64ZBA-LABEL: test_cse:
 ; RV64ZBA:       # %bb.0: # %entry
 ; RV64ZBA-NEXT:    sh2add a0, a1, a0
-; RV64ZBA-NEXT:    lw a1, 1200(a0)
-; RV64ZBA-NEXT:    addi a0, a0, 2047
-; RV64ZBA-NEXT:    lw a0, 753(a0)
-; RV64ZBA-NEXT:    addw a0, a0, a1
+; RV64ZBA-NEXT:    addi a1, a0, 2047
+; RV64ZBA-NEXT:    lw a0, 1200(a0)
+; RV64ZBA-NEXT:    lw a1, 753(a1)
+; RV64ZBA-NEXT:    addw a0, a1, a0
 ; RV64ZBA-NEXT:    ret
 entry:
   %c = getelementptr inbounds nuw i8, ptr %p, i64 1200

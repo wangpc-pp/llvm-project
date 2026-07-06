@@ -1296,9 +1296,9 @@ define i32 @maccsu_h00_swap_operands_commute(i32 %rd, i16 %a, i16 %b) nounwind {
 define i32 @macc_h00_multiple_uses(i16 %a, i16 %b, i32 %c, ptr %out) nounwind {
 ; CHECK-LABEL: macc_h00_multiple_uses:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    mul.h00 a0, a0, a1
-; CHECK-NEXT:    sw a0, 0(a3)
-; CHECK-NEXT:    add a0, a2, a0
+; CHECK-NEXT:    mul.h00 a1, a0, a1
+; CHECK-NEXT:    add a0, a2, a1
+; CHECK-NEXT:    sw a1, 0(a3)
 ; CHECK-NEXT:    ret
   %aext = sext i16 %a to i32
   %bext = sext i16 %b to i32
@@ -1424,9 +1424,9 @@ define i32 @mhaccsu_swap_operands_commute(i32 %rd, i32 %a, i32 %b) nounwind {
 define i32 @mhacc_multiple_uses(i32 %a, i32 %b, i32 %c, ptr %out) nounwind {
 ; CHECK-LABEL: mhacc_multiple_uses:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    mulh a0, a0, a1
-; CHECK-NEXT:    sw a0, 0(a3)
-; CHECK-NEXT:    add a0, a2, a0
+; CHECK-NEXT:    mulh a1, a0, a1
+; CHECK-NEXT:    add a0, a2, a1
+; CHECK-NEXT:    sw a1, 0(a3)
 ; CHECK-NEXT:    ret
   %aext = sext i32 %a to i64
   %bext = sext i32 %b to i64

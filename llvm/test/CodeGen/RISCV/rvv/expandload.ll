@@ -372,21 +372,23 @@ define <256 x i8> @test_expandload_v256i8_all_ones(ptr %base, <256 x i8> %passth
 ; CHECK-RV32-NEXT:    vsrl.vx v9, v8, a2
 ; CHECK-RV32-NEXT:    vmv.x.s a3, v9
 ; CHECK-RV32-NEXT:    vmv.x.s a4, v8
-; CHECK-RV32-NEXT:    vslidedown.vi v8, v8, 1
-; CHECK-RV32-NEXT:    vsrl.vx v9, v8, a2
-; CHECK-RV32-NEXT:    vmv.x.s a2, v9
-; CHECK-RV32-NEXT:    vmv.x.s a5, v8
+; CHECK-RV32-NEXT:    vslidedown.vi v16, v8, 1
+; CHECK-RV32-NEXT:    vsrl.vx v17, v16, a2
+; CHECK-RV32-NEXT:    vsetvli zero, a1, e8, m8, ta, ma
+; CHECK-RV32-NEXT:    vle8.v v8, (a0)
+; CHECK-RV32-NEXT:    vsetvli zero, a1, e64, m1, ta, ma
+; CHECK-RV32-NEXT:    vmv.x.s a2, v17
+; CHECK-RV32-NEXT:    vmv.x.s a5, v16
 ; CHECK-RV32-NEXT:    cpop a3, a3
 ; CHECK-RV32-NEXT:    cpop a4, a4
 ; CHECK-RV32-NEXT:    cpop a2, a2
 ; CHECK-RV32-NEXT:    cpop a5, a5
 ; CHECK-RV32-NEXT:    add a3, a4, a3
 ; CHECK-RV32-NEXT:    add a2, a5, a2
-; CHECK-RV32-NEXT:    add a3, a0, a3
-; CHECK-RV32-NEXT:    add a2, a3, a2
+; CHECK-RV32-NEXT:    add a0, a0, a3
+; CHECK-RV32-NEXT:    add a0, a0, a2
 ; CHECK-RV32-NEXT:    vsetvli zero, a1, e8, m8, ta, ma
-; CHECK-RV32-NEXT:    vle8.v v16, (a2)
-; CHECK-RV32-NEXT:    vle8.v v8, (a0)
+; CHECK-RV32-NEXT:    vle8.v v16, (a0)
 ; CHECK-RV32-NEXT:    ret
 ;
 ; CHECK-RV64-LABEL: test_expandload_v256i8_all_ones:

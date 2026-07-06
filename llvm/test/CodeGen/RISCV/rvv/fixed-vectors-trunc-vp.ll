@@ -216,33 +216,33 @@ define <128 x i32> @vtrunc_v128i32_v128i64(<128 x i64> %a, <128 x i1> %m, i32 ze
 ; CHECK-NEXT:    vnsrl.wi v0, v16, 0
 ; CHECK-NEXT:    addi a3, sp, 16
 ; CHECK-NEXT:    vl8r.v v8, (a3) # vscale x 64-byte Folded Reload
-; CHECK-NEXT:    vnsrl.wi v24, v8, 0
+; CHECK-NEXT:    vnsrl.wi v16, v8, 0
 ; CHECK-NEXT:    addi a3, a1, 640
-; CHECK-NEXT:    vle64.v v16, (a3)
+; CHECK-NEXT:    vle64.v v8, (a3)
 ; CHECK-NEXT:    vsetvli zero, a2, e32, m8, ta, ma
-; CHECK-NEXT:    vslideup.vi v24, v0, 16
+; CHECK-NEXT:    vslideup.vi v16, v0, 16
 ; CHECK-NEXT:    addi a3, a1, 512
 ; CHECK-NEXT:    vsetivli zero, 16, e32, m4, ta, ma
-; CHECK-NEXT:    vle64.v v0, (a3)
-; CHECK-NEXT:    vnsrl.wi v8, v16, 0
-; CHECK-NEXT:    addi a3, a1, 128
-; CHECK-NEXT:    vle64.v v16, (a3)
+; CHECK-NEXT:    vle64.v v24, (a3)
+; CHECK-NEXT:    vnsrl.wi v0, v8, 0
+; CHECK-NEXT:    vle64.v v8, (a1)
 ; CHECK-NEXT:    addi a3, sp, 16
-; CHECK-NEXT:    vs8r.v v16, (a3) # vscale x 64-byte Folded Spill
-; CHECK-NEXT:    vnsrl.wi v16, v0, 0
-; CHECK-NEXT:    vle64.v v0, (a1)
+; CHECK-NEXT:    vs8r.v v8, (a3) # vscale x 64-byte Folded Spill
+; CHECK-NEXT:    vnsrl.wi v8, v24, 0
+; CHECK-NEXT:    addi a1, a1, 128
+; CHECK-NEXT:    vle64.v v24, (a1)
 ; CHECK-NEXT:    vsetvli zero, a2, e32, m8, ta, ma
-; CHECK-NEXT:    vslideup.vi v16, v8, 16
-; CHECK-NEXT:    vse32.v v24, (a0)
+; CHECK-NEXT:    vslideup.vi v8, v0, 16
+; CHECK-NEXT:    vse32.v v16, (a0)
+; CHECK-NEXT:    addi a1, sp, 16
+; CHECK-NEXT:    vl8r.v v0, (a1) # vscale x 64-byte Folded Reload
 ; CHECK-NEXT:    vsetivli zero, 16, e32, m4, ta, ma
-; CHECK-NEXT:    vnsrl.wi v8, v0, 0
+; CHECK-NEXT:    vnsrl.wi v16, v0, 0
 ; CHECK-NEXT:    addi a1, a0, 384
 ; CHECK-NEXT:    vsetvli zero, a2, e32, m8, ta, ma
-; CHECK-NEXT:    vse32.v v16, (a1)
-; CHECK-NEXT:    addi a1, sp, 16
-; CHECK-NEXT:    vl8r.v v24, (a1) # vscale x 64-byte Folded Reload
+; CHECK-NEXT:    vse32.v v8, (a1)
 ; CHECK-NEXT:    vsetivli zero, 16, e32, m4, ta, ma
-; CHECK-NEXT:    vnsrl.wi v16, v24, 0
+; CHECK-NEXT:    vnsrl.wi v8, v24, 0
 ; CHECK-NEXT:    addi a1, a0, 256
 ; CHECK-NEXT:    csrr a3, vlenb
 ; CHECK-NEXT:    slli a3, a3, 3
@@ -251,9 +251,9 @@ define <128 x i32> @vtrunc_v128i32_v128i64(<128 x i64> %a, <128 x i1> %m, i32 ze
 ; CHECK-NEXT:    vl8r.v v24, (a3) # vscale x 64-byte Folded Reload
 ; CHECK-NEXT:    vsetvli zero, a2, e32, m8, ta, ma
 ; CHECK-NEXT:    vse32.v v24, (a1)
-; CHECK-NEXT:    vslideup.vi v8, v16, 16
+; CHECK-NEXT:    vslideup.vi v16, v8, 16
 ; CHECK-NEXT:    addi a0, a0, 128
-; CHECK-NEXT:    vse32.v v8, (a0)
+; CHECK-NEXT:    vse32.v v16, (a0)
 ; CHECK-NEXT:    csrr a0, vlenb
 ; CHECK-NEXT:    slli a0, a0, 4
 ; CHECK-NEXT:    add sp, sp, a0

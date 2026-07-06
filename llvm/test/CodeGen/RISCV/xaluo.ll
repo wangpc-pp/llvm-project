@@ -1041,9 +1041,9 @@ define zeroext i1 @usubo.i32.constant.lhs(i32 signext %v1, ptr %res) {
 ; RV32:       # %bb.0: # %entry
 ; RV32-NEXT:    li a2, -2
 ; RV32-NEXT:    sub a2, a2, a0
+; RV32-NEXT:    addi a0, a2, 1
+; RV32-NEXT:    seqz a0, a0
 ; RV32-NEXT:    sw a2, 0(a1)
-; RV32-NEXT:    addi a2, a2, 1
-; RV32-NEXT:    seqz a0, a2
 ; RV32-NEXT:    ret
 ;
 ; RV64-LABEL: usubo.i32.constant.lhs:
@@ -1059,9 +1059,9 @@ define zeroext i1 @usubo.i32.constant.lhs(i32 signext %v1, ptr %res) {
 ; RV32ZBA:       # %bb.0: # %entry
 ; RV32ZBA-NEXT:    li a2, -2
 ; RV32ZBA-NEXT:    sub a2, a2, a0
+; RV32ZBA-NEXT:    addi a0, a2, 1
+; RV32ZBA-NEXT:    seqz a0, a0
 ; RV32ZBA-NEXT:    sw a2, 0(a1)
-; RV32ZBA-NEXT:    addi a2, a2, 1
-; RV32ZBA-NEXT:    seqz a0, a2
 ; RV32ZBA-NEXT:    ret
 ;
 ; RV64ZBA-LABEL: usubo.i32.constant.lhs:
@@ -1077,9 +1077,9 @@ define zeroext i1 @usubo.i32.constant.lhs(i32 signext %v1, ptr %res) {
 ; RV32ZICOND:       # %bb.0: # %entry
 ; RV32ZICOND-NEXT:    li a2, -2
 ; RV32ZICOND-NEXT:    sub a2, a2, a0
+; RV32ZICOND-NEXT:    addi a0, a2, 1
+; RV32ZICOND-NEXT:    seqz a0, a0
 ; RV32ZICOND-NEXT:    sw a2, 0(a1)
-; RV32ZICOND-NEXT:    addi a2, a2, 1
-; RV32ZICOND-NEXT:    seqz a0, a2
 ; RV32ZICOND-NEXT:    ret
 ;
 ; RV64ZICOND-LABEL: usubo.i32.constant.lhs:
