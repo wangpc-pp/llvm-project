@@ -184,27 +184,27 @@ define signext i32 @sad_2block_16xi8_as_i32(ptr %a, ptr %b, i32 signext %stridea
 ; ZVABD-NEXT:    vle8.v v8, (a0)
 ; ZVABD-NEXT:    vle8.v v9, (a1)
 ; ZVABD-NEXT:    add a0, a0, a2
-; ZVABD-NEXT:    add a4, a0, a2
-; ZVABD-NEXT:    vabdu.vv v8, v8, v9
-; ZVABD-NEXT:    vle8.v v9, (a4)
+; ZVABD-NEXT:    vle8.v v10, (a0)
 ; ZVABD-NEXT:    add a1, a1, a3
-; ZVABD-NEXT:    add a5, a1, a3
-; ZVABD-NEXT:    vle8.v v10, (a5)
+; ZVABD-NEXT:    vle8.v v11, (a1)
+; ZVABD-NEXT:    vabdu.vv v8, v8, v9
+; ZVABD-NEXT:    add a0, a0, a2
+; ZVABD-NEXT:    vle8.v v9, (a0)
 ; ZVABD-NEXT:    vsetvli zero, zero, e16, m2, ta, ma
 ; ZVABD-NEXT:    vzext.vf2 v12, v8
-; ZVABD-NEXT:    vle8.v v8, (a0)
+; ZVABD-NEXT:    add a1, a1, a3
+; ZVABD-NEXT:    vle8.v v8, (a1)
 ; ZVABD-NEXT:    vsetvli zero, zero, e8, m1, ta, ma
-; ZVABD-NEXT:    vabdu.vv v9, v9, v10
-; ZVABD-NEXT:    vle8.v v10, (a1)
-; ZVABD-NEXT:    add a2, a4, a2
+; ZVABD-NEXT:    vabdu.vv v8, v9, v8
+; ZVABD-NEXT:    add a0, a0, a2
 ; ZVABD-NEXT:    vsetvli zero, zero, e16, m2, ta, ma
-; ZVABD-NEXT:    vzext.vf2 v14, v9
-; ZVABD-NEXT:    vle8.v v9, (a2)
-; ZVABD-NEXT:    add a3, a5, a3
-; ZVABD-NEXT:    vle8.v v11, (a3)
+; ZVABD-NEXT:    vzext.vf2 v14, v8
+; ZVABD-NEXT:    vle8.v v8, (a0)
+; ZVABD-NEXT:    add a1, a1, a3
+; ZVABD-NEXT:    vle8.v v9, (a1)
 ; ZVABD-NEXT:    vsetvli zero, zero, e8, m1, ta, ma
-; ZVABD-NEXT:    vwabdau.vv v12, v8, v10
-; ZVABD-NEXT:    vwabdau.vv v14, v9, v11
+; ZVABD-NEXT:    vwabdau.vv v12, v10, v11
+; ZVABD-NEXT:    vwabdau.vv v14, v8, v9
 ; ZVABD-NEXT:    vsetvli zero, zero, e16, m2, ta, ma
 ; ZVABD-NEXT:    vwaddu.vv v8, v14, v12
 ; ZVABD-NEXT:    vsetvli zero, zero, e32, m4, ta, ma
@@ -301,27 +301,27 @@ define signext i32 @sadu_2block_16xi8_as_i32(ptr %a, ptr %b, i32 signext %stride
 ; ZVABD-NEXT:    vle8.v v8, (a0)
 ; ZVABD-NEXT:    vle8.v v9, (a1)
 ; ZVABD-NEXT:    add a0, a0, a2
-; ZVABD-NEXT:    add a4, a0, a2
-; ZVABD-NEXT:    vabd.vv v8, v8, v9
-; ZVABD-NEXT:    vle8.v v9, (a4)
+; ZVABD-NEXT:    vle8.v v10, (a0)
 ; ZVABD-NEXT:    add a1, a1, a3
-; ZVABD-NEXT:    add a5, a1, a3
-; ZVABD-NEXT:    vle8.v v10, (a5)
+; ZVABD-NEXT:    vle8.v v11, (a1)
+; ZVABD-NEXT:    vabd.vv v8, v8, v9
+; ZVABD-NEXT:    add a0, a0, a2
+; ZVABD-NEXT:    vle8.v v9, (a0)
 ; ZVABD-NEXT:    vsetvli zero, zero, e16, m2, ta, ma
 ; ZVABD-NEXT:    vzext.vf2 v12, v8
-; ZVABD-NEXT:    vle8.v v8, (a0)
+; ZVABD-NEXT:    add a1, a1, a3
+; ZVABD-NEXT:    vle8.v v8, (a1)
 ; ZVABD-NEXT:    vsetvli zero, zero, e8, m1, ta, ma
-; ZVABD-NEXT:    vabd.vv v9, v9, v10
-; ZVABD-NEXT:    vle8.v v10, (a1)
-; ZVABD-NEXT:    add a2, a4, a2
+; ZVABD-NEXT:    vabd.vv v8, v9, v8
+; ZVABD-NEXT:    add a0, a0, a2
 ; ZVABD-NEXT:    vsetvli zero, zero, e16, m2, ta, ma
-; ZVABD-NEXT:    vzext.vf2 v14, v9
-; ZVABD-NEXT:    vle8.v v9, (a2)
-; ZVABD-NEXT:    add a3, a5, a3
-; ZVABD-NEXT:    vle8.v v11, (a3)
+; ZVABD-NEXT:    vzext.vf2 v14, v8
+; ZVABD-NEXT:    vle8.v v8, (a0)
+; ZVABD-NEXT:    add a1, a1, a3
+; ZVABD-NEXT:    vle8.v v9, (a1)
 ; ZVABD-NEXT:    vsetvli zero, zero, e8, m1, ta, ma
-; ZVABD-NEXT:    vwabda.vv v12, v8, v10
-; ZVABD-NEXT:    vwabda.vv v14, v9, v11
+; ZVABD-NEXT:    vwabda.vv v12, v10, v11
+; ZVABD-NEXT:    vwabda.vv v14, v8, v9
 ; ZVABD-NEXT:    vsetvli zero, zero, e16, m2, ta, ma
 ; ZVABD-NEXT:    vwaddu.vv v8, v14, v12
 ; ZVABD-NEXT:    vsetvli zero, zero, e32, m4, ta, ma

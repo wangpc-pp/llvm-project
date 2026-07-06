@@ -1539,9 +1539,9 @@ define i64 @maccsu_w00_swap_operands_commute(i64 %rd, i32 %a, i32 %b) nounwind {
 define i64 @macc_w00_multiple_uses(i32 %a, i32 %b, i64 %c, ptr %out) nounwind {
 ; CHECK-LABEL: macc_w00_multiple_uses:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    mul.w00 a1, a0, a1
-; CHECK-NEXT:    add a0, a2, a1
-; CHECK-NEXT:    sd a1, 0(a3)
+; CHECK-NEXT:    mul.w00 a0, a0, a1
+; CHECK-NEXT:    sd a0, 0(a3)
+; CHECK-NEXT:    add a0, a2, a0
 ; CHECK-NEXT:    ret
   %aext = sext i32 %a to i64
   %bext = sext i32 %b to i64

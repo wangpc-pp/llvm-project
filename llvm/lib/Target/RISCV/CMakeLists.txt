@@ -31,6 +31,7 @@ tablegen(LLVM RISCVGenPostLegalizeGICombiner.inc -gen-global-isel-combiner
 add_public_tablegen_target(RISCVCommonTableGen)
 
 add_llvm_target(RISCVCodeGen
+  RISCVAddressMemClusterDAGMutation.cpp
   RISCVAsmPrinter.cpp
   RISCVCallingConv.cpp
   RISCVCodeGenPrepare.cpp

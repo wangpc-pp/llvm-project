@@ -49,11 +49,11 @@ define void @test_stlf_i32_to_v2i8_assertion(ptr %arg, ptr %arg1) {
 ; CHECK-NEXT:    addi a1, a1, 2
 ; CHECK-NEXT:    vsetivli zero, 4, e8, mf4, ta, ma
 ; CHECK-NEXT:    vse8.v v8, (a1)
-; CHECK-NEXT:    addi a1, a0, 4
 ; CHECK-NEXT:    vsetivli zero, 2, e8, mf8, ta, ma
-; CHECK-NEXT:    vse8.v v9, (a1)
-; CHECK-NEXT:    vse8.v v10, (a5)
 ; CHECK-NEXT:    vse8.v v11, (a0)
+; CHECK-NEXT:    addi a0, a0, 4
+; CHECK-NEXT:    vse8.v v9, (a0)
+; CHECK-NEXT:    vse8.v v10, (a5)
 ; CHECK-NEXT:    addi sp, sp, 16
 ; CHECK-NEXT:    .cfi_def_cfa_offset 0
 ; CHECK-NEXT:    ret

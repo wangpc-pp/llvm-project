@@ -879,8 +879,8 @@ define i32 @extractelt_nxv32i32_neg1(<vscale x 32 x i32> %v) {
 ; CHECK-NEXT:    vs8r.v v8, (a0)
 ; CHECK-NEXT:    csrr a1, vlenb
 ; CHECK-NEXT:    slli a2, a1, 3
-; CHECK-NEXT:    slli a1, a1, 4
 ; CHECK-NEXT:    add a2, a0, a2
+; CHECK-NEXT:    slli a1, a1, 4
 ; CHECK-NEXT:    add a0, a1, a0
 ; CHECK-NEXT:    vs8r.v v16, (a2)
 ; CHECK-NEXT:    lw a0, -4(a0)

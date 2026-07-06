@@ -95,10 +95,10 @@ define <vscale x 2 x float> @test_different_evl(ptr %ptr, <vscale x 2 x i1> %mas
 ; CHECK-NEXT:    vmsne.vi v0, v10, 0
 ; CHECK-NEXT:    vsetvli zero, a2, e32, m1, ta, ma
 ; CHECK-NEXT:    vid.v v8
+; CHECK-NEXT:    vle32.v v9, (a0), v0.t
 ; CHECK-NEXT:    addi a2, a2, -1
-; CHECK-NEXT:    vrsub.vx v9, v8, a2
-; CHECK-NEXT:    vle32.v v10, (a0), v0.t
-; CHECK-NEXT:    vrgather.vv v8, v10, v9
+; CHECK-NEXT:    vrsub.vx v10, v8, a2
+; CHECK-NEXT:    vrgather.vv v8, v9, v10
 ; CHECK-NEXT:    ret
   %loadmask = call <vscale x 2 x i1> @llvm.experimental.vp.reverse.nxv2i1(<vscale x 2 x i1> %mask, <vscale x 2 x i1> splat (i1 true), i32 %evl1)
   %load = call <vscale x 2 x float> @llvm.vp.load.nxv2f32.p0nxv2f32(ptr %ptr, <vscale x 2 x i1> %loadmask, i32 %evl2)

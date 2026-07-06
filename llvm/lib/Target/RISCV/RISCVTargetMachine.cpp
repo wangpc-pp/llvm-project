@@ -99,6 +99,11 @@ static cl::opt<bool> DisableVectorMaskMutation(
     cl::desc("Disable the vector mask scheduling mutation"), cl::init(false),
     cl::Hidden);
 
+static cl::opt<bool> DisableAddressMemClusterMutation(
+    "riscv-disable-address-mem-cluster-mutation",
+    cl::desc("Disable the address/memory clustering scheduling mutation"),
+    cl::init(false), cl::Hidden);
+
 static cl::opt<bool>
     EnableMachinePipeliner("riscv-enable-pipeliner",
                            cl::desc("Enable Machine Pipeliner for RISC-V"),
@@ -309,6 +314,9 @@ RISCVTargetMachine::createMachineScheduler(MachineSchedContext *C) const {
 
   if (!DisableVectorMaskMutation && ST.hasVInstructions())
     DAG->addMutation(createRISCVVectorMaskDAGMutation(DAG->TRI));
+
+  if (!DisableAddressMemClusterMutation)
+    DAG->addMutation(createRISCVAddressMemClusterDAGMutation());
 
   return DAG;
 }

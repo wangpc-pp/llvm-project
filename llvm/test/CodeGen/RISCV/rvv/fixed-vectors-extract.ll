@@ -631,8 +631,8 @@ define i32 @extractelt_v32i32_idx(ptr %x, i32 zeroext %idx) nounwind {
 ; RV32NOM-NEXT:    vle32.v v8, (s1)
 ; RV32NOM-NEXT:    vadd.vv v8, v8, v8
 ; RV32NOM-NEXT:    mv a1, sp
-; RV32NOM-NEXT:    add a0, a1, a0
 ; RV32NOM-NEXT:    vse32.v v8, (a1)
+; RV32NOM-NEXT:    add a0, a1, a0
 ; RV32NOM-NEXT:    lw a0, 0(a0)
 ; RV32NOM-NEXT:    addi sp, s0, -256
 ; RV32NOM-NEXT:    lw ra, 252(sp) # 4-byte Folded Reload
@@ -681,8 +681,8 @@ define i32 @extractelt_v32i32_idx(ptr %x, i32 zeroext %idx) nounwind {
 ; RV64NOM-NEXT:    vle32.v v8, (s1)
 ; RV64NOM-NEXT:    vadd.vv v8, v8, v8
 ; RV64NOM-NEXT:    mv a1, sp
-; RV64NOM-NEXT:    add a0, a1, a0
 ; RV64NOM-NEXT:    vse32.v v8, (a1)
+; RV64NOM-NEXT:    add a0, a1, a0
 ; RV64NOM-NEXT:    lw a0, 0(a0)
 ; RV64NOM-NEXT:    addi sp, s0, -256
 ; RV64NOM-NEXT:    ld ra, 248(sp) # 8-byte Folded Reload
@@ -751,15 +751,15 @@ define i32 @extractelt_v64i32_idx(<64 x i32> %a, i32 zeroext %idx) nounwind {
 ; RV32-NEXT:    andi sp, sp, -128
 ; RV32-NEXT:    li a1, 32
 ; RV32-NEXT:    vsetvli zero, a1, e32, m8, ta, ma
-; RV32-NEXT:    vadd.vv v16, v16, v16
-; RV32-NEXT:    addi a1, sp, 128
-; RV32-NEXT:    vse32.v v16, (a1)
 ; RV32-NEXT:    vadd.vv v8, v8, v8
-; RV32-NEXT:    andi a0, a0, 63
 ; RV32-NEXT:    mv a1, sp
+; RV32-NEXT:    vse32.v v8, (a1)
+; RV32-NEXT:    vadd.vv v8, v16, v16
+; RV32-NEXT:    andi a0, a0, 63
+; RV32-NEXT:    addi a2, sp, 128
 ; RV32-NEXT:    slli a0, a0, 2
 ; RV32-NEXT:    add a0, a1, a0
-; RV32-NEXT:    vse32.v v8, (a1)
+; RV32-NEXT:    vse32.v v8, (a2)
 ; RV32-NEXT:    lw a0, 0(a0)
 ; RV32-NEXT:    addi sp, s0, -384
 ; RV32-NEXT:    lw ra, 380(sp) # 4-byte Folded Reload
@@ -776,15 +776,15 @@ define i32 @extractelt_v64i32_idx(<64 x i32> %a, i32 zeroext %idx) nounwind {
 ; RV64-NEXT:    andi sp, sp, -128
 ; RV64-NEXT:    li a1, 32
 ; RV64-NEXT:    vsetvli zero, a1, e32, m8, ta, ma
-; RV64-NEXT:    vadd.vv v16, v16, v16
-; RV64-NEXT:    addi a1, sp, 128
-; RV64-NEXT:    vse32.v v16, (a1)
 ; RV64-NEXT:    vadd.vv v8, v8, v8
-; RV64-NEXT:    andi a0, a0, 63
 ; RV64-NEXT:    mv a1, sp
+; RV64-NEXT:    vse32.v v8, (a1)
+; RV64-NEXT:    vadd.vv v8, v16, v16
+; RV64-NEXT:    andi a0, a0, 63
+; RV64-NEXT:    addi a2, sp, 128
 ; RV64-NEXT:    slli a0, a0, 2
 ; RV64-NEXT:    add a0, a1, a0
-; RV64-NEXT:    vse32.v v8, (a1)
+; RV64-NEXT:    vse32.v v8, (a2)
 ; RV64-NEXT:    lw a0, 0(a0)
 ; RV64-NEXT:    addi sp, s0, -384
 ; RV64-NEXT:    ld ra, 376(sp) # 8-byte Folded Reload

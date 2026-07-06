@@ -1560,8 +1560,8 @@ define double @extractelt_nxv16f64_neg1(<vscale x 16 x double> %v) {
 ; RV32-NEXT:    vs8r.v v8, (a0)
 ; RV32-NEXT:    csrr a1, vlenb
 ; RV32-NEXT:    slli a2, a1, 3
-; RV32-NEXT:    slli a1, a1, 4
 ; RV32-NEXT:    add a2, a0, a2
+; RV32-NEXT:    slli a1, a1, 4
 ; RV32-NEXT:    add a0, a1, a0
 ; RV32-NEXT:    vs8r.v v16, (a2)
 ; RV32-NEXT:    fld fa0, -8(a0)
@@ -1591,20 +1591,20 @@ define double @extractelt_nxv16f64_neg1(<vscale x 16 x double> %v) {
 ; RV64-NEXT:    andi sp, sp, -64
 ; RV64-NEXT:    addi a0, sp, 64
 ; RV64-NEXT:    vs8r.v v8, (a0)
-; RV64-NEXT:    csrr a2, vlenb
-; RV64-NEXT:    li a1, -1
-; RV64-NEXT:    slli a3, a2, 3
-; RV64-NEXT:    srli a1, a1, 32
-; RV64-NEXT:    slli a2, a2, 1
+; RV64-NEXT:    csrr a1, vlenb
+; RV64-NEXT:    li a2, -1
+; RV64-NEXT:    slli a3, a1, 3
+; RV64-NEXT:    slli a1, a1, 1
 ; RV64-NEXT:    add a3, a0, a3
-; RV64-NEXT:    addi a2, a2, -1
+; RV64-NEXT:    srli a2, a2, 32
+; RV64-NEXT:    addi a1, a1, -1
 ; RV64-NEXT:    vs8r.v v16, (a3)
-; RV64-NEXT:    bltu a2, a1, .LBB70_2
+; RV64-NEXT:    bltu a1, a2, .LBB70_2
 ; RV64-NEXT:  # %bb.1:
-; RV64-NEXT:    mv a2, a1
+; RV64-NEXT:    mv a1, a2
 ; RV64-NEXT:  .LBB70_2:
-; RV64-NEXT:    slli a2, a2, 3
-; RV64-NEXT:    add a0, a0, a2
+; RV64-NEXT:    slli a1, a1, 3
+; RV64-NEXT:    add a0, a0, a1
 ; RV64-NEXT:    fld fa0, 0(a0)
 ; RV64-NEXT:    addi sp, s0, -80
 ; RV64-NEXT:    .cfi_def_cfa sp, 80
