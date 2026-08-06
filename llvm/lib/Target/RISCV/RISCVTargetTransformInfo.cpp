@@ -1608,6 +1608,18 @@ RISCVTTIImpl::getIntrinsicInstrCost(const IntrinsicCostAttributes &ICA,
     }
     break;
   }
+  case Intrinsic::pext:
+  case Intrinsic::pdep: {
+    auto LT = getTypeLegalizationCost(RetTy);
+    if (LT.second.isVector() && ST->hasStdExtZvbext() &&
+        TLI->isLegalElementTypeForRVV(
+            TLI->getValueType(DL, RetTy->getScalarType()))) {
+      unsigned Op = ICA.getID() == Intrinsic::pext ? RISCV::VBCOMPRESS_VV
+                                                   : RISCV::VBEXPAND_VV;
+      return LT.first * getRISCVInstructionCost(Op, LT.second, CostKind);
+    }
+    break;
+  }
   case Intrinsic::abs: {
     auto LT = getTypeLegalizationCost(RetTy);
     if (ST->hasVInstructions() && LT.second.isVector()) {
