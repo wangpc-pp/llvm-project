@@ -1224,6 +1224,9 @@ RISCVTargetLowering::RISCVTargetLowering(const TargetMachine &TM,
         }
       }
 
+      if (Subtarget.hasStdExtZvbext())
+        setOperationAction({ISD::PEXT, ISD::PDEP}, VT, Legal);
+
       if (VT.getVectorElementType() == MVT::i64) {
         if (Subtarget.hasStdExtZvbc())
           setOperationAction({ISD::CLMUL, ISD::CLMULH}, VT, Legal);
@@ -1731,6 +1734,9 @@ RISCVTargetLowering::RISCVTargetLowering(const TargetMachine &TM,
                 {ISD::CTLZ, ISD::CTLZ_ZERO_POISON, ISD::CTTZ_ZERO_POISON}, VT,
                 Custom);
         }
+
+        if (Subtarget.hasStdExtZvbext())
+          setOperationAction({ISD::PEXT, ISD::PDEP}, VT, Custom);
 
         if (VT.getVectorElementType() == MVT::i64) {
           if (Subtarget.hasStdExtZvbc())
@@ -7997,6 +8003,8 @@ static unsigned getRISCVVLOp(SDValue Op) {
   OP_CASE(BITREVERSE)
   OP_CASE(CLMUL)
   OP_CASE(CLMULH)
+  OP_CASE(PEXT)
+  OP_CASE(PDEP)
   OP_CASE(SADDSAT)
   OP_CASE(UADDSAT)
   OP_CASE(SSUBSAT)
@@ -9562,6 +9570,9 @@ SDValue RISCVTargetLowering::LowerOperation(SDValue Op,
       return lowerToScalableOp(Op, DAG);
     assert(Op.getOpcode() != ISD::CTTZ);
     return lowerCTLZ_CTTZ_ZERO_POISON(Op, DAG);
+  case ISD::PEXT:
+  case ISD::PDEP:
+    return lowerToScalableOp(Op, DAG);
   case ISD::CLMUL:
   case ISD::CLMULH: {
     SDLoc DL(Op);
