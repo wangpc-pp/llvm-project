@@ -68,3 +68,16 @@ defm : VPatBinaryVL_VV_VX<riscv_pdep_vl, "PseudoVBEXPAND",
                           Zvbec64Vectors,
                           ExtraPreds = [HasStdExtZvbec,
                                         HasVInstructionsI64]>;
+
+defm : VPatBinaryV_VV_VX<"int_riscv_vbcompress", "PseudoVBCOMPRESS",
+                         Zvbec32Vectors, ExtraPreds = [HasStdExtZvbec]>;
+defm : VPatBinaryV_VV_VX<"int_riscv_vbexpand", "PseudoVBEXPAND",
+                         Zvbec32Vectors, ExtraPreds = [HasStdExtZvbec]>;
+defm : VPatBinaryV_VV_VX<"int_riscv_vbcompress", "PseudoVBCOMPRESS",
+                         Zvbec64Vectors,
+                         ExtraPreds = [HasStdExtZvbec,
+                                       HasVInstructionsI64]>;
+defm : VPatBinaryV_VV_VX<"int_riscv_vbexpand", "PseudoVBEXPAND",
+                         Zvbec64Vectors,
+                         ExtraPreds = [HasStdExtZvbec,
+                                       HasVInstructionsI64]>;
