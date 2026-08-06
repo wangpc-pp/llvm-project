@@ -822,6 +822,14 @@ def HasStdExtZvbcOrZvbc32e : Predicate<"Subtarget->hasStdExtZvbc() || Subtarget-
                              AssemblerPredicate<(any_of FeatureStdExtZvbc, FeatureStdExtZvbc32e),
                              "'Zvbc' or 'Zvbc32e' (Vector Carryless Multiplication)">;
 
+def FeatureStdExtZvbext
+    : RISCVExperimentalExtension<0, 1,
+                                 "Vector Bit Compress and Expand",
+                                 [FeatureStdExtZve32x]>;
+def HasStdExtZvbext : Predicate<"Subtarget->hasStdExtZvbext()">,
+                      AssemblerPredicate<(all_of FeatureStdExtZvbext),
+                          "'Zvbext' (Vector Bit Compress and Expand)">;
+
 def FeatureStdExtZvkg
     : RISCVExtension<1, 0, "Vector GCM instructions for Cryptography",
                      [FeatureStdExtZve32x]>,

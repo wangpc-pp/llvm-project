@@ -1642,6 +1642,7 @@ Experimental extensions
     zilx                 0.1
     zvabd                0.7
     zvbc32e              0.7
+    zvbext               0.1
     zvdot4a8i            0.1
     zvfbdota32f          0.2
     zvfbfa               0.1
