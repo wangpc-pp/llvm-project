@@ -75,6 +75,12 @@ struct BasicTest : public testing::Test {
 
 } // namespace
 
+TEST(VectorUtils, IsTriviallyVectorizableIntrinsic) {
+  EXPECT_TRUE(isTriviallyVectorizable(Intrinsic::pext));
+  EXPECT_TRUE(isTriviallyVectorizable(Intrinsic::pdep));
+  EXPECT_FALSE(isTriviallyVectorizable(Intrinsic::experimental_deoptimize));
+}
+
 TEST_F(BasicTest, isSplat) {
   Value *UndefVec = UndefValue::get(FixedVectorType::get(IRB.getInt8Ty(), 4));
   EXPECT_TRUE(isSplatValue(UndefVec));
