@@ -1,0 +1,51 @@
+# RUN: llc %s -o - -mtriple=riscv64 -mattr=+experimental-zvbext \
+# RUN:   -run-pass=riscv-vl-optimizer -verify-machineinstrs | FileCheck %s
+
+---
+name: vbcompress_vv
+body: |
+  bb.0:
+    ; CHECK-LABEL: name: vbcompress_vv
+    ; CHECK: %x:vr = PseudoVBCOMPRESS_VV_M1 $noreg, $noreg, $noreg, 1 /* vl */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: %y:vr = PseudoVADD_VV_M1 $noreg, %x, $noreg, 1 /* vl */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: $v8 = COPY %y
+    %x:vr = PseudoVBCOMPRESS_VV_M1 $noreg, $noreg, $noreg, -1, 3 /* e8 */, 0
+    %y:vr = PseudoVADD_VV_M1 $noreg, %x, $noreg, 1, 3 /* e8 */, 0
+    $v8 = COPY %y
+...
+---
+name: vbcompress_vx
+body: |
+  bb.0:
+    ; CHECK-LABEL: name: vbcompress_vx
+    ; CHECK: %x:vr = PseudoVBCOMPRESS_VX_M1 $noreg, $noreg, $noreg, 1 /* vl */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: %y:vr = PseudoVADD_VV_M1 $noreg, %x, $noreg, 1 /* vl */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: $v8 = COPY %y
+    %x:vr = PseudoVBCOMPRESS_VX_M1 $noreg, $noreg, $noreg, -1, 3 /* e8 */, 0
+    %y:vr = PseudoVADD_VV_M1 $noreg, %x, $noreg, 1, 3 /* e8 */, 0
+    $v8 = COPY %y
+...
+---
+name: vbexpand_vv
+body: |
+  bb.0:
+    ; CHECK-LABEL: name: vbexpand_vv
+    ; CHECK: %x:vr = PseudoVBEXPAND_VV_M1 $noreg, $noreg, $noreg, 1 /* vl */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: %y:vr = PseudoVADD_VV_M1 $noreg, %x, $noreg, 1 /* vl */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: $v8 = COPY %y
+    %x:vr = PseudoVBEXPAND_VV_M1 $noreg, $noreg, $noreg, -1, 3 /* e8 */, 0
+    %y:vr = PseudoVADD_VV_M1 $noreg, %x, $noreg, 1, 3 /* e8 */, 0
+    $v8 = COPY %y
+...
+---
+name: vbexpand_vx
+body: |
+  bb.0:
+    ; CHECK-LABEL: name: vbexpand_vx
+    ; CHECK: %x:vr = PseudoVBEXPAND_VX_M1 $noreg, $noreg, $noreg, 1 /* vl */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: %y:vr = PseudoVADD_VV_M1 $noreg, %x, $noreg, 1 /* vl */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: $v8 = COPY %y
+    %x:vr = PseudoVBEXPAND_VX_M1 $noreg, $noreg, $noreg, -1, 3 /* e8 */, 0
+    %y:vr = PseudoVADD_VV_M1 $noreg, %x, $noreg, 1, 3 /* e8 */, 0
+    $v8 = COPY %y
+...

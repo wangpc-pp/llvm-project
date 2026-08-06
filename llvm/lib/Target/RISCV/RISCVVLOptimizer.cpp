@@ -590,6 +590,12 @@ static std::optional<unsigned> getOperandLog2EEW(const MachineOperand &MO) {
   case RISCV::VCLMULH_VV:
   case RISCV::VCLMULH_VX:
 
+  // Zvbext
+  case RISCV::VBCOMPRESS_VV:
+  case RISCV::VBCOMPRESS_VX:
+  case RISCV::VBEXPAND_VV:
+  case RISCV::VBEXPAND_VX:
+
   // Zvabd
   case RISCV::VABS_V:
   case RISCV::VABD_VV:
