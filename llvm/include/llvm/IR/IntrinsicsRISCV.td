@@ -1903,6 +1903,10 @@ let TargetPrefix = "riscv" in {
   defm vclmul            : RISCVBinaryAAX;
   defm vclmulh           : RISCVBinaryAAX;
 
+  // Zvbext
+  defm vbcompress        : RISCVBinaryAAX;
+  defm vbexpand          : RISCVBinaryAAX;
+
   // Zvkg
   def int_riscv_vghsh    : RISCVBinaryAAXUnMaskedZvk;
   def int_riscv_vgmul_vv : RISCVUnaryAAUnMaskedZvk<IsVS=0>;

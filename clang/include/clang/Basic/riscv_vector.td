@@ -2055,6 +2055,29 @@ let UnMaskedPolicyScheme = HasPassthruOperand in {
     defm vclmulh : RVVInt64BinBuiltinSet;
   }
 
+  // zvbext
+  let RequiredFeatures = ["zvbext"] in {
+    defm vbcompress
+        : RVVOutOp1BuiltinSet<"vbcompress", "csi",
+                              [["vv", "Uv", "UvUvUv"],
+                               ["vx", "Uv", "UvUvUe"]]>;
+    defm vbexpand
+        : RVVOutOp1BuiltinSet<"vbexpand", "csi",
+                              [["vv", "Uv", "UvUvUv"],
+                               ["vx", "Uv", "UvUvUe"]]>;
+  }
+
+  let RequiredFeatures = ["zvbext", "zve64x"] in {
+    defm vbcompress
+        : RVVOutOp1BuiltinSet<"vbcompress", "l",
+                              [["vv", "Uv", "UvUvUv"],
+                               ["vx", "Uv", "UvUvUe"]]>;
+    defm vbexpand
+        : RVVOutOp1BuiltinSet<"vbexpand", "l",
+                              [["vv", "Uv", "UvUvUv"],
+                               ["vx", "Uv", "UvUvUe"]]>;
+  }
+
   // zvabd
   let RequiredFeatures = ["zvabd"] in {
     defm vabs : RVVOutBuiltinSet<"vabs", "csil", [["v", "Uv", "Uvv"]]>;
