@@ -767,6 +767,8 @@ static std::optional<unsigned> getOperandLog2EEW(const MachineOperand &MO) {
 
   // Vector Integer Compare Instructions
   // Dest EEW=1. Source EEW=SEW.
+  case RISCV::VMMATCH_VV:
+  case RISCV::VMMATCH_VX:
   case RISCV::VMSEQ_VI:
   case RISCV::VMSEQ_VV:
   case RISCV::VMSEQ_VX:
@@ -1060,6 +1062,14 @@ RISCVVLOptimizer::getMinimumVLForUser(const MachineOperand &UserOp) const {
 
   if (auto VL = getMinimumVLForVSLIDEDOWN_VX(UserOp, MRI))
     return *VL;
+
+  if (RISCV::getRVVMCOpcode(UserMI.getOpcode()) == RISCV::VMMATCH_VV) {
+    int KeyIdx =
+        RISCV::getNamedOperandIdx(UserMI.getOpcode(), RISCV::OpName::rs1);
+    assert(KeyIdx >= 0 && "Unexpected vmmatch.vv operand list");
+    if (UserOp.getOperandNo() == static_cast<unsigned>(KeyIdx))
+      return DemandedVL::vlmax();
+  }
 
   if (RISCVII::readsPastVL(
           TII->get(RISCV::getRVVMCOpcode(UserMI.getOpcode())).TSFlags)) {
