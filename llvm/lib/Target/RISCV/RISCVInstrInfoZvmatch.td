@@ -22,3 +22,59 @@ let Predicates = [HasStdExtZvmatch], ElementsDependOn = EltDepsNone,
   def VMMATCH_VX : VALUVX<0b110100, OPIVX, "vmmatch.vx">,
                    SchedBinaryMC<"WriteVICmpX", "ReadVICmpV", "ReadVICmpX">;
 }
+
+//===----------------------------------------------------------------------===//
+// Pseudos
+//===----------------------------------------------------------------------===//
+
+defvar AllZvmatchVectors =
+    !filter(vti, AllIntegerVectors, !le(vti.SEW, 16));
+
+// Key types are independent of the query LMUL. M1 requires VLEN >= 128;
+// M2 provides the complete key group on LLVM's minimum VLEN of 64.
+multiclass VPseudoVMMATCH_VS {
+  foreach vti = AllZvmatchVectors in {
+    foreach key = !if(!eq(vti.SEW, 8), [VI8M1, VI8M2], [VI16M1, VI16M2]) in {
+      let VLMul = vti.LMul.value, SEW = vti.SEW in {
+        def "_VS_" # vti.LMul.MX # "_" # key.LMul.MX # "_E" # vti.SEW :
+          VPseudoBinaryNoMask<VR, vti.RegClass, key.RegClass,
+                              "@earlyclobber $rd",
+                              TargetConstraintType = 2>,
+          SchedBinary<"WriteVICmpV", "ReadVICmpV", "ReadVICmpV",
+                      vti.LMul.MX>;
+        def "_VS_" # vti.LMul.MX # "_" # key.LMul.MX # "_E" # vti.SEW # "_MASK" :
+          VPseudoBinaryMOutMask<
+              !if(!ge(vti.LMul.octuple, 16), VRNoV0, VR),
+              GetVRegNoV0<vti.RegClass>.R, GetVRegNoV0<key.RegClass>.R,
+              "@earlyclobber $rd", TargetConstraintType = 2>,
+          RISCVMaskedPseudo<MaskIdx = 3>,
+          SchedBinary<"WriteVICmpV", "ReadVICmpV", "ReadVICmpV",
+                      vti.LMul.MX>;
+      }
+    }
+  }
+}
+
+multiclass VPseudoVMMATCH_VX {
+  foreach vti = AllZvmatchVectors in {
+    let VLMul = vti.LMul.value, SEW = vti.SEW in {
+      def "_VX_" # vti.LMul.MX # "_E" # vti.SEW :
+        VPseudoBinaryNoMask<VR, vti.RegClass, GPR, "",
+                            TargetConstraintType = 2>,
+        SchedBinary<"WriteVICmpX", "ReadVICmpV", "ReadVICmpX",
+                    vti.LMul.MX>;
+      def "_VX_" # vti.LMul.MX # "_E" # vti.SEW # "_MASK" :
+        VPseudoBinaryMOutMask<
+            !if(!ge(vti.LMul.octuple, 16), VRNoV0, VR),
+            GetVRegNoV0<vti.RegClass>.R, GPR, "",
+            TargetConstraintType = 2>,
+        RISCVMaskedPseudo<MaskIdx = 3>,
+        SchedBinary<"WriteVICmpX", "ReadVICmpV", "ReadVICmpX",
+                    vti.LMul.MX>;
+    }
+  }
+}
+
+let Predicates = [HasStdExtZvmatch] in {
+  defm PseudoVMMATCH : VPseudoVMMATCH_VS, VPseudoVMMATCH_VX;
+}
