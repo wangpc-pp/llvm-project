@@ -4204,6 +4204,28 @@ bool RISCVAsmParser::validateInstruction(MCInst &Inst,
                                          OperandVector &Operands) {
   unsigned Opcode = Inst.getOpcode();
 
+  if (Opcode == RISCV::VMMATCH_VV || Opcode == RISCV::VMMATCH_VX) {
+    int VMIdx =
+        RISCV::getNamedOperandIdx(Opcode, RISCV::OpName::vm);
+    int VS1Idx =
+        RISCV::getNamedOperandIdx(Opcode, RISCV::OpName::vs1);
+    int VS2Idx =
+        RISCV::getNamedOperandIdx(Opcode, RISCV::OpName::vs2);
+    assert(VMIdx >= 0 && VS2Idx >= 0 && "Unexpected vmmatch operand list");
+
+    if (Inst.getOperand(VMIdx).getReg() == RISCV::V0 &&
+        (Inst.getOperand(VS2Idx).getReg() == RISCV::V0 ||
+         (VS1Idx >= 0 && Inst.getOperand(VS1Idx).getReg() == RISCV::V0))) {
+      int ParsedIdx = VS1Idx >= 0 &&
+                              Inst.getOperand(VS1Idx).getReg() == RISCV::V0
+                          ? VS1Idx + 1
+                          : VS2Idx + 1;
+      return Error(Operands[ParsedIdx]->getStartLoc(),
+                   "the source vector register group cannot overlap the mask "
+                   "register");
+    }
+  }
+
   if (Opcode == RISCV::PseudoVMSGEU_VX_M_T ||
       Opcode == RISCV::PseudoVMSGE_VX_M_T) {
     MCRegister DestReg = Inst.getOperand(0).getReg();

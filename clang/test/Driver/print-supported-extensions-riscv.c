@@ -261,6 +261,7 @@
 // CHECK-NEXT:     zvfwbdota16bf        0.2       'Zvfwbdota16bf' (BF16 batched dot-product extension)
 // CHECK-NEXT:     zvfwdota16bf         0.2       'Zvfwdota16bf' (BF16 Dot-Product)
 // CHECK-NEXT:     zvkgs                0.7       'Zvkgs' (Vector-Scalar GCM instructions for Cryptography)
+// CHECK-NEXT:     zvmatch              0.1       'Zvmatch' (Vector Match Against Key Set)
 // CHECK-NEXT:     zvqwbdota16i         0.2       'Zvqwbdota16i' (16-bit integer batched dot-product extension)
 // CHECK-NEXT:     zvqwbdota8i          0.2       'Zvqwbdota8i' (8-bit integer batched dot-product extension)
 // CHECK-NEXT:     zvqwdota16i          0.2       'Zvqwdota16i' (16-bit Integer Dot-Product)

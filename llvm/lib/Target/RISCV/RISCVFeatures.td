@@ -922,6 +922,14 @@ def HasStdExtZvdot4a8i : Predicate<"Subtarget->hasStdExtZvdot4a8i()">,
                          AssemblerPredicate<(all_of FeatureStdExtZvdot4a8i),
                          "'Zvdot4a8i' (Vector 4-element Dot Product of packed 8-bit Integers)">;
 
+// Vector Match Against Key Set
+def FeatureStdExtZvmatch
+    : RISCVExperimentalExtension<0, 1, "Vector Match Against Key Set",
+                                 [FeatureStdExtV]>;
+def HasStdExtZvmatch : Predicate<"Subtarget->hasStdExtZvmatch()">,
+                       AssemblerPredicate<(all_of FeatureStdExtZvmatch),
+                           "'Zvmatch' (Vector Match Against Key Set)">;
+
 // Vector Reordering Structured Data
 def FeatureStdExtZvzip
     : RISCVExperimentalExtension<0, 1, "Vector Reordering Structured Data",

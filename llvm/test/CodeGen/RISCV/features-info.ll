@@ -51,6 +51,7 @@
 ; CHECK-NEXT:   experimental-zvfwbdota16bf       - 'Zvfwbdota16bf' (BF16 batched dot-product extension).
 ; CHECK-NEXT:   experimental-zvfwdota16bf        - 'Zvfwdota16bf' (BF16 Dot-Product).
 ; CHECK-NEXT:   experimental-zvkgs               - 'Zvkgs' (Vector-Scalar GCM instructions for Cryptography).
+; CHECK-NEXT:   experimental-zvmatch              - 'Zvmatch' (Vector Match Against Key Set).
 ; CHECK-NEXT:   experimental-zvqwbdota16i        - 'Zvqwbdota16i' (16-bit integer batched dot-product extension).
 ; CHECK-NEXT:   experimental-zvqwbdota8i         - 'Zvqwbdota8i' (8-bit integer batched dot-product extension).
 ; CHECK-NEXT:   experimental-zvqwdota16i         - 'Zvqwdota16i' (16-bit Integer Dot-Product).

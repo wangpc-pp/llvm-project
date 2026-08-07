@@ -368,6 +368,9 @@ The primary goal of experimental support is to assist in the process of ratifica
 ``experimental-zvabd``
   LLVM implements the `0.7 draft specification <https://github.com/riscv/integer-vector-absolute-difference/releases/tag/v0.7>`__.
 
+``experimental-zvmatch``
+  LLVM implements the 0.1 draft Zvmatch vector match against key set proposal. Zvmatch requires the base V extension and supports SEW=8 and SEW=16.
+
 ``experimental-zvzip``
   LLVM implements the `0.1 draft specification <https://github.com/ved-rivos/riscv-isa-manual/blob/zvzip/src/zvzip.adoc>`__.
 
