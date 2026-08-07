@@ -1,0 +1,55 @@
+# RUN: llc %s -o - -mtriple=riscv64 -mattr=+experimental-zvmatch \
+# RUN:   -run-pass=riscv-vl-optimizer -verify-machineinstrs | FileCheck %s
+
+---
+name: vmmatch_vv_keys_vlmax
+body: |
+  bb.0:
+    ; CHECK-LABEL: name: vmmatch_vv_keys_vlmax
+    ; CHECK: %query:vr = PseudoVADD_VV_M1 $noreg, $noreg, $noreg, 1 /* vl */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: %keys:vr = PseudoVADD_VV_M1 $noreg, $noreg, $noreg, -1 /* vl=VLMAX */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: early-clobber %match:vr = PseudoVMMATCH_VV_M1_E8 %query, %keys, 1 /* vl */, 3 /* e8 */
+    ; CHECK-NEXT: %use:vr = PseudoVMAND_MM_B8 $noreg, %match, 1 /* vl */, 0 /* e8 */
+    ; CHECK-NEXT: $v8 = COPY %use
+    %query:vr = PseudoVADD_VV_M1 $noreg, $noreg, $noreg, -1, 3, 0
+    %keys:vr = PseudoVADD_VV_M1 $noreg, $noreg, $noreg, -1, 3, 0
+    %match:vr = PseudoVMMATCH_VV_M1_E8 %query, %keys, 1, 3
+    %use:vr = PseudoVMAND_MM_B8 $noreg, %match, 1, 0
+    $v8 = COPY %use
+...
+---
+name: vmmatch_vv_mask_keys_vlmax
+body: |
+  bb.0:
+    ; CHECK-LABEL: name: vmmatch_vv_mask_keys_vlmax
+    ; CHECK: %query:vrnov0 = PseudoVADD_VV_M1 $noreg, $noreg, $noreg, 1 /* vl */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: %keys:vrnov0 = PseudoVADD_VV_M1 $noreg, $noreg, $noreg, -1 /* vl=VLMAX */, 3 /* e8 */, 0 /* tu, mu */
+    ; CHECK-NEXT: %passthru:vr = PseudoVMAND_MM_B8 $noreg, $noreg, 1 /* vl */, 0 /* e8 */
+    ; CHECK-NEXT: %mask:vmv0 = PseudoVMSET_M_B8 1 /* vl */, 0 /* e8 */
+    ; CHECK-NEXT: early-clobber %match:vr = PseudoVMMATCH_VV_M1_E8_MASK %passthru, %query, %keys, %mask, 1 /* vl */, 3 /* e8 */, 1 /* ta, mu */
+    ; CHECK-NEXT: %use:vr = PseudoVMAND_MM_B8 $noreg, %match, 1 /* vl */, 0 /* e8 */
+    ; CHECK-NEXT: $v8 = COPY %use
+    %query:vrnov0 = PseudoVADD_VV_M1 $noreg, $noreg, $noreg, -1, 3, 0
+    %keys:vrnov0 = PseudoVADD_VV_M1 $noreg, $noreg, $noreg, -1, 3, 0
+    %passthru:vr = PseudoVMAND_MM_B8 $noreg, $noreg, -1, 0
+    %mask:vmv0 = PseudoVMSET_M_B8 1, 0
+    %match:vr = PseudoVMMATCH_VV_M1_E8_MASK %passthru, %query, %keys, %mask, 1, 3, 1
+    %use:vr = PseudoVMAND_MM_B8 $noreg, %match, 1, 0
+    $v8 = COPY %use
+...
+---
+name: vmmatch_vx_query_vl
+body: |
+  bb.0:
+    ; CHECK-LABEL: name: vmmatch_vx_query_vl
+    ; CHECK: %query:vr = PseudoVADD_VV_M1 $noreg, $noreg, $noreg, 1 /* vl */, 4 /* e16 */, 0 /* tu, mu */
+    ; CHECK-NEXT: %keys:gpr = IMPLICIT_DEF
+    ; CHECK-NEXT: %match:vr = PseudoVMMATCH_VX_M1_E16 %query, %keys, 1 /* vl */, 4 /* e16 */
+    ; CHECK-NEXT: %use:vr = PseudoVMAND_MM_B16 $noreg, %match, 1 /* vl */, 0 /* e8 */
+    ; CHECK-NEXT: $v8 = COPY %use
+    %query:vr = PseudoVADD_VV_M1 $noreg, $noreg, $noreg, -1, 4, 0
+    %keys:gpr = IMPLICIT_DEF
+    %match:vr = PseudoVMMATCH_VX_M1_E16 %query, %keys, 1, 4
+    %use:vr = PseudoVMAND_MM_B16 $noreg, %match, 1, 0
+    $v8 = COPY %use
+...

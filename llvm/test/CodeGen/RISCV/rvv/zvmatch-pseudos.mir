@@ -1,0 +1,73 @@
+# RUN: llc %s -o - -mtriple=riscv32 -mattr=+experimental-zvmatch \
+# RUN:   -start-after=finalize-isel -verify-machineinstrs | FileCheck %s
+# RUN: llc %s -o - -mtriple=riscv64 -mattr=+experimental-zvmatch \
+# RUN:   -start-after=finalize-isel -verify-machineinstrs | FileCheck %s
+
+---
+name: vmmatch_vv_e8
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $v8, $v9
+
+    ; CHECK-LABEL: vmmatch_vv_e8:
+    ; CHECK: vsetivli zero, 4, e8, m1, ta, ma
+    ; CHECK-NEXT: vmmatch.vv
+    %query:vr = COPY $v8
+    %keys:vr = COPY $v9
+    %result:vr = PseudoVMMATCH_VV_M1_E8 %query, %keys, 4, 3
+    $v8 = COPY %result
+    PseudoRET implicit $v8
+...
+---
+name: vmmatch_vv_e16_mask
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $v0, $v8, $v9, $v10
+
+    ; CHECK-LABEL: vmmatch_vv_e16_mask:
+    ; CHECK: vsetivli zero, 4, e16, m1, ta, mu
+    ; CHECK-NEXT: vmmatch.vv {{.*}}, v0.t
+    %query:vrnov0 = COPY $v8
+    %keys:vrnov0 = COPY $v9
+    %passthru:vr = COPY $v10
+    %mask:vmv0 = COPY $v0
+    %result:vr = PseudoVMMATCH_VV_M1_E16_MASK %passthru, %query, %keys, %mask, 4, 4, 1
+    $v8 = COPY %result
+    PseudoRET implicit $v8
+...
+---
+name: vmmatch_vx_e8
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $v8, $x10
+
+    ; CHECK-LABEL: vmmatch_vx_e8:
+    ; CHECK: vsetivli zero, 4, e8, m1, ta, ma
+    ; CHECK-NEXT: vmmatch.vx
+    %query:vr = COPY $v8
+    %keys:gpr = COPY $x10
+    %result:vr = PseudoVMMATCH_VX_M1_E8 %query, %keys, 4, 3
+    $v8 = COPY %result
+    PseudoRET implicit $v8
+...
+---
+name: vmmatch_vx_e16_mask
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $v0, $v8, $v9, $x10
+
+    ; CHECK-LABEL: vmmatch_vx_e16_mask:
+    ; CHECK: vsetivli zero, 4, e16, m1, ta, mu
+    ; CHECK-NEXT: vmmatch.vx {{.*}}, v0.t
+    %query:vrnov0 = COPY $v8
+    %passthru:vr = COPY $v9
+    %keys:gpr = COPY $x10
+    %mask:vmv0 = COPY $v0
+    %result:vr = PseudoVMMATCH_VX_M1_E16_MASK %passthru, %query, %keys, %mask, 4, 4, 1
+    $v8 = COPY %result
+    PseudoRET implicit $v8
+...
