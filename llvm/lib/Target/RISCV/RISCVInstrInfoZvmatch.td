@@ -74,3 +74,30 @@ multiclass VPseudoVMMATCH_VX {
 let Predicates = [HasStdExtZvmatch] in {
   defm PseudoVMMATCH : VPseudoVMMATCH_VV, VPseudoVMMATCH_VX;
 }
+
+//===----------------------------------------------------------------------===//
+// Intrinsic patterns
+//===----------------------------------------------------------------------===//
+
+multiclass VPatVMMATCHVV<VTypeInfo vti> {
+  let Predicates = !listconcat([HasStdExtZvmatch],
+                               GetVTypePredicates<vti>.Predicates) in
+  defm : VPatBinaryM<"int_riscv_vmmatch_vv",
+                     "PseudoVMMATCH_VV_" # vti.LMul.MX # "_E" # vti.SEW,
+                     vti.Mask, vti.Vector, vti.Vector, vti.Mask,
+                     vti.Log2SEW, VR, vti.RegClass, vti.RegClass>;
+}
+
+multiclass VPatVMMATCHVX<VTypeInfo vti> {
+  let Predicates = !listconcat([HasStdExtZvmatch],
+                               GetVTypePredicates<vti>.Predicates) in
+  defm : VPatBinaryM<"int_riscv_vmmatch_vx",
+                     "PseudoVMMATCH_VX_" # vti.LMul.MX # "_E" # vti.SEW,
+                     vti.Mask, vti.Vector, XLenVT, vti.Mask,
+                     vti.Log2SEW, VR, vti.RegClass, GPR>;
+}
+
+foreach vti = AllZvmatchVectors in {
+  defm : VPatVMMATCHVV<vti>;
+  defm : VPatVMMATCHVX<vti>;
+}
