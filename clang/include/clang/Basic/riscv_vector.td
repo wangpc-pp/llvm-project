@@ -2145,6 +2145,18 @@ let RequiredFeatures = ["zvdot4a8i"] in {
   defm vdot4aus : RVVVDOT4AQBuiltinSet<[["vx", "v", "vvUvUe"]]>;
 }
 
+// Zvmatch
+let RequiredFeatures = ["zvmatch"],
+    MaskedPolicyScheme = HasPassthruOperand,
+    HasTailPolicy = false in {
+  defm vmmatch
+      : RVVBuiltinSet<"vmmatch_vv", "cs",
+                      [["vv", "Uvm", "mUvUv"]], [0]>;
+  defm vmmatch
+      : RVVBuiltinSet<"vmmatch_vx", "cs",
+                      [["vx", "Uvm", "mUvz"]], [0]>;
+}
+
 // Zvzip
 let UnMaskedPolicyScheme = HasPassthruOperand in {
   let RequiredFeatures = ["zvzip"] in {

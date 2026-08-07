@@ -440,7 +440,7 @@ void RVVEmitter::createHeader(raw_ostream &OS) {
       "zve32x",   "zve64d", "zve64f",  "zve64x",     "zvfbfa",    "zvfbfmin",
       "zvfbfwma", "zvfh",   "zvfhmin", "zvfofp8min", "zvkb",      "zvkg",
       "zvkn",     "zvknc",  "zvkned",  "zvkng",      "zvknha",    "zvknhb",
-      "zvks",     "zvksc",  "zvksed",  "zvksg",      "zvksh"};
+      "zvks",     "zvksc",  "zvksed",  "zvksg",      "zvksh",     "zvmatch"};
   for (const char *Ext : Exts)
     OS << "#define __riscv_intrinsic_" << Ext << " 1\n";
 

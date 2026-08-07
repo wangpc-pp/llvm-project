@@ -87,3 +87,4 @@
 // CHECK-INTRINSIC-EXTS-NEXT: #define __riscv_intrinsic_zvksed 1
 // CHECK-INTRINSIC-EXTS-NEXT: #define __riscv_intrinsic_zvksg 1
 // CHECK-INTRINSIC-EXTS-NEXT: #define __riscv_intrinsic_zvksh 1
+// CHECK-INTRINSIC-EXTS-NEXT: #define __riscv_intrinsic_zvmatch 1
