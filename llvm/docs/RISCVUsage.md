@@ -384,6 +384,8 @@ The primary goal of experimental support is to assist in the process of ratifica
 : LLVM implements the [0.1 draft specification](https://github.com/wangpc-pp/riscv-isa-manual/blob/main-zvmatch/src/unpriv/zvmatch.adoc).
   Zvmatch requires Zve32x and supports SEW=8 and SEW=16. `vmmatch.vs` matches
   against the low 128 bits of a scalar key group, independently of query LMUL.
+  Clang's canonical `.vs` intrinsics take M1 keys and require VLEN >= 128;
+  variants with an M2 key type in the suffix also support VLEN=64.
 
 `experimental-zvzip`
 

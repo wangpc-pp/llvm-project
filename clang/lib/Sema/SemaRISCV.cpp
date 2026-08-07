@@ -802,6 +802,16 @@ bool SemaRISCV::CheckBuiltinFunctionCall(const TargetInfo &TI,
                  (VecInfo.EC.getKnownMinValue() * VecInfo.NumVectors);
     return SemaRef.BuiltinConstantArgRange(TheCall, 1, 0, MaxIndex - 1);
   }
+  // Zvmatch requires 128 key bits, independently of the query LMUL.
+  case RISCVVector::BI__builtin_rvv_vmmatch_vs:
+    return CheckInvalidVLENandLMUL(TI, FunctionFeatureMap, TheCall, SemaRef,
+                                   TheCall->getArg(1)->getType(), 128);
+  case RISCVVector::BI__builtin_rvv_vmmatch_vs_m:
+    return CheckInvalidVLENandLMUL(TI, FunctionFeatureMap, TheCall, SemaRef,
+                                   TheCall->getArg(2)->getType(), 128);
+  case RISCVVector::BI__builtin_rvv_vmmatch_vs_mu:
+    return CheckInvalidVLENandLMUL(TI, FunctionFeatureMap, TheCall, SemaRef,
+                                   TheCall->getArg(3)->getType(), 128);
   // Vector Crypto
   case RISCVVector::BI__builtin_rvv_vaeskf1_vi_tu:
   case RISCVVector::BI__builtin_rvv_vaeskf2_vi_tu:

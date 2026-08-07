@@ -78,3 +78,38 @@ multiclass VPseudoVMMATCH_VX {
 let Predicates = [HasStdExtZvmatch] in {
   defm PseudoVMMATCH : VPseudoVMMATCH_VS, VPseudoVMMATCH_VX;
 }
+
+//===----------------------------------------------------------------------===//
+// Intrinsic patterns
+//===----------------------------------------------------------------------===//
+
+def HasZvmatchKeyM1 : Predicate<"Subtarget->hasStdExtZvmatch() && "
+                                "Subtarget->getRealMinVLen() >= 128">;
+
+multiclass VPatVMMATCHVS<VTypeInfo vti> {
+  foreach key = !if(!eq(vti.SEW, 8), [VI8M1, VI8M2], [VI16M1, VI16M2]) in {
+    let Predicates = !listconcat([HasStdExtZvmatch],
+                                 GetVTypePredicates<vti>.Predicates,
+                                 !if(!eq(key.LMul.MX, "M1"),
+                                     [HasZvmatchKeyM1], [])) in
+    defm : VPatBinaryM<"int_riscv_vmmatch_vs",
+                       "PseudoVMMATCH_VS_" # vti.LMul.MX # "_" #
+                       key.LMul.MX # "_E" # vti.SEW,
+                       vti.Mask, vti.Vector, key.Vector, vti.Mask,
+                       vti.Log2SEW, VR, vti.RegClass, key.RegClass>;
+  }
+}
+
+multiclass VPatVMMATCHVX<VTypeInfo vti> {
+  let Predicates = !listconcat([HasStdExtZvmatch],
+                               GetVTypePredicates<vti>.Predicates) in
+  defm : VPatBinaryM<"int_riscv_vmmatch_vx",
+                     "PseudoVMMATCH_VX_" # vti.LMul.MX # "_E" # vti.SEW,
+                     vti.Mask, vti.Vector, XLenVT, vti.Mask,
+                     vti.Log2SEW, VR, vti.RegClass, GPR>;
+}
+
+foreach vti = AllZvmatchVectors in {
+  defm : VPatVMMATCHVS<vti>;
+  defm : VPatVMMATCHVX<vti>;
+}

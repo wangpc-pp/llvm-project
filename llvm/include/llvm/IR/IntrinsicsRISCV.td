@@ -1974,6 +1974,59 @@ let TargetPrefix = "riscv" in {
   defm vwabdau : RISCVTernaryWideVS2First;
 } // TargetPrefix = "riscv"
 
+// Zvmatch - Vector Match Against Key Set
+//===----------------------------------------------------------------------===//
+let TargetPrefix = "riscv" in {
+  multiclass RISCVVMatchVS {
+    // Input: (query, 128-bit scalar key group, vl)
+    def "int_riscv_" # NAME :
+      DefaultAttrsIntrinsic<[LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>],
+                            [llvm_anyvector_ty, llvm_anyvector_ty,
+                             llvm_anyint_ty],
+                            [IntrNoMem]>, RISCVVIntrinsic {
+      let VLOperand = 2;
+    }
+
+    // Input: (maskedoff, query, 128-bit scalar key group, mask, vl)
+    def "int_riscv_" # NAME # "_mask" :
+      DefaultAttrsIntrinsic<[LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>],
+                            [LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>,
+                             llvm_anyvector_ty, llvm_anyvector_ty,
+                             LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>,
+                             llvm_anyint_ty],
+                            [IntrNoMem]>, RISCVVIntrinsic {
+      let VLOperand = 4;
+    }
+  }
+
+  multiclass RISCVVMatchVX {
+    // Input: (query, xlen_keys, vl)
+    def "int_riscv_" # NAME :
+      DefaultAttrsIntrinsic<[LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>],
+                            [llvm_anyvector_ty, llvm_anyint_ty,
+                             LLVMMatchType<1>],
+                            [IntrNoMem]>, RISCVVIntrinsic {
+      let ScalarOperand = 1;
+      let VLOperand = 2;
+    }
+
+    // Input: (maskedoff, query, xlen_keys, mask, vl)
+    def "int_riscv_" # NAME # "_mask" :
+      DefaultAttrsIntrinsic<[LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>],
+                            [LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>,
+                             llvm_anyvector_ty, llvm_anyint_ty,
+                             LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>,
+                             LLVMMatchType<1>],
+                            [IntrNoMem]>, RISCVVIntrinsic {
+      let ScalarOperand = 2;
+      let VLOperand = 4;
+    }
+  }
+
+  defm vmmatch_vs : RISCVVMatchVS;
+  defm vmmatch_vx : RISCVVMatchVX;
+} // TargetPrefix = "riscv"
+
 // Zvzip - Reordering Structured Data in Vector Registers
 //===----------------------------------------------------------------------===//
 let TargetPrefix = "riscv" in {

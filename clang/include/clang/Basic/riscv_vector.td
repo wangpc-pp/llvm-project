@@ -2152,6 +2152,25 @@ let RequiredFeatures = ["zvdot4a8i"] in {
   defm vdot4aus : RVVVDOT4AQBuiltinSet<[["vx", "v", "vvUvUe"]]>;
 }
 
+// Zvmatch
+let RequiredFeatures = ["zvmatch"],
+    MaskedPolicyScheme = HasPassthruOperand,
+    HasTailPolicy = false in {
+  // The canonical .vs API uses an M1 key group, independent of query LMUL.
+  defm vmmatch
+      : RVVBuiltinSet<"vmmatch_vs", "cs",
+                      [["vs", "Uvm", "mUvUSv"]], [0, 1]>;
+  // An M2 key group also supports VLEN=64. Include its type in the suffix.
+  foreach key_lmul = ["(LFixedLog2LMUL:1)", "(SEFixedLog2LMUL:1)"] in
+    defm vmmatch
+        : RVVBuiltinSet<"vmmatch_vs", "cs",
+                        [["vs", "Uv" # key_lmul # "Uvm",
+                          "mUv" # key_lmul # "Uv"]], [0, 1]>;
+  defm vmmatch
+      : RVVBuiltinSet<"vmmatch_vx", "cs",
+                      [["vx", "Uvm", "mUvz"]], [0]>;
+}
+
 // Zvzip
 let UnMaskedPolicyScheme = HasPassthruOperand in {
   let RequiredFeatures = ["zvzip"] in {
