@@ -186,6 +186,7 @@
 // CHECK-NOT: __riscv_zvksg {{.*$}}
 // CHECK-NOT: __riscv_zvksh {{.*$}}
 // CHECK-NOT: __riscv_zvkt {{.*$}}
+// CHECK-NOT: __riscv_zvmatch {{.*$}}
 // CHECK-NOT: __riscv_zvl32b {{.*$}}
 // CHECK-NOT: __riscv_zvl64b {{.*$}}
 // CHECK-NOT: __riscv_zvl128b {{.*$}}
@@ -1885,6 +1886,16 @@
 // RUN:   -march=rv64i_zve32x_zvzip0p3 -E -dM %s \
 // RUN:   -o - | FileCheck --check-prefix=CHECK-ZVZIP-EXT %s
 // CHECK-ZVZIP-EXT: __riscv_zvzip 3000{{$}}
+
+// RUN: %clang --target=riscv32 -menable-experimental-extensions \
+// RUN:   -march=rv32i_zvmatch0p1 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZVMATCH-EXT %s
+// RUN: %clang --target=riscv64 -menable-experimental-extensions \
+// RUN:   -march=rv64i_zvmatch0p1 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZVMATCH-EXT %s
+// CHECK-ZVMATCH-EXT-NOT: __riscv_v 1000000
+// CHECK-ZVMATCH-EXT: __riscv_zve32x 1000000{{$}}
+// CHECK-ZVMATCH-EXT: __riscv_zvmatch 1000{{$}}
 
 // RUN: %clang -target riscv32 -menable-experimental-extensions \
 // RUN:   -march=rv32izicfiss1p0 -E -dM %s \

@@ -1782,6 +1782,7 @@ Experimental extensions
     zvfwbdota16bf        0.2
     zvfwdota16bf         0.2
     zvkgs                0.7
+    zvmatch              0.1
     zvqwbdota16i         0.2
     zvqwbdota8i          0.2
     zvqwdota16i          0.2
