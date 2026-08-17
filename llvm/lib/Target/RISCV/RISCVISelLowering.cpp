@@ -1174,6 +1174,16 @@ RISCVTargetLowering::RISCVTargetLowering(const TargetMachine &TM,
       setOperationAction({ISD::MLOAD, ISD::MSTORE, ISD::MGATHER, ISD::MSCATTER},
                          VT, Custom);
 
+      // The Zvcd cross-lane conflict-detection instructions let us lower the
+      // 'add' histogram intrinsic to a gather + vconflictcnt + ordered scatter
+      // sequence.  Zvcd supports SEW=32/64, and the scalar increment must be a
+      // legal type (so no i64 buckets on RV32, whose i64 increment operand
+      // would need expanding on the histogram node itself).
+      if (Subtarget.hasStdExtZvcd() &&
+          (VT.getVectorElementType() == MVT::i32 ||
+           (VT.getVectorElementType() == MVT::i64 && Subtarget.is64Bit())))
+        setOperationAction(ISD::EXPERIMENTAL_VECTOR_HISTOGRAM, VT, Custom);
+
       setOperationAction(
           {ISD::VP_LOAD, ISD::VP_STORE, ISD::EXPERIMENTAL_VP_STRIDED_LOAD,
            ISD::EXPERIMENTAL_VP_STRIDED_STORE, ISD::VP_GATHER, ISD::VP_SCATTER},
@@ -9638,6 +9648,8 @@ SDValue RISCVTargetLowering::LowerOperation(SDValue Op,
   case ISD::MSCATTER:
   case ISD::VP_SCATTER:
     return lowerMaskedScatter(Op, DAG);
+  case ISD::EXPERIMENTAL_VECTOR_HISTOGRAM:
+    return lowerVectorHistogram(Op, DAG);
   case ISD::GET_ROUNDING:
     return lowerGET_ROUNDING(Op, DAG);
   case ISD::SET_ROUNDING:
@@ -15548,6 +15560,90 @@ SDValue RISCVTargetLowering::lowerMaskedScatter(SDValue Op,
 
   return DAG.getMemIntrinsicNode(ISD::INTRINSIC_VOID, DL,
                                  DAG.getVTList(MVT::Other), Ops, MemVT, MMO);
+}
+
+// Custom lower the 'add' vector histogram intrinsic using the Zvcd cross-lane
+// conflict-detection instruction.  This mirrors AArch64's HISTCNT-based
+// lowering: for each active lane vconflictcnt.v returns the inclusive number
+// of earlier-or-equal active lanes targeting the same bucket, so a single
+// masked gather -> old + count*inc -> ordered masked scatter reproduces the
+// serial per-lane accumulation.  Correctness for duplicate buckets relies on
+// the "last active lane wins" ordering of the scatter, which lowers to the
+// ordered vsoxei instruction.
+SDValue RISCVTargetLowering::lowerVectorHistogram(SDValue Op,
+                                                  SelectionDAG &DAG) const {
+  auto *HG = cast<MaskedHistogramSDNode>(Op.getNode());
+  SDLoc DL(HG);
+  SDValue Chain = HG->getChain();
+  SDValue Inc = HG->getInc();
+  SDValue Mask = HG->getMask();
+  SDValue Base = HG->getBasePtr();
+  SDValue Index = HG->getIndex();
+  SDValue Scale = HG->getScale();
+  EVT MemVT = HG->getMemoryVT();
+  MachineMemOperand *MMO = HG->getMemOperand();
+  ISD::MemIndexType IndexType = HG->getIndexType();
+  MVT XLenVT = Subtarget.getXLenVT();
+  LLVMContext &Ctx = *DAG.getContext();
+
+  // Only 'add' is turned into a histogram node by SelectionDAGBuilder; the
+  // other updates are handled by the generic scalarizer.
+  assert(cast<ConstantSDNode>(HG->getIntID())->getZExtValue() ==
+             Intrinsic::experimental_vector_histogram_add &&
+         "Unexpected histogram update operation");
+
+  ElementCount EC = Index.getValueType().getVectorElementCount();
+  // The histogram is only made Custom for i32/i64 buckets, both of which are
+  // legal Zvcd element widths, so run the conflict count at the bucket width.
+  EVT DataVT = EVT::getVectorVT(Ctx, MemVT, EC);
+
+  MachineFunction &MF = DAG.getMachineFunction();
+
+  // Masked gather of the current bucket values (load-only MMO).
+  MachineMemOperand *GMMO = MF.getMachineMemOperand(
+      MMO->getPointerInfo(), MachineMemOperand::MOLoad, MMO->getSize(),
+      MMO->getAlign(), MMO->getAAInfo());
+  SDValue PassThru = DAG.getConstant(0, DL, DataVT);
+  SDValue GatherOps[] = {Chain, PassThru, Mask, Base, Index, Scale};
+  SDValue Gather =
+      DAG.getMaskedGather(DAG.getVTList(DataVT, MVT::Other), MemVT, DL,
+                          GatherOps, GMMO, IndexType, ISD::NON_EXTLOAD);
+  SDValue GChain = Gather.getValue(1);
+
+  // Use the bucket index vector as the equal-value identity: buckets with the
+  // same address share the same index, so vconflictcnt.v counts duplicates.
+  // Cast it to the bucket element width for the conflict count.
+  SDValue Ids = Index;
+  if (Index.getValueType() != DataVT) {
+    if (Index.getScalarValueSizeInBits() < MemVT.getScalarSizeInBits())
+      Ids = DAG.getNode(ISD::ANY_EXTEND, DL, DataVT, Index);
+    else
+      Ids = DAG.getNode(ISD::TRUNCATE, DL, DataVT, Index);
+  }
+
+  // Masked vconflictcnt.v: masked-off lanes are neither queried nor counted.
+  SDValue VL = DAG.getElementCount(DL, XLenVT, EC);
+  SDValue Policy = DAG.getTargetConstant(
+      RISCVVType::TAIL_AGNOSTIC | RISCVVType::MASK_AGNOSTIC, DL, XLenVT);
+  SDValue CountOps[] = {
+      DAG.getTargetConstant(Intrinsic::riscv_vconflictcnt_mask, DL, XLenVT),
+      DAG.getUNDEF(DataVT), Ids, Mask, VL, Policy};
+  SDValue Count =
+      DAG.getNode(ISD::INTRINSIC_WO_CHAIN, DL, DataVT, CountOps);
+
+  // result = gathered + count * inc.  MemVT is a legal integer here (i32, or
+  // i64 on RV64), so a plain SPLAT_VECTOR of the increment is fine.
+  SDValue IncSplat = DAG.getSplatVector(DataVT, DL, Inc);
+  SDValue Delta = DAG.getNode(ISD::MUL, DL, DataVT, Count, IncSplat);
+  SDValue Add = DAG.getNode(ISD::ADD, DL, DataVT, Gather, Delta);
+
+  // Ordered masked scatter (store-only MMO) writes the serially-correct value.
+  MachineMemOperand *SMMO = MF.getMachineMemOperand(
+      MMO->getPointerInfo(), MachineMemOperand::MOStore, MMO->getSize(),
+      MMO->getAlign(), MMO->getAAInfo());
+  SDValue ScatterOps[] = {GChain, Add, Mask, Base, Index, Scale};
+  return DAG.getMaskedScatter(DAG.getVTList(MVT::Other), MemVT, DL, ScatterOps,
+                              SMMO, IndexType, /*IsTruncating=*/false);
 }
 
 SDValue RISCVTargetLowering::lowerGET_ROUNDING(SDValue Op,

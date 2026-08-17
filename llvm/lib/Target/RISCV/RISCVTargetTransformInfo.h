@@ -336,6 +336,25 @@ public:
     return isLegalMaskedGatherScatter(DataType, Alignment);
   }
 
+  bool isLegalMaskedVectorHistogram(Type *AddrType,
+                                    Type *DataType) const override {
+    // Only the 'add' update is lowered (see lowerVectorHistogram), and only
+    // when Zvcd provides the cross-lane conflict count.  Zvcd supports SEW=32
+    // and SEW=64, so restrict the bucket element type accordingly.  Returning
+    // true here keeps ScalarizeMaskedMemIntrin from expanding the intrinsic so
+    // it reaches SelectionDAG.
+    if (!ST->hasStdExtZvcd() || !DataType->isIntegerTy())
+      return false;
+    unsigned EltSize = DataType->getScalarSizeInBits();
+    if (EltSize != 32 && !(EltSize == 64 && ST->is64Bit()))
+      return false;
+    auto *VTy = dyn_cast<VectorType>(AddrType);
+    if (!VTy || !VTy->isScalableTy())
+      return false;
+    Align Alignment(EltSize / 8);
+    return isLegalMaskedGatherScatter(DataType, Alignment);
+  }
+
   bool forceScalarizeMaskedGather(VectorType *VTy,
                                   Align Alignment) const override {
     // Scalarize masked gather for RV64 if EEW=64 indices aren't supported.

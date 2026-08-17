@@ -547,6 +547,7 @@ private:
                                                SelectionDAG &DAG) const;
   SDValue lowerMaskedGather(SDValue Op, SelectionDAG &DAG) const;
   SDValue lowerMaskedScatter(SDValue Op, SelectionDAG &DAG) const;
+  SDValue lowerVectorHistogram(SDValue Op, SelectionDAG &DAG) const;
   SDValue lowerFixedLengthVectorLoadToRVV(SDValue Op, SelectionDAG &DAG) const;
   SDValue lowerFixedLengthVectorStoreToRVV(SDValue Op, SelectionDAG &DAG) const;
   SDValue lowerToScalableOp(SDValue Op, SelectionDAG &DAG) const;

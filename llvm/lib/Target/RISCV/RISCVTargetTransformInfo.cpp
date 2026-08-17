@@ -1409,6 +1409,51 @@ RISCVTTIImpl::getIntrinsicInstrCost(const IntrinsicCostAttributes &ICA,
                                     TTI::TargetCostKind CostKind) const {
   auto *RetTy = ICA.getReturnType();
   switch (ICA.getID()) {
+  case Intrinsic::experimental_vector_histogram_add: {
+    // Only lowered when Zvcd provides the cross-lane conflict count; otherwise
+    // fall through to the BaseT fallback (invalid cost for scalable vectors),
+    // which keeps the loop vectorizer from generating the intrinsic.
+    if (!ST->hasStdExtZvcd())
+      break;
+
+    // ICA operands are {<vector of ptr>, <scalar increment>, <vector of i1>}.
+    if (ICA.getArgTypes().size() < 2)
+      break;
+    auto *PtrVecTy = dyn_cast<VectorType>(ICA.getArgTypes()[0]);
+    Type *IncTy = ICA.getArgTypes()[1];
+    if (!PtrVecTy || !IncTy->isIntegerTy())
+      break;
+
+    // Zvcd only supports SEW=32/64 element types, and an i64 increment must
+    // be a legal scalar (RV64 only).
+    unsigned EltSize = IncTy->getScalarSizeInBits();
+    if (EltSize != 32 && !(EltSize == 64 && ST->is64Bit()))
+      break;
+
+    ElementCount EC = PtrVecTy->getElementCount();
+    auto *DataTy = VectorType::get(IncTy, EC);
+    Align Alignment = DL.getABITypeAlign(IncTy);
+
+    // We lower the intrinsic to a masked gather + masked scatter pair.  If the
+    // bucket element type isn't a legal gather/scatter type there is no
+    // profitable lowering, so report an invalid cost.
+    if (!isLegalMaskedGather(DataTy, Alignment) ||
+        !isLegalMaskedScatter(DataTy, Alignment))
+      return InstructionCost::getInvalid();
+
+    MemIntrinsicCostAttributes GatherMICA(Intrinsic::masked_gather, DataTy,
+                                          /*Ptr=*/nullptr,
+                                          /*VariableMask=*/true, Alignment);
+    MemIntrinsicCostAttributes ScatterMICA(Intrinsic::masked_scatter, DataTy,
+                                           /*Ptr=*/nullptr,
+                                           /*VariableMask=*/true, Alignment);
+    InstructionCost Cost = getGatherScatterOpCost(GatherMICA, CostKind);
+    Cost += getGatherScatterOpCost(ScatterMICA, CostKind);
+    // One vconflictcnt.v plus the multiply/add folding the conflict count into
+    // the bucket update.
+    Cost += 3 * TTI::TCC_Basic;
+    return Cost;
+  }
   case Intrinsic::lrint:
   case Intrinsic::llrint:
   case Intrinsic::lround:
