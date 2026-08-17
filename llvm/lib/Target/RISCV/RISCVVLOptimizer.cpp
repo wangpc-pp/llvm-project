@@ -765,6 +765,17 @@ static std::optional<unsigned> getOperandLog2EEW(const MachineOperand &MO) {
     return 0;
   }
 
+  // Vector Conflict Detection Instructions (Zvcd)
+  // vconflictcnt.v: data-in/data-out, both EEW=SEW.
+  case RISCV::VCONFLICTCNT_V:
+    return MILog2SEW;
+  // vconflictlast.m: source data EEW=SEW, mask destination EEW=1.
+  case RISCV::VCONFLICTLAST_M: {
+    if (IsMODef)
+      return 0;
+    return MILog2SEW;
+  }
+
   // Vector Integer Compare Instructions
   // Dest EEW=1. Source EEW=SEW.
   case RISCV::VMSEQ_VI:
