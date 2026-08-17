@@ -930,6 +930,14 @@ def HasStdExtZvzip : Predicate<"Subtarget->hasStdExtZvzip()">,
                      AssemblerPredicate<(all_of FeatureStdExtZvzip),
                          "'Zvzip' (Vector Reordering Structured Data)">;
 
+// Vector Conflict Detection
+def FeatureStdExtZvcd
+    : RISCVExperimentalExtension<0, 1, "Vector Conflict Detection",
+                                 [FeatureStdExtZve32x]>;
+def HasStdExtZvcd : Predicate<"Subtarget->hasStdExtZvcd()">,
+                    AssemblerPredicate<(all_of FeatureStdExtZvcd),
+                        "'Zvcd' (Vector Conflict Detection)">;
+
 // Integrated Matrix Extension integer matrix multiply-accumulate
 def FeatureStdExtZvvmm
     : RISCVExperimentalExtension<0, 1, "Integer Matrix Multiply-Accumulate",

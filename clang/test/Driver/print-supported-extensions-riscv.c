@@ -252,6 +252,7 @@
 // CHECK-NEXT:     zilx                 0.1       'Zilx' (Indexed Integer Load Instructions)
 // CHECK-NEXT:     zvabd                0.7       'Zvabd' (Vector Absolute Difference)
 // CHECK-NEXT:     zvbc32e              0.7       'Zvbc32e' (Vector Carryless Multiplication with 32-bits elements)
+// CHECK-NEXT:     zvcd                 0.1       'Zvcd' (Vector Conflict Detection)
 // CHECK-NEXT:     zvdot4a8i            0.1       'Zvdot4a8i' (Vector 4-element Dot Product of packed 8-bit Integers)
 // CHECK-NEXT:     zvfbdota32f          0.2       'Zvfbdota32f' (FP32 batched dot-product extension)
 // CHECK-NEXT:     zvfbfa               0.1       'Zvfbfa' (Additional BF16 vector compute support)

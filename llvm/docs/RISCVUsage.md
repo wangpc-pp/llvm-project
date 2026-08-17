@@ -378,6 +378,10 @@ The primary goal of experimental support is to assist in the process of ratifica
 
 : LLVM implements the [0.1 draft specification](https://github.com/ved-rivos/riscv-isa-manual/blob/zvzip/src/zvzip.adoc).
 
+`experimental-zvcd`
+
+: LLVM implements the 0.1 draft specification.
+
 `experimental-zvvfmm`
 
 : LLVM implements the [0.1 draft specification](https://github.com/riscv/integrated-matrix-extension/releases/tag/riscv-isa-release-71c48b9-2026-05-17).

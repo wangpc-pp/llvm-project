@@ -2435,6 +2435,7 @@ include "RISCVInstrInfoZvk.td"
 include "RISCVInstrInfoZvdot4a8i.td"
 include "RISCVInstrInfoZvfofp8min.td"
 include "RISCVInstrInfoZvzip.td"
+include "RISCVInstrInfoZvcd.td"
 include "RISCVInstrInfoZvvm.td"
 include "RISCVInstrInfoZvbdota.td"
 

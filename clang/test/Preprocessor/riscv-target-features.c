@@ -1798,6 +1798,14 @@
 // RUN:   -o - | FileCheck --check-prefix=CHECK-ZVZVIP-EXT %s
 // CHECK-ZVZVIP-EXT: __riscv_zvzip 1000{{$}}
 
+// RUN: %clang --target=riscv32 -menable-experimental-extensions \
+// RUN:   -march=rv32i_zve32x_zvcd0p1 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZVCD-EXT %s
+// RUN: %clang --target=riscv64 -menable-experimental-extensions \
+// RUN:   -march=rv64i_zve32x_zvcd0p1 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZVCD-EXT %s
+// CHECK-ZVCD-EXT: __riscv_zvcd 1000{{$}}
+
 // RUN: %clang -target riscv32 -menable-experimental-extensions \
 // RUN:   -march=rv32izicfiss1p0 -E -dM %s \
 // RUN:   -o - | FileCheck --check-prefix=CHECK-ZICFISS-EXT %s
