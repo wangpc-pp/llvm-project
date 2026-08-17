@@ -1993,6 +1993,38 @@ let TargetPrefix = "riscv" in {
   defm vpairo  : RISCVBinaryAAA;
 }
 
+// Zvcd - Vector Conflict Detection
+//===----------------------------------------------------------------------===//
+let TargetPrefix = "riscv" in {
+  // vconflictcnt.v produces an SEW-bit data vector with the same shape as its
+  // source, so it reuses the RISCVUnaryAA data-in/data-out form.
+  defm vconflictcnt : RISCVUnaryAA;
+
+  // vconflictlast.m consumes an SEW-bit data vector and produces a mask.
+  // The mask destination is always tail-agnostic, so like the compare
+  // instructions the masked form takes no policy operand.
+  // Output: (mask type output)
+  // Input: (mask passthru, vector_in, vl)
+  def int_riscv_vconflictlast
+        : DefaultAttrsIntrinsic<[LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>],
+                    [LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>,
+                     llvm_anyvector_ty, llvm_anyint_ty],
+                    [IntrNoMem]>, RISCVVIntrinsic {
+    let VLOperand = 2;
+  }
+  // Output: (mask type output)
+  // Input: (mask passthru, vector_in, mask, vl)
+  def int_riscv_vconflictlast_mask
+        : DefaultAttrsIntrinsic<[LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>],
+                    [LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>,
+                     llvm_anyvector_ty,
+                     LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>,
+                     llvm_anyint_ty],
+                    [IntrNoMem]>, RISCVVIntrinsic {
+    let VLOperand = 3;
+  }
+}
+
 //===----------------------------------------------------------------------===//
 // Zvdot4a8i - Vector 4-element Dot Product of packed 8-bit Integers
 //

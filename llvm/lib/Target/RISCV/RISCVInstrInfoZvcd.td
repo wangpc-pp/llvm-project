@@ -82,3 +82,58 @@ let Predicates = [HasStdExtZvcd] in {
 defm PseudoVCONFLICTCNT_V  : VPseudoVCONFLICTCNT_V;
 defm PseudoVCONFLICTLAST_M : VPseudoVCONFLICTLAST_M;
 } // Predicates = [HasStdExtZvcd]
+
+//===----------------------------------------------------------------------===//
+// Patterns.
+//===----------------------------------------------------------------------===//
+
+// Zvcd only supports SEW=32 and SEW=64.
+defvar AllZvcdVectors = [VI32MF2, VI32M1, VI32M2, VI32M4, VI32M8,
+                         VI64M1, VI64M2, VI64M4, VI64M8];
+
+// vconflictcnt.v: data-in/data-out, both the same integer vector type.
+multiclass VPatUnaryV_V_Zvcd<string intrinsic, string instruction> {
+  foreach vti = AllZvcdVectors in {
+    let Predicates = !listconcat([HasStdExtZvcd],
+                                 GetVTypePredicates<vti>.Predicates) in {
+      def : VPatUnaryNoMask<intrinsic, instruction, "V",
+                            vti.Vector, vti.Vector, vti.Log2SEW,
+                            vti.LMul, vti.RegClass, vti.RegClass>;
+      def : VPatUnaryMask<intrinsic, instruction, "V",
+                          vti.Vector, vti.Vector, vti.Mask, vti.Log2SEW,
+                          vti.LMul, vti.RegClass, vti.RegClass>;
+    }
+  }
+}
+
+// vconflictlast.m: data-in (integer vector), mask-out. The mask destination
+// is always tail-agnostic, so the masked pattern hard-codes TA_MU and the
+// masked intrinsic takes no policy operand (as with compares / vmsbf).
+multiclass VPatUnaryM_V_Zvcd<string intrinsic, string instruction> {
+  foreach vti = AllZvcdVectors in {
+    let Predicates = !listconcat([HasStdExtZvcd],
+                                 GetVTypePredicates<vti>.Predicates) in {
+      def : Pat<(vti.Mask (!cast<Intrinsic>(intrinsic)
+                          (vti.Mask VR:$passthru),
+                          (vti.Vector vti.RegClass:$rs2),
+                          VLOpFrag)),
+                (!cast<Instruction>(instruction#"_"#vti.LMul.MX)
+                          (vti.Mask VR:$passthru),
+                          (vti.Vector vti.RegClass:$rs2),
+                          GPR:$vl, vti.Log2SEW, TU_MU)>;
+      def : Pat<(vti.Mask (!cast<Intrinsic>(intrinsic#"_mask")
+                          (vti.Mask VR:$passthru),
+                          (vti.Vector vti.RegClass:$rs2),
+                          (vti.Mask VMV0:$vm),
+                          VLOpFrag)),
+                (!cast<Instruction>(instruction#"_"#vti.LMul.MX#"_MASK")
+                          (vti.Mask VR:$passthru),
+                          (vti.Vector vti.RegClass:$rs2),
+                          (vti.Mask VMV0:$vm),
+                          GPR:$vl, vti.Log2SEW, TA_MU)>;
+    }
+  }
+}
+
+defm : VPatUnaryV_V_Zvcd<"int_riscv_vconflictcnt", "PseudoVCONFLICTCNT">;
+defm : VPatUnaryM_V_Zvcd<"int_riscv_vconflictlast", "PseudoVCONFLICTLAST_M">;

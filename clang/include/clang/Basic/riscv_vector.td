@@ -2162,3 +2162,25 @@ let UnMaskedPolicyScheme = HasPassthruOperand in {
     defm vpairo : RVVOutBuiltinSet<"vpairo", "csil", [["vv", "Uv", "UvUvUv"]]>;
   }
 }
+
+// Zvcd
+// Zvcd only supports SEW=32 and SEW=64, so the type range is "il".
+let RequiredFeatures = ["zvcd"] in {
+  // vconflictcnt.v: data-in/data-out with the same integer vector type.
+  let UnMaskedPolicyScheme = HasPassthruOperand in {
+    defm vconflictcnt : RVVOutBuiltinSet<"vconflictcnt", "il",
+                                         [["v", "v", "vv"],
+                                          ["v", "Uv", "UvUv"]]>;
+  }
+
+  // vconflictlast.m: integer vector input, mask output. The mask destination
+  // is always tail-agnostic, so like the compare instructions the masked form
+  // takes a mask passthru but no policy operand.
+  let UnMaskedPolicyScheme = HasPassthruOperand,
+      MaskedPolicyScheme = HasPassthruOperand,
+      HasTailPolicy = false in {
+    defm vconflictlast : RVVOp0BuiltinSet<"vconflictlast", "il",
+                                          [["v", "vm", "mv"],
+                                           ["v", "Uvm", "mUv"]]>;
+  }
+}
