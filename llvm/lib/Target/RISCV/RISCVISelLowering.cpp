@@ -70,6 +70,12 @@ static cl::opt<bool>
                               "VWADD_W) with splat constants"),
                      cl::init(false));
 
+static cl::opt<bool> HistogramUnorderedScatter(
+    DEBUG_TYPE "-histogram-unordered-scatter", cl::Hidden, cl::init(false),
+    cl::desc("Lower the vector histogram add with a vconflictlast.m "
+             "unique-writer mask and an unordered scatter instead of the "
+             "default ordered scatter"));
+
 static cl::opt<unsigned> NumRepeatedDivisors(
     DEBUG_TYPE "-fp-repeated-divisors", cl::Hidden,
     cl::desc("Set the minimum number of repetitions of a divisor to allow "
@@ -15637,10 +15643,61 @@ SDValue RISCVTargetLowering::lowerVectorHistogram(SDValue Op,
   SDValue Delta = DAG.getNode(ISD::MUL, DL, DataVT, Count, IncSplat);
   SDValue Add = DAG.getNode(ISD::ADD, DL, DataVT, Gather, Delta);
 
-  // Ordered masked scatter (store-only MMO) writes the serially-correct value.
   MachineMemOperand *SMMO = MF.getMachineMemOperand(
       MMO->getPointerInfo(), MachineMemOperand::MOStore, MMO->getSize(),
       MMO->getAlign(), MMO->getAAInfo());
+
+  // With -riscv-histogram-unordered-scatter use vconflictlast.m to keep only
+  // the unique highest-index active lane of each equal-value group.  On that
+  // lane the inclusive count already equals the group total, so old+count*inc
+  // is the final bucket value.  The selected lanes then target distinct
+  // buckets, so the store order no longer matters and we can use an unordered
+  // indexed store (vsuxei) instead of the ordered vsoxei.
+  //
+  // A generic MSCATTER always lowers to the ordered vsoxei, so emit the vsuxei
+  // intrinsic directly.  It uses the unscaled "ptr + index byte offset" form,
+  // so fold the histogram's uniform base and constant scale into an absolute
+  // byte-address vector and store from base x0.  address = base + index*scale
+  // is lane-invariant in base/scale, so it stays injective in the index and
+  // the Index vector remains a valid equal-value identity for the conflict
+  // count above.
+  if (HistogramUnorderedScatter) {
+    MVT MaskVT = Mask.getSimpleValueType();
+    SDValue LastOps[] = {DAG.getTargetConstant(
+                             Intrinsic::riscv_vconflictlast_mask, DL, XLenVT),
+                         DAG.getUNDEF(MaskVT), Ids, Mask, VL};
+    SDValue Last = DAG.getNode(ISD::INTRINSIC_WO_CHAIN, DL, MaskVT, LastOps);
+    // vconflictlast.m only sets bits for active lanes, but AND with the
+    // execution mask anyway so masked-off lanes are never written.
+    SDValue WMask = DAG.getNode(ISD::AND, DL, MaskVT, Mask, Last);
+
+    // Build the absolute byte-address vector at XLEN element width.
+    MVT XLenVecVT = MVT::getVectorVT(XLenVT, EC);
+    SDValue AddrVec = DAG.getNode(ISD::SIGN_EXTEND, DL, XLenVecVT, Index);
+    uint64_t ScaleVal = cast<ConstantSDNode>(Scale)->getZExtValue();
+    if (ScaleVal != 1) {
+      SDValue ScaleSplat =
+          DAG.getSplatVector(XLenVecVT, DL, DAG.getConstant(ScaleVal, DL, XLenVT));
+      AddrVec = DAG.getNode(ISD::MUL, DL, XLenVecVT, AddrVec, ScaleSplat);
+    }
+    if (!isNullConstant(Base)) {
+      SDValue BaseSplat = DAG.getSplatVector(XLenVecVT, DL, Base);
+      AddrVec = DAG.getNode(ISD::ADD, DL, XLenVecVT, BaseSplat, AddrVec);
+    }
+
+    SDValue ZeroPtr = DAG.getConstant(0, DL, XLenVT);
+    SDValue StoreOps[] = {
+        GChain,
+        DAG.getTargetConstant(Intrinsic::riscv_vsuxei_mask, DL, XLenVT),
+        Add, ZeroPtr, AddrVec, WMask, VL};
+    return DAG.getMemIntrinsicNode(ISD::INTRINSIC_VOID, DL,
+                                   DAG.getVTList(MVT::Other), StoreOps, MemVT,
+                                   SMMO);
+  }
+
+  // Ordered masked scatter (store-only MMO) writes the serially-correct value:
+  // duplicate lanes all store, and the highest active lane of each group writes
+  // last, so memory ends up with the group total.
   SDValue ScatterOps[] = {GChain, Add, Mask, Base, Index, Scale};
   return DAG.getMaskedScatter(DAG.getVTList(MVT::Other), MemVT, DL, ScatterOps,
                               SMMO, IndexType, /*IsTruncating=*/false);
