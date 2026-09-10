@@ -1967,6 +1967,14 @@ RISCVTargetLowering::RISCVTargetLowering(const TargetMachine &TM,
     }
   }
 
+  if (Subtarget.hasStdExtZispi()) {
+    setIndexedStoreAction(ISD::POST_INC, MVT::i8, Legal);
+    setIndexedStoreAction(ISD::POST_INC, MVT::i16, Legal);
+    setIndexedStoreAction(ISD::POST_INC, MVT::i32, Legal);
+    if (Subtarget.is64Bit())
+      setIndexedStoreAction(ISD::POST_INC, MVT::i64, Legal);
+  }
+
   if (Subtarget.hasVendorXCVmem() && !Subtarget.is64Bit()) {
     setIndexedLoadAction(ISD::POST_INC, MVT::i8, Legal);
     setIndexedLoadAction(ISD::POST_INC, MVT::i16, Legal);
@@ -28682,6 +28690,26 @@ bool RISCVTargetLowering::getPostIndexedAddressParts(SDNode *N, SDNode *Op,
                                                      SDValue &Offset,
                                                      ISD::MemIndexedMode &AM,
                                                      SelectionDAG &DAG) const {
+  if (Subtarget.hasStdExtZispi() && isa<StoreSDNode>(N)) {
+    if (Op->getOpcode() == ISD::ADD) {
+      auto *ST = cast<StoreSDNode>(N);
+      SDValue StoreBase = ST->getBasePtr();
+      SDValue StoreOffset;
+      if (StoreBase == Op->getOperand(0))
+        StoreOffset = Op->getOperand(1);
+      else if (StoreBase == Op->getOperand(1))
+        StoreOffset = Op->getOperand(0);
+
+      auto *C = dyn_cast_or_null<ConstantSDNode>(StoreOffset.getNode());
+      if (C && C->getZExtValue() == ST->getMemoryVT().getStoreSize()) {
+        Base = StoreBase;
+        Offset = StoreOffset;
+        AM = ISD::POST_INC;
+        return true;
+      }
+    }
+  }
+
   if (Subtarget.hasVendorXCVmem() && !Subtarget.is64Bit()) {
     if (Op->getOpcode() != ISD::ADD)
       return false;

@@ -1,0 +1,165 @@
+# RUN: llc -mtriple=riscv32 -mattr=+experimental-zispi \
+# RUN:   -run-pass=riscv-load-store-opt -verify-machineinstrs %s -o - \
+# RUN:   | FileCheck %s --check-prefixes=CHECK,RV32
+# RUN: llc -mtriple=riscv64 -mattr=+experimental-zispi \
+# RUN:   -run-pass=riscv-load-store-opt -verify-machineinstrs %s -o - \
+# RUN:   | FileCheck %s --check-prefixes=CHECK,RV64
+
+--- |
+  define void @merge_adjacent() { ret void }
+  define void @no_merge_non_unit_stride() { ret void }
+  define void @no_merge_nonzero_store_offset() { ret void }
+  define void @no_merge_different_base() { ret void }
+  define void @no_merge_across_safe_instruction() { ret void }
+  define void @no_merge_across_base_use() { ret void }
+  define void @no_merge_across_memory() { ret void }
+  define void @no_merge_across_live_range_boundary() { ret void }
+  define void @no_merge_dead_update() { ret void }
+...
+---
+name: merge_adjacent
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $x10, $x11, $x12, $x13, $x14
+
+    ; CHECK-LABEL: name: merge_adjacent
+    ; CHECK: $x10 = SPI_B killed renamable $x11, $x10 :: (store (s8))
+    ; CHECK-NEXT: $x10 = SPI_H killed $x12, killed $x10 :: (store (s16))
+    ; CHECK-NEXT: $x10 = SPI_W killed $x13, killed $x10 :: (store (s32))
+    ; RV32-NEXT: SD killed $x14, $x10, 0 :: (store (s64))
+    ; RV32-NEXT: $x10 = ADDI killed $x10, 8
+    ; RV64-NEXT: $x10 = SPI_D killed $x14, killed $x10 :: (store (s64))
+    ; CHECK-NEXT: PseudoRET
+    SB killed renamable $x11, renamable $x10, 0 :: (store (s8))
+    renamable $x10 = ADDI renamable $x10, 1
+    SH killed $x12, $x10, 0 :: (store (s16))
+    $x10 = ADDI killed $x10, 2
+    SW killed $x13, $x10, 0 :: (store (s32))
+    $x10 = ADDI killed $x10, 4
+    SD killed $x14, $x10, 0 :: (store (s64))
+    $x10 = ADDI killed $x10, 8
+    PseudoRET implicit $x10
+...
+---
+name: no_merge_non_unit_stride
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $x10, $x11
+
+    ; CHECK-LABEL: name: no_merge_non_unit_stride
+    ; CHECK: SB killed $x11, $x10, 0 :: (store (s8))
+    ; CHECK-NEXT: $x10 = ADDI killed $x10, 2
+    SB killed $x11, $x10, 0 :: (store (s8))
+    $x10 = ADDI killed $x10, 2
+    PseudoRET
+...
+---
+name: no_merge_nonzero_store_offset
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $x10, $x11
+
+    ; CHECK-LABEL: name: no_merge_nonzero_store_offset
+    ; CHECK: SH killed $x11, $x10, 2 :: (store (s16))
+    ; CHECK-NEXT: $x10 = ADDI killed $x10, 2
+    SH killed $x11, $x10, 2 :: (store (s16))
+    $x10 = ADDI killed $x10, 2
+    PseudoRET
+...
+---
+name: no_merge_different_base
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $x10, $x11, $x12, $x13
+
+    ; CHECK-LABEL: name: no_merge_different_base
+    ; CHECK: SW killed $x12, $x10, 0 :: (store (s32))
+    ; CHECK-NEXT: $x11 = ADDI killed $x11, 4
+    SW killed $x12, $x10, 0 :: (store (s32))
+    $x11 = ADDI killed $x11, 4
+    PseudoRET
+...
+---
+name: no_merge_across_safe_instruction
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $x10, $x11
+
+    ; CHECK-LABEL: name: no_merge_across_safe_instruction
+    ; CHECK: SB killed $x11, $x10, 0 :: (store (s8))
+    ; CHECK-NEXT: $x12 = ADDI $x0, 1
+    ; CHECK-NEXT: $x10 = ADDI killed $x10, 1
+    SB killed $x11, $x10, 0 :: (store (s8))
+    $x12 = ADDI $x0, 1
+    $x10 = ADDI killed $x10, 1
+    PseudoRET
+...
+---
+name: no_merge_across_base_use
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $x10, $x11
+
+    ; CHECK-LABEL: name: no_merge_across_base_use
+    ; CHECK: SB killed $x11, $x10, 0 :: (store (s8))
+    ; CHECK-NEXT: $x12 = ADDI $x10, 16
+    ; CHECK-NEXT: $x10 = ADDI killed $x10, 1
+    SB killed $x11, $x10, 0 :: (store (s8))
+    $x12 = ADDI $x10, 16
+    $x10 = ADDI killed $x10, 1
+    PseudoRET
+...
+---
+name: no_merge_across_memory
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $x10, $x11, $x12, $x13
+
+    ; CHECK-LABEL: name: no_merge_across_memory
+    ; CHECK: SB killed $x11, $x10, 0 :: (store (s8))
+    ; CHECK-NEXT: SW killed $x12, $x13, 0 :: (store (s32))
+    ; CHECK-NEXT: $x10 = ADDI killed $x10, 1
+    SB killed $x11, $x10, 0 :: (store (s8))
+    SW killed $x12, $x13, 0 :: (store (s32))
+    $x10 = ADDI killed $x10, 1
+    PseudoRET
+...
+---
+name: no_merge_across_live_range_boundary
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $x10, $x11
+
+    ; The killed store base and the later undef use are unrelated live ranges
+    ; that happen to use the same physical register.
+    ; CHECK-LABEL: name: no_merge_across_live_range_boundary
+    ; CHECK: SD killed $x11, killed $x10, 0 :: (store (s64))
+    ; CHECK-NEXT: $x10 = ADDI undef $x10, 8
+    SD killed $x11, killed $x10, 0 :: (store (s64))
+    $x10 = ADDI undef $x10, 8
+    PseudoRET
+...
+---
+name: no_merge_dead_update
+tracksRegLiveness: true
+body: |
+  bb.0:
+    liveins: $x10, $x11
+
+    ; CHECK-LABEL: name: no_merge_dead_update
+    ; CHECK: SD killed $x11, $x10, 0 :: (store (s64))
+    ; CHECK-NEXT: $x10 = ADDI killed $x10, 8
+    ; CHECK-NEXT: $x10 = LUI 1
+    SD killed $x11, $x10, 0 :: (store (s64))
+    $x10 = ADDI killed $x10, 8
+    $x10 = LUI 1
+    PseudoRET implicit $x10
+...

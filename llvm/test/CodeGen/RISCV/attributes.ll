@@ -161,6 +161,7 @@
 ; RUN: llc -mtriple=riscv32 -mattr=+experimental-p %s -o - | FileCheck --check-prefix=RV32P %s
 ; RUN: llc -mtriple=riscv32 -mattr=+experimental-zibi %s -o - | FileCheck --check-prefix=RV32ZIBI %s
 ; RUN: llc -mtriple=riscv32 -mattr=+experimental-zilx %s -o - | FileCheck --check-prefix=RV32ZILX %s
+; RUN: llc -mtriple=riscv32 -mattr=+experimental-zispi %s -o - | FileCheck --check-prefix=RV32ZISPI %s
 ; RUN: llc -mtriple=riscv32 -mattr=+experimental-zvqwbdota8i %s -o - | FileCheck --check-prefixes=CHECK,RV32ZVQWBDOTA8I %s
 ; RUN: llc -mtriple=riscv32 -mattr=+experimental-zvqwbdota16i %s -o - | FileCheck --check-prefixes=CHECK,RV32ZVQWBDOTA16I %s
 ; RUN: llc -mtriple=riscv32 -mattr=+experimental-zvfwbdota16bf %s -o - | FileCheck --check-prefixes=CHECK,RV32ZVFWBDOTA16BF %s
@@ -338,6 +339,7 @@
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-y %s -o - | FileCheck --check-prefix=RV64Y %s
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-zibi %s -o - | FileCheck --check-prefix=RV64ZIBI %s
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-zilx %s -o - | FileCheck --check-prefix=RV64ZILX %s
+; RUN: llc -mtriple=riscv64 -mattr=+experimental-zispi %s -o - | FileCheck --check-prefix=RV64ZISPI %s
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-zvqwbdota8i %s -o - | FileCheck --check-prefixes=CHECK,RV64ZVQWBDOTA8I %s
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-zvqwbdota16i %s -o - | FileCheck --check-prefixes=CHECK,RV64ZVQWBDOTA16I %s
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-zvfwbdota16bf %s -o - | FileCheck --check-prefixes=CHECK,RV64ZVFWBDOTA16BF %s
@@ -476,6 +478,7 @@
 ; RV32ZICOND: .attribute 5, "rv32i2p1_zicond1p0"
 ; RV32ZILSD: .attribute 5, "rv32i2p1_zilsd1p0"
 ; RV32ZILX: .attribute 5, "rv32i2p1_zilx0p1"
+; RV32ZISPI: .attribute 5, "rv32i2p1_zispi0p1"
 ; RV32ZIMOP: .attribute 5, "rv32i2p1_zimop1p0"
 ; RV32ZCLSD: .attribute 5, "rv32i2p1_c2p0_zilsd1p0_zca1p0_zclsd1p0"
 ; RV32ZCMOP: .attribute 5, "rv32i2p1_c2p0_zca1p0_zcmop1p0"
@@ -649,6 +652,7 @@
 ; RV64ZVABD: .attribute 5, "rv64i2p1_zicsr2p0_zvabd0p9_zve32x1p0_zvl32b1p0"
 ; RV64ZICOND: .attribute 5, "rv64i2p1_zicond1p0"
 ; RV64ZILX: .attribute 5, "rv64i2p1_zilx0p1"
+; RV64ZISPI: .attribute 5, "rv64i2p1_zispi0p1"
 ; RV64ZIMOP: .attribute 5, "rv64i2p1_zimop1p0"
 ; RV64ZCMOP: .attribute 5, "rv64i2p1_c2p0_zca1p0_zcmop1p0"
 ; RV64SMAIA: .attribute 5, "rv64i2p1_smaia1p0"

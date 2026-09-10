@@ -141,6 +141,7 @@
 // CHECK-NOT: __riscv_zihpm {{.*$}}
 // CHECK-NOT: __riscv_zilsd {{.*$}}
 // CHECK-NOT: __riscv_zilx {{.*$}}
+// CHECK-NOT: __riscv_zispi {{.*$}}
 // CHECK-NOT: __riscv_zimop {{.*$}}
 // CHECK-NOT: __riscv_zk {{.*$}}
 // CHECK-NOT: __riscv_zkn {{.*$}}
@@ -879,6 +880,14 @@
 // RUN:   -march=rv64i_zibi0p1 -E -dM %s \
 // RUN:   -o - | FileCheck --check-prefix=CHECK-ZIBI-EXT %s
 // CHECK-ZIBI-EXT: __riscv_zibi
+
+// RUN: %clang --target=riscv32 -menable-experimental-extensions \
+// RUN:   -march=rv32i_zispi0p1 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZISPI-EXT %s
+// RUN: %clang --target=riscv64 -menable-experimental-extensions \
+// RUN:   -march=rv64i_zispi0p1 -E -dM %s \
+// RUN:   -o - | FileCheck --check-prefix=CHECK-ZISPI-EXT %s
+// CHECK-ZISPI-EXT: __riscv_zispi 1000{{$}}
 
 // RUN: %clang --target=riscv32-unknown-linux-gnu \
 // RUN:   -march=rv32izic64b -E -dM %s \

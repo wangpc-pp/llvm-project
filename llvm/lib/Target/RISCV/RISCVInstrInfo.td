@@ -2427,6 +2427,7 @@ include "RISCVInstrInfoZicond.td"
 include "RISCVInstrInfoZilsd.td"
 include "RISCVInstrInfoZibi.td"
 include "RISCVInstrInfoZilx.td"
+include "RISCVInstrInfoZispi.td"
 
 // Privileged
 include "RISCVInstrInfoSmcsps.td"

@@ -15,12 +15,10 @@
 // register allocation didn't provide suitable consecutive registers.
 //
 // NOTE: The AArch64LoadStoreOpt pass performs additional optimizations such as
-// merging zero store instructions, promoting loads that read directly from a
-// preceding store, and merging base register updates with load/store
-// instructions (via pre-/post-indexed addressing). These advanced
-// transformations are not yet implemented in the RISC-V pass but represent
-// potential future enhancements for further optimizing RISC-V memory
-// operations.
+// merging zero store instructions and promoting loads that read directly from
+// a preceding store. The RISC-V pass only merges base register updates for the
+// conservative Zispi store pattern implemented below. Other pre-/post-indexed
+// addressing transformations remain potential future enhancements.
 //
 //===----------------------------------------------------------------------===//
 
@@ -45,6 +43,8 @@ static cl::opt<unsigned> LdStLimit("riscv-load-store-scan-limit", cl::init(128),
                                    cl::Hidden);
 STATISTIC(NumLD2LW, "Number of LD instructions split back to LW");
 STATISTIC(NumSD2SW, "Number of SD instructions split back to SW");
+STATISTIC(NumZispiFusions,
+          "Number of store/add-immediate pairs fused into Zispi stores");
 
 namespace {
 
@@ -67,6 +67,9 @@ struct RISCVLoadStoreOpt : public MachineFunctionPass {
 
   // Find and pair load/store instructions.
   bool tryToPairLdStInst(MachineBasicBlock::iterator &MBBI);
+
+  // Merge an in-place base update following a store into a Zispi store.
+  bool tryToMergeZispi(MachineBasicBlock::iterator &MBBI);
 
   // Convert load/store pairs to single instructions.
   bool tryConvertToLdStPair(MachineBasicBlock::iterator First,
@@ -123,6 +126,18 @@ bool RISCVLoadStoreOpt::runOnMachineFunction(MachineFunction &Fn) {
   ModifiedRegUnits.init(*TRI);
   UsedRegUnits.init(*TRI);
 
+  if (STI->hasStdExtZispi()) {
+    for (MachineBasicBlock &MBB : Fn) {
+      for (MachineBasicBlock::iterator MBBI = MBB.begin(), E = MBB.end();
+           MBBI != E;) {
+        if (tryToMergeZispi(MBBI))
+          MadeChange = true;
+        else
+          ++MBBI;
+      }
+    }
+  }
+
   if (STI->useMIPSLoadStorePairs() || STI->hasVendorXqcilsm()) {
     for (MachineBasicBlock &MBB : Fn) {
       LLVM_DEBUG(dbgs() << "MBB: " << MBB.getName() << "\n");
@@ -152,6 +167,84 @@ bool RISCVLoadStoreOpt::runOnMachineFunction(MachineFunction &Fn) {
   }
 
   return MadeChange;
+}
+
+bool RISCVLoadStoreOpt::tryToMergeZispi(MachineBasicBlock::iterator &MBBI) {
+  MachineInstr &Store = *MBBI;
+
+  unsigned ZispiOpc;
+  int64_t Increment;
+  switch (Store.getOpcode()) {
+  default:
+    return false;
+  case RISCV::SB:
+    ZispiOpc = RISCV::SPI_B;
+    Increment = 1;
+    break;
+  case RISCV::SH:
+    ZispiOpc = RISCV::SPI_H;
+    Increment = 2;
+    break;
+  case RISCV::SW:
+    ZispiOpc = RISCV::SPI_W;
+    Increment = 4;
+    break;
+  case RISCV::SD:
+    if (!STI->is64Bit())
+      return false;
+    ZispiOpc = RISCV::SPI_D;
+    Increment = 8;
+    break;
+  }
+
+  if (Store.isBundledWithPred() || Store.isBundledWithSucc() ||
+      Store.getFlag(MachineInstr::FrameSetup) ||
+      Store.getFlag(MachineInstr::FrameDestroy) ||
+      Store.getNumExplicitOperands() != 3 || !Store.getOperand(0).isReg() ||
+      !Store.getOperand(1).isReg() || !Store.getOperand(2).isImm() ||
+      Store.getOperand(1).isKill() || Store.getOperand(2).getImm() != 0)
+    return false;
+
+  Register BaseReg = Store.getOperand(1).getReg();
+  if (BaseReg == RISCV::X0 || BaseReg == RISCV::X2)
+    return false;
+
+  MachineBasicBlock &MBB = *Store.getParent();
+  MachineBasicBlock::iterator AddI = next_nodbg(MBBI, MBB.end());
+  if (AddI == MBB.end() || AddI->getOpcode() != RISCV::ADDI ||
+      AddI->isBundledWithPred() || AddI->isBundledWithSucc() ||
+      AddI->getFlag(MachineInstr::FrameSetup) ||
+      AddI->getFlag(MachineInstr::FrameDestroy) ||
+      AddI->getNumExplicitOperands() != 3 || !AddI->getOperand(0).isReg() ||
+      !AddI->getOperand(1).isReg() || !AddI->getOperand(2).isImm() ||
+      AddI->getOperand(0).getReg() != BaseReg ||
+      AddI->getOperand(1).getReg() != BaseReg || AddI->getOperand(0).isDead() ||
+      AddI->getOperand(1).isUndef() ||
+      AddI->getOperand(2).getImm() != Increment)
+    return false;
+
+  // Require local proof that the update produces a value used by the next
+  // instruction. A later reuse of the same physical register can belong to a
+  // different live range; treating that as a use would make a dead writeback
+  // observable and can corrupt the later value.
+  MachineBasicBlock::iterator NextI = next_nodbg(AddI, MBB.end());
+  if (NextI == MBB.end() || !NextI->readsRegister(BaseReg, TRI))
+    return false;
+
+  MachineInstrBuilder MIB =
+      BuildMI(MBB, MBBI, Store.getDebugLoc(), TII->get(ZispiOpc))
+          .addReg(BaseReg, RegState::Define)
+          .add(Store.getOperand(0))
+          .addReg(BaseReg, getKillRegState(AddI->getOperand(1).isKill()))
+          .cloneMemRefs(Store);
+  MIB->setFlags(Store.getFlags());
+
+  LLVM_DEBUG(dbgs() << "Merged store and base update into Zispi: " << *MIB);
+  ++NumZispiFusions;
+
+  AddI->eraseFromParent();
+  MBBI = MBB.erase(MBBI);
+  return true;
 }
 
 // Find loads and stores that can be merged into a single load or store pair

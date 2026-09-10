@@ -211,6 +211,15 @@ def HasStdExtZilx
       AssemblerPredicate<(all_of FeatureStdExtZilx),
                           "'Zilx' (Indexed Integer Load Instructions)">;
 
+def FeatureStdExtZispi
+    : RISCVExperimentalExtension<0, 1,
+                                 "Unit-Stride Post-Increment Integer Stores">;
+def HasStdExtZispi
+    : Predicate<"Subtarget->hasStdExtZispi()">,
+      AssemblerPredicate<
+          (all_of FeatureStdExtZispi),
+          "'Zispi' (Unit-Stride Post-Increment Integer Stores)">;
+
 // Multiply Extensions
 
 def FeatureStdExtZmmul
