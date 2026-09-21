@@ -29,21 +29,19 @@ define void @foo(ptr noalias %a, ptr noalias %b, ptr noalias %c, i64 %N) {
 ; IF-EVL-NEXT:      CURRENT-ITERATION-PHI vp<[[VP4:%[0-9]+]]> = phi ir<0>, vp<%current.iteration.next>
 ; IF-EVL-NEXT:      EMIT-SCALAR vp<%avl> = phi [ ir<%N>, vector.ph ], [ vp<%avl.next>, vector.body ]
 ; IF-EVL-NEXT:      EMIT-SCALAR vp<%evl> = EXPLICIT-VECTOR-LENGTH vp<%avl>
-; IF-EVL-NEXT:      EMIT-SCALAR vp<[[VP5:%[0-9]+]]> = zext vp<%evl> to i64
-; IF-EVL-NEXT:      vp<[[VP6:%[0-9]+]]> = SCALAR-STEPS vp<[[VP4]]>, ir<1>, vp<[[VP5]]>
-; IF-EVL-NEXT:      CLONE ir<%arrayidx> = getelementptr inbounds ir<%b>, vp<[[VP6]]>
-; IF-EVL-NEXT:      vp<[[VP7:%[0-9]+]]> = vector-pointer inbounds i32, ir<%arrayidx>, ir<1>
-; IF-EVL-NEXT:      WIDEN ir<%0> = vp.load vp<[[VP7]]>, vp<%evl>
-; IF-EVL-NEXT:      CLONE ir<%arrayidx2> = getelementptr inbounds ir<%c>, vp<[[VP6]]>
-; IF-EVL-NEXT:      vp<[[VP8:%[0-9]+]]> = vector-pointer inbounds i32, ir<%arrayidx2>, ir<1>
-; IF-EVL-NEXT:      WIDEN ir<%1> = vp.load vp<[[VP8]]>, vp<%evl>
+; IF-EVL-NEXT:      vp<[[VP5:%[0-9]+]]> = SCALAR-STEPS vp<[[VP4]]>, ir<1>, vp<%evl>
+; IF-EVL-NEXT:      CLONE ir<%arrayidx> = getelementptr inbounds ir<%b>, vp<[[VP5]]>
+; IF-EVL-NEXT:      vp<[[VP6:%[0-9]+]]> = vector-pointer inbounds i32, ir<%arrayidx>, ir<1>
+; IF-EVL-NEXT:      WIDEN ir<%0> = vp.load vp<[[VP6]]>, vp<%evl>
+; IF-EVL-NEXT:      CLONE ir<%arrayidx2> = getelementptr inbounds ir<%c>, vp<[[VP5]]>
+; IF-EVL-NEXT:      vp<[[VP7:%[0-9]+]]> = vector-pointer inbounds i32, ir<%arrayidx2>, ir<1>
+; IF-EVL-NEXT:      WIDEN ir<%1> = vp.load vp<[[VP7]]>, vp<%evl>
 ; IF-EVL-NEXT:      WIDEN ir<%add> = add nsw ir<%1>, ir<%0>
-; IF-EVL-NEXT:      CLONE ir<%arrayidx4> = getelementptr inbounds ir<%a>, vp<[[VP6]]>
-; IF-EVL-NEXT:      vp<[[VP9:%[0-9]+]]> = vector-pointer inbounds i32, ir<%arrayidx4>, ir<1>
-; IF-EVL-NEXT:      WIDEN vp.store vp<[[VP9]]>, ir<%add>, vp<%evl>
-; IF-EVL-NEXT:      EMIT-SCALAR vp<[[VP10:%[0-9]+]]> = zext vp<%evl> to i64
-; IF-EVL-NEXT:      EMIT vp<%current.iteration.next> = add vp<[[VP10]]>, vp<[[VP4]]>
-; IF-EVL-NEXT:      EMIT vp<%avl.next> = sub nuw vp<%avl>, vp<[[VP10]]>
+; IF-EVL-NEXT:      CLONE ir<%arrayidx4> = getelementptr inbounds ir<%a>, vp<[[VP5]]>
+; IF-EVL-NEXT:      vp<[[VP8:%[0-9]+]]> = vector-pointer inbounds i32, ir<%arrayidx4>, ir<1>
+; IF-EVL-NEXT:      WIDEN vp.store vp<[[VP8]]>, ir<%add>, vp<%evl>
+; IF-EVL-NEXT:      EMIT vp<%current.iteration.next> = add vp<%evl>, vp<[[VP4]]>
+; IF-EVL-NEXT:      EMIT vp<%avl.next> = sub nuw vp<%avl>, vp<%evl>
 ; IF-EVL-NEXT:      EMIT vp<%index.next> = add vp<[[VP2]]>, vp<[[VP0]]>
 ; IF-EVL-NEXT:      EMIT branch-on-count vp<%index.next>, vp<[[VP1]]>
 ; IF-EVL-NEXT:    No successors

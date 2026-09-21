@@ -90,8 +90,7 @@ define void @foo(ptr %p, ptr %p.strided, i64 %n, i64 %stride) vscale_range(2, 10
 ; NO-UNIT-STRIDE-MV-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[HEADER]] ]
 ; NO-UNIT-STRIDE-MV-NEXT:    [[STEP_ADD_3:%.*]] = phi <vscale x 2 x i64> [ [[INDUCTION]], %[[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], %[[HEADER]] ]
 ; NO-UNIT-STRIDE-MV-NEXT:    [[AVL:%.*]] = phi i64 [ 63, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[HEADER]] ]
-; NO-UNIT-STRIDE-MV-NEXT:    [[TMP25:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
-; NO-UNIT-STRIDE-MV-NEXT:    [[TMP26:%.*]] = zext i32 [[TMP25]] to i64
+; NO-UNIT-STRIDE-MV-NEXT:    [[TMP26:%.*]] = call i64 @llvm.experimental.get.vector.length.i64.i64(i64 [[AVL]], i32 2, i1 true)
 ; NO-UNIT-STRIDE-MV-NEXT:    [[BROADCAST_SPLATINSERT14:%.*]] = insertelement <vscale x 2 x i64> poison, i64 [[TMP26]], i64 0
 ; NO-UNIT-STRIDE-MV-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <vscale x 2 x i64> [[BROADCAST_SPLATINSERT14]], <vscale x 2 x i64> poison, <vscale x 2 x i32> zeroinitializer
 ; NO-UNIT-STRIDE-MV-NEXT:    [[OFFSET_IDX:%.*]] = add i64 1, [[INDEX]]
@@ -99,10 +98,13 @@ define void @foo(ptr %p, ptr %p.strided, i64 %n, i64 %stride) vscale_range(2, 10
 ; NO-UNIT-STRIDE-MV-NEXT:    [[TMP30:%.*]] = getelementptr i64, ptr [[P]], i64 [[OFFSET_IDX]]
 ; NO-UNIT-STRIDE-MV-NEXT:    [[TMP31:%.*]] = getelementptr i64, ptr [[OUT]], i64 [[OFFSET_IDX]]
 ; NO-UNIT-STRIDE-MV-NEXT:    [[TMP40:%.*]] = getelementptr i64, ptr [[P_STRIDED]], <vscale x 2 x i64> [[TMP34]]
+; NO-UNIT-STRIDE-MV-NEXT:    [[TMP25:%.*]] = trunc i64 [[TMP26]] to i32
 ; NO-UNIT-STRIDE-MV-NEXT:    [[WIDE_LOAD19:%.*]] = call <vscale x 2 x i64> @llvm.vp.load.nxv2i64.p0(ptr align 8 [[TMP30]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP25]]), !alias.scope [[META0:![0-9]+]]
-; NO-UNIT-STRIDE-MV-NEXT:    [[WIDE_MASKED_GATHER22:%.*]] = call <vscale x 2 x i64> @llvm.vp.gather.nxv2i64.nxv2p0(<vscale x 2 x ptr> align 8 [[TMP40]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP25]]), !alias.scope [[META3:![0-9]+]]
+; NO-UNIT-STRIDE-MV-NEXT:    [[TMP27:%.*]] = trunc i64 [[TMP26]] to i32
+; NO-UNIT-STRIDE-MV-NEXT:    [[WIDE_MASKED_GATHER22:%.*]] = call <vscale x 2 x i64> @llvm.vp.gather.nxv2i64.nxv2p0(<vscale x 2 x ptr> align 8 [[TMP40]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP27]]), !alias.scope [[META3:![0-9]+]]
 ; NO-UNIT-STRIDE-MV-NEXT:    [[TMP49:%.*]] = add <vscale x 2 x i64> [[WIDE_LOAD19]], [[WIDE_MASKED_GATHER22]]
-; NO-UNIT-STRIDE-MV-NEXT:    call void @llvm.vp.store.nxv2i64.p0(<vscale x 2 x i64> [[TMP49]], ptr align 8 [[TMP31]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP25]]), !alias.scope [[META5:![0-9]+]], !noalias [[META7:![0-9]+]]
+; NO-UNIT-STRIDE-MV-NEXT:    [[TMP28:%.*]] = trunc i64 [[TMP26]] to i32
+; NO-UNIT-STRIDE-MV-NEXT:    call void @llvm.vp.store.nxv2i64.p0(<vscale x 2 x i64> [[TMP49]], ptr align 8 [[TMP31]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP28]]), !alias.scope [[META5:![0-9]+]], !noalias [[META7:![0-9]+]]
 ; NO-UNIT-STRIDE-MV-NEXT:    [[INDEX_EVL_NEXT]] = add nuw i64 [[TMP26]], [[INDEX]]
 ; NO-UNIT-STRIDE-MV-NEXT:    [[AVL_NEXT]] = sub nuw i64 [[AVL]], [[TMP26]]
 ; NO-UNIT-STRIDE-MV-NEXT:    [[VEC_IND_NEXT]] = add nsw <vscale x 2 x i64> [[STEP_ADD_3]], [[BROADCAST_SPLAT]]

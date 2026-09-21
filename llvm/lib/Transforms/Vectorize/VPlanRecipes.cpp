@@ -60,6 +60,15 @@ namespace llvm {
 extern cl::opt<unsigned> ForceTargetInstructionCost;
 } // namespace llvm
 
+/// VP intrinsics take an i32 explicit-vector-length operand. The EVL recipe now
+/// produces its value in the canonical IV type (so the IV increment and AVL
+/// decrement need no cast), so narrow it back to i32 before handing it to a VP
+/// intrinsic. The truncation is free and only emitted during recipe execution,
+/// so it does not perturb the cost model.
+static Value *getEVLAsI32(IRBuilderBase &Builder, Value *EVL) {
+  return Builder.CreateZExtOrTrunc(EVL, Builder.getInt32Ty());
+}
+
 bool VPRecipeBase::mayWriteToMemory() const {
   switch (getVPRecipeID()) {
   case VPExpressionSC:
@@ -529,7 +538,8 @@ Type *llvm::computeScalarTypeForInstruction(unsigned Opcode,
     return IntegerType::get(Ctx, 1);
   case VPInstruction::ExplicitVectorLength:
     assert(Op0Ty->isIntegerTy() && "expected integer operand");
-    return IntegerType::get(Ctx, 32);
+    // The EVL result type matches the AVL operand type.
+    return Op0Ty;
   case Instruction::Select: {
     assert((!Op0Ty || Op0Ty->isIntegerTy(1)) &&
            "select condition must be bool");
@@ -877,8 +887,10 @@ Value *VPInstruction::generate(VPTransformState &State) {
     assert(State.VF.isScalable() && "Expected scalable vector factor.");
     Value *VFArg = Builder.getInt32(State.VF.getKnownMinValue());
 
+    // The result type matches the AVL/induction type so that the EVL can feed
+    // the (free) IV increment and AVL decrement without any extra casts.
     Value *EVL = Builder.CreateIntrinsic(
-        Builder.getInt32Ty(), Intrinsic::experimental_get_vector_length,
+        AVL->getType(), Intrinsic::experimental_get_vector_length,
         {AVL, VFArg, Builder.getTrue()});
     return EVL;
   }
@@ -1478,7 +1490,7 @@ InstructionCost VPInstruction::computeCost(ElementCount VF,
     Type *I32Ty = Type::getInt32Ty(Ctx.LLVMCtx);
     Type *I1Ty = Type::getInt1Ty(Ctx.LLVMCtx);
     IntrinsicCostAttributes Attrs(Intrinsic::experimental_get_vector_length,
-                                  I32Ty, {Arg0Ty, I32Ty, I1Ty});
+                                  Arg0Ty, {Arg0Ty, I32Ty, I1Ty});
     return Ctx.TTI.getIntrinsicInstrCost(Attrs, Ctx.CostKind);
   }
   case VPInstruction::Reverse: {
@@ -2316,6 +2328,16 @@ CallInst *VPWidenIntrinsicRecipe::createVectorCall(VPTransformState &State) {
       Intrinsic::getOrInsertDeclaration(M, VectorIntrinsicID, TysForDecl);
   assert(VectorF &&
          "Can't retrieve vector intrinsic or vector-predication intrinsics.");
+
+  // The explicit-vector-length operand of VP intrinsics is a fixed i32. The EVL
+  // recipe may now feed it a value in the wider canonical IV type, so narrow it
+  // to the declared i32 parameter. The truncation is free and only emitted
+  // here, so it does not affect the cost model.
+  if (auto EVLPos = VPIntrinsic::getVectorLengthParamPos(VectorIntrinsicID)) {
+    Type *ParamTy = VectorF->getFunctionType()->getParamType(*EVLPos);
+    if (Args[*EVLPos]->getType() != ParamTy)
+      Args[*EVLPos] = State.Builder.CreateZExtOrTrunc(Args[*EVLPos], ParamTy);
+  }
 
   auto *CI = cast_or_null<CallInst>(getUnderlyingValue());
   SmallVector<OperandBundleDef, 1> OpBundles;
@@ -3518,7 +3540,7 @@ void VPReductionEVLRecipe::execute(VPTransformState &State) {
   RecurKind Kind = getRecurrenceKind();
   Value *Prev = State.get(getChainOp(), /*IsScalar*/ !isPartialReduction());
   Value *VecOp = State.get(getVecOp());
-  Value *EVL = State.get(getEVL(), VPLane(0));
+  Value *EVL = getEVLAsI32(Builder, State.get(getEVL(), VPLane(0)));
 
   Value *Mask;
   if (VPValue *CondOp = getCondOp())
@@ -4369,7 +4391,7 @@ void VPWidenLoadEVLRecipe::execute(VPTransformState &State) {
 
   auto &Builder = State.Builder;
   CallInst *NewLI;
-  Value *EVL = State.get(getEVL(), VPLane(0));
+  Value *EVL = getEVLAsI32(Builder, State.get(getEVL(), VPLane(0)));
   Value *Addr = State.get(getAddr(), !CreateGather);
   Value *Mask = nullptr;
   if (VPValue *VPMask = getMask())
@@ -4457,7 +4479,7 @@ void VPWidenStoreEVLRecipe::execute(VPTransformState &State) {
 
   CallInst *NewSI = nullptr;
   Value *StoredVal = State.get(StoredValue);
-  Value *EVL = State.get(getEVL(), VPLane(0));
+  Value *EVL = getEVLAsI32(Builder, State.get(getEVL(), VPLane(0)));
   Value *Mask = nullptr;
   if (VPValue *VPMask = getMask())
     Mask = State.get(VPMask);
@@ -4808,7 +4830,7 @@ void VPInterleaveEVLRecipe::execute(VPTransformState &State) {
 
   VPValue *Addr = getAddr();
   Value *ResAddr = State.get(Addr, VPLane(0));
-  Value *EVL = State.get(getEVL(), VPLane(0));
+  Value *EVL = getEVLAsI32(State.Builder, State.get(getEVL(), VPLane(0)));
   Value *InterleaveEVL = State.Builder.CreateMul(
       EVL, ConstantInt::get(EVL->getType(), InterleaveFactor), "interleave.evl",
       /* NUW= */ true, /* NSW= */ true);

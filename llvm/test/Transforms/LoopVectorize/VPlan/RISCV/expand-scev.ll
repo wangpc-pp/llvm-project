@@ -21,12 +21,12 @@ define void @scev_ptradd_strided(ptr noalias %a, ptr noalias %dst, i64 %n) {
 ; CHECK-NEXT:    EMIT-SCALAR vp<%evl> = EXPLICIT-VECTOR-LENGTH vp<%avl>
 ; CHECK-NEXT:    EMIT vp<[[VP3:%[0-9]+]]> = shl nuw vp<%index>, ir<4>
 ; CHECK-NEXT:    EMIT vp<[[VP4:%[0-9]+]]> = ptradd nuw vp<[[VP2]]>, vp<[[VP3]]>
-; CHECK-NEXT:    WIDEN-INTRINSIC vp<[[VP5:%[0-9]+]]> = call llvm.experimental.vp.strided.load(vp<[[VP4]]>, ir<16>, ir<true>, vp<%evl>)
+; CHECK-NEXT:    EMIT-SCALAR vp<[[VP5:%[0-9]+]]> = trunc vp<%evl> to i32
+; CHECK-NEXT:    WIDEN-INTRINSIC vp<[[VP6:%[0-9]+]]> = call llvm.experimental.vp.strided.load(vp<[[VP4]]>, ir<16>, ir<true>, vp<[[VP5]]>)
 ; CHECK-NEXT:    CLONE ir<%gd> = getelementptr inbounds ir<%dst>, vp<%index>
-; CHECK-NEXT:    WIDEN vp.store ir<%gd>, vp<[[VP5]]>, vp<%evl>
-; CHECK-NEXT:    EMIT-SCALAR vp<[[VP6:%[0-9]+]]> = zext vp<%evl> to i64
-; CHECK-NEXT:    EMIT vp<%current.iteration.next> = add vp<[[VP6]]>, vp<%index>
-; CHECK-NEXT:    EMIT vp<%avl.next> = sub nuw vp<%avl>, vp<[[VP6]]>
+; CHECK-NEXT:    WIDEN vp.store ir<%gd>, vp<[[VP6]]>, vp<%evl>
+; CHECK-NEXT:    EMIT vp<%current.iteration.next> = add vp<%evl>, vp<%index>
+; CHECK-NEXT:    EMIT vp<%avl.next> = sub nuw vp<%avl>, vp<%evl>
 ; CHECK-NEXT:    EMIT vp<[[VP7:%[0-9]+]]> = icmp eq vp<%avl.next>, ir<0>
 ; CHECK-NEXT:    EMIT branch-on-cond vp<[[VP7]]>
 ; CHECK-NEXT:  Successor(s): middle.block, vector.body
@@ -75,12 +75,12 @@ define void @scev_ptradd_strided_var_offset(ptr noalias %a, ptr noalias %dst, i6
 ; CHECK-NEXT:    EMIT-SCALAR vp<%evl> = EXPLICIT-VECTOR-LENGTH vp<%avl>
 ; CHECK-NEXT:    EMIT vp<[[VP5:%[0-9]+]]> = shl vp<%index>, ir<4>
 ; CHECK-NEXT:    EMIT vp<[[VP6:%[0-9]+]]> = ptradd vp<[[VP4]]>, vp<[[VP5]]>
-; CHECK-NEXT:    WIDEN-INTRINSIC vp<[[VP7:%[0-9]+]]> = call llvm.experimental.vp.strided.load(vp<[[VP6]]>, ir<16>, ir<true>, vp<%evl>)
+; CHECK-NEXT:    EMIT-SCALAR vp<[[VP7:%[0-9]+]]> = trunc vp<%evl> to i32
+; CHECK-NEXT:    WIDEN-INTRINSIC vp<[[VP8:%[0-9]+]]> = call llvm.experimental.vp.strided.load(vp<[[VP6]]>, ir<16>, ir<true>, vp<[[VP7]]>)
 ; CHECK-NEXT:    CLONE ir<%gd> = getelementptr inbounds ir<%dst>, vp<%index>
-; CHECK-NEXT:    WIDEN vp.store ir<%gd>, vp<[[VP7]]>, vp<%evl>
-; CHECK-NEXT:    EMIT-SCALAR vp<[[VP8:%[0-9]+]]> = zext vp<%evl> to i64
-; CHECK-NEXT:    EMIT vp<%current.iteration.next> = add vp<[[VP8]]>, vp<%index>
-; CHECK-NEXT:    EMIT vp<%avl.next> = sub nuw vp<%avl>, vp<[[VP8]]>
+; CHECK-NEXT:    WIDEN vp.store ir<%gd>, vp<[[VP8]]>, vp<%evl>
+; CHECK-NEXT:    EMIT vp<%current.iteration.next> = add vp<%evl>, vp<%index>
+; CHECK-NEXT:    EMIT vp<%avl.next> = sub nuw vp<%avl>, vp<%evl>
 ; CHECK-NEXT:    EMIT vp<[[VP9:%[0-9]+]]> = icmp eq vp<%avl.next>, ir<0>
 ; CHECK-NEXT:    EMIT branch-on-cond vp<[[VP9]]>
 ; CHECK-NEXT:  Successor(s): middle.block, vector.body

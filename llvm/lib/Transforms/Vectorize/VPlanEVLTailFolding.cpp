@@ -45,8 +45,11 @@ bool VPlanTransforms::simplifyKnownEVL(VPlan &Plan, ElementCount VF,
       if (!SE.isKnownPredicate(CmpInst::ICMP_ULE, AVLSCEV, VFSCEV))
         continue;
 
-      VPValue *Trunc = VPBuilder(&R).createScalarZExtOrTrunc(
-          AVL, Type::getInt32Ty(Plan.getContext()), R.getDebugLoc());
+      // The EVL result type now matches the AVL type, so the simplified value
+      // must be cast to the EVL recipe's own type rather than a fixed i32.
+      Type *EVLTy = R.getVPSingleValue()->getScalarType();
+      VPValue *Trunc =
+          VPBuilder(&R).createScalarZExtOrTrunc(AVL, EVLTy, R.getDebugLoc());
       if (Trunc != AVL) {
         auto *TruncR = cast<VPSingleDefRecipe>(Trunc);
         const DataLayout &DL = Plan.getDataLayout();
@@ -137,8 +140,14 @@ static VPRecipeBase *optimizeMaskToEVL(VPValue *HeaderMask,
                 m_VPValue(), m_VPValue(), m_RemoveMask(HeaderMask, Mask),
                 m_TruncOrSelf(m_Specific(&Plan->getVF()))))) {
     auto *NewLoad = cast<VPWidenMemIntrinsicRecipe>(&CurRecipe)->clone();
+    // The strided intrinsic's vector-length operand is i32; narrow EVL (which
+    // now matches the canonical IV type) to the existing operand's type.
+    VPValue *EVLAsVL =
+        VPBuilder(&CurRecipe)
+            .createScalarZExtOrTrunc(
+                &EVL, NewLoad->getOperand(3)->getScalarType(), DL);
     NewLoad->setOperand(2, Mask ? Mask : Plan->getTrue());
-    NewLoad->setOperand(3, &EVL);
+    NewLoad->setOperand(3, EVLAsVL);
     return NewLoad;
   }
 
@@ -168,8 +177,14 @@ static VPRecipeBase *optimizeMaskToEVL(VPValue *HeaderMask,
                             m_RemoveMask(HeaderMask, Mask),
                             m_TruncOrSelf(m_Specific(&Plan->getVF()))))) {
     auto *NewStore = cast<VPWidenMemIntrinsicRecipe>(&CurRecipe)->clone();
+    // The strided intrinsic's vector-length operand is i32; narrow EVL (which
+    // now matches the canonical IV type) to the existing operand's type.
+    VPValue *EVLAsVL =
+        VPBuilder(&CurRecipe)
+            .createScalarZExtOrTrunc(
+                &EVL, NewStore->getOperand(4)->getScalarType(), DL);
     NewStore->setOperand(3, Mask ? Mask : Plan->getTrue());
-    NewStore->setOperand(4, &EVL);
+    NewStore->setOperand(4, EVLAsVL);
     return NewStore;
   }
 
@@ -391,14 +406,20 @@ static void fixupVFUsersForEVL(VPlan &Plan, VPValue &EVL) {
   if (ContainsFORs) {
     // TODO: Use VPInstruction::ExplicitVectorLength to get maximum EVL.
     VPValue *MaxEVL = &Plan.getVF();
-    // Emit VPScalarCastRecipe in preheader if VF is not a 32 bits integer.
+    // The vp.splice explicit-vector-length operands are i32. Keep prev.evl in
+    // i32 by narrowing both the preheader max EVL and the loop EVL backedge.
+    Type *I32Ty = Type::getInt32Ty(Plan.getContext());
     VPBuilder Builder(LoopRegion->getPreheaderVPBB());
-    MaxEVL = Builder.createScalarZExtOrTrunc(
-        MaxEVL, Type::getInt32Ty(Plan.getContext()), DebugLoc::getUnknown());
+    MaxEVL =
+        Builder.createScalarZExtOrTrunc(MaxEVL, I32Ty, DebugLoc::getUnknown());
+
+    VPValue *EVLI32 =
+        VPBuilder::getToInsertAfter(EVL.getDefiningRecipe())
+            .createScalarZExtOrTrunc(&EVL, I32Ty, DebugLoc::getUnknown());
 
     Builder.setInsertPoint(Header, Header->getFirstNonPhi());
     VPValue *PrevEVL = Builder.createScalarPhi(
-        {MaxEVL, &EVL}, DebugLoc::getUnknown(), "prev.evl");
+        {MaxEVL, EVLI32}, DebugLoc::getUnknown(), "prev.evl");
 
     for (VPBasicBlock *VPBB : VPBlockUtils::blocksOnly<VPBasicBlock>(
              vp_depth_first_deep(Plan.getVectorLoopRegion()->getEntry()))) {
@@ -412,7 +433,7 @@ static void fixupVFUsersForEVL(VPlan &Plan, VPValue &EVL) {
             ConstantInt::getSigned(Type::getInt32Ty(Plan.getContext()), -1));
         VPWidenIntrinsicRecipe *VPSplice = new VPWidenIntrinsicRecipe(
             Intrinsic::experimental_vp_splice,
-            {V1, V2, Imm, Plan.getTrue(), PrevEVL, &EVL},
+            {V1, V2, Imm, Plan.getTrue(), PrevEVL, EVLI32},
             R.getVPSingleValue()->getScalarType(), {}, {}, R.getDebugLoc());
         VPSplice->insertBefore(&R);
         R.getVPSingleValue()->replaceAllUsesWith(VPSplice);

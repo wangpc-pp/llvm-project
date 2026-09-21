@@ -12,18 +12,19 @@ define void @load_store_interleave_group(ptr noalias %data) vscale_range(2, 1024
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 100, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP5:%.*]] = call i64 @llvm.experimental.get.vector.length.i64.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP1:%.*]] = shl nsw i64 [[EVL_BASED_IV]], 1
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds i64, ptr [[DATA]], i64 [[TMP1]]
+; CHECK-NEXT:    [[TMP0:%.*]] = trunc i64 [[TMP5]] to i32
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP0]], 2
 ; CHECK-NEXT:    [[WIDE_VP_LOAD:%.*]] = call <vscale x 4 x i64> @llvm.vp.load.nxv4i64.p0(ptr align 8 [[TMP2]], <vscale x 4 x i1> splat (i1 true), i32 [[INTERLEAVE_EVL]])
 ; CHECK-NEXT:    [[STRIDED_VEC:%.*]] = call { <vscale x 2 x i64>, <vscale x 2 x i64> } @llvm.vector.deinterleave2.nxv4i64(<vscale x 4 x i64> [[WIDE_VP_LOAD]])
 ; CHECK-NEXT:    [[TMP3:%.*]] = extractvalue { <vscale x 2 x i64>, <vscale x 2 x i64> } [[STRIDED_VEC]], 0
 ; CHECK-NEXT:    [[TMP4:%.*]] = extractvalue { <vscale x 2 x i64>, <vscale x 2 x i64> } [[STRIDED_VEC]], 1
-; CHECK-NEXT:    [[INTERLEAVE_EVL1:%.*]] = mul nuw nsw i32 [[TMP0]], 2
+; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP5]] to i32
+; CHECK-NEXT:    [[INTERLEAVE_EVL1:%.*]] = mul nuw nsw i32 [[TMP7]], 2
 ; CHECK-NEXT:    [[INTERLEAVED_VEC:%.*]] = call <vscale x 4 x i64> @llvm.vector.interleave2.nxv4i64(<vscale x 2 x i64> [[TMP3]], <vscale x 2 x i64> [[TMP4]])
 ; CHECK-NEXT:    call void @llvm.vp.store.nxv4i64.p0(<vscale x 4 x i64> [[INTERLEAVED_VEC]], ptr align 8 [[TMP2]], <vscale x 4 x i1> splat (i1 true), i32 [[INTERLEAVE_EVL1]])
-; CHECK-NEXT:    [[TMP5:%.*]] = zext i32 [[TMP0]] to i64
 ; CHECK-NEXT:    [[INDEX_EVL_NEXT]] = add nuw i64 [[TMP5]], [[EVL_BASED_IV]]
 ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i64 [[AVL]], [[TMP5]]
 ; CHECK-NEXT:    [[TMP6:%.*]] = icmp eq i64 [[AVL_NEXT]], 0
@@ -245,9 +246,10 @@ define void @load_store_interleave_group_i32(ptr noalias %data) vscale_range(2, 
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 100, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP5:%.*]] = call i64 @llvm.experimental.get.vector.length.i64.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP1:%.*]] = shl nsw i64 [[EVL_BASED_IV]], 2
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds i32, ptr [[DATA]], i64 [[TMP1]]
+; CHECK-NEXT:    [[TMP0:%.*]] = trunc i64 [[TMP5]] to i32
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP0]], 4
 ; CHECK-NEXT:    [[WIDE_VP_LOAD:%.*]] = call <vscale x 16 x i32> @llvm.vp.load.nxv16i32.p0(ptr align 8 [[TMP2]], <vscale x 16 x i1> splat (i1 true), i32 [[INTERLEAVE_EVL]])
 ; CHECK-NEXT:    [[STRIDED_VEC:%.*]] = call { <vscale x 4 x i32>, <vscale x 4 x i32>, <vscale x 4 x i32>, <vscale x 4 x i32> } @llvm.vector.deinterleave4.nxv16i32(<vscale x 16 x i32> [[WIDE_VP_LOAD]])
@@ -255,10 +257,10 @@ define void @load_store_interleave_group_i32(ptr noalias %data) vscale_range(2, 
 ; CHECK-NEXT:    [[TMP4:%.*]] = extractvalue { <vscale x 4 x i32>, <vscale x 4 x i32>, <vscale x 4 x i32>, <vscale x 4 x i32> } [[STRIDED_VEC]], 1
 ; CHECK-NEXT:    [[TMP7:%.*]] = extractvalue { <vscale x 4 x i32>, <vscale x 4 x i32>, <vscale x 4 x i32>, <vscale x 4 x i32> } [[STRIDED_VEC]], 2
 ; CHECK-NEXT:    [[TMP8:%.*]] = extractvalue { <vscale x 4 x i32>, <vscale x 4 x i32>, <vscale x 4 x i32>, <vscale x 4 x i32> } [[STRIDED_VEC]], 3
-; CHECK-NEXT:    [[INTERLEAVE_EVL1:%.*]] = mul nuw nsw i32 [[TMP0]], 4
+; CHECK-NEXT:    [[TMP9:%.*]] = trunc i64 [[TMP5]] to i32
+; CHECK-NEXT:    [[INTERLEAVE_EVL1:%.*]] = mul nuw nsw i32 [[TMP9]], 4
 ; CHECK-NEXT:    [[INTERLEAVED_VEC:%.*]] = call <vscale x 16 x i32> @llvm.vector.interleave4.nxv16i32(<vscale x 4 x i32> [[TMP3]], <vscale x 4 x i32> [[TMP4]], <vscale x 4 x i32> [[TMP7]], <vscale x 4 x i32> [[TMP8]])
 ; CHECK-NEXT:    call void @llvm.vp.store.nxv16i32.p0(<vscale x 16 x i32> [[INTERLEAVED_VEC]], ptr align 8 [[TMP2]], <vscale x 16 x i1> splat (i1 true), i32 [[INTERLEAVE_EVL1]])
-; CHECK-NEXT:    [[TMP5:%.*]] = zext i32 [[TMP0]] to i64
 ; CHECK-NEXT:    [[INDEX_EVL_NEXT]] = add nuw i64 [[TMP5]], [[EVL_BASED_IV]]
 ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i64 [[AVL]], [[TMP5]]
 ; CHECK-NEXT:    [[TMP6:%.*]] = icmp eq i64 [[AVL_NEXT]], 0

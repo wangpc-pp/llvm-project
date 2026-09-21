@@ -14,9 +14,10 @@ define void @f(ptr noalias %p0, ptr noalias %p1, ptr noalias %p2) vscale_range(2
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[TMP7:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1025, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
+; CHECK-NEXT:    [[TMP13:%.*]] = call i64 @llvm.experimental.get.vector.length.i64.i64(i64 [[AVL]], i32 16, i1 true)
 ; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP7]], 1
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[TMP8]]
+; CHECK-NEXT:    [[TMP6:%.*]] = trunc i64 [[TMP13]] to i32
 ; CHECK-NEXT:    [[TMP3:%.*]] = call <vscale x 16 x i8> @llvm.experimental.vp.strided.load.nxv16i8.p0.i64(ptr align 1 [[TMP2]], i64 2, <vscale x 16 x i1> splat (i1 true), i32 [[TMP6]])
 ; CHECK-NEXT:    [[TMP4:%.*]] = mul i64 [[TMP7]], 3
 ; CHECK-NEXT:    [[TMP5:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[TMP4]]
@@ -27,10 +28,10 @@ define void @f(ptr noalias %p0, ptr noalias %p1, ptr noalias %p2) vscale_range(2
 ; CHECK-NEXT:    [[TMP19:%.*]] = mul i64 [[TMP7]], 3
 ; CHECK-NEXT:    [[TMP20:%.*]] = getelementptr i8, ptr [[P1]], i64 [[TMP19]]
 ; CHECK-NEXT:    [[TMP21:%.*]] = getelementptr i8, ptr [[TMP20]], i8 0
-; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP6]], 3
+; CHECK-NEXT:    [[TMP15:%.*]] = trunc i64 [[TMP13]] to i32
+; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP15]], 3
 ; CHECK-NEXT:    [[INTERLEAVED_VEC:%.*]] = call <vscale x 48 x i8> @llvm.vector.interleave3.nxv48i8(<vscale x 16 x i8> [[TMP3]], <vscale x 16 x i8> [[TMP10]], <vscale x 16 x i8> [[TMP9]])
 ; CHECK-NEXT:    call void @llvm.vp.store.nxv48i8.p0(<vscale x 48 x i8> [[INTERLEAVED_VEC]], ptr align 1 [[TMP21]], <vscale x 48 x i1> splat (i1 true), i32 [[INTERLEAVE_EVL]])
-; CHECK-NEXT:    [[TMP13:%.*]] = zext i32 [[TMP6]] to i64
 ; CHECK-NEXT:    [[CURRENT_ITERATION_NEXT]] = add nuw i64 [[TMP13]], [[TMP7]]
 ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i64 [[AVL]], [[TMP13]]
 ; CHECK-NEXT:    [[TMP23:%.*]] = icmp eq i64 [[AVL_NEXT]], 0
@@ -50,9 +51,10 @@ define void @f(ptr noalias %p0, ptr noalias %p1, ptr noalias %p2) vscale_range(2
 ; NO-REG-PRESSURE-CHECK:       [[VECTOR_BODY]]:
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP7:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1025, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
+; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP13:%.*]] = call i64 @llvm.experimental.get.vector.length.i64.i64(i64 [[AVL]], i32 16, i1 true)
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP7]], 1
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[TMP8]]
+; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP6:%.*]] = trunc i64 [[TMP13]] to i32
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP3:%.*]] = call <vscale x 16 x i8> @llvm.experimental.vp.strided.load.nxv16i8.p0.i64(ptr align 1 [[TMP2]], i64 2, <vscale x 16 x i1> splat (i1 true), i32 [[TMP6]])
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP4:%.*]] = mul i64 [[TMP7]], 3
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP5:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[TMP4]]
@@ -63,10 +65,10 @@ define void @f(ptr noalias %p0, ptr noalias %p1, ptr noalias %p2) vscale_range(2
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP19:%.*]] = mul i64 [[TMP7]], 3
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP20:%.*]] = getelementptr i8, ptr [[P1]], i64 [[TMP19]]
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP21:%.*]] = getelementptr i8, ptr [[TMP20]], i8 0
-; NO-REG-PRESSURE-CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP6]], 3
+; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP15:%.*]] = trunc i64 [[TMP13]] to i32
+; NO-REG-PRESSURE-CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP15]], 3
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[INTERLEAVED_VEC:%.*]] = call <vscale x 48 x i8> @llvm.vector.interleave3.nxv48i8(<vscale x 16 x i8> [[TMP3]], <vscale x 16 x i8> [[TMP10]], <vscale x 16 x i8> [[TMP9]])
 ; NO-REG-PRESSURE-CHECK-NEXT:    call void @llvm.vp.store.nxv48i8.p0(<vscale x 48 x i8> [[INTERLEAVED_VEC]], ptr align 1 [[TMP21]], <vscale x 48 x i1> splat (i1 true), i32 [[INTERLEAVE_EVL]])
-; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP13:%.*]] = zext i32 [[TMP6]] to i64
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[CURRENT_ITERATION_NEXT]] = add nuw i64 [[TMP13]], [[TMP7]]
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i64 [[AVL]], [[TMP13]]
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP22:%.*]] = icmp eq i64 [[AVL_NEXT]], 0

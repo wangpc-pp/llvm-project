@@ -20,21 +20,19 @@ define i32 @vdota4(ptr %a, ptr %b) vscale_range(2, 1024) {
 ; CHECK-EMPTY:
 ; CHECK-NEXT:    vector.body:
 ; CHECK-NEXT:      CURRENT-ITERATION-PHI vp<[[VP5:%[0-9]+]]> = phi ir<0>, vp<%current.iteration.next>
-; CHECK-NEXT:      WIDEN-REDUCTION-PHI ir<%accum> = phi (add) vp<[[VP2]]>, vp<[[VP10:%[0-9]+]]> (VF scaled by 1/4)
+; CHECK-NEXT:      WIDEN-REDUCTION-PHI ir<%accum> = phi (add) vp<[[VP2]]>, vp<[[VP9:%[0-9]+]]> (VF scaled by 1/4)
 ; CHECK-NEXT:      EMIT-SCALAR vp<%avl> = phi [ ir<1024>, vector.ph ], [ vp<%avl.next>, vector.body ]
 ; CHECK-NEXT:      EMIT-SCALAR vp<%evl> = EXPLICIT-VECTOR-LENGTH vp<%avl>
-; CHECK-NEXT:      EMIT-SCALAR vp<[[VP6:%[0-9]+]]> = zext vp<%evl> to i64
-; CHECK-NEXT:      vp<[[VP7:%[0-9]+]]> = SCALAR-STEPS vp<[[VP5]]>, ir<1>, vp<[[VP6]]>
-; CHECK-NEXT:      CLONE ir<%gep.a> = getelementptr ir<%a>, vp<[[VP7]]>
-; CHECK-NEXT:      vp<[[VP8:%[0-9]+]]> = vector-pointer i8, ir<%gep.a>, ir<1>
-; CHECK-NEXT:      WIDEN ir<%load.a> = vp.load vp<[[VP8]]>, vp<%evl>
-; CHECK-NEXT:      CLONE ir<%gep.b> = getelementptr ir<%b>, vp<[[VP7]]>
-; CHECK-NEXT:      vp<[[VP9:%[0-9]+]]> = vector-pointer i8, ir<%gep.b>, ir<1>
-; CHECK-NEXT:      WIDEN ir<%load.b> = vp.load vp<[[VP9]]>, vp<%evl>
-; CHECK-NEXT:      EXPRESSION vp<[[VP10]]> = ir<%accum> + partial.reduce.add (mul (ir<%load.b> zext to i32), (ir<%load.a> sext to i32), vp<%evl>)
-; CHECK-NEXT:      EMIT-SCALAR vp<[[VP11:%[0-9]+]]> = zext vp<%evl> to i64
-; CHECK-NEXT:      EMIT vp<%current.iteration.next> = add nuw vp<[[VP11]]>, vp<[[VP5]]>
-; CHECK-NEXT:      EMIT vp<%avl.next> = sub nuw vp<%avl>, vp<[[VP11]]>
+; CHECK-NEXT:      vp<[[VP6:%[0-9]+]]> = SCALAR-STEPS vp<[[VP5]]>, ir<1>, vp<%evl>
+; CHECK-NEXT:      CLONE ir<%gep.a> = getelementptr ir<%a>, vp<[[VP6]]>
+; CHECK-NEXT:      vp<[[VP7:%[0-9]+]]> = vector-pointer i8, ir<%gep.a>, ir<1>
+; CHECK-NEXT:      WIDEN ir<%load.a> = vp.load vp<[[VP7]]>, vp<%evl>
+; CHECK-NEXT:      CLONE ir<%gep.b> = getelementptr ir<%b>, vp<[[VP6]]>
+; CHECK-NEXT:      vp<[[VP8:%[0-9]+]]> = vector-pointer i8, ir<%gep.b>, ir<1>
+; CHECK-NEXT:      WIDEN ir<%load.b> = vp.load vp<[[VP8]]>, vp<%evl>
+; CHECK-NEXT:      EXPRESSION vp<[[VP9]]> = ir<%accum> + partial.reduce.add (mul (ir<%load.b> zext to i32), (ir<%load.a> sext to i32), vp<%evl>)
+; CHECK-NEXT:      EMIT vp<%current.iteration.next> = add nuw vp<%evl>, vp<[[VP5]]>
+; CHECK-NEXT:      EMIT vp<%avl.next> = sub nuw vp<%avl>, vp<%evl>
 ; CHECK-NEXT:      EMIT vp<%index.next> = add nuw vp<[[VP3]]>, vp<[[VP0]]>
 ; CHECK-NEXT:      EMIT branch-on-count vp<%index.next>, vp<[[VP1]]>
 ; CHECK-NEXT:    No successors
@@ -42,7 +40,7 @@ define i32 @vdota4(ptr %a, ptr %b) vscale_range(2, 1024) {
 ; CHECK-NEXT:  Successor(s): middle.block
 ; CHECK-EMPTY:
 ; CHECK-NEXT:  middle.block:
-; CHECK-NEXT:    EMIT vp<[[VP13:%[0-9]+]]> = compute-reduction-result (add) vp<[[VP10]]>
+; CHECK-NEXT:    EMIT vp<[[VP11:%[0-9]+]]> = compute-reduction-result (add) vp<[[VP9]]>
 ; CHECK-NEXT:  Successor(s): ir-bb<for.exit>
 ;
 entry:

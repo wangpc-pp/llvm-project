@@ -12,8 +12,9 @@ define void @strided_interleaved_same_address(i64 %n, ptr %p) {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP0]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP9:%.*]] = call i64 @llvm.experimental.get.vector.length.i64.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds [2 x i64], ptr [[P]], i64 [[INDEX]], i32 0
+; CHECK-NEXT:    [[TMP1:%.*]] = trunc i64 [[TMP9]] to i32
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP1]], 2
 ; CHECK-NEXT:    [[WIDE_VP_LOAD:%.*]] = call <vscale x 4 x i64> @llvm.vp.load.nxv4i64.p0(ptr align 8 [[TMP2]], <vscale x 4 x i1> splat (i1 true), i32 [[INTERLEAVE_EVL]])
 ; CHECK-NEXT:    [[STRIDED_VEC:%.*]] = call { <vscale x 2 x i64>, <vscale x 2 x i64> } @llvm.vector.deinterleave2.nxv4i64(<vscale x 4 x i64> [[WIDE_VP_LOAD]])
@@ -23,8 +24,8 @@ define void @strided_interleaved_same_address(i64 %n, ptr %p) {
 ; CHECK-NEXT:    [[TMP6:%.*]] = icmp eq <vscale x 2 x i64> [[TMP5]], zeroinitializer
 ; CHECK-NEXT:    [[TMP7:%.*]] = shl nuw i64 [[INDEX]], 4
 ; CHECK-NEXT:    [[TMP8:%.*]] = getelementptr nuw i8, ptr [[P]], i64 [[TMP7]]
-; CHECK-NEXT:    call void @llvm.experimental.vp.strided.store.nxv2i64.p0.i64(<vscale x 2 x i64> zeroinitializer, ptr align 8 [[TMP8]], i64 16, <vscale x 2 x i1> [[TMP6]], i32 [[TMP1]])
-; CHECK-NEXT:    [[TMP9:%.*]] = zext i32 [[TMP1]] to i64
+; CHECK-NEXT:    [[TMP11:%.*]] = trunc i64 [[TMP9]] to i32
+; CHECK-NEXT:    call void @llvm.experimental.vp.strided.store.nxv2i64.p0.i64(<vscale x 2 x i64> zeroinitializer, ptr align 8 [[TMP8]], i64 16, <vscale x 2 x i1> [[TMP6]], i32 [[TMP11]])
 ; CHECK-NEXT:    [[CURRENT_ITERATION_NEXT]] = add i64 [[TMP9]], [[INDEX]]
 ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i64 [[AVL]], [[TMP9]]
 ; CHECK-NEXT:    [[TMP10:%.*]] = icmp eq i64 [[AVL_NEXT]], 0

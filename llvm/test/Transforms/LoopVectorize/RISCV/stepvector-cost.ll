@@ -4,9 +4,9 @@
 ; RUN: cat %t | FileCheck %s --check-prefix=COST
 
 ; COST: LV: Checking a loop in 'pointer_induction_stepvector_cost'
-; COST: Cost of 0 for VF vscale x 1: EMIT vp<%6> = step-vector i32
-; COST: Cost of 0 for VF vscale x 2: EMIT vp<%6> = step-vector i32
-; COST: Cost of 0 for VF vscale x 4: EMIT vp<%6> = step-vector i32
+; COST: Cost of 0 for VF vscale x 1: EMIT vp<%6> = step-vector i64
+; COST: Cost of 0 for VF vscale x 2: EMIT vp<%6> = step-vector i64
+; COST: Cost of 0 for VF vscale x 4: EMIT vp<%6> = step-vector i64
 
 ; NOTE: All costs are invalid despite each individual operation having a valid cost.
 ; TODO: VPlan shows the step-vector instruction is not hoisted out of the loop.

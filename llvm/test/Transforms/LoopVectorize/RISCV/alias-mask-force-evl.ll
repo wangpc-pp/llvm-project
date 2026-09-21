@@ -26,15 +26,18 @@ define void @alias_mask(ptr noalias %a, ptr %b, ptr %c, i64 %n) {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[CURRENT_ITERATION_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
+; CHECK-NEXT:    [[TMP9:%.*]] = call i64 @llvm.experimental.get.vector.length.i64.i64(i64 [[AVL]], i32 16, i1 true)
 ; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[CURRENT_ITERATION_IV]]
+; CHECK-NEXT:    [[TMP3:%.*]] = trunc i64 [[TMP9]] to i32
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr align 1 [[TMP4]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP3]])
 ; CHECK-NEXT:    [[TMP5:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[CURRENT_ITERATION_IV]]
-; CHECK-NEXT:    [[VP_OP_LOAD3:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr align 1 [[TMP5]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP3]])
-; CHECK-NEXT:    [[TMP7:%.*]] = call <vscale x 16 x i8> @llvm.vp.sdiv.nxv16i8(<vscale x 16 x i8> [[VP_OP_LOAD3]], <vscale x 16 x i8> [[VP_OP_LOAD]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP3]])
+; CHECK-NEXT:    [[TMP12:%.*]] = trunc i64 [[TMP9]] to i32
+; CHECK-NEXT:    [[VP_OP_LOAD3:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr align 1 [[TMP5]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP12]])
+; CHECK-NEXT:    [[TMP14:%.*]] = trunc i64 [[TMP9]] to i32
+; CHECK-NEXT:    [[TMP15:%.*]] = call <vscale x 16 x i8> @llvm.vp.sdiv.nxv16i8(<vscale x 16 x i8> [[VP_OP_LOAD3]], <vscale x 16 x i8> [[VP_OP_LOAD]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP14]])
 ; CHECK-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i8, ptr [[C]], i64 [[CURRENT_ITERATION_IV]]
-; CHECK-NEXT:    call void @llvm.vp.store.nxv16i8.p0(<vscale x 16 x i8> [[TMP7]], ptr align 1 [[TMP8]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP3]])
-; CHECK-NEXT:    [[TMP9:%.*]] = zext i32 [[TMP3]] to i64
+; CHECK-NEXT:    [[TMP13:%.*]] = trunc i64 [[TMP9]] to i32
+; CHECK-NEXT:    call void @llvm.vp.store.nxv16i8.p0(<vscale x 16 x i8> [[TMP15]], ptr align 1 [[TMP8]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP13]])
 ; CHECK-NEXT:    [[CURRENT_ITERATION_NEXT]] = add i64 [[TMP9]], [[CURRENT_ITERATION_IV]]
 ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i64 [[AVL]], [[TMP9]]
 ; CHECK-NEXT:    [[TMP10:%.*]] = icmp eq i64 [[AVL_NEXT]], 0

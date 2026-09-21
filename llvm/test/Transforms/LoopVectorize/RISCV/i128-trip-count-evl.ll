@@ -13,10 +13,10 @@ define void @i128_trip_count(ptr %p) {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i128 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i128 [ 18446744073709551617, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i128(i128 [[AVL]], i32 8, i1 true)
+; CHECK-NEXT:    [[TMP2:%.*]] = call i128 @llvm.experimental.get.vector.length.i128.i128(i128 [[AVL]], i32 8, i1 true)
 ; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds i16, ptr [[P]], i128 [[INDEX]]
+; CHECK-NEXT:    [[TMP0:%.*]] = trunc i128 [[TMP2]] to i32
 ; CHECK-NEXT:    call void @llvm.vp.store.nxv8i16.p0(<vscale x 8 x i16> splat (i16 1), ptr align 2 [[TMP1]], <vscale x 8 x i1> splat (i1 true), i32 [[TMP0]])
-; CHECK-NEXT:    [[TMP2:%.*]] = zext i32 [[TMP0]] to i128
 ; CHECK-NEXT:    [[CURRENT_ITERATION_NEXT]] = add i128 [[TMP2]], [[INDEX]]
 ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i128 [[AVL]], [[TMP2]]
 ; CHECK-NEXT:    [[TMP3:%.*]] = icmp eq i128 [[AVL_NEXT]], 0

@@ -20,8 +20,7 @@ define void @reverse_store(ptr %a, i64 %n) !dbg !3 {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 2 x i64> [ [[TMP3]], %[[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP9]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP4:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
-; CHECK-NEXT:    [[TMP5:%.*]] = zext i32 [[TMP4]] to i64
+; CHECK-NEXT:    [[TMP5:%.*]] = call i64 @llvm.experimental.get.vector.length.i64.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP6:%.*]] = sub nsw i64 0, [[TMP5]]
 ; CHECK-NEXT:    [[BROADCAST_SPLATINSERT1:%.*]] = insertelement <vscale x 2 x i64> poison, i64 [[TMP6]], i64 0
 ; CHECK-NEXT:    [[BROADCAST_SPLAT2:%.*]] = shufflevector <vscale x 2 x i64> [[BROADCAST_SPLATINSERT1]], <vscale x 2 x i64> poison, <vscale x 2 x i32> zeroinitializer
@@ -30,9 +29,11 @@ define void @reverse_store(ptr %a, i64 %n) !dbg !3 {
 ; CHECK-NEXT:    [[TMP10:%.*]] = getelementptr inbounds nuw i64, ptr [[A]], i64 [[TMP8]], !dbg [[DBG7:![0-9]+]]
 ; CHECK-NEXT:    [[TMP11:%.*]] = sub nuw nsw i64 [[TMP5]], 1
 ; CHECK-NEXT:    [[TMP12:%.*]] = sub i64 0, [[TMP11]]
-; CHECK-NEXT:    [[TMP13:%.*]] = getelementptr i64, ptr [[TMP10]], i64 [[TMP12]], !dbg [[DBG8:![0-9]+]]
-; CHECK-NEXT:    [[TMP14:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.reverse.nxv2i64(<vscale x 2 x i64> [[TMP7]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP4]]), !dbg [[DBG8]]
-; CHECK-NEXT:    call void @llvm.vp.store.nxv2i64.p0(<vscale x 2 x i64> [[TMP14]], ptr align 8 [[TMP13]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP4]]), !dbg [[DBG8]]
+; CHECK-NEXT:    [[TMP16:%.*]] = getelementptr i64, ptr [[TMP10]], i64 [[TMP12]], !dbg [[DBG8:![0-9]+]]
+; CHECK-NEXT:    [[TMP13:%.*]] = trunc i64 [[TMP5]] to i32, !dbg [[DBG8]]
+; CHECK-NEXT:    [[TMP14:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.reverse.nxv2i64(<vscale x 2 x i64> [[TMP7]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP13]]), !dbg [[DBG8]]
+; CHECK-NEXT:    [[TMP15:%.*]] = trunc i64 [[TMP5]] to i32, !dbg [[DBG8]]
+; CHECK-NEXT:    call void @llvm.vp.store.nxv2i64.p0(<vscale x 2 x i64> [[TMP14]], ptr align 8 [[TMP16]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP15]]), !dbg [[DBG8]]
 ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i64 [[AVL]], [[TMP5]]
 ; CHECK-NEXT:    [[VEC_IND_NEXT]] = add nsw <vscale x 2 x i64> [[VEC_IND]], [[BROADCAST_SPLAT2]]
 ; CHECK-NEXT:    [[TMP17:%.*]] = icmp eq i64 [[AVL_NEXT]], 0
