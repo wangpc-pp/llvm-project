@@ -26,7 +26,7 @@ define void @alias_mask(ptr noalias %a, ptr %b, ptr %c, i64 %n) {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[CURRENT_ITERATION_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[CURRENT_ITERATION_IV]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr align 1 [[TMP4]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP3]])
 ; CHECK-NEXT:    [[TMP5:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[CURRENT_ITERATION_IV]]

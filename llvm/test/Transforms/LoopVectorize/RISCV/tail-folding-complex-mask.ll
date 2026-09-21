@@ -27,7 +27,7 @@ define void @test(i64 %n, ptr noalias %src0, ptr noalias %src1, ptr noalias %src
 ; IF-EVL:       [[VECTOR_BODY]]:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[TMP10:%.*]] = getelementptr i32, ptr [[SRC0]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[TMP10]], <vscale x 4 x i1> [[BROADCAST_SPLAT]], i32 [[TMP7]])
 ; IF-EVL-NEXT:    [[PREDPHI:%.*]] = select <vscale x 4 x i1> [[TMP3]], <vscale x 4 x i32> zeroinitializer, <vscale x 4 x i32> [[VP_OP_LOAD]]

@@ -19,7 +19,7 @@ define void @lshift_significand(i32 %n, ptr nocapture writeonly %dst) {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP0]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[OFFSET_IDX:%.*]] = add nuw i64 [[SPEC_SELECT]], [[EVL_BASED_IV]]
 ; CHECK-NEXT:    [[TMP12:%.*]] = sub nuw nsw i64 1, [[OFFSET_IDX]]
 ; CHECK-NEXT:    [[ARRAYIDX13:%.*]] = getelementptr i64, ptr [[DST]], i64 [[TMP12]]

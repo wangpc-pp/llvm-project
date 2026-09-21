@@ -25,7 +25,7 @@ define void @vector_reverse_i32(ptr noalias %A, ptr noalias %B) vscale_range(2, 
 ; RV64:       [[VECTOR_BODY]]:
 ; RV64-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV64-NEXT:    [[AVL:%.*]] = phi i64 [ 1023, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV64-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; RV64-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; RV64-NEXT:    [[OFFSET_IDX:%.*]] = sub i64 1023, [[INDEX]]
 ; RV64-NEXT:    [[TMP7:%.*]] = add nsw i64 [[OFFSET_IDX]], -1
 ; RV64-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 [[TMP7]]
@@ -56,7 +56,7 @@ define void @vector_reverse_i32(ptr noalias %A, ptr noalias %B) vscale_range(2, 
 ; RV32:       [[VECTOR_BODY]]:
 ; RV32-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV32-NEXT:    [[AVL:%.*]] = phi i64 [ 1023, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV32-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; RV32-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; RV32-NEXT:    [[OFFSET_IDX:%.*]] = sub i64 1023, [[INDEX]]
 ; RV32-NEXT:    [[TMP7:%.*]] = add nsw i64 [[OFFSET_IDX]], -1
 ; RV32-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 [[TMP7]]
@@ -172,7 +172,7 @@ define void @vector_reverse_i64(ptr nocapture noundef writeonly %A, ptr nocaptur
 ; RV64:       [[VECTOR_BODY]]:
 ; RV64-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV64-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP0]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV64-NEXT:    [[TMP20:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; RV64-NEXT:    [[TMP20:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; RV64-NEXT:    [[DOTCAST3:%.*]] = trunc i64 [[INDEX]] to i32
 ; RV64-NEXT:    [[OFFSET_IDX:%.*]] = sub i32 [[N]], [[DOTCAST3]]
 ; RV64-NEXT:    [[TMP21:%.*]] = add nsw i32 [[OFFSET_IDX]], -1
@@ -224,7 +224,7 @@ define void @vector_reverse_i64(ptr nocapture noundef writeonly %A, ptr nocaptur
 ; RV32:       [[VECTOR_BODY]]:
 ; RV32-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV32-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP0]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV32-NEXT:    [[TMP16:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; RV32-NEXT:    [[TMP16:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; RV32-NEXT:    [[DOTCAST3:%.*]] = trunc i64 [[INDEX]] to i32
 ; RV32-NEXT:    [[OFFSET_IDX:%.*]] = sub i32 [[N]], [[DOTCAST3]]
 ; RV32-NEXT:    [[TMP13:%.*]] = add nsw i32 [[OFFSET_IDX]], -1
@@ -387,7 +387,7 @@ define void @vector_reverse_f32(ptr nocapture noundef writeonly %A, ptr nocaptur
 ; RV64:       [[VECTOR_BODY]]:
 ; RV64-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV64-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP0]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV64-NEXT:    [[TMP20:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; RV64-NEXT:    [[TMP20:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; RV64-NEXT:    [[DOTCAST3:%.*]] = trunc i64 [[INDEX]] to i32
 ; RV64-NEXT:    [[OFFSET_IDX:%.*]] = sub i32 [[N]], [[DOTCAST3]]
 ; RV64-NEXT:    [[TMP21:%.*]] = add nsw i32 [[OFFSET_IDX]], -1
@@ -439,7 +439,7 @@ define void @vector_reverse_f32(ptr nocapture noundef writeonly %A, ptr nocaptur
 ; RV32:       [[VECTOR_BODY]]:
 ; RV32-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV32-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP0]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV32-NEXT:    [[TMP16:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; RV32-NEXT:    [[TMP16:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; RV32-NEXT:    [[DOTCAST3:%.*]] = trunc i64 [[INDEX]] to i32
 ; RV32-NEXT:    [[OFFSET_IDX:%.*]] = sub i32 [[N]], [[DOTCAST3]]
 ; RV32-NEXT:    [[TMP13:%.*]] = add nsw i32 [[OFFSET_IDX]], -1
@@ -579,7 +579,7 @@ define void @vector_reverse_f32_simplify(ptr noalias %A, ptr noalias %B) vscale_
 ; RV64:       [[VECTOR_BODY]]:
 ; RV64-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV64-NEXT:    [[AVL:%.*]] = phi i64 [ 1023, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV64-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; RV64-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; RV64-NEXT:    [[OFFSET_IDX:%.*]] = sub i64 1023, [[INDEX]]
 ; RV64-NEXT:    [[TMP7:%.*]] = add nsw i64 [[OFFSET_IDX]], -1
 ; RV64-NEXT:    [[TMP8:%.*]] = getelementptr inbounds float, ptr [[B]], i64 [[TMP7]]
@@ -610,7 +610,7 @@ define void @vector_reverse_f32_simplify(ptr noalias %A, ptr noalias %B) vscale_
 ; RV32:       [[VECTOR_BODY]]:
 ; RV32-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV32-NEXT:    [[AVL:%.*]] = phi i64 [ 1023, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV32-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; RV32-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; RV32-NEXT:    [[OFFSET_IDX:%.*]] = sub i64 1023, [[INDEX]]
 ; RV32-NEXT:    [[TMP7:%.*]] = add nsw i64 [[OFFSET_IDX]], -1
 ; RV32-NEXT:    [[TMP8:%.*]] = getelementptr inbounds float, ptr [[B]], i64 [[TMP7]]

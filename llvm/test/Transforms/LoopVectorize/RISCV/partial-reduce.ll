@@ -12,7 +12,7 @@ define i32 @partial_reduce_dotprod(ptr %a, ptr %b, ptr %c, ptr %d, i64 %N) #0 {
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 1 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[PARTIAL_REDUCE:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds nuw i8, ptr [[A]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP2]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr inbounds nuw i8, ptr [[B]], i64 [[INDEX]]
@@ -66,7 +66,7 @@ define i32 @chained_partial_reduce_dotprod(ptr %a, ptr %b, ptr %c, ptr %d, i64 %
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 1 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[PARTIAL_REDUCE4:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds nuw i8, ptr [[A]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP2]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr inbounds nuw i8, ptr [[B]], i64 [[INDEX]]
@@ -141,7 +141,7 @@ define i32 @chained_reduce_iv_derived_first_link(ptr %c, ptr %d, i64 %N) #0 {
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 1 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[PARTIAL_REDUCE2:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 4 x i8> [ [[TMP0]], %[[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP2:%.*]] = zext i32 [[TMP1]] to i64
 ; CHECK-NEXT:    [[TMP3:%.*]] = trunc i64 [[TMP2]] to i8
 ; CHECK-NEXT:    [[BROADCAST_SPLATINSERT:%.*]] = insertelement <vscale x 4 x i8> poison, i8 [[TMP3]], i64 0

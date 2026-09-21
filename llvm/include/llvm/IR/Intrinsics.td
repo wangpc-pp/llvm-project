@@ -2403,7 +2403,7 @@ def int_get_active_lane_mask:
             [IntrNoMem, IntrSpeculatable]>;
 
 def int_experimental_get_vector_length:
-  DefaultAttrsIntrinsic<[llvm_i32_ty],
+  DefaultAttrsIntrinsic<[llvm_anyint_ty],
                         [llvm_anyint_ty, llvm_i32_ty, llvm_i1_ty],
                         [IntrNoMem, IntrSpeculatable,
                          ImmArg<ArgIndex<1>>, ImmArg<ArgIndex<2>>]>;

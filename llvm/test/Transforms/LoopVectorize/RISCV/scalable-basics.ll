@@ -16,7 +16,7 @@ define void @vector_add(ptr noalias nocapture %a, i64 %v, i64 %n) vscale_range(2
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr inbounds i64, ptr [[A:%.*]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 2 x i64> @llvm.vp.load.nxv2i64.p0(ptr align 8 [[TMP6]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP10]])
 ; CHECK-NEXT:    [[TMP8:%.*]] = add <vscale x 2 x i64> [[WIDE_LOAD]], [[BROADCAST_SPLAT]]
@@ -62,7 +62,7 @@ define void @vector_add_i32(ptr noalias nocapture %a, i32 %v, i64 %n) vscale_ran
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr inbounds i32, ptr [[A:%.*]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[TMP6]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP10]])
 ; CHECK-NEXT:    [[TMP8:%.*]] = add <vscale x 4 x i32> [[WIDE_LOAD]], [[BROADCAST_SPLAT]]
@@ -146,7 +146,7 @@ define void @indexed_store(ptr noalias nocapture %a, ptr noalias nocapture %b, i
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr inbounds i64, ptr [[B:%.*]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 2 x i64> @llvm.vp.load.nxv2i64.p0(ptr align 8 [[TMP6]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP10]])
 ; CHECK-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i64, ptr [[A:%.*]], <vscale x 2 x i64> [[WIDE_LOAD]]
@@ -188,7 +188,7 @@ define i64 @indexed_load(ptr noalias nocapture %a, ptr noalias nocapture %b, i64
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 2 x i64> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP9:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr inbounds i64, ptr [[B:%.*]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 2 x i64> @llvm.vp.load.nxv2i64.p0(ptr align 8 [[TMP6]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP12]])
 ; CHECK-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i64, ptr [[A:%.*]], <vscale x 2 x i64> [[WIDE_LOAD]]
@@ -236,7 +236,7 @@ define void @splat_int(ptr noalias nocapture %a, i64 %v, i64 %n) vscale_range(2,
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr inbounds i64, ptr [[A:%.*]], i64 [[INDEX]]
 ; CHECK-NEXT:    call void @llvm.vp.store.nxv2i64.p0(<vscale x 2 x i64> [[BROADCAST_SPLAT]], ptr align 8 [[TMP6]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP10]])
 ; CHECK-NEXT:    [[TMP7:%.*]] = zext i32 [[TMP10]] to i64
@@ -275,7 +275,7 @@ define void @splat_ptr(ptr noalias nocapture %a, ptr %v, i64 %n) vscale_range(2,
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr inbounds i64, ptr [[A:%.*]], i64 [[INDEX]]
 ; CHECK-NEXT:    call void @llvm.vp.store.nxv2p0.p0(<vscale x 2 x ptr> [[BROADCAST_SPLAT]], ptr align 8 [[TMP6]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP10]])
 ; CHECK-NEXT:    [[TMP7:%.*]] = zext i32 [[TMP10]] to i64

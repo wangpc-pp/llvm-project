@@ -23,7 +23,7 @@ define i64 @pr97452_scalable_vf1_for(ptr %src, ptr noalias %dst) #0 {
 ; CHECK-NEXT:    [[VECTOR_RECUR:%.*]] = phi <vscale x 2 x i64> [ [[VECTOR_RECUR_INIT]], %[[VECTOR_PH]] ], [ [[VP_OP_LOAD:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 23, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[PREV_EVL:%.*]] = phi i32 [ [[TMP2]], %[[VECTOR_PH]] ], [ [[TMP6:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP6]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP6]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP9:%.*]] = getelementptr inbounds i64, ptr [[SRC]], i64 [[EVL_BASED_IV]]
 ; CHECK-NEXT:    [[VP_OP_LOAD]] = call <vscale x 2 x i64> @llvm.vp.load.nxv2i64.p0(ptr align 8 [[TMP9]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP6]])
 ; CHECK-NEXT:    [[TMP10:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.splice.nxv2i64(<vscale x 2 x i64> [[VECTOR_RECUR]], <vscale x 2 x i64> [[VP_OP_LOAD]], i32 -1, <vscale x 2 x i1> splat (i1 true), i32 [[PREV_EVL]], i32 [[TMP6]])

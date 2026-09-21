@@ -37,7 +37,7 @@ define void @reduction_intermediate_store(ptr %a, i64 %n, i32 %start, ptr %addr)
 ; IF-EVL-OUTLOOP-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, [[ENTRY]] ], [ [[INDEX_EVL_NEXT:%.*]], [[FOR_BODY]] ]
 ; IF-EVL-OUTLOOP-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ [[TMP10]], [[ENTRY]] ], [ [[TMP19:%.*]], [[FOR_BODY]] ]
 ; IF-EVL-OUTLOOP-NEXT:    [[TMP11:%.*]] = phi i64 [ [[N]], [[ENTRY]] ], [ [[AVL_NEXT:%.*]], [[FOR_BODY]] ]
-; IF-EVL-OUTLOOP-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[TMP11]], i32 4, i1 true)
+; IF-EVL-OUTLOOP-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[TMP11]], i32 4, i1 true)
 ; IF-EVL-OUTLOOP-NEXT:    [[TMP17:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-OUTLOOP-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[TMP17]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP12]]), !alias.scope [[META0:![0-9]+]]
 ; IF-EVL-OUTLOOP-NEXT:    [[VP_OP:%.*]] = add <vscale x 4 x i32> [[VP_OP_LOAD]], [[VEC_PHI]]
@@ -84,7 +84,7 @@ define void @reduction_intermediate_store(ptr %a, i64 %n, i32 %start, ptr %addr)
 ; IF-EVL-INLOOP-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-INLOOP-NEXT:    [[VEC_PHI:%.*]] = phi i32 [ [[START]], [[VECTOR_PH]] ], [ [[TMP22:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-INLOOP-NEXT:    [[TMP13:%.*]] = phi i64 [ [[N]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-INLOOP-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[TMP13]], i32 4, i1 true)
+; IF-EVL-INLOOP-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[TMP13]], i32 4, i1 true)
 ; IF-EVL-INLOOP-NEXT:    [[TMP19:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-INLOOP-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[TMP19]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP14]]), !alias.scope [[META0:![0-9]+]]
 ; IF-EVL-INLOOP-NEXT:    [[TMP21:%.*]] = call i32 @llvm.vp.reduce.add.nxv4i32(i32 0, <vscale x 4 x i32> [[VP_OP_LOAD]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP14]])

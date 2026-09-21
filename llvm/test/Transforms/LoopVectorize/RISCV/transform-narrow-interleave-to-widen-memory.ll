@@ -12,7 +12,7 @@ define void @load_store_interleave_group(ptr noalias %data) vscale_range(2, 1024
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 100, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP1:%.*]] = shl nsw i64 [[EVL_BASED_IV]], 1
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds i64, ptr [[DATA]], i64 [[TMP1]]
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP0]], 2
@@ -245,7 +245,7 @@ define void @load_store_interleave_group_i32(ptr noalias %data) vscale_range(2, 
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 100, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP1:%.*]] = shl nsw i64 [[EVL_BASED_IV]], 2
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds i32, ptr [[DATA]], i64 [[TMP1]]
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP0]], 4

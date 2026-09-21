@@ -17,7 +17,7 @@ define void @test_pr98413_zext_removed(ptr %src, ptr noalias %dst, i64 %x) vscal
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[TMP7:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 97, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP13:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 8, i1 true)
+; CHECK-NEXT:    [[TMP13:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 8, i1 true)
 ; CHECK-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i16, ptr [[SRC]], i64 [[TMP7]]
 ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 8 x i16> @llvm.vp.load.nxv8i16.p0(ptr align 8 [[TMP8]], <vscale x 8 x i1> splat (i1 true), i32 [[TMP13]])
 ; CHECK-NEXT:    [[TMP10:%.*]] = trunc <vscale x 8 x i16> [[WIDE_LOAD]] to <vscale x 8 x i8>
@@ -67,7 +67,7 @@ define void @test_pr98413_sext_removed(ptr %src, ptr noalias %dst, i64 %x) vscal
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[TMP7:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 97, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP13:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 8, i1 true)
+; CHECK-NEXT:    [[TMP13:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 8, i1 true)
 ; CHECK-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i16, ptr [[SRC]], i64 [[TMP7]]
 ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 8 x i16> @llvm.vp.load.nxv8i16.p0(ptr align 8 [[TMP8]], <vscale x 8 x i1> splat (i1 true), i32 [[TMP13]])
 ; CHECK-NEXT:    [[TMP10:%.*]] = trunc <vscale x 8 x i16> [[WIDE_LOAD]] to <vscale x 8 x i8>
@@ -116,7 +116,7 @@ define void @truncate_to_i1_used_by_branch(i8 %x, ptr %dst) #0 {
 ; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ 9, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    call void @llvm.vp.scatter.nxv4i8.nxv4p0(<vscale x 4 x i8> zeroinitializer, <vscale x 4 x ptr> align 1 [[BROADCAST_SPLAT2]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP6]])
 ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i32 [[AVL]], [[TMP6]]
 ; CHECK-NEXT:    [[TMP3:%.*]] = icmp eq i32 [[AVL_NEXT]], 0
@@ -208,7 +208,7 @@ define void @icmp_only_first_op_truncated(ptr noalias %dst, i32 %x, i64 %N, i64 
 ; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP0]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[WIDE_MASKED_GATHER:%.*]] = call <vscale x 2 x double> @llvm.vp.gather.nxv2f64.nxv2p0(<vscale x 2 x ptr> align 8 [[BROADCAST_SPLAT4]], <vscale x 2 x i1> [[TMP8]], i32 [[TMP14]])
 ; CHECK-NEXT:    call void @llvm.vp.scatter.nxv2f64.nxv2p0(<vscale x 2 x double> [[WIDE_MASKED_GATHER]], <vscale x 2 x ptr> align 8 [[BROADCAST_SPLAT6]], <vscale x 2 x i1> [[TMP8]], i32 [[TMP14]])
 ; CHECK-NEXT:    [[TMP11:%.*]] = zext i32 [[TMP14]] to i64
@@ -277,7 +277,7 @@ define void @test_minbws_for_trunc(i32 %n, ptr noalias %p1, ptr noalias %p2) vsc
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ 256, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP13:%.*]] = zext i32 [[INDEX]] to i64
 ; CHECK-NEXT:    [[TMP22:%.*]] = shl i64 [[TMP13]], 4
 ; CHECK-NEXT:    [[TMP14:%.*]] = getelementptr i8, ptr [[P1]], i64 [[TMP22]]

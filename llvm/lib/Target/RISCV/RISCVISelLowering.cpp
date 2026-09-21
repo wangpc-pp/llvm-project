@@ -12173,7 +12173,9 @@ static SDValue lowerGetVectorLength(SDNode *N, SelectionDAG &DAG,
   SDValue ID = DAG.getTargetConstant(Intrinsic::riscv_vsetvli, DL, XLenVT);
   SDValue Res =
       DAG.getNode(ISD::INTRINSIC_WO_CHAIN, DL, XLenVT, ID, AVL, Sew, LMul);
-  return DAG.getNode(ISD::TRUNCATE, DL, N->getValueType(0), Res);
+  // The result type may be wider (e.g. i64 on RV32) or narrower (e.g. i32 on
+  // RV64) than XLen; adjust accordingly.
+  return DAG.getZExtOrTrunc(Res, DL, N->getValueType(0));
 }
 
 static SDValue lowerCttzElts(SDValue Op, SelectionDAG &DAG,
@@ -17309,8 +17311,9 @@ void RISCVTargetLowering::ReplaceNodeResults(SDNode *N,
       llvm_unreachable(
           "Don't know how to custom type legalize this intrinsic!");
     case Intrinsic::experimental_get_vector_length: {
-      SDValue Res = lowerGetVectorLength(N, DAG, Subtarget);
-      Results.push_back(DAG.getNode(ISD::TRUNCATE, DL, MVT::i32, Res));
+      // lowerGetVectorLength already returns a value of the node's result
+      // type; it is pushed as-is and further legalized if needed.
+      Results.push_back(lowerGetVectorLength(N, DAG, Subtarget));
       return;
     }
     case Intrinsic::riscv_psext_h:

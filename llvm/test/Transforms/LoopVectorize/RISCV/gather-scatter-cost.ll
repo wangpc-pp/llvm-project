@@ -38,7 +38,7 @@ define void @predicated_uniform_load(ptr %src, i32 %n, ptr %dst, i1 %cond) {
 ; CHECK-NEXT:    br label [[VECTOR_BODY:%.*]]
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ [[TMP3]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[WIDE_MASKED_GATHER:%.*]] = call <vscale x 4 x i32> @llvm.vp.gather.nxv4i32.nxv4p0(<vscale x 4 x ptr> align 4 [[BROADCAST_SPLAT]], <vscale x 4 x i1> [[TMP13]], i32 [[TMP10]]), !alias.scope [[META0:![0-9]+]]
 ; CHECK-NEXT:    [[PREDPHI:%.*]] = select i1 [[COND]], <vscale x 4 x i32> zeroinitializer, <vscale x 4 x i32> [[WIDE_MASKED_GATHER]]
 ; CHECK-NEXT:    call void @llvm.vp.scatter.nxv4i32.nxv4p0(<vscale x 4 x i32> [[PREDPHI]], <vscale x 4 x ptr> align 4 [[BROADCAST_SPLAT4]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP10]]), !alias.scope [[META3:![0-9]+]], !noalias [[META0]]
@@ -100,7 +100,7 @@ define void @predicated_strided_store(ptr %start) {
 ; RVA23:       vector.body:
 ; RVA23-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; RVA23-NEXT:    [[AVL:%.*]] = phi i64 [ 586, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; RVA23-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; RVA23-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; RVA23-NEXT:    [[TMP1:%.*]] = mul i64 [[INDEX]], 7
 ; RVA23-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[START:%.*]], i64 [[TMP1]]
 ; RVA23-NEXT:    call void @llvm.experimental.vp.strided.store.nxv16i8.p0.i64(<vscale x 16 x i8> zeroinitializer, ptr align 1 [[TMP2]], i64 7, <vscale x 16 x i1> splat (i1 true), i32 [[TMP0]])
@@ -122,7 +122,7 @@ define void @predicated_strided_store(ptr %start) {
 ; RVA23ZVL1024B:       vector.body:
 ; RVA23ZVL1024B-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; RVA23ZVL1024B-NEXT:    [[AVL:%.*]] = phi i64 [ 586, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; RVA23ZVL1024B-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 8, i1 true)
+; RVA23ZVL1024B-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 8, i1 true)
 ; RVA23ZVL1024B-NEXT:    [[TMP1:%.*]] = mul i64 [[INDEX]], 7
 ; RVA23ZVL1024B-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[START:%.*]], i64 [[TMP1]]
 ; RVA23ZVL1024B-NEXT:    call void @llvm.experimental.vp.strided.store.nxv8i8.p0.i64(<vscale x 8 x i8> zeroinitializer, ptr align 1 [[TMP2]], i64 7, <vscale x 8 x i1> splat (i1 true), i32 [[TMP0]])
@@ -164,7 +164,7 @@ define void @store_to_addr_generated_from_invariant_addr(ptr noalias %p0, ptr no
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP0]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP2:%.*]] = shl i64 [[INDEX]], 2
 ; CHECK-NEXT:    [[TMP5:%.*]] = getelementptr i8, ptr [[P1:%.*]], i64 [[TMP2]]
 ; CHECK-NEXT:    call void @llvm.experimental.vp.strided.store.nxv2p0.p0.i64(<vscale x 2 x ptr> [[BROADCAST_SPLAT1]], ptr align 8 [[TMP5]], i64 4, <vscale x 2 x i1> splat (i1 true), i32 [[TMP3]])
@@ -224,7 +224,7 @@ define i8 @mixed_gather_scatters(ptr %A, ptr %B, ptr %C) #0 {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 1 x i8> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP14:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ 10, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 1, i1 true)
+; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 1, i1 true)
 ; CHECK-NEXT:    [[WIDE_MASKED_GATHER:%.*]] = call <vscale x 1 x i64> @llvm.vp.gather.nxv1i64.nxv1p0(<vscale x 1 x ptr> align 8 [[BROADCAST_SPLAT]], <vscale x 1 x i1> splat (i1 true), i32 [[TMP3]])
 ; CHECK-NEXT:    [[TMP4:%.*]] = icmp sgt <vscale x 1 x i64> [[WIDE_MASKED_GATHER]], zeroinitializer
 ; CHECK-NEXT:    [[TMP5:%.*]] = zext <vscale x 1 x i1> [[TMP4]] to <vscale x 1 x i8>

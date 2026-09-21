@@ -16,7 +16,7 @@ define void @gather_scatter(ptr noalias %in, ptr noalias %out, ptr noalias %inde
 ; IF-EVL:       vector.body:
 ; IF-EVL-NEXT:    [[INDEX1:%.*]] = phi i64 [ 0, [[FOR_BODY1]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N:%.*]], [[FOR_BODY1]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; IF-EVL-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; IF-EVL-NEXT:    [[TMP1:%.*]] = shl nuw i64 [[INDEX1]], 2
 ; IF-EVL-NEXT:    [[TMP2:%.*]] = getelementptr nuw i8, ptr [[INDEX:%.*]], i64 [[TMP1]]
 ; IF-EVL-NEXT:    [[TMP3:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.strided.load.nxv2i64.p0.i64(ptr align 8 [[TMP2]], i64 4, <vscale x 2 x i1> splat (i1 true), i32 [[TMP0]])

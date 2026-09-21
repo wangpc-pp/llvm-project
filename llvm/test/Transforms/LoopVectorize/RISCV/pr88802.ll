@@ -22,7 +22,7 @@ define void @test(ptr %p, i64 %a, i8 %b) {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 8 x i32> [ [[TMP4]], [[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], [[FOR_COND]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ 9, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[FOR_COND]] ]
-; CHECK-NEXT:    [[TMP11:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; CHECK-NEXT:    [[TMP11:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; CHECK-NEXT:    [[BROADCAST_SPLATINSERT5:%.*]] = insertelement <vscale x 8 x i32> poison, i32 [[TMP11]], i64 0
 ; CHECK-NEXT:    [[BROADCAST_SPLAT6:%.*]] = shufflevector <vscale x 8 x i32> [[BROADCAST_SPLATINSERT5]], <vscale x 8 x i32> poison, <vscale x 8 x i32> zeroinitializer
 ; CHECK-NEXT:    [[TMP6:%.*]] = icmp slt <vscale x 8 x i32> [[VEC_IND]], splat (i32 2)

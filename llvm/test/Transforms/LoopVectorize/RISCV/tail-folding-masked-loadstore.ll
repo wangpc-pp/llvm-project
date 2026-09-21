@@ -16,7 +16,7 @@ define void @masked_loadstore(ptr noalias %a, ptr noalias %b, i64 %n) {
 ; IF-EVL:       vector.body:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[TMP9:%.*]] = phi i64 [ [[N:%.*]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[TMP9]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[TMP9]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[TMP15:%.*]] = getelementptr inbounds i32, ptr [[B:%.*]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[TMP15]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP10]])
 ; IF-EVL-NEXT:    [[TMP17:%.*]] = icmp ne <vscale x 4 x i32> [[VP_OP_LOAD]], zeroinitializer

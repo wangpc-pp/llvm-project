@@ -15,7 +15,7 @@ define i32 @simple_find_last_reduction(i64 %N, ptr %data, i32 %a) {
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ splat (i32 -1), %[[EXIT]] ], [ [[TMP10:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[TMP0:%.*]] = phi <vscale x 4 x i1> [ zeroinitializer, %[[EXIT]] ], [ [[TMP9:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[EXIT]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[LD_ADDR:%.*]] = getelementptr inbounds i32, ptr [[DATA]], i64 [[IV]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[LD_ADDR]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP1]])
 ; CHECK-NEXT:    [[TMP5:%.*]] = icmp slt <vscale x 4 x i32> [[BROADCAST_SPLAT]], [[VP_OP_LOAD]]
@@ -79,7 +79,7 @@ define i32 @non_speculatable_find_last_reduction(ptr noalias %a, ptr noalias %b,
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ [[BROADCAST_SPLAT2]], %[[EXIT]] ], [ [[TMP12:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[TMP0:%.*]] = phi <vscale x 4 x i1> [ zeroinitializer, %[[EXIT]] ], [ [[TMP11:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[EXIT]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[A_ADDR:%.*]] = getelementptr inbounds nuw i32, ptr [[A]], i64 [[IV]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[A_ADDR]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP1]])
 ; CHECK-NEXT:    [[TMP5:%.*]] = icmp sgt <vscale x 4 x i32> [[VP_OP_LOAD]], [[BROADCAST_SPLAT]]

@@ -16,7 +16,7 @@ define void @interleave(ptr noalias %a, ptr noalias %b, i64 %N) vscale_range(2, 
 ; IF-EVL:       vector.body:
 ; IF-EVL-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N:%.*]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[TMP1:%.*]] = getelementptr inbounds [2 x i32], ptr [[B:%.*]], i64 [[INDEX]], i32 0
 ; IF-EVL-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP0]], 2
 ; IF-EVL-NEXT:    [[WIDE_VP_LOAD:%.*]] = call <vscale x 8 x i32> @llvm.vp.load.nxv8i32.p0(ptr align 4 [[TMP1]], <vscale x 8 x i1> splat (i1 true), i32 [[INTERLEAVE_EVL]])
@@ -121,7 +121,7 @@ define i32 @load_factor_4_with_gap(i64 %n, ptr noalias %a) vscale_range(2, 1024)
 ; IF-EVL-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP8:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N:%.*]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[TMP1:%.*]] = getelementptr inbounds [4 x i32], ptr [[A:%.*]], i64 [[INDEX]], i32 0
 ; IF-EVL-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP0]], 4
 ; IF-EVL-NEXT:    [[WIDE_VP_LOAD:%.*]] = call <vscale x 16 x i32> @llvm.vp.load.nxv16i32.p0(ptr align 4 [[TMP1]], <vscale x 16 x i1> splat (i1 true), i32 [[INTERLEAVE_EVL]])
@@ -242,7 +242,7 @@ define void @store_factor_4_with_gap(i32 %n, ptr noalias %a) vscale_range(2, 102
 ; IF-EVL-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 4 x i32> [ [[TMP2]], [[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i32 [ [[N:%.*]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[BROADCAST_SPLATINSERT:%.*]] = insertelement <vscale x 4 x i32> poison, i32 [[TMP3]], i64 0
 ; IF-EVL-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <vscale x 4 x i32> [[BROADCAST_SPLATINSERT]], <vscale x 4 x i32> poison, <vscale x 4 x i32> zeroinitializer
 ; IF-EVL-NEXT:    [[TMP4:%.*]] = zext i32 [[INDEX]] to i64
@@ -355,7 +355,7 @@ define i32 @load_factor_4_with_tail_gap(i64 %n, ptr noalias %a) vscale_range(2, 
 ; IF-EVL-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP13:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N:%.*]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[TMP3:%.*]] = shl nuw i64 [[INDEX]], 4
 ; IF-EVL-NEXT:    [[TMP4:%.*]] = getelementptr nuw i8, ptr [[A]], i64 [[TMP3]]
 ; IF-EVL-NEXT:    [[TMP5:%.*]] = call <vscale x 4 x i32> @llvm.experimental.vp.strided.load.nxv4i32.p0.i64(ptr align 4 [[TMP4]], i64 16, <vscale x 4 x i1> splat (i1 true), i32 [[TMP2]])
@@ -478,7 +478,7 @@ define void @store_factor_4_with_tail_gap(i32 %n, ptr noalias %a) vscale_range(2
 ; IF-EVL-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 4 x i32> [ [[TMP2]], [[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i32 [ [[N:%.*]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[BROADCAST_SPLATINSERT:%.*]] = insertelement <vscale x 4 x i32> poison, i32 [[TMP3]], i64 0
 ; IF-EVL-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <vscale x 4 x i32> [[BROADCAST_SPLATINSERT]], <vscale x 4 x i32> poison, <vscale x 4 x i32> zeroinitializer
 ; IF-EVL-NEXT:    [[TMP4:%.*]] = zext i32 [[INDEX]] to i64
@@ -589,7 +589,7 @@ define i32 @load_factor_4_reverse(i64 %n, ptr noalias %a) vscale_range(2, 1024) 
 ; IF-EVL-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP25:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP2]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP11:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP11:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[TMP12:%.*]] = mul i64 [[INDEX]], -16
 ; IF-EVL-NEXT:    [[TMP13:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP12]]
 ; IF-EVL-NEXT:    [[TMP14:%.*]] = call <vscale x 4 x i32> @llvm.experimental.vp.strided.load.nxv4i32.p0.i64(ptr align 4 [[TMP13]], i64 -16, <vscale x 4 x i1> splat (i1 true), i32 [[TMP11]])
@@ -739,7 +739,7 @@ define void @store_factor_4_reverse(i32 %n, ptr noalias %a) vscale_range(2, 1024
 ; IF-EVL-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 4 x i32> [ [[TMP13]], [[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i32 [ [[TMP2]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[TMP15:%.*]] = sub nsw i32 0, [[TMP14]]
 ; IF-EVL-NEXT:    [[BROADCAST_SPLATINSERT1:%.*]] = insertelement <vscale x 4 x i32> poison, i32 [[TMP15]], i64 0
 ; IF-EVL-NEXT:    [[BROADCAST_SPLAT2:%.*]] = shufflevector <vscale x 4 x i32> [[BROADCAST_SPLATINSERT1]], <vscale x 4 x i32> poison, <vscale x 4 x i32> zeroinitializer

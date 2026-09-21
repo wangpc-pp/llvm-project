@@ -32,7 +32,7 @@ define void @fadd(ptr noalias %a, ptr noalias %b, i64 %n) {
 ; ZVFBFMIN:       [[VECTOR_BODY]]:
 ; ZVFBFMIN-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; ZVFBFMIN-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; ZVFBFMIN-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 8, i1 true)
+; ZVFBFMIN-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 8, i1 true)
 ; ZVFBFMIN-NEXT:    [[TMP1:%.*]] = getelementptr bfloat, ptr [[A]], i64 [[INDEX]]
 ; ZVFBFMIN-NEXT:    [[TMP2:%.*]] = getelementptr bfloat, ptr [[B]], i64 [[INDEX]]
 ; ZVFBFMIN-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 8 x bfloat> @llvm.vp.load.nxv8bf16.p0(ptr align 2 [[TMP1]], <vscale x 8 x i1> splat (i1 true), i32 [[TMP0]])
@@ -124,7 +124,7 @@ define void @vfwmaccbf16.vv(ptr noalias %a, ptr noalias %b, ptr noalias %c, i64 
 ; ZVFBFMIN:       [[VECTOR_BODY]]:
 ; ZVFBFMIN-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; ZVFBFMIN-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; ZVFBFMIN-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; ZVFBFMIN-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; ZVFBFMIN-NEXT:    [[TMP1:%.*]] = getelementptr bfloat, ptr [[A]], i64 [[INDEX]]
 ; ZVFBFMIN-NEXT:    [[TMP2:%.*]] = getelementptr bfloat, ptr [[B]], i64 [[INDEX]]
 ; ZVFBFMIN-NEXT:    [[TMP3:%.*]] = getelementptr float, ptr [[C]], i64 [[INDEX]]

@@ -13,7 +13,7 @@ define i1 @result_le_count() {
 define i1 @result_le_max_lanes(i32 %count) {
 ; CHECK-LABEL: define i1 @result_le_max_lanes(
 ; CHECK-SAME: i32 [[COUNT:%.*]]) {
-; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[COUNT]], i32 3, i1 false)
+; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[COUNT]], i32 3, i1 false)
 ; CHECK-NEXT:    ret i1 true
 ;
   %x = call i32 @llvm.experimental.get.vector.length(i32 %count, i32 3, i1 false)
@@ -24,7 +24,7 @@ define i1 @result_le_max_lanes(i32 %count) {
 define i1 @result_le_max_lanes_scalable(i32 %count) vscale_range(2, 4) {
 ; CHECK-LABEL: define i1 @result_le_max_lanes_scalable(
 ; CHECK-SAME: i32 [[COUNT:%.*]]) #[[ATTR0:[0-9]+]] {
-; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[COUNT]], i32 4, i1 true)
+; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[COUNT]], i32 4, i1 true)
 ; CHECK-NEXT:    ret i1 true
 ;
   %x = call i32 @llvm.experimental.get.vector.length(i32 %count, i32 4, i1 true)
@@ -62,7 +62,7 @@ define i32 @count_not_le_max_lanes() {
 ; CHECK-NEXT:    br label %[[LOOP:.*]]
 ; CHECK:       [[LOOP]]:
 ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 6, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
-; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[IV]], i32 4, i1 false)
+; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[IV]], i32 4, i1 false)
 ; CHECK-NEXT:    [[IV_NEXT]] = sub i32 [[IV]], [[X]]
 ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], 0
 ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP]]
@@ -114,7 +114,7 @@ define i32 @count_le_max_lanes_scalable_unknown() {
 ; CHECK-NEXT:    br label %[[LOOP:.*]]
 ; CHECK:       [[LOOP]]:
 ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 16, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
-; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[IV]], i32 4, i1 true)
+; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[IV]], i32 4, i1 true)
 ; CHECK-NEXT:    [[IV_NEXT]] = sub i32 [[IV]], [[X]]
 ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], 0
 ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP]]
@@ -137,7 +137,7 @@ exit:
 
 define i1 @result_le_overflow() {
 ; CHECK-LABEL: define i1 @result_le_overflow() {
-; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 4294967296, i32 4, i1 false)
+; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 4294967296, i32 4, i1 false)
 ; CHECK-NEXT:    [[RES:%.*]] = icmp ule i32 [[X]], 3
 ; CHECK-NEXT:    ret i1 [[RES]]
 ;
@@ -160,7 +160,7 @@ define i32 @incorrect_result_range(i32 %x) vscale_range(16, 1024) {
 ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
 ; CHECK-NEXT:    [[OFFSET:%.*]] = phi i32 [ 1, %[[ENTRY]] ], [ [[OFFSET_NEXT:%.*]], %[[LOOP]] ]
 ; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i32 [[OFFSET]], 3
-; CHECK-NEXT:    [[LEN:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[ADD]], i32 4, i1 true)
+; CHECK-NEXT:    [[LEN:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[ADD]], i32 4, i1 true)
 ; CHECK-NEXT:    [[OFFSET_NEXT]] = add nuw nsw i32 [[OFFSET]], 4
 ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i32 [[IV]], 4
 ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[X]]

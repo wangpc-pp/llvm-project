@@ -14,7 +14,7 @@ define void @scatter_gepty_mismatch_storety(ptr %p) {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 128, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP4:%.*]] = shl i64 [[INDEX]], 3
 ; CHECK-NEXT:    [[TMP5:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP4]]
 ; CHECK-NEXT:    call void @llvm.experimental.vp.strided.store.nxv4f32.p0.i64(<vscale x 4 x float> zeroinitializer, ptr align 4 [[TMP5]], i64 8, <vscale x 4 x i1> splat (i1 true), i32 [[TMP1]])

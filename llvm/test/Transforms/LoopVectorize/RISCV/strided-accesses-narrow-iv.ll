@@ -14,7 +14,7 @@ define void @narrow_iv_i8_sext_i64(ptr noalias %arr, ptr noalias %out) {
 ; RV64:       [[VECTOR_BODY]]:
 ; RV64-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV64-NEXT:    [[AVL:%.*]] = phi i32 [ 16, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV64-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; RV64-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; RV64-NEXT:    [[TMP1:%.*]] = zext i32 [[INDEX]] to i64
 ; RV64-NEXT:    [[TMP5:%.*]] = shl i64 [[TMP1]], 12
 ; RV64-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[ARR]], i64 [[TMP5]]
@@ -40,7 +40,7 @@ define void @narrow_iv_i8_sext_i64(ptr noalias %arr, ptr noalias %out) {
 ; RV32:       [[VECTOR_BODY]]:
 ; RV32-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV32-NEXT:    [[AVL:%.*]] = phi i32 [ 16, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV32-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; RV32-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; RV32-NEXT:    [[TMP1:%.*]] = shl i32 [[INDEX]], 12
 ; RV32-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[ARR]], i32 [[TMP1]]
 ; RV32-NEXT:    [[TMP3:%.*]] = call <vscale x 8 x i8> @llvm.experimental.vp.strided.load.nxv8i8.p0.i32(ptr align 1 [[TMP2]], i32 4096, <vscale x 8 x i1> splat (i1 true), i32 [[TMP0]])
@@ -83,7 +83,7 @@ define void @narrow_iv_i8_sext_i16(ptr noalias %arr, ptr noalias %out) {
 ; RV64:       [[VECTOR_BODY]]:
 ; RV64-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV64-NEXT:    [[AVL:%.*]] = phi i32 [ 16, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV64-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; RV64-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; RV64-NEXT:    [[TMP1:%.*]] = zext i32 [[INDEX]] to i64
 ; RV64-NEXT:    [[TMP5:%.*]] = shl i64 [[TMP1]], 12
 ; RV64-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[ARR]], i64 [[TMP5]]
@@ -109,7 +109,7 @@ define void @narrow_iv_i8_sext_i16(ptr noalias %arr, ptr noalias %out) {
 ; RV32:       [[VECTOR_BODY]]:
 ; RV32-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV32-NEXT:    [[AVL:%.*]] = phi i32 [ 16, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV32-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; RV32-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; RV32-NEXT:    [[TMP1:%.*]] = shl i32 [[INDEX]], 12
 ; RV32-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[ARR]], i32 [[TMP1]]
 ; RV32-NEXT:    [[TMP3:%.*]] = call <vscale x 8 x i8> @llvm.experimental.vp.strided.load.nxv8i8.p0.i32(ptr align 1 [[TMP2]], i32 4096, <vscale x 8 x i1> splat (i1 true), i32 [[TMP0]])
@@ -152,7 +152,7 @@ define void @narrow_iv_i8_zext_i64(ptr noalias %arr, ptr noalias %out) {
 ; RV64:       [[VECTOR_BODY]]:
 ; RV64-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV64-NEXT:    [[AVL:%.*]] = phi i32 [ 16, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV64-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; RV64-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; RV64-NEXT:    [[TMP1:%.*]] = zext i32 [[INDEX]] to i64
 ; RV64-NEXT:    [[TMP5:%.*]] = shl i64 [[TMP1]], 12
 ; RV64-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[ARR]], i64 [[TMP5]]
@@ -178,7 +178,7 @@ define void @narrow_iv_i8_zext_i64(ptr noalias %arr, ptr noalias %out) {
 ; RV32:       [[VECTOR_BODY]]:
 ; RV32-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV32-NEXT:    [[AVL:%.*]] = phi i32 [ 16, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV32-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; RV32-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; RV32-NEXT:    [[TMP1:%.*]] = shl i32 [[INDEX]], 12
 ; RV32-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[ARR]], i32 [[TMP1]]
 ; RV32-NEXT:    [[TMP3:%.*]] = call <vscale x 8 x i8> @llvm.experimental.vp.strided.load.nxv8i8.p0.i32(ptr align 1 [[TMP2]], i32 4096, <vscale x 8 x i1> splat (i1 true), i32 [[TMP0]])
@@ -221,7 +221,7 @@ define void @narrow_iv_i8_zext_i16(ptr noalias %arr, ptr noalias %out) {
 ; RV64:       [[VECTOR_BODY]]:
 ; RV64-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV64-NEXT:    [[AVL:%.*]] = phi i32 [ 16, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV64-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; RV64-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; RV64-NEXT:    [[TMP1:%.*]] = zext i32 [[INDEX]] to i64
 ; RV64-NEXT:    [[TMP5:%.*]] = shl i64 [[TMP1]], 12
 ; RV64-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[ARR]], i64 [[TMP5]]
@@ -247,7 +247,7 @@ define void @narrow_iv_i8_zext_i16(ptr noalias %arr, ptr noalias %out) {
 ; RV32:       [[VECTOR_BODY]]:
 ; RV32-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; RV32-NEXT:    [[AVL:%.*]] = phi i32 [ 16, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; RV32-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; RV32-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; RV32-NEXT:    [[TMP1:%.*]] = shl i32 [[INDEX]], 12
 ; RV32-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[ARR]], i32 [[TMP1]]
 ; RV32-NEXT:    [[TMP3:%.*]] = call <vscale x 8 x i8> @llvm.experimental.vp.strided.load.nxv8i8.p0.i32(ptr align 1 [[TMP2]], i32 4096, <vscale x 8 x i1> splat (i1 true), i32 [[TMP0]])
@@ -293,7 +293,7 @@ define void @narrow_iv_i8_sext_i64_wrapping(ptr noalias %arr, ptr noalias %out) 
 ; RV64:       [[EXIT]]:
 ; RV64-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 8 x i8> [ [[TMP1]], %[[LOOP]] ], [ [[VEC_IND_NEXT:%.*]], %[[EXIT]] ]
 ; RV64-NEXT:    [[AVL:%.*]] = phi i32 [ 64, %[[LOOP]] ], [ [[AVL_NEXT:%.*]], %[[EXIT]] ]
-; RV64-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; RV64-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; RV64-NEXT:    [[TMP3:%.*]] = trunc i32 [[TMP2]] to i8
 ; RV64-NEXT:    [[TMP4:%.*]] = shl i8 [[TMP3]], 2
 ; RV64-NEXT:    [[BROADCAST_SPLATINSERT1:%.*]] = insertelement <vscale x 8 x i8> poison, i8 [[TMP4]], i64 0
@@ -324,7 +324,7 @@ define void @narrow_iv_i8_sext_i64_wrapping(ptr noalias %arr, ptr noalias %out) 
 ; RV32:       [[EXIT]]:
 ; RV32-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 16 x i8> [ [[TMP1]], %[[LOOP]] ], [ [[VEC_IND_NEXT:%.*]], %[[EXIT]] ]
 ; RV32-NEXT:    [[AVL:%.*]] = phi i32 [ 64, %[[LOOP]] ], [ [[AVL_NEXT:%.*]], %[[EXIT]] ]
-; RV32-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 16, i1 true)
+; RV32-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 16, i1 true)
 ; RV32-NEXT:    [[TMP3:%.*]] = trunc i32 [[TMP2]] to i8
 ; RV32-NEXT:    [[TMP4:%.*]] = shl i8 [[TMP3]], 2
 ; RV32-NEXT:    [[BROADCAST_SPLATINSERT1:%.*]] = insertelement <vscale x 16 x i8> poison, i8 [[TMP4]], i64 0

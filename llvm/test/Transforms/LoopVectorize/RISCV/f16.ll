@@ -32,7 +32,7 @@ define void @fadd(ptr noalias %a, ptr noalias %b, i64 %n) {
 ; ZVFHMIN:       [[VECTOR_BODY]]:
 ; ZVFHMIN-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; ZVFHMIN-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; ZVFHMIN-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 8, i1 true)
+; ZVFHMIN-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 8, i1 true)
 ; ZVFHMIN-NEXT:    [[TMP1:%.*]] = getelementptr half, ptr [[A]], i64 [[INDEX]]
 ; ZVFHMIN-NEXT:    [[TMP2:%.*]] = getelementptr half, ptr [[B]], i64 [[INDEX]]
 ; ZVFHMIN-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 8 x half> @llvm.vp.load.nxv8f16.p0(ptr align 2 [[TMP1]], <vscale x 8 x i1> splat (i1 true), i32 [[TMP6]])

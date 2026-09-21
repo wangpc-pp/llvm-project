@@ -13,7 +13,7 @@ define i32 @pred_reduction(ptr %src, ptr %cond, i64 %N) #0 {
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[PARTIAL_REDUCE4:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[TMP6:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds nuw i8, ptr [[COND]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP4]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; CHECK-NEXT:    [[TMP2:%.*]] = icmp ne <vscale x 4 x i8> [[VP_OP_LOAD]], zeroinitializer
@@ -112,7 +112,7 @@ define i32 @pred_reduction_sext(ptr %src, ptr %cond, i64 %N) #0 {
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[PARTIAL_REDUCE4:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[TMP6:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds nuw i8, ptr [[COND]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP4]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; CHECK-NEXT:    [[TMP2:%.*]] = icmp ne <vscale x 4 x i8> [[VP_OP_LOAD]], zeroinitializer
@@ -211,7 +211,7 @@ define i32 @pred_reduction_dotprod(ptr %a, ptr %b, ptr %cond, i64 %N) #0 {
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 1 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[PARTIAL_REDUCE:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds nuw i8, ptr [[COND]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP4]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; CHECK-NEXT:    [[TMP2:%.*]] = icmp ne <vscale x 4 x i8> [[VP_OP_LOAD]], zeroinitializer
@@ -325,7 +325,7 @@ define i32 @pred_sub_reduction(ptr %a, ptr %b, ptr %cond, i64 %N) #0 {
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 1 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[PARTIAL_REDUCE:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds nuw i8, ptr [[COND]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP4]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; CHECK-NEXT:    [[TMP2:%.*]] = icmp ne <vscale x 4 x i8> [[VP_OP_LOAD]], zeroinitializer
@@ -441,7 +441,7 @@ define i32 @chained_pred_reduction(ptr %src, ptr noalias %src_b, ptr %cond, i64 
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[TMP9:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds nuw i8, ptr [[COND]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP4]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; CHECK-NEXT:    [[TMP2:%.*]] = icmp ne <vscale x 4 x i8> [[VP_OP_LOAD]], zeroinitializer
@@ -556,7 +556,7 @@ define i32 @reduction_before_pred(ptr %src, ptr noalias %src_b, ptr %cond, i64 %
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[TMP9:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC_B]], i64 [[INDEX]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP4]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; CHECK-NEXT:    [[TMP2:%.*]] = zext <vscale x 4 x i8> [[VP_OP_LOAD]] to <vscale x 4 x i32>

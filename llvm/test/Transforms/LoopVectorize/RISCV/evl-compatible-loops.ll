@@ -16,7 +16,7 @@ define void @test_wide_integer_induction(ptr noalias %a, i64 %N) {
 ; CHECK-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, [[ENTRY]] ], [ [[INDEX_EVL_NEXT:%.*]], [[FOR_BODY]] ]
 ; CHECK-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 2 x i64> [ [[TMP9]], [[ENTRY]] ], [ [[VEC_IND_NEXT:%.*]], [[FOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], [[ENTRY]] ], [ [[AVL_NEXT:%.*]], [[FOR_BODY]] ]
-; CHECK-NEXT:    [[TMP11:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP11:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP12:%.*]] = zext i32 [[TMP11]] to i64
 ; CHECK-NEXT:    [[BROADCAST_SPLATINSERT:%.*]] = insertelement <vscale x 2 x i64> poison, i64 [[TMP12]], i64 0
 ; CHECK-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <vscale x 2 x i64> [[BROADCAST_SPLATINSERT]], <vscale x 2 x i64> poison, <vscale x 2 x i32> zeroinitializer
@@ -62,7 +62,7 @@ define void @test_wide_ptr_induction(ptr noalias %a, ptr noalias %b, i64 %N) {
 ; CHECK-NEXT:    [[TMP5:%.*]] = call <vscale x 2 x i64> @llvm.stepvector.nxv2i64()
 ; CHECK-NEXT:    [[TMP6:%.*]] = shl <vscale x 2 x i64> [[TMP5]], splat (i64 3)
 ; CHECK-NEXT:    [[VECTOR_GEP:%.*]] = getelementptr i8, ptr [[POINTER_PHI]], <vscale x 2 x i64> [[TMP6]]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP9:%.*]] = zext i32 [[TMP7]] to i64
 ; CHECK-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i64, ptr [[A]], i64 [[EVL_BASED_IV]]
 ; CHECK-NEXT:    call void @llvm.vp.store.nxv2p0.p0(<vscale x 2 x ptr> [[VECTOR_GEP]], ptr align 8 [[TMP8]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP7]])

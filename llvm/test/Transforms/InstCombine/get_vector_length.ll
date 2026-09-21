@@ -11,7 +11,7 @@ define i32 @cnt_known_lt() {
 
 define i32 @cnt_not_known_lt() {
 ; CHECK-LABEL: define i32 @cnt_not_known_lt() {
-; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 2, i32 1, i1 false)
+; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 2, i32 1, i1 false)
 ; CHECK-NEXT:    ret i32 [[X]]
 ;
   %x = call i32 @llvm.experimental.get.vector.length(i32 2, i32 1, i1 false)
@@ -29,7 +29,7 @@ define i32 @cnt_known_lt_scalable() vscale_range(2, 4) {
 
 define i32 @cnt_not_known_lt_scalable() {
 ; CHECK-LABEL: define i32 @cnt_not_known_lt_scalable() {
-; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 2, i32 1, i1 true)
+; CHECK-NEXT:    [[X:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 2, i32 1, i1 true)
 ; CHECK-NEXT:    ret i32 [[X]]
 ;
   %x = call i32 @llvm.experimental.get.vector.length(i32 2, i32 1, i1 true)

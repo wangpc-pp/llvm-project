@@ -24,7 +24,7 @@ define void @ptr_induction(ptr %p, ptr noalias %q, ptr noalias %p.end) #0 {
 ; CHECK-NEXT:    [[POINTER_PHI:%.*]] = phi ptr [ [[P]], %[[VECTOR_PH]] ], [ [[PTR_IND7:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP3]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[VECTOR_GEP:%.*]] = getelementptr i8, ptr [[POINTER_PHI]], <vscale x 2 x i64> [[TMP2]]
-; CHECK-NEXT:    [[TMP4:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP4:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP5:%.*]] = zext i32 [[TMP4]] to i64
 ; CHECK-NEXT:    [[BROADCAST_SPLATINSERT5:%.*]] = insertelement <vscale x 2 x i64> poison, i64 [[TMP5]], i64 0
 ; CHECK-NEXT:    [[BROADCAST_SPLAT6:%.*]] = shufflevector <vscale x 2 x i64> [[BROADCAST_SPLATINSERT5]], <vscale x 2 x i64> poison, <vscale x 2 x i32> zeroinitializer
@@ -84,7 +84,7 @@ define i1 @scalarize_ptr_induction(ptr %start, ptr %end, ptr noalias %dst, i1 %c
 ; CHECK-NEXT:    [[TMP13:%.*]] = call <vscale x 2 x i64> @llvm.stepvector.nxv2i64()
 ; CHECK-NEXT:    [[TMP14:%.*]] = mul <vscale x 2 x i64> [[TMP13]], splat (i64 12)
 ; CHECK-NEXT:    [[VECTOR_GEP:%.*]] = getelementptr i8, ptr [[POINTER_PHI]], <vscale x 2 x i64> [[TMP14]]
-; CHECK-NEXT:    [[TMP11:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP11:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP26:%.*]] = zext i32 [[TMP11]] to i64
 ; CHECK-NEXT:    [[TMP12:%.*]] = mul i64 [[INDEX]], 12
 ; CHECK-NEXT:    [[TMP15:%.*]] = getelementptr i8, ptr [[SCEVGEP6]], i64 [[TMP12]]

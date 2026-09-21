@@ -11,7 +11,7 @@ define void @reverse_load_scatter(ptr noalias %src, ptr noalias %dst, i64 %n) {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[CURRENT_ITERATION_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[OFFSET_IDX:%.*]] = sub i64 [[N]], [[CURRENT_ITERATION_IV]]
 ; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds i64, ptr [[SRC]], i64 [[OFFSET_IDX]]
 ; CHECK-NEXT:    [[TMP2:%.*]] = zext i32 [[TMP0]] to i64

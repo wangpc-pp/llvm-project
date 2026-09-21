@@ -13,7 +13,7 @@ define void @reverse_predicated_store(i1 %c, ptr %dst, i64 %n) #0 {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, [[FOR_BODY]] ], [ [[INDEX_EVL_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP0]], [[FOR_BODY]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[IV:%.*]] = sub i64 [[N]], [[EVL_BASED_IV]]
 ; CHECK-NEXT:    [[IV_NEXT:%.*]] = add i64 [[IV]], -1
 ; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr float, ptr [[DST:%.*]], i64 [[IV_NEXT]]

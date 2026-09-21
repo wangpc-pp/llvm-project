@@ -37,7 +37,7 @@ define i32 @compare_bytes_simple(ptr %a, ptr %b, i32 %len, i32 %n) {
 ; CHECK:       mismatch_vec_loop:
 ; CHECK-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP1]], [[MISMATCH_VECTOR_LOOP_PREHEADER]] ], [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; CHECK-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; CHECK-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; CHECK-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; CHECK-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr [[TMP20]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP19]])
 ; CHECK-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -127,7 +127,7 @@ define i32 @compare_bytes_simple(ptr %a, ptr %b, i32 %len, i32 %n) {
 ; LMUL8:       mismatch_vec_loop:
 ; LMUL8-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP1]], [[MISMATCH_VECTOR_LOOP_PREHEADER]] ], [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ]
 ; LMUL8-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; LMUL8-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 64, i1 true)
+; LMUL8-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 64, i1 true)
 ; LMUL8-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; LMUL8-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 64 x i8> @llvm.vp.load.nxv64i8.p0(ptr [[TMP20]], <vscale x 64 x i1> splat (i1 true), i32 [[TMP19]])
 ; LMUL8-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -213,7 +213,7 @@ define i32 @compare_bytes_simple(ptr %a, ptr %b, i32 %len, i32 %n) {
 ; LOOP-DEL:       mismatch_vec_loop:
 ; LOOP-DEL-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ], [ [[TMP1]], [[MISMATCH_MEM_CHECK]] ]
 ; LOOP-DEL-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; LOOP-DEL-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; LOOP-DEL-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; LOOP-DEL-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; LOOP-DEL-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr [[TMP20]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP19]])
 ; LOOP-DEL-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -404,7 +404,7 @@ define i32 @compare_bytes_signed_wrap(ptr %a, ptr %b, i32 %len, i32 %n) {
 ; CHECK:       mismatch_vec_loop:
 ; CHECK-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP1]], [[MISMATCH_VECTOR_LOOP_PREHEADER]] ], [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; CHECK-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; CHECK-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; CHECK-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; CHECK-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr [[TMP20]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP19]])
 ; CHECK-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -494,7 +494,7 @@ define i32 @compare_bytes_signed_wrap(ptr %a, ptr %b, i32 %len, i32 %n) {
 ; LMUL8:       mismatch_vec_loop:
 ; LMUL8-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP1]], [[MISMATCH_VECTOR_LOOP_PREHEADER]] ], [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ]
 ; LMUL8-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; LMUL8-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 64, i1 true)
+; LMUL8-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 64, i1 true)
 ; LMUL8-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; LMUL8-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 64 x i8> @llvm.vp.load.nxv64i8.p0(ptr [[TMP20]], <vscale x 64 x i1> splat (i1 true), i32 [[TMP19]])
 ; LMUL8-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -580,7 +580,7 @@ define i32 @compare_bytes_signed_wrap(ptr %a, ptr %b, i32 %len, i32 %n) {
 ; LOOP-DEL:       mismatch_vec_loop:
 ; LOOP-DEL-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ], [ [[TMP1]], [[MISMATCH_MEM_CHECK]] ]
 ; LOOP-DEL-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; LOOP-DEL-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; LOOP-DEL-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; LOOP-DEL-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; LOOP-DEL-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr [[TMP20]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP19]])
 ; LOOP-DEL-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -792,7 +792,7 @@ define i32 @compare_bytes_simple_end_ne_found(ptr %a, ptr %b, ptr %c, ptr %d, i3
 ; CHECK:       mismatch_vec_loop:
 ; CHECK-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP1]], [[MISMATCH_VECTOR_LOOP_PREHEADER]] ], [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; CHECK-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; CHECK-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; CHECK-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; CHECK-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr [[TMP20]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP19]])
 ; CHECK-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -893,7 +893,7 @@ define i32 @compare_bytes_simple_end_ne_found(ptr %a, ptr %b, ptr %c, ptr %d, i3
 ; LMUL8:       mismatch_vec_loop:
 ; LMUL8-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP1]], [[MISMATCH_VECTOR_LOOP_PREHEADER]] ], [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ]
 ; LMUL8-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; LMUL8-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 64, i1 true)
+; LMUL8-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 64, i1 true)
 ; LMUL8-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; LMUL8-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 64 x i8> @llvm.vp.load.nxv64i8.p0(ptr [[TMP20]], <vscale x 64 x i1> splat (i1 true), i32 [[TMP19]])
 ; LMUL8-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -990,7 +990,7 @@ define i32 @compare_bytes_simple_end_ne_found(ptr %a, ptr %b, ptr %c, ptr %d, i3
 ; LOOP-DEL:       mismatch_vec_loop:
 ; LOOP-DEL-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ], [ [[TMP1]], [[MISMATCH_MEM_CHECK]] ]
 ; LOOP-DEL-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; LOOP-DEL-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; LOOP-DEL-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; LOOP-DEL-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; LOOP-DEL-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr [[TMP20]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP19]])
 ; LOOP-DEL-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -1243,7 +1243,7 @@ define i32 @compare_bytes_extra_cmp(ptr %a, ptr %b, i32 %len, i32 %n, i32 %x) {
 ; CHECK:       mismatch_vec_loop:
 ; CHECK-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP1]], [[MISMATCH_VECTOR_LOOP_PREHEADER]] ], [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; CHECK-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; CHECK-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; CHECK-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; CHECK-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr [[TMP20]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP19]])
 ; CHECK-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -1339,7 +1339,7 @@ define i32 @compare_bytes_extra_cmp(ptr %a, ptr %b, i32 %len, i32 %n, i32 %x) {
 ; LMUL8:       mismatch_vec_loop:
 ; LMUL8-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP1]], [[MISMATCH_VECTOR_LOOP_PREHEADER]] ], [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ]
 ; LMUL8-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; LMUL8-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 64, i1 true)
+; LMUL8-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 64, i1 true)
 ; LMUL8-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; LMUL8-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 64 x i8> @llvm.vp.load.nxv64i8.p0(ptr [[TMP20]], <vscale x 64 x i1> splat (i1 true), i32 [[TMP19]])
 ; LMUL8-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -1431,7 +1431,7 @@ define i32 @compare_bytes_extra_cmp(ptr %a, ptr %b, i32 %len, i32 %n, i32 %x) {
 ; LOOP-DEL:       mismatch_vec_loop:
 ; LOOP-DEL-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ [[TMP24:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ], [ [[TMP1]], [[MISMATCH_MEM_CHECK]] ]
 ; LOOP-DEL-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 [[TMP2]], [[MISMATCH_VECTOR_INDEX]]
-; LOOP-DEL-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; LOOP-DEL-NEXT:    [[TMP19:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; LOOP-DEL-NEXT:    [[TMP20:%.*]] = getelementptr inbounds i8, ptr [[A]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; LOOP-DEL-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr [[TMP20]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP19]])
 ; LOOP-DEL-NEXT:    [[TMP21:%.*]] = getelementptr inbounds i8, ptr [[B]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -1651,7 +1651,7 @@ define void @compare_bytes_cleanup_block(ptr %src1, ptr %src2) {
 ; CHECK:       mismatch_vec_loop:
 ; CHECK-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ 1, [[MISMATCH_VECTOR_LOOP_PREHEADER]] ], [ [[TMP20:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 0, [[MISMATCH_VECTOR_INDEX]]
-; CHECK-NEXT:    [[TMP15:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; CHECK-NEXT:    [[TMP15:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; CHECK-NEXT:    [[TMP16:%.*]] = getelementptr i8, ptr [[SRC1]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; CHECK-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 16 x i8> @llvm.vp.load.nxv16i8.p0(ptr [[TMP16]], <vscale x 16 x i1> splat (i1 true), i32 [[TMP15]])
 ; CHECK-NEXT:    [[TMP17:%.*]] = getelementptr i8, ptr [[SRC2]], i64 [[MISMATCH_VECTOR_INDEX]]
@@ -1740,7 +1740,7 @@ define void @compare_bytes_cleanup_block(ptr %src1, ptr %src2) {
 ; LMUL8:       mismatch_vec_loop:
 ; LMUL8-NEXT:    [[MISMATCH_VECTOR_INDEX:%.*]] = phi i64 [ 1, [[MISMATCH_VECTOR_LOOP_PREHEADER]] ], [ [[TMP20:%.*]], [[MISMATCH_VECTOR_LOOP_INC:%.*]] ]
 ; LMUL8-NEXT:    [[AVL:%.*]] = sub nuw nsw i64 0, [[MISMATCH_VECTOR_INDEX]]
-; LMUL8-NEXT:    [[TMP15:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 64, i1 true)
+; LMUL8-NEXT:    [[TMP15:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 64, i1 true)
 ; LMUL8-NEXT:    [[TMP16:%.*]] = getelementptr i8, ptr [[SRC1]], i64 [[MISMATCH_VECTOR_INDEX]]
 ; LMUL8-NEXT:    [[LHS_LOAD:%.*]] = call <vscale x 64 x i8> @llvm.vp.load.nxv64i8.p0(ptr [[TMP16]], <vscale x 64 x i1> splat (i1 true), i32 [[TMP15]])
 ; LMUL8-NEXT:    [[TMP17:%.*]] = getelementptr i8, ptr [[SRC2]], i64 [[MISMATCH_VECTOR_INDEX]]

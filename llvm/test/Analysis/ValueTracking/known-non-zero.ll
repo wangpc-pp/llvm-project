@@ -1274,7 +1274,7 @@ define i1 @check_get_vector_length(i32 %x, i32 %y) {
 ; CHECK-NEXT:    [[NE:%.*]] = icmp ne i32 [[X:%.*]], 0
 ; CHECK-NEXT:    br i1 [[NE]], label [[TRUE:%.*]], label [[FALSE:%.*]]
 ; CHECK:       true:
-; CHECK-NEXT:    [[Z:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[X]], i32 1, i1 true)
+; CHECK-NEXT:    [[Z:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[X]], i32 1, i1 true)
 ; CHECK-NEXT:    [[CMP0:%.*]] = icmp ugt i32 [[Z]], [[Y:%.*]]
 ; CHECK-NEXT:    ret i1 [[CMP0]]
 ; CHECK:       false:

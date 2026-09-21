@@ -677,7 +677,7 @@ define void @vector_operands(ptr %p, i64 %n) {
 ; COMMON:       [[VECTOR_BODY]]:
 ; COMMON-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; COMMON-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; COMMON-NEXT:    [[VL:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; COMMON-NEXT:    [[VL:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; COMMON-NEXT:    [[ADDR:%.*]] = getelementptr i64, ptr [[P]], i64 [[EVL_BASED_IV]]
 ; COMMON-NEXT:    call void @llvm.vp.store.nxv2i64.p0(<vscale x 2 x i64> zeroinitializer, ptr align 8 [[ADDR]], <vscale x 2 x i1> splat (i1 true), i32 [[VL]])
 ; COMMON-NEXT:    [[VL_ZEXT:%.*]] = zext i32 [[VL]] to i64

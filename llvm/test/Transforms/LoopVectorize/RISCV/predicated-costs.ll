@@ -20,7 +20,7 @@ define void @nested(ptr noalias %p0, ptr noalias %p1, i1 %c0, i1 %c1) vscale_ran
 ; CHECK:       [[THEN_1]]:
 ; CHECK-NEXT:    [[IV1:%.*]] = phi i32 [ 0, %[[LOOP]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[THEN_1]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ 1024, %[[LOOP]] ], [ [[AVL_NEXT:%.*]], %[[THEN_1]] ]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[GEP2:%.*]] = getelementptr i32, ptr [[P0]], i32 [[IV1]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[GEP2]], <vscale x 4 x i1> [[TMP0]], i32 [[TMP1]])
 ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr i32, ptr [[P1]], <vscale x 4 x i32> [[VP_OP_LOAD]]
@@ -78,7 +78,7 @@ define void @always_taken(ptr noalias %p0, ptr noalias %p1, i1 %c0, i1 %c1) vsca
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[EVL_BASED_IV:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ 1024, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr i32, ptr [[P0]], i32 [[EVL_BASED_IV]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[TMP2]], <vscale x 4 x i1> [[TMP0]], i32 [[TMP1]])
 ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr i32, ptr [[P1]], <vscale x 4 x i32> [[VP_OP_LOAD]]

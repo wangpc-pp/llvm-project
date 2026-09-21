@@ -17,7 +17,7 @@ define i32 @vdot4a(ptr %a, ptr %b) vscale_range(2, 1024) {
 ; V-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; V-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP13:%.*]], [[VECTOR_BODY]] ]
 ; V-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; V-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; V-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; V-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[A]], i64 [[INDEX]]
 ; V-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP6]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; V-NEXT:    [[TMP8:%.*]] = sext <vscale x 4 x i8> [[WIDE_LOAD]] to <vscale x 4 x i32>
@@ -48,7 +48,7 @@ define i32 @vdot4a(ptr %a, ptr %b) vscale_range(2, 1024) {
 ; ZVDOT4A8I-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; ZVDOT4A8I-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 1 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[PARTIAL_REDUCE:%.*]], [[VECTOR_BODY]] ]
 ; ZVDOT4A8I-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; ZVDOT4A8I-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; ZVDOT4A8I-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; ZVDOT4A8I-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[A]], i64 [[INDEX]]
 ; ZVDOT4A8I-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP6]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; ZVDOT4A8I-NEXT:    [[TMP9:%.*]] = getelementptr i8, ptr [[B]], i64 [[INDEX]]
@@ -155,7 +155,7 @@ define i32 @vdot4au(ptr %a, ptr %b) vscale_range(2, 1024) {
 ; V-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; V-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP13:%.*]], [[VECTOR_BODY]] ]
 ; V-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; V-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; V-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; V-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[A]], i64 [[INDEX]]
 ; V-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP6]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; V-NEXT:    [[TMP8:%.*]] = zext <vscale x 4 x i8> [[WIDE_LOAD]] to <vscale x 4 x i32>
@@ -186,7 +186,7 @@ define i32 @vdot4au(ptr %a, ptr %b) vscale_range(2, 1024) {
 ; ZVDOT4A8I-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; ZVDOT4A8I-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 1 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[PARTIAL_REDUCE:%.*]], [[VECTOR_BODY]] ]
 ; ZVDOT4A8I-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; ZVDOT4A8I-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; ZVDOT4A8I-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; ZVDOT4A8I-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[A]], i64 [[INDEX]]
 ; ZVDOT4A8I-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP6]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; ZVDOT4A8I-NEXT:    [[TMP9:%.*]] = getelementptr i8, ptr [[B]], i64 [[INDEX]]
@@ -293,7 +293,7 @@ define i32 @vdot4asu(ptr %a, ptr %b) vscale_range(2, 1024) {
 ; V-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; V-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP13:%.*]], [[VECTOR_BODY]] ]
 ; V-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; V-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; V-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; V-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[A]], i64 [[INDEX]]
 ; V-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP6]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; V-NEXT:    [[TMP8:%.*]] = zext <vscale x 4 x i8> [[WIDE_LOAD]] to <vscale x 4 x i32>
@@ -324,7 +324,7 @@ define i32 @vdot4asu(ptr %a, ptr %b) vscale_range(2, 1024) {
 ; ZVDOT4A8I-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; ZVDOT4A8I-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 1 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[PARTIAL_REDUCE:%.*]], [[VECTOR_BODY]] ]
 ; ZVDOT4A8I-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; ZVDOT4A8I-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; ZVDOT4A8I-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; ZVDOT4A8I-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[A]], i64 [[INDEX]]
 ; ZVDOT4A8I-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP6]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; ZVDOT4A8I-NEXT:    [[TMP9:%.*]] = getelementptr i8, ptr [[B]], i64 [[INDEX]]
@@ -430,7 +430,7 @@ define i32 @vdot4asu2(ptr %a, ptr %b) vscale_range(2, 1024) {
 ; V-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; V-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP13:%.*]], [[VECTOR_BODY]] ]
 ; V-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; V-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; V-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; V-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[A]], i64 [[INDEX]]
 ; V-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP6]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; V-NEXT:    [[TMP8:%.*]] = sext <vscale x 4 x i8> [[WIDE_LOAD]] to <vscale x 4 x i32>
@@ -461,7 +461,7 @@ define i32 @vdot4asu2(ptr %a, ptr %b) vscale_range(2, 1024) {
 ; ZVDOT4A8I-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; ZVDOT4A8I-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 1 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[PARTIAL_REDUCE:%.*]], [[VECTOR_BODY]] ]
 ; ZVDOT4A8I-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; ZVDOT4A8I-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; ZVDOT4A8I-NEXT:    [[TMP0:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; ZVDOT4A8I-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[A]], i64 [[INDEX]]
 ; ZVDOT4A8I-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 4 x i8> @llvm.vp.load.nxv4i8.p0(ptr align 1 [[TMP6]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP0]])
 ; ZVDOT4A8I-NEXT:    [[TMP9:%.*]] = getelementptr i8, ptr [[B]], i64 [[INDEX]]

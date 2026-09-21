@@ -14,7 +14,7 @@ define void @f(ptr noalias %p0, ptr noalias %p1, ptr noalias %p2) vscale_range(2
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[TMP7:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1025, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP7]], 1
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[TMP8]]
 ; CHECK-NEXT:    [[TMP3:%.*]] = call <vscale x 16 x i8> @llvm.experimental.vp.strided.load.nxv16i8.p0.i64(ptr align 1 [[TMP2]], i64 2, <vscale x 16 x i1> splat (i1 true), i32 [[TMP6]])
@@ -50,7 +50,7 @@ define void @f(ptr noalias %p0, ptr noalias %p1, ptr noalias %p2) vscale_range(2
 ; NO-REG-PRESSURE-CHECK:       [[VECTOR_BODY]]:
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP7:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1025, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 16, i1 true)
+; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 16, i1 true)
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP7]], 1
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[TMP8]]
 ; NO-REG-PRESSURE-CHECK-NEXT:    [[TMP3:%.*]] = call <vscale x 16 x i8> @llvm.experimental.vp.strided.load.nxv16i8.p0.i64(ptr align 1 [[TMP2]], i64 2, <vscale x 16 x i1> splat (i1 true), i32 [[TMP6]])

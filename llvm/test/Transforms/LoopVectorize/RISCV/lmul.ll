@@ -34,7 +34,7 @@ define void @load_store(ptr %p) vscale_range(2, 1024) {
 ; LMUL2:       vector.body:
 ; LMUL2-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; LMUL2-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; LMUL2-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; LMUL2-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; LMUL2-NEXT:    [[TMP5:%.*]] = getelementptr inbounds i64, ptr [[P:%.*]], i64 [[INDEX]]
 ; LMUL2-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 2 x i64> @llvm.vp.load.nxv2i64.p0(ptr align 8 [[TMP5]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP6]])
 ; LMUL2-NEXT:    [[TMP7:%.*]] = add <vscale x 2 x i64> [[WIDE_LOAD]], splat (i64 1)
@@ -57,7 +57,7 @@ define void @load_store(ptr %p) vscale_range(2, 1024) {
 ; LMUL4:       vector.body:
 ; LMUL4-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; LMUL4-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; LMUL4-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; LMUL4-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; LMUL4-NEXT:    [[TMP5:%.*]] = getelementptr inbounds i64, ptr [[P:%.*]], i64 [[INDEX]]
 ; LMUL4-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 4 x i64> @llvm.vp.load.nxv4i64.p0(ptr align 8 [[TMP5]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP6]])
 ; LMUL4-NEXT:    [[TMP7:%.*]] = add <vscale x 4 x i64> [[WIDE_LOAD]], splat (i64 1)
@@ -80,7 +80,7 @@ define void @load_store(ptr %p) vscale_range(2, 1024) {
 ; LMUL8:       vector.body:
 ; LMUL8-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; LMUL8-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; LMUL8-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 8, i1 true)
+; LMUL8-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 8, i1 true)
 ; LMUL8-NEXT:    [[TMP5:%.*]] = getelementptr inbounds i64, ptr [[P:%.*]], i64 [[INDEX]]
 ; LMUL8-NEXT:    [[WIDE_LOAD:%.*]] = call <vscale x 8 x i64> @llvm.vp.load.nxv8i64.p0(ptr align 8 [[TMP5]], <vscale x 8 x i1> splat (i1 true), i32 [[TMP6]])
 ; LMUL8-NEXT:    [[TMP7:%.*]] = add <vscale x 8 x i64> [[WIDE_LOAD]], splat (i64 1)

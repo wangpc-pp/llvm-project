@@ -17,7 +17,7 @@ define i32 @widenpointerinduction_evl(ptr noalias %p) {
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ 1024, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[TMP0:%.*]] = call <vscale x 4 x i32> @llvm.stepvector.nxv4i32()
 ; CHECK-NEXT:    [[VECTOR_GEP:%.*]] = getelementptr i8, ptr [[POINTER_PHI]], <vscale x 4 x i32> [[TMP0]]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    call void @llvm.vp.scatter.nxv4p0.nxv4p0(<vscale x 4 x ptr> [[VECTOR_GEP]], <vscale x 4 x ptr> align 4 [[BROADCAST_SPLAT]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP1]])
 ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i32 [[AVL]], [[TMP1]]
 ; CHECK-NEXT:    [[PTR_IND]] = getelementptr i8, ptr [[POINTER_PHI]], i32 [[TMP1]]

@@ -111,7 +111,7 @@ define void @masked_strided_factor2(ptr noalias nocapture readonly %p, ptr noali
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 16 x i32> [ [[TMP0]], %[[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[AVL:%.*]] = phi i32 [ 1024, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; PREDICATED_DATA-WITH-EVL-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 16, i1 true)
+; PREDICATED_DATA-WITH-EVL-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 16, i1 true)
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[BROADCAST_SPLATINSERT1:%.*]] = insertelement <vscale x 16 x i32> poison, i32 [[TMP1]], i64 0
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[BROADCAST_SPLAT2:%.*]] = shufflevector <vscale x 16 x i32> [[BROADCAST_SPLATINSERT1]], <vscale x 16 x i32> poison, <vscale x 16 x i32> zeroinitializer
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[TMP2:%.*]] = icmp ugt <vscale x 16 x i32> [[VEC_IND]], [[BROADCAST_SPLAT]]
@@ -292,7 +292,7 @@ define void @masked_strided_factor4(ptr noalias nocapture readonly %p, ptr noali
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 16 x i32> [ [[TMP0]], %[[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[AVL:%.*]] = phi i32 [ 1024, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; PREDICATED_DATA-WITH-EVL-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 16, i1 true)
+; PREDICATED_DATA-WITH-EVL-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 16, i1 true)
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[BROADCAST_SPLATINSERT1:%.*]] = insertelement <vscale x 16 x i32> poison, i32 [[TMP1]], i64 0
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[BROADCAST_SPLAT2:%.*]] = shufflevector <vscale x 16 x i32> [[BROADCAST_SPLATINSERT1]], <vscale x 16 x i32> poison, <vscale x 16 x i32> zeroinitializer
 ; PREDICATED_DATA-WITH-EVL-NEXT:    [[TMP2:%.*]] = icmp ugt <vscale x 16 x i32> [[VEC_IND]], [[BROADCAST_SPLAT]]

@@ -117,7 +117,7 @@ define i32 @add_i16_i32(ptr nocapture readonly %x, i32 %n) vscale_range(2, 1024)
 ; IF-EVL-OUTLOOP-NEXT:    [[EVL_BASED_IV:%.*]] = phi i32 [ 0, [[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-OUTLOOP-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP10:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-OUTLOOP-NEXT:    [[AVL:%.*]] = phi i32 [ [[N]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-OUTLOOP-NEXT:    [[TMP5:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; IF-EVL-OUTLOOP-NEXT:    [[TMP5:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; IF-EVL-OUTLOOP-NEXT:    [[TMP7:%.*]] = getelementptr inbounds i16, ptr [[X:%.*]], i32 [[EVL_BASED_IV]]
 ; IF-EVL-OUTLOOP-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i16> @llvm.vp.load.nxv4i16.p0(ptr align 2 [[TMP7]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP5]])
 ; IF-EVL-OUTLOOP-NEXT:    [[TMP9:%.*]] = sext <vscale x 4 x i16> [[VP_OP_LOAD]] to <vscale x 4 x i32>
@@ -148,7 +148,7 @@ define i32 @add_i16_i32(ptr nocapture readonly %x, i32 %n) vscale_range(2, 1024)
 ; IF-EVL-INLOOP-NEXT:    [[EVL_BASED_IV:%.*]] = phi i32 [ 0, [[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-INLOOP-NEXT:    [[VEC_PHI:%.*]] = phi i32 [ 0, [[VECTOR_PH]] ], [ [[TMP11:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-INLOOP-NEXT:    [[TMP5:%.*]] = phi i32 [ [[N]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-INLOOP-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[TMP5]], i32 8, i1 true)
+; IF-EVL-INLOOP-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[TMP5]], i32 8, i1 true)
 ; IF-EVL-INLOOP-NEXT:    [[TMP8:%.*]] = getelementptr inbounds i16, ptr [[X:%.*]], i32 [[EVL_BASED_IV]]
 ; IF-EVL-INLOOP-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 8 x i16> @llvm.vp.load.nxv8i16.p0(ptr align 2 [[TMP8]], <vscale x 8 x i1> splat (i1 true), i32 [[TMP6]])
 ; IF-EVL-INLOOP-NEXT:    [[TMP14:%.*]] = sext <vscale x 8 x i16> [[VP_OP_LOAD]] to <vscale x 8 x i32>
@@ -282,7 +282,7 @@ define i32 @smin(ptr %a, i64 %n, i32 %start) vscale_range(2, 1024) {
 ; IF-EVL-OUTLOOP-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-OUTLOOP-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ [[BROADCAST_SPLAT]], [[VECTOR_PH]] ], [ [[TMP15:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-OUTLOOP-NEXT:    [[AVL:%.*]] = phi i64 [ [[N:%.*]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-OUTLOOP-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; IF-EVL-OUTLOOP-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; IF-EVL-OUTLOOP-NEXT:    [[TMP11:%.*]] = getelementptr inbounds i32, ptr [[A:%.*]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-OUTLOOP-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[TMP11]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP9]])
 ; IF-EVL-OUTLOOP-NEXT:    [[TMP14:%.*]] = call <vscale x 4 x i32> @llvm.smin.nxv4i32(<vscale x 4 x i32> [[VP_OP_LOAD]], <vscale x 4 x i32> [[VEC_PHI]])
@@ -309,7 +309,7 @@ define i32 @smin(ptr %a, i64 %n, i32 %start) vscale_range(2, 1024) {
 ; IF-EVL-INLOOP-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-INLOOP-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i32> [ [[BROADCAST_SPLAT]], [[VECTOR_PH]] ], [ [[TMP3:%.*]], [[VECTOR_BODY]] ]
 ; IF-EVL-INLOOP-NEXT:    [[AVL:%.*]] = phi i64 [ [[N:%.*]], [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; IF-EVL-INLOOP-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; IF-EVL-INLOOP-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; IF-EVL-INLOOP-NEXT:    [[TMP11:%.*]] = getelementptr inbounds i32, ptr [[A:%.*]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-INLOOP-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[TMP11]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP9]])
 ; IF-EVL-INLOOP-NEXT:    [[TMP2:%.*]] = call <vscale x 4 x i32> @llvm.smin.nxv4i32(<vscale x 4 x i32> [[VP_OP_LOAD]], <vscale x 4 x i32> [[VEC_PHI]])

@@ -758,7 +758,7 @@ define <vscale x 1 x i64> @evl_gather(ptr %a, i32 %len) {
 ; CHECK-NEXT:    [[VEC_IND_SCALAR1:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[VEC_IND_NEXT_SCALAR1:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[ACCUM:%.*]] = phi <vscale x 1 x i64> [ zeroinitializer, [[VECTOR_PH]] ], [ [[ACCUM_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[ELEMS:%.*]] = sub i64 [[WIDE_TRIP_COUNT]], [[VEC_IND_SCALAR]]
-; CHECK-NEXT:    [[EVL:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[ELEMS]], i32 1, i1 true)
+; CHECK-NEXT:    [[EVL:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[ELEMS]], i32 1, i1 true)
 ; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr [[STRUCT_FOO:%.*]], ptr [[A:%.*]], i64 [[VEC_IND_SCALAR1]], i32 3
 ; CHECK-NEXT:    [[GATHER:%.*]] = call <vscale x 1 x i64> @llvm.experimental.vp.strided.load.nxv1i64.p0.i64(ptr [[TMP0]], i64 16, <vscale x 1 x i1> splat (i1 true), i32 [[EVL]])
 ; CHECK-NEXT:    [[ACCUM_NEXT]] = add <vscale x 1 x i64> [[ACCUM]], [[GATHER]]
@@ -811,7 +811,7 @@ define void @evl_scatter(ptr %a, i32 %len) {
 ; CHECK-NEXT:    [[VEC_IND_SCALAR1:%.*]] = phi i64 [ 0, [[VECTOR_PH:%.*]] ], [ [[VEC_IND_NEXT_SCALAR1:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[VEC_IND_SCALAR:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[VEC_IND_NEXT_SCALAR:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[ELEMS:%.*]] = sub i64 [[WIDE_TRIP_COUNT]], [[VEC_IND_SCALAR1]]
-; CHECK-NEXT:    [[EVL:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[ELEMS]], i32 1, i1 true)
+; CHECK-NEXT:    [[EVL:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[ELEMS]], i32 1, i1 true)
 ; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr [[STRUCT_FOO:%.*]], ptr [[A:%.*]], i64 [[VEC_IND_SCALAR]], i32 3
 ; CHECK-NEXT:    call void @llvm.experimental.vp.strided.store.nxv1i64.p0.i64(<vscale x 1 x i64> zeroinitializer, ptr [[TMP0]], i64 16, <vscale x 1 x i1> splat (i1 true), i32 [[EVL]])
 ; CHECK-NEXT:    [[EVL_ZEXT:%.*]] = zext i32 [[EVL]] to i64

@@ -21283,8 +21283,9 @@ If any element in the input vector is poison, the result is poison.
 This is an overloaded intrinsic.
 
 ```
-declare i32 @llvm.experimental.get.vector.length.i32(i32 %cnt, i32 immarg %vf, i1 immarg %scalable)
-declare i32 @llvm.experimental.get.vector.length.i64(i64 %cnt, i32 immarg %vf, i1 immarg %scalable)
+declare i32 @llvm.experimental.get.vector.length.i32.i32(i32 %cnt, i32 immarg %vf, i1 immarg %scalable)
+declare i32 @llvm.experimental.get.vector.length.i32.i64(i64 %cnt, i32 immarg %vf, i1 immarg %scalable)
+declare i64 @llvm.experimental.get.vector.length.i64.i64(i64 %cnt, i32 immarg %vf, i1 immarg %scalable)
 ```
 
 ##### Overview:
@@ -21302,8 +21303,8 @@ vectorization factor should be multiplied by vscale.
 
 ##### Semantics:
 
-Returns a non-negative i32 value (explicit vector length) that is unknown at compile
-time and depends on the hardware specification.
+Returns a non-negative value (explicit vector length) of any scalar integer
+type that is unknown at compile time and depends on the hardware specification.
 If the result value does not fit in the result type, then the result is
 a {ref}`poison value <poisonvalues>`.
 

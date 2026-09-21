@@ -12,7 +12,7 @@ define void @strided_interleaved_same_address(i64 %n, ptr %p) {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP0]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds [2 x i64], ptr [[P]], i64 [[INDEX]], i32 0
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP1]], 2
 ; CHECK-NEXT:    [[WIDE_VP_LOAD:%.*]] = call <vscale x 4 x i64> @llvm.vp.load.nxv4i64.p0(ptr align 8 [[TMP2]], <vscale x 4 x i1> splat (i1 true), i32 [[INTERLEAVE_EVL]])

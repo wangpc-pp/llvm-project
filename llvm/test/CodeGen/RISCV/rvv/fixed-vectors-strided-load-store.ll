@@ -1007,7 +1007,7 @@ define void @vp_gather(ptr noalias nocapture %A, ptr noalias nocapture readonly 
 ; CHECK-NEXT:    [[VEC_IND:%.*]] = phi <32 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7, i64 8, i64 9, i64 10, i64 11, i64 12, i64 13, i64 14, i64 15, i64 16, i64 17, i64 18, i64 19, i64 20, i64 21, i64 22, i64 23, i64 24, i64 25, i64 26, i64 27, i64 28, i64 29, i64 30, i64 31>, [[ENTRY]] ], [ [[VEC_IND_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr i8, ptr [[B:%.*]], i64 [[VEC_IND_SCALAR1]]
 ; CHECK-NEXT:    [[ELEMS:%.*]] = sub i64 1024, [[VEC_IND_SCALAR]]
-; CHECK-NEXT:    [[EVL:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[ELEMS]], i32 32, i1 false)
+; CHECK-NEXT:    [[EVL:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[ELEMS]], i32 32, i1 false)
 ; CHECK-NEXT:    [[ODD:%.*]] = and <32 x i64> [[VEC_IND]], splat (i64 1)
 ; CHECK-NEXT:    [[MASK:%.*]] = icmp ne <32 x i64> [[ODD]], zeroinitializer
 ; CHECK-NEXT:    [[WIDE_VP_GATHER:%.*]] = call <32 x i8> @llvm.experimental.vp.strided.load.v32i8.p0.i64(ptr [[TMP0]], i64 5, <32 x i1> [[MASK]], i32 [[EVL]])
@@ -1064,7 +1064,7 @@ define void @vp_scatter(ptr noalias nocapture %A, ptr noalias nocapture readonly
 ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <32 x i8>, ptr [[I]], align 1
 ; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr i8, ptr [[A:%.*]], i64 [[VEC_IND_SCALAR1]]
 ; CHECK-NEXT:    [[ELEMS:%.*]] = sub i64 1024, [[VEC_IND_SCALAR]]
-; CHECK-NEXT:    [[EVL:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[ELEMS]], i32 32, i1 false)
+; CHECK-NEXT:    [[EVL:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[ELEMS]], i32 32, i1 false)
 ; CHECK-NEXT:    [[ODD:%.*]] = and <32 x i64> [[VEC_IND]], splat (i64 1)
 ; CHECK-NEXT:    [[MASK:%.*]] = icmp ne <32 x i64> [[ODD]], zeroinitializer
 ; CHECK-NEXT:    [[WIDE_MASKED_GATHER:%.*]] = call <32 x i8> @llvm.experimental.vp.strided.load.v32i8.p0.i64(ptr [[TMP0]], i64 5, <32 x i1> [[MASK]], i32 [[EVL]])

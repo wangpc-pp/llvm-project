@@ -25,7 +25,7 @@ define void @stride_sext_exceeds_i32_max(ptr noalias readonly %src, ptr noalias 
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 8 x i16> [ [[INDUCTION]], %[[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ [[TMP2]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP4:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; CHECK-NEXT:    [[TMP4:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; CHECK-NEXT:    [[TMP5:%.*]] = trunc i32 [[TMP4]] to i16
 ; CHECK-NEXT:    [[BROADCAST_SPLATINSERT3:%.*]] = insertelement <vscale x 8 x i16> poison, i16 [[TMP5]], i64 0
 ; CHECK-NEXT:    [[BROADCAST_SPLAT4:%.*]] = shufflevector <vscale x 8 x i16> [[BROADCAST_SPLATINSERT3]], <vscale x 8 x i16> poison, <vscale x 8 x i32> zeroinitializer
@@ -79,7 +79,7 @@ define void @stride_zext_exceeds_i32_max(ptr noalias readonly %src, ptr noalias 
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ [[TMP2]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 8, i1 true)
+; CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 8, i1 true)
 ; CHECK-NEXT:    [[TMP7:%.*]] = zext i32 [[INDEX]] to i64
 ; CHECK-NEXT:    [[TMP8:%.*]] = mul i64 [[TMP7]], 3000000000
 ; CHECK-NEXT:    [[TMP9:%.*]] = getelementptr i8, ptr [[TMP5]], i64 [[TMP8]]

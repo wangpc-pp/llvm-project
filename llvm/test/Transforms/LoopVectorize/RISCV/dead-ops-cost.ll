@@ -23,7 +23,7 @@ define void @dead_load(ptr %p, i16 %start) vscale_range(2, 1024) {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP4]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP16:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 8, i1 true)
+; CHECK-NEXT:    [[TMP16:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 8, i1 true)
 ; CHECK-NEXT:    [[TMP11:%.*]] = mul i64 [[INDEX]], 6
 ; CHECK-NEXT:    [[TMP12:%.*]] = getelementptr i8, ptr [[TMP9]], i64 [[TMP11]]
 ; CHECK-NEXT:    call void @llvm.experimental.vp.strided.store.nxv8i16.p0.i64(<vscale x 8 x i16> zeroinitializer, ptr align 2 [[TMP12]], i64 6, <vscale x 8 x i1> splat (i1 true), i32 [[TMP16]])
@@ -75,7 +75,7 @@ define i8 @dead_live_out_due_to_scalar_epilogue_required(ptr %src, ptr %dst) vsc
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ 252, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 16, i1 true)
+; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 16, i1 true)
 ; CHECK-NEXT:    [[TMP5:%.*]] = zext i32 [[INDEX]] to i64
 ; CHECK-NEXT:    [[TMP6:%.*]] = shl i64 [[TMP5]], 2
 ; CHECK-NEXT:    [[TMP12:%.*]] = getelementptr i8, ptr [[SRC]], i64 [[TMP6]]
@@ -130,7 +130,7 @@ exit:
 ; Test case for https://github.com/llvm/llvm-project/issues/106780.
 define i32 @cost_of_exit_branch_and_cond_insts(ptr %a, ptr %b, i1 %c, i16 %x) vscale_range(2, 1024) {
 ; CHECK-LABEL: define i32 @cost_of_exit_branch_and_cond_insts(
-; CHECK-SAME: ptr [[A:%.*]], ptr [[B:%.*]], i1 [[C:%.*]], i16 [[X:%.*]]) #[[ATTR1:[0-9]+]] {
+; CHECK-SAME: ptr [[A:%.*]], ptr [[B:%.*]], i1 [[C:%.*]], i16 [[X:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  [[ENTRY:.*]]:
 ; CHECK-NEXT:    [[TMP0:%.*]] = zext i16 [[X]] to i32
 ; CHECK-NEXT:    [[UMAX3:%.*]] = call i32 @llvm.umax.i32(i32 [[TMP0]], i32 111)
@@ -269,7 +269,7 @@ return:
 ; Test case for https://github.com/llvm/llvm-project/issues/107473.
 define void @test_phi_in_latch_redundant(ptr %dst, i32 %a) vscale_range(2, 1024) {
 ; CHECK-LABEL: define void @test_phi_in_latch_redundant(
-; CHECK-SAME: ptr [[DST:%.*]], i32 [[A:%.*]]) #[[ATTR1]] {
+; CHECK-SAME: ptr [[DST:%.*]], i32 [[A:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  [[ENTRY:.*:]]
 ; CHECK-NEXT:    br label %[[VECTOR_PH:.*]]
 ; CHECK:       [[VECTOR_PH]]:
@@ -280,7 +280,7 @@ define void @test_phi_in_latch_redundant(ptr %dst, i32 %a) vscale_range(2, 1024)
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 37, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP8:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP8:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP2:%.*]] = mul i64 [[INDEX]], 36
 ; CHECK-NEXT:    [[TMP3:%.*]] = getelementptr i8, ptr [[DST]], i64 [[TMP2]]
 ; CHECK-NEXT:    call void @llvm.experimental.vp.strided.store.nxv4i32.p0.i64(<vscale x 4 x i32> [[BROADCAST_SPLAT]], ptr align 4 [[TMP3]], i64 36, <vscale x 4 x i1> splat (i1 true), i32 [[TMP8]])
@@ -332,7 +332,7 @@ define void @gather_interleave_group_with_dead_insert_pos(i64 %N, ptr noalias %s
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP2]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[OFFSET_IDX:%.*]] = shl i64 [[EVL_BASED_IV]], 1
 ; CHECK-NEXT:    [[TMP11:%.*]] = add i64 [[OFFSET_IDX]], 1
 ; CHECK-NEXT:    [[TMP22:%.*]] = getelementptr i8, ptr [[SRC]], i64 [[TMP11]]

@@ -1774,6 +1774,7 @@ public:
     case Intrinsic::experimental_get_vector_length: {
       auto *VFC = cast<ConstantInt>(CB.getArgOperand(1));
       auto *ScalableC = cast<ConstantInt>(CB.getArgOperand(2));
+      const unsigned RetBW = RetTy->getIntegerBitWidth();
 
       if (Args[0].isPoison())
         return AnyValue::poison();
@@ -1800,8 +1801,8 @@ public:
         }
       }
 
-      if (isIntN(32, Res))
-        return APInt(32, Res);
+      if (isUIntN(RetBW, Res))
+        return APInt(RetBW, Res);
       return AnyValue::poison();
     }
 

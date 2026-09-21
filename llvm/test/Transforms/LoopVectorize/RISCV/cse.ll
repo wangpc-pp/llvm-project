@@ -23,7 +23,7 @@ define i32 @widenpointerinduction_evl_cse(ptr noalias %p0, ptr noalias %p1) {
 ; CHECK-NEXT:    [[TMP1:%.*]] = shl <vscale x 4 x i32> [[TMP0]], splat (i32 1)
 ; CHECK-NEXT:    [[VECTOR_GEP:%.*]] = getelementptr i8, ptr [[POINTER_PHI3]], <vscale x 4 x i32> [[TMP1]]
 ; CHECK-NEXT:    [[VECTOR_GEP4:%.*]] = getelementptr i8, ptr [[POINTER_PHI]], <vscale x 4 x i32> [[TMP1]]
-; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    call void @llvm.vp.scatter.nxv4p0.nxv4p0(<vscale x 4 x ptr> [[VECTOR_GEP4]], <vscale x 4 x ptr> align 4 [[BROADCAST_SPLAT]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP2]])
 ; CHECK-NEXT:    call void @llvm.vp.scatter.nxv4p0.nxv4p0(<vscale x 4 x ptr> [[VECTOR_GEP]], <vscale x 4 x ptr> align 4 [[BROADCAST_SPLAT2]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP2]])
 ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i32 [[AVL]], [[TMP2]]

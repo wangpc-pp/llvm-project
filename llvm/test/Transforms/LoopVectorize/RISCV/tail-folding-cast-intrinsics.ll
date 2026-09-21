@@ -26,7 +26,7 @@ define void @vp_sext(ptr %a, ptr %b, i64 %N) {
 ; IF-EVL:       [[VECTOR_BODY]]:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; IF-EVL-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; IF-EVL-NEXT:    [[TMP14:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 2 x i32> @llvm.vp.load.nxv2i32.p0(ptr align 4 [[TMP14]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP12]]), !alias.scope [[META0:![0-9]+]]
 ; IF-EVL-NEXT:    [[TMP16:%.*]] = sext <vscale x 2 x i32> [[VP_OP_LOAD]] to <vscale x 2 x i64>
@@ -141,7 +141,7 @@ define void @vp_zext(ptr %a, ptr %b, i64 %N) {
 ; IF-EVL:       [[VECTOR_BODY]]:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; IF-EVL-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; IF-EVL-NEXT:    [[TMP14:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 2 x i32> @llvm.vp.load.nxv2i32.p0(ptr align 4 [[TMP14]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP12]]), !alias.scope [[META9:![0-9]+]]
 ; IF-EVL-NEXT:    [[TMP16:%.*]] = zext <vscale x 2 x i32> [[VP_OP_LOAD]] to <vscale x 2 x i64>
@@ -256,7 +256,7 @@ define void @vp_trunc(ptr %a, ptr %b, i64 %N) {
 ; IF-EVL:       [[VECTOR_BODY]]:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; IF-EVL-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; IF-EVL-NEXT:    [[TMP14:%.*]] = getelementptr inbounds i64, ptr [[B]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 2 x i64> @llvm.vp.load.nxv2i64.p0(ptr align 8 [[TMP14]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP12]]), !alias.scope [[META16:![0-9]+]]
 ; IF-EVL-NEXT:    [[TMP16:%.*]] = trunc <vscale x 2 x i64> [[VP_OP_LOAD]] to <vscale x 2 x i32>
@@ -371,7 +371,7 @@ define void @vp_fpext(ptr %a, ptr %b, i64 %N) {
 ; IF-EVL:       [[VECTOR_BODY]]:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; IF-EVL-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; IF-EVL-NEXT:    [[TMP14:%.*]] = getelementptr inbounds float, ptr [[B]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 2 x float> @llvm.vp.load.nxv2f32.p0(ptr align 4 [[TMP14]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP12]]), !alias.scope [[META23:![0-9]+]]
 ; IF-EVL-NEXT:    [[TMP16:%.*]] = fpext <vscale x 2 x float> [[VP_OP_LOAD]] to <vscale x 2 x double>
@@ -486,7 +486,7 @@ define void @vp_fptrunc(ptr %a, ptr %b, i64 %N) {
 ; IF-EVL:       [[VECTOR_BODY]]:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; IF-EVL-NEXT:    [[TMP12:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; IF-EVL-NEXT:    [[TMP14:%.*]] = getelementptr inbounds double, ptr [[B]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 2 x double> @llvm.vp.load.nxv2f64.p0(ptr align 8 [[TMP14]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP12]]), !alias.scope [[META30:![0-9]+]]
 ; IF-EVL-NEXT:    [[TMP16:%.*]] = fptrunc <vscale x 2 x double> [[VP_OP_LOAD]] to <vscale x 2 x float>
@@ -602,7 +602,7 @@ define void @vp_sitofp(ptr %a, ptr %b, i64 %N) {
 ; IF-EVL:       [[VECTOR_BODY]]:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[TMP16:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[TMP16]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP14]])
 ; IF-EVL-NEXT:    [[TMP18:%.*]] = sitofp <vscale x 4 x i32> [[VP_OP_LOAD]] to <vscale x 4 x float>
@@ -719,7 +719,7 @@ define void @vp_uitofp(ptr %a, ptr %b, i64 %N) {
 ; IF-EVL:       [[VECTOR_BODY]]:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[TMP16:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[TMP16]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP14]])
 ; IF-EVL-NEXT:    [[TMP18:%.*]] = uitofp <vscale x 4 x i32> [[VP_OP_LOAD]] to <vscale x 4 x float>
@@ -836,7 +836,7 @@ define void @vp_fptosi(ptr %a, ptr %b, i64 %N) {
 ; IF-EVL:       [[VECTOR_BODY]]:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[TMP16:%.*]] = getelementptr inbounds float, ptr [[B]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x float> @llvm.vp.load.nxv4f32.p0(ptr align 4 [[TMP16]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP14]])
 ; IF-EVL-NEXT:    [[TMP18:%.*]] = fptosi <vscale x 4 x float> [[VP_OP_LOAD]] to <vscale x 4 x i32>
@@ -953,7 +953,7 @@ define void @vp_fptoui(ptr %a, ptr %b, i64 %N) {
 ; IF-EVL:       [[VECTOR_BODY]]:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; IF-EVL-NEXT:    [[TMP16:%.*]] = getelementptr inbounds float, ptr [[B]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x float> @llvm.vp.load.nxv4f32.p0(ptr align 4 [[TMP16]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP14]])
 ; IF-EVL-NEXT:    [[TMP18:%.*]] = fptoui <vscale x 4 x float> [[VP_OP_LOAD]] to <vscale x 4 x i32>
@@ -1070,7 +1070,7 @@ define void @vp_inttoptr(ptr %a, ptr %b, i64 %N) {
 ; IF-EVL:       [[VECTOR_BODY]]:
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; IF-EVL-NEXT:    [[TMP14:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; IF-EVL-NEXT:    [[TMP16:%.*]] = getelementptr inbounds i64, ptr [[B]], i64 [[EVL_BASED_IV]]
 ; IF-EVL-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 2 x i64> @llvm.vp.load.nxv2i64.p0(ptr align 8 [[TMP16]], <vscale x 2 x i1> splat (i1 true), i32 [[TMP14]])
 ; IF-EVL-NEXT:    [[TMP18:%.*]] = inttoptr <vscale x 2 x i64> [[VP_OP_LOAD]] to <vscale x 2 x ptr>
@@ -1179,7 +1179,7 @@ define void @vp_ptrtoint(ptr %a, ptr %b, i64 %N) {
 ; IF-EVL-NEXT:    [[EVL_BASED_IV:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 2 x i64> [ [[TMP9]], %[[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; IF-EVL-NEXT:    [[AVL:%.*]] = phi i64 [ [[N]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; IF-EVL-NEXT:    [[TMP11:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; IF-EVL-NEXT:    [[TMP11:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; IF-EVL-NEXT:    [[TMP12:%.*]] = zext i32 [[TMP11]] to i64
 ; IF-EVL-NEXT:    [[BROADCAST_SPLATINSERT:%.*]] = insertelement <vscale x 2 x i64> poison, i64 [[TMP12]], i64 0
 ; IF-EVL-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <vscale x 2 x i64> [[BROADCAST_SPLATINSERT]], <vscale x 2 x i64> poison, <vscale x 2 x i32> zeroinitializer

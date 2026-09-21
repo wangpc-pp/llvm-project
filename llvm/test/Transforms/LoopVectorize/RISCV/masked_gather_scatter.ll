@@ -34,7 +34,7 @@ define void @foo4(ptr nocapture %A, ptr nocapture readonly %B, ptr nocapture rea
 ; RV32:       vector.body:
 ; RV32-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; RV32-NEXT:    [[AVL:%.*]] = phi i64 [ 625, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; RV32-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; RV32-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; RV32-NEXT:    [[TMP12:%.*]] = trunc i64 [[INDEX]] to i32
 ; RV32-NEXT:    [[TMP6:%.*]] = shl nuw i32 [[TMP12]], 6
 ; RV32-NEXT:    [[TMP13:%.*]] = getelementptr nuw i8, ptr [[TRIGGER]], i32 [[TMP6]]
@@ -99,7 +99,7 @@ define void @foo4(ptr nocapture %A, ptr nocapture readonly %B, ptr nocapture rea
 ; RV64:       vector.body:
 ; RV64-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; RV64-NEXT:    [[AVL:%.*]] = phi i64 [ 625, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; RV64-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; RV64-NEXT:    [[TMP10:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; RV64-NEXT:    [[TMP5:%.*]] = shl nuw i64 [[INDEX]], 6
 ; RV64-NEXT:    [[TMP6:%.*]] = getelementptr nuw i8, ptr [[TRIGGER]], i64 [[TMP5]]
 ; RV64-NEXT:    [[WIDE_MASKED_GATHER:%.*]] = call <vscale x 2 x i32> @llvm.experimental.vp.strided.load.nxv2i32.p0.i64(ptr align 4 [[TMP6]], i64 64, <vscale x 2 x i1> splat (i1 true), i32 [[TMP10]]), !alias.scope [[META0:![0-9]+]]

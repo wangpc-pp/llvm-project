@@ -12,7 +12,7 @@ define void @load_store_factor2_i32(ptr %p) vscale_range(2, 1024) {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP14:%.*]] = shl i64 [[INDEX]], 1
 ; CHECK-NEXT:    [[TMP15:%.*]] = getelementptr i32, ptr [[P:%.*]], i64 [[TMP14]]
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 2
@@ -68,7 +68,7 @@ define void @load_store_factor2_i32(ptr %p) vscale_range(2, 1024) {
 ; SCALABLE:       vector.body:
 ; SCALABLE-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; SCALABLE-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; SCALABLE-NEXT:    [[TMP14:%.*]] = shl i64 [[INDEX]], 1
 ; SCALABLE-NEXT:    [[TMP15:%.*]] = getelementptr i32, ptr [[P:%.*]], i64 [[TMP14]]
 ; SCALABLE-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 2
@@ -124,7 +124,7 @@ define void @load_store_factor2_i64(ptr %p) vscale_range(2, 1024) {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[INDEX]], 1
 ; CHECK-NEXT:    [[TMP14:%.*]] = getelementptr i64, ptr [[P:%.*]], i64 [[TMP8]]
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 2
@@ -180,7 +180,7 @@ define void @load_store_factor2_i64(ptr %p) vscale_range(2, 1024) {
 ; SCALABLE:       vector.body:
 ; SCALABLE-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; SCALABLE-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; SCALABLE-NEXT:    [[TMP8:%.*]] = shl i64 [[INDEX]], 1
 ; SCALABLE-NEXT:    [[TMP14:%.*]] = getelementptr i64, ptr [[P:%.*]], i64 [[TMP8]]
 ; SCALABLE-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 2
@@ -236,7 +236,7 @@ define void @load_store_factor3_i32(ptr %p) vscale_range(2, 1024) {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP16:%.*]] = mul i64 [[INDEX]], 3
 ; CHECK-NEXT:    [[TMP17:%.*]] = getelementptr i32, ptr [[P:%.*]], i64 [[TMP16]]
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 3
@@ -298,7 +298,7 @@ define void @load_store_factor3_i32(ptr %p) vscale_range(2, 1024) {
 ; SCALABLE:       vector.body:
 ; SCALABLE-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; SCALABLE-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; SCALABLE-NEXT:    [[TMP16:%.*]] = mul i64 [[INDEX]], 3
 ; SCALABLE-NEXT:    [[TMP17:%.*]] = getelementptr i32, ptr [[P:%.*]], i64 [[TMP16]]
 ; SCALABLE-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 3
@@ -362,7 +362,7 @@ define void @load_store_factor3_i64(ptr %p) vscale_range(2, 1024) {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP8:%.*]] = mul i64 [[INDEX]], 3
 ; CHECK-NEXT:    [[TMP14:%.*]] = getelementptr i64, ptr [[P:%.*]], i64 [[TMP8]]
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 3
@@ -424,7 +424,7 @@ define void @load_store_factor3_i64(ptr %p) vscale_range(2, 1024) {
 ; SCALABLE:       vector.body:
 ; SCALABLE-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; SCALABLE-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; SCALABLE-NEXT:    [[TMP8:%.*]] = mul i64 [[INDEX]], 3
 ; SCALABLE-NEXT:    [[TMP14:%.*]] = getelementptr i64, ptr [[P:%.*]], i64 [[TMP8]]
 ; SCALABLE-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 3
@@ -488,7 +488,7 @@ define void @load_store_factor4(ptr %p) vscale_range(2, 1024) {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[INDEX]], 2
 ; CHECK-NEXT:    [[TMP9:%.*]] = getelementptr i64, ptr [[P:%.*]], i64 [[TMP8]]
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 4
@@ -543,7 +543,7 @@ define void @load_store_factor4(ptr %p) vscale_range(2, 1024) {
 ; SCALABLE:       vector.body:
 ; SCALABLE-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; SCALABLE-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; SCALABLE-NEXT:    [[TMP8:%.*]] = shl i64 [[INDEX]], 2
 ; SCALABLE-NEXT:    [[TMP9:%.*]] = getelementptr i64, ptr [[P:%.*]], i64 [[TMP8]]
 ; SCALABLE-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 4
@@ -619,7 +619,7 @@ define void @load_store_factor5(ptr %p) vscale_range(2, 1024) {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP1:%.*]] = mul i64 [[INDEX]], 40
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP1]]
 ; CHECK-NEXT:    [[TMP3:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.strided.load.nxv2i64.p0.i64(ptr align 8 [[TMP2]], i64 40, <vscale x 2 x i1> splat (i1 true), i32 [[TMP7]])
@@ -703,7 +703,7 @@ define void @load_store_factor5(ptr %p) vscale_range(2, 1024) {
 ; SCALABLE:       vector.body:
 ; SCALABLE-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; SCALABLE-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; SCALABLE-NEXT:    [[TMP1:%.*]] = mul i64 [[INDEX]], 40
 ; SCALABLE-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP1]]
 ; SCALABLE-NEXT:    [[TMP3:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.strided.load.nxv2i64.p0.i64(ptr align 8 [[TMP2]], i64 40, <vscale x 2 x i1> splat (i1 true), i32 [[TMP7]])
@@ -791,7 +791,7 @@ define void @load_store_factor6(ptr %p) vscale_range(2, 1024) {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP1:%.*]] = mul i64 [[INDEX]], 48
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP1]]
 ; CHECK-NEXT:    [[TMP3:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.strided.load.nxv2i64.p0.i64(ptr align 8 [[TMP2]], i64 48, <vscale x 2 x i1> splat (i1 true), i32 [[TMP7]])
@@ -885,7 +885,7 @@ define void @load_store_factor6(ptr %p) vscale_range(2, 1024) {
 ; SCALABLE:       vector.body:
 ; SCALABLE-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; SCALABLE-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; SCALABLE-NEXT:    [[TMP1:%.*]] = mul i64 [[INDEX]], 48
 ; SCALABLE-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP1]]
 ; SCALABLE-NEXT:    [[TMP3:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.strided.load.nxv2i64.p0.i64(ptr align 8 [[TMP2]], i64 48, <vscale x 2 x i1> splat (i1 true), i32 [[TMP7]])
@@ -984,7 +984,7 @@ define void @load_store_factor7(ptr %p) vscale_range(2, 1024) {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP1:%.*]] = mul i64 [[INDEX]], 56
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP1]]
 ; CHECK-NEXT:    [[TMP3:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.strided.load.nxv2i64.p0.i64(ptr align 8 [[TMP2]], i64 56, <vscale x 2 x i1> splat (i1 true), i32 [[TMP7]])
@@ -1088,7 +1088,7 @@ define void @load_store_factor7(ptr %p) vscale_range(2, 1024) {
 ; SCALABLE:       vector.body:
 ; SCALABLE-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; SCALABLE-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; SCALABLE-NEXT:    [[TMP1:%.*]] = mul i64 [[INDEX]], 56
 ; SCALABLE-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP1]]
 ; SCALABLE-NEXT:    [[TMP3:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.strided.load.nxv2i64.p0.i64(ptr align 8 [[TMP2]], i64 56, <vscale x 2 x i1> splat (i1 true), i32 [[TMP7]])
@@ -1198,7 +1198,7 @@ define void @load_store_factor8(ptr %p) vscale_range(2, 1024) {
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[INDEX]], 6
 ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP1]]
 ; CHECK-NEXT:    [[TMP3:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.strided.load.nxv2i64.p0.i64(ptr align 8 [[TMP2]], i64 64, <vscale x 2 x i1> splat (i1 true), i32 [[TMP7]])
@@ -1312,7 +1312,7 @@ define void @load_store_factor8(ptr %p) vscale_range(2, 1024) {
 ; SCALABLE:       vector.body:
 ; SCALABLE-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; SCALABLE-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; SCALABLE-NEXT:    [[TMP1:%.*]] = shl i64 [[INDEX]], 6
 ; SCALABLE-NEXT:    [[TMP2:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP1]]
 ; SCALABLE-NEXT:    [[TMP3:%.*]] = call <vscale x 2 x i64> @llvm.experimental.vp.strided.load.nxv2i64.p0.i64(ptr align 8 [[TMP2]], i64 64, <vscale x 2 x i1> splat (i1 true), i32 [[TMP7]])
@@ -1425,7 +1425,7 @@ define void @combine_load_factor2_i32(ptr noalias %p, ptr noalias %q) vscale_ran
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP13:%.*]] = shl i64 [[INDEX]], 1
 ; CHECK-NEXT:    [[TMP15:%.*]] = getelementptr i32, ptr [[P:%.*]], i64 [[TMP13]]
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 2
@@ -1477,7 +1477,7 @@ define void @combine_load_factor2_i32(ptr noalias %p, ptr noalias %q) vscale_ran
 ; SCALABLE:       vector.body:
 ; SCALABLE-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; SCALABLE-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; SCALABLE-NEXT:    [[TMP13:%.*]] = shl i64 [[INDEX]], 1
 ; SCALABLE-NEXT:    [[TMP15:%.*]] = getelementptr i32, ptr [[P:%.*]], i64 [[TMP13]]
 ; SCALABLE-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 2
@@ -1532,7 +1532,7 @@ define void @combine_load_factor2_i64(ptr noalias %p, ptr noalias %q) vscale_ran
 ; CHECK:       vector.body:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP13:%.*]] = shl i64 [[INDEX]], 1
 ; CHECK-NEXT:    [[TMP15:%.*]] = getelementptr i64, ptr [[P:%.*]], i64 [[TMP13]]
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 2
@@ -1584,7 +1584,7 @@ define void @combine_load_factor2_i64(ptr noalias %p, ptr noalias %q) vscale_ran
 ; SCALABLE:       vector.body:
 ; SCALABLE-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
 ; SCALABLE-NEXT:    [[AVL:%.*]] = phi i64 [ 1024, [[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], [[VECTOR_BODY]] ]
-; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; SCALABLE-NEXT:    [[TMP7:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; SCALABLE-NEXT:    [[TMP13:%.*]] = shl i64 [[INDEX]], 1
 ; SCALABLE-NEXT:    [[TMP15:%.*]] = getelementptr i64, ptr [[P:%.*]], i64 [[TMP13]]
 ; SCALABLE-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP7]], 2

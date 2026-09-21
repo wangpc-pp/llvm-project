@@ -17,7 +17,7 @@ define i32 @f(ptr noalias %p, i32 %start, i32 %step, i32 %n) {
 ; CHECK:       [[EXIT]]:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[EXIT]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ [[TMP0]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[EXIT]] ]
-; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr i32, ptr [[P]], i32 [[INDEX]]
 ; CHECK-NEXT:    [[VP_OP_LOAD:%.*]] = call <vscale x 4 x i32> @llvm.vp.load.nxv4i32.p0(ptr align 4 [[TMP6]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP3]])
 ; CHECK-NEXT:    [[TMP7:%.*]] = add <vscale x 4 x i32> [[VP_OP_LOAD]], splat (i32 1)

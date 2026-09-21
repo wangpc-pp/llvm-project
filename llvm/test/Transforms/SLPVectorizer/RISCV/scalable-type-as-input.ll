@@ -10,7 +10,7 @@ define void @test(i32 %lhsWords) {
 ; CHECK-NEXT:    [[TMP0:%.*]] = extractvalue { <vscale x 2 x i32>, <vscale x 2 x i32> } [[STRIDED_VEC]], 0
 ; CHECK-NEXT:    [[TMP1:%.*]] = zext <vscale x 2 x i32> [[TMP0]] to <vscale x 2 x i64>
 ; CHECK-NEXT:    [[WIDE_TRIP_COUNT404:%.*]] = zext i32 [[LHSWORDS]] to i64
-; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[WIDE_TRIP_COUNT404]], i32 1, i1 false)
+; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[WIDE_TRIP_COUNT404]], i32 1, i1 false)
 ; CHECK-NEXT:    call void @llvm.vp.store.nxv2i64.p0(<vscale x 2 x i64> [[TMP1]], ptr null, <vscale x 2 x i1> zeroinitializer, i32 [[TMP2]])
 ; CHECK-NEXT:    ret void
 ;

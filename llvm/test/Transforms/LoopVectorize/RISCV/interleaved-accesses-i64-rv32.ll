@@ -13,7 +13,7 @@ define void @i64_factor_2(ptr noalias %src, ptr noalias %dst, i64 %n) {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[SMAX]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; CHECK-NEXT:    [[TMP5:%.*]] = getelementptr inbounds [[I64_2:%.*]], ptr [[SRC]], i64 [[INDEX]], i32 0
 ; CHECK-NEXT:    [[INTERLEAVE_EVL:%.*]] = mul nuw nsw i32 [[TMP1]], 2
 ; CHECK-NEXT:    [[WIDE_VP_LOAD:%.*]] = call <vscale x 4 x i64> @llvm.vp.load.nxv4i64.p0(ptr align 8 [[TMP5]], <vscale x 4 x i1> splat (i1 true), i32 [[INTERLEAVE_EVL]])

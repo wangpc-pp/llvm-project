@@ -14,7 +14,7 @@ define float @s311(float %a_0, float %s311_sum) {
 ; CHECK:       [[VECTOR_BODY]]:
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi float [ [[S311_SUM]], %[[VECTOR_PH]] ], [ [[TMP6:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i32 [ 1200, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i32(i32 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP9:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i32(i32 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP6]] = call float @llvm.vp.reduce.fadd.nxv4f32(float [[VEC_PHI]], <vscale x 4 x float> [[BROADCAST_SPLAT]], <vscale x 4 x i1> splat (i1 true), i32 [[TMP9]])
 ; CHECK-NEXT:    [[AVL_NEXT]] = sub nuw i32 [[AVL]], [[TMP9]]
 ; CHECK-NEXT:    [[TMP7:%.*]] = icmp eq i32 [[AVL_NEXT]], 0

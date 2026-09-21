@@ -90,7 +90,7 @@ define void @foo(ptr %p, ptr %p.strided, i64 %n, i64 %stride) vscale_range(2, 10
 ; NO-UNIT-STRIDE-MV-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_EVL_NEXT:%.*]], %[[HEADER]] ]
 ; NO-UNIT-STRIDE-MV-NEXT:    [[STEP_ADD_3:%.*]] = phi <vscale x 2 x i64> [ [[INDUCTION]], %[[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], %[[HEADER]] ]
 ; NO-UNIT-STRIDE-MV-NEXT:    [[AVL:%.*]] = phi i64 [ 63, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[HEADER]] ]
-; NO-UNIT-STRIDE-MV-NEXT:    [[TMP25:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 2, i1 true)
+; NO-UNIT-STRIDE-MV-NEXT:    [[TMP25:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 2, i1 true)
 ; NO-UNIT-STRIDE-MV-NEXT:    [[TMP26:%.*]] = zext i32 [[TMP25]] to i64
 ; NO-UNIT-STRIDE-MV-NEXT:    [[BROADCAST_SPLATINSERT14:%.*]] = insertelement <vscale x 2 x i64> poison, i64 [[TMP26]], i64 0
 ; NO-UNIT-STRIDE-MV-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <vscale x 2 x i64> [[BROADCAST_SPLATINSERT14]], <vscale x 2 x i64> poison, <vscale x 2 x i32> zeroinitializer

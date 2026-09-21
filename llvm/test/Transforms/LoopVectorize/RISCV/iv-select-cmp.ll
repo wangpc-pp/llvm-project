@@ -16,7 +16,7 @@ define i32 @find_last_trunc_iv(ptr %src, i64 %n) {
 ; CHECK-NEXT:    [[TMP2:%.*]] = phi <vscale x 4 x i1> [ zeroinitializer, %[[VECTOR_BODY]] ], [ [[TMP9:%.*]], %[[VECTOR_BODY1]] ]
 ; CHECK-NEXT:    [[VEC_IND:%.*]] = phi <vscale x 4 x i32> [ [[TMP1]], %[[VECTOR_BODY]] ], [ [[VEC_IND_NEXT:%.*]], %[[VECTOR_BODY1]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP0]], %[[VECTOR_BODY]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY1]] ]
-; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP3:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP11:%.*]] = zext i32 [[TMP3]] to i64
 ; CHECK-NEXT:    [[BROADCAST_SPLATINSERT:%.*]] = insertelement <vscale x 4 x i32> poison, i32 [[TMP3]], i64 0
 ; CHECK-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <vscale x 4 x i32> [[BROADCAST_SPLATINSERT]], <vscale x 4 x i32> poison, <vscale x 4 x i32> zeroinitializer
@@ -78,7 +78,7 @@ define i64 @select_decreasing_induction_icmp_non_const_start(ptr %a, ptr %b, i64
 ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <vscale x 4 x i64> [ splat (i64 9223372036854775807), %[[VECTOR_PH]] ], [ [[TMP18:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[VEC_PHI1:%.*]] = phi <vscale x 4 x i1> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[TMP19:%.*]], %[[VECTOR_BODY]] ]
 ; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP8]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
-; CHECK-NEXT:    [[TMP4:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+; CHECK-NEXT:    [[TMP4:%.*]] = call i32 @llvm.experimental.get.vector.length.i32.i64(i64 [[AVL]], i32 4, i1 true)
 ; CHECK-NEXT:    [[TMP5:%.*]] = zext i32 [[TMP4]] to i64
 ; CHECK-NEXT:    [[TMP7:%.*]] = sub nsw i64 0, [[TMP5]]
 ; CHECK-NEXT:    [[BROADCAST_SPLATINSERT2:%.*]] = insertelement <vscale x 4 x i64> poison, i64 [[TMP7]], i64 0
