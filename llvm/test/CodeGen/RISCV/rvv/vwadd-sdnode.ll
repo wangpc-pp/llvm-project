@@ -1638,3 +1638,42 @@ define <vscale x 8 x i64> @vwadd_wx_splat_sext(<vscale x 8 x i64> %va, i32 %b) {
   %ve = add <vscale x 8 x i64> %va, %splat
   ret <vscale x 8 x i64> %ve
 }
+
+define void @fold_vsetvli_splat(ptr %out, i64 %remaining, <vscale x 2 x i64> %v) {
+; RV64-LABEL: fold_vsetvli_splat:
+; RV64:       # %bb.0:
+; RV64-NEXT:    vsetvli a1, a1, e64, m2, ta, ma
+; RV64-NEXT:    vadd.vx v8, v8, a1
+; RV64-NEXT:    vsetvli zero, zero, e32, m1, ta, ma
+; RV64-NEXT:    vnsrl.wi v10, v8, 0
+; RV64-NEXT:    vse32.v v10, (a0)
+; RV64-NEXT:    ret
+  %vl = call i32 @llvm.experimental.get.vector.length.i64(i64 %remaining, i32 2, i1 true)
+  %vl.wide = zext i32 %vl to i64
+  %vl.insert = insertelement <vscale x 2 x i64> poison, i64 %vl.wide, i64 0
+  %vl.splat = shufflevector <vscale x 2 x i64> %vl.insert, <vscale x 2 x i64> poison, <vscale x 2 x i32> zeroinitializer
+  %next = add <vscale x 2 x i64> %v, %vl.splat
+  %narrow = trunc <vscale x 2 x i64> %next to <vscale x 2 x i32>
+  call void @llvm.vp.store.nxv2i32.p0(<vscale x 2 x i32> %narrow, ptr %out, <vscale x 2 x i1> splat (i1 true), i32 %vl)
+  ret void
+}
+
+define void @keep_wide_vtype(ptr %out0, ptr %out1, i64 %remaining, <vscale x 2 x i64> %v) {
+; RV64-LABEL: keep_wide_vtype:
+; RV64:       # %bb.0:
+; RV64-NEXT:    vsetvli a2, a2, e64, m2, ta, ma
+; RV64-NEXT:    vnot.v v10, v8
+; RV64-NEXT:    vadd.vx v8, v8, a2
+; RV64-NEXT:    vse64.v v10, (a0)
+; RV64-NEXT:    vse64.v v8, (a1)
+; RV64-NEXT:    ret
+  %vl = call i32 @llvm.experimental.get.vector.length.i64(i64 %remaining, i32 2, i1 true)
+  %vl.wide = zext i32 %vl to i64
+  %vl.insert = insertelement <vscale x 2 x i64> poison, i64 %vl.wide, i64 0
+  %vl.splat = shufflevector <vscale x 2 x i64> %vl.insert, <vscale x 2 x i64> poison, <vscale x 2 x i32> zeroinitializer
+  %wide = xor <vscale x 2 x i64> %v, splat (i64 -1)
+  %next = add <vscale x 2 x i64> %v, %vl.splat
+  call void @llvm.vp.store.nxv2i64.p0(<vscale x 2 x i64> %wide, ptr %out0, <vscale x 2 x i1> splat (i1 true), i32 %vl)
+  call void @llvm.vp.store.nxv2i64.p0(<vscale x 2 x i64> %next, ptr %out1, <vscale x 2 x i1> splat (i1 true), i32 %vl)
+  ret void
+}
