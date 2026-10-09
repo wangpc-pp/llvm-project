@@ -67,9 +67,9 @@ static cl::opt<unsigned> ExtensionMaxWebSize(
 
 static cl::opt<bool>
     AllowSplatInVW_W(DEBUG_TYPE "-form-vw-w-with-splat", cl::Hidden,
-                     cl::desc("Allow the formation of VW_W operations (e.g., "
-                              "VWADD_W) with splat constants"),
-                     cl::init(false));
+                     cl::desc("Allow profitable formation of VW_W operations "
+                              "(e.g., VWADD_W) with scalar splats"),
+                     cl::init(true));
 
 static cl::opt<unsigned> NumRepeatedDivisors(
     DEBUG_TYPE "-fp-repeated-divisors", cl::Hidden,
@@ -21092,6 +21092,65 @@ struct NodeExtensionHelper {
            OrigOperand.getOpcode() == ISD::SPLAT_VECTOR;
   }
 
+  /// Return the scalar value used by this splat.
+  SDValue getSplatScalar() const {
+    assert(isSplat() && "Expected a splat");
+    return OrigOperand.getOpcode() == ISD::SPLAT_VECTOR
+               ? OrigOperand.getOperand(0)
+               : OrigOperand.getOperand(1);
+  }
+
+  /// Return true if forming a VW_W operation can eliminate the scalar
+  /// extension feeding this splat.
+  bool isProfitableSplatForVW_W(SDNode *Root, ExtKind Ext,
+                                SDValue WideOperand) const {
+    if (!isSplat())
+      return true;
+    if (!OrigOperand.hasOneUse())
+      return false;
+
+    SDValue Scalar = getSplatScalar();
+    if (Scalar.getOpcode() == ISD::INTRINSIC_WO_CHAIN &&
+        Scalar->getConstantOperandVal(0) == Intrinsic::riscv_vsetvli) {
+      if (WideOperand.getOpcode() != ISD::CopyFromReg)
+        return false;
+      EVT WideVT = Root->getValueType(0);
+      for (SDUse &Use : WideOperand->uses()) {
+        if (Use.getResNo() != WideOperand.getResNo() || Use.getUser() == Root)
+          continue;
+        for (unsigned I = 0, E = Use.getUser()->getNumValues(); I != E; ++I)
+          if (Use.getUser()->getValueType(I) == WideVT)
+            return false;
+      }
+      return true;
+    }
+
+    if (!Scalar.hasOneUse())
+      return false;
+
+    unsigned NarrowSize = Root->getValueType(0).getScalarSizeInBits() / 2;
+    switch (Scalar.getOpcode()) {
+    default:
+      return false;
+    case ISD::ZERO_EXTEND:
+      return Ext == ExtKind::ZExt &&
+             Scalar.getOperand(0).getValueSizeInBits() == NarrowSize;
+    case ISD::SIGN_EXTEND:
+      return Ext == ExtKind::SExt &&
+             Scalar.getOperand(0).getValueSizeInBits() == NarrowSize;
+    case ISD::SIGN_EXTEND_INREG:
+      return Ext == ExtKind::SExt &&
+             cast<VTSDNode>(Scalar.getOperand(1))->getVT().getSizeInBits() ==
+                 NarrowSize;
+    case ISD::AND: {
+      auto *Mask = dyn_cast<ConstantSDNode>(Scalar.getOperand(1));
+      return Ext == ExtKind::ZExt && Mask &&
+             Mask->getAPIntValue() ==
+                 APInt::getLowBitsSet(Scalar.getValueSizeInBits(), NarrowSize);
+    }
+    }
+  }
+
   /// Get the extended opcode.
   unsigned getExtOpc(ExtKind SupportsExt) const {
     switch (SupportsExt) {
@@ -21706,15 +21765,19 @@ canFoldToVW_W(SDNode *Root, const NodeExtensionHelper &LHS,
         NodeExtensionHelper::getWOpcode(Root->getOpcode(), ExtKind::FPExt),
         Root, LHS, /*LHSExt=*/std::nullopt, RHS, /*RHSExt=*/{ExtKind::FPExt});
 
-  // FIXME: Is it useful to form a vwadd.wx or vwsub.wx if it removes a scalar
-  // sext/zext?
-  // Control this behavior behind an option (AllowSplatInVW_W) for testing
-  // purposes.
-  if (RHS.SupportsZExt && (!RHS.isSplat() || AllowSplatInVW_W))
+  // A splat is profitable when the widening operation eliminates its scalar
+  // extension.
+  if (RHS.SupportsZExt &&
+      (!RHS.isSplat() ||
+       (AllowSplatInVW_W &&
+        RHS.isProfitableSplatForVW_W(Root, ExtKind::ZExt, LHS.OrigOperand))))
     return CombineResult(
         NodeExtensionHelper::getWOpcode(Root->getOpcode(), ExtKind::ZExt), Root,
         LHS, /*LHSExt=*/std::nullopt, RHS, /*RHSExt=*/{ExtKind::ZExt});
-  if (RHS.SupportsSExt && (!RHS.isSplat() || AllowSplatInVW_W))
+  if (RHS.SupportsSExt &&
+      (!RHS.isSplat() ||
+       (AllowSplatInVW_W &&
+        RHS.isProfitableSplatForVW_W(Root, ExtKind::SExt, LHS.OrigOperand))))
     return CombineResult(
         NodeExtensionHelper::getWOpcode(Root->getOpcode(), ExtKind::SExt), Root,
         LHS, /*LHSExt=*/std::nullopt, RHS, /*RHSExt=*/{ExtKind::SExt});
