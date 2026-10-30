@@ -144,6 +144,7 @@
 // CHECK-NOT: __riscv_zihpm {{.*$}}
 // CHECK-NOT: __riscv_zilsd {{.*$}}
 // CHECK-NOT: __riscv_zilx {{.*$}}
+// CHECK-NOT: __riscv_zimemops {{.*$}}
 // CHECK-NOT: __riscv_zimop {{.*$}}
 // CHECK-NOT: __riscv_zk {{.*$}}
 // CHECK-NOT: __riscv_zkn {{.*$}}
@@ -1015,6 +1016,12 @@
 // RUN:   -march=rv32i_zilsd1p0 -E -dM %s \
 // RUN:   -o - | FileCheck --check-prefix=CHECK-ZILSD-EXT %s
 // CHECK-ZILSD-EXT: __riscv_zilsd  1000000{{$}}
+
+// RUN: %clang --target=riscv32 -march=rv32i_zimemops0p1 -menable-experimental-extensions -E -dM %s \
+// RUN:   | FileCheck %s --check-prefix=CHECK-ZIMEMOPS-EXT
+// RUN: %clang --target=riscv64 -march=rv64i_zimemops0p1 -menable-experimental-extensions -E -dM %s \
+// RUN:   | FileCheck %s --check-prefix=CHECK-ZIMEMOPS-EXT
+// CHECK-ZIMEMOPS-EXT: #define __riscv_zimemops 1000{{$}}
 
 // RUN: %clang --target=riscv32-unknown-linux-gnu \
 // RUN:   -march=rv32i_zimop1p0 -E -dM %s \

@@ -2473,6 +2473,7 @@ include "RISCVInstrInfoZa.td"
 include "RISCVInstrInfoZalasr.td"
 
 // Integer
+include "RISCVInstrInfoZimemops.td"
 include "RISCVInstrInfoZimop.td"
 include "RISCVInstrInfoZicbo.td"
 include "RISCVInstrInfoZicond.td"

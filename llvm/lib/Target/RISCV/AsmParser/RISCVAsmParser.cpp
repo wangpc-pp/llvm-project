@@ -4209,6 +4209,16 @@ bool RISCVAsmParser::validateInstruction(MCInst &Inst,
                                          OperandVector &Operands) {
   unsigned Opcode = Inst.getOpcode();
 
+  if (Opcode == RISCV::MCOPY || Opcode == RISCV::MMOVE ||
+      Opcode == RISCV::MSET) {
+    MCRegister Rd = Inst.getOperand(0).getReg();
+    MCRegister Rs1 = Inst.getOperand(Opcode == RISCV::MSET ? 3 : 1).getReg();
+    MCRegister Rs2 = Inst.getOperand(Opcode == RISCV::MSET ? 1 : 2).getReg();
+    if (Rd == Rs1 || Rd == Rs2 || Rs1 == Rs2)
+      return Error(Operands[1]->getStartLoc(),
+                   "rd, rs1, and rs2 must be different");
+  }
+
   if (Opcode == RISCV::PseudoVMSGEU_VX_M_T ||
       Opcode == RISCV::PseudoVMSGE_VX_M_T) {
     MCRegister DestReg = Inst.getOperand(0).getReg();

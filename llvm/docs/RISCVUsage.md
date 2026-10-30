@@ -351,6 +351,10 @@ The primary goal of experimental support is to assist in the process of ratifica
 
 : LLVM implements the [1.0 release specification](https://github.com/riscv/riscv-cfi/releases/tag/v1.0).
 
+`experimental-zimemops`
+
+: LLVM implements the [0.1 draft specification](https://github.com/wangpc-pp/riscv-isa-manual/blob/dec8093ba2758b096f8844e2df4a443c08e29be7/src/unpriv/zimemops.adoc).
+
 `experimental-smcsps`, `experimental-sscsps`, `experimental-smijt`, `experimental-ssijt`, `experimental-smehv`, `experimental-ssehv`, `experimental-smip`, `experimental-ssip`, `experimental-smidctrl`, `experimental-ssidctrl`, `experimental-smnip`, `experimental-ssnip`
 
 : LLVM implements the [0.20 release specification](https://github.com/riscv/riscv-fast-interrupt/releases/tag/v0.20).

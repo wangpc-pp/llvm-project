@@ -408,6 +408,22 @@
 // RUN: -fsyntax-only 2>&1 | FileCheck -check-prefix=RV32-ZBB %s
 // RV32-ZBB: "-target-feature" "+zbb"
 
+// Zimemops 0.1 experimental extension.
+// RUN: %clang --target=riscv32 -march=rv32i_zimemops0p1 -menable-experimental-extensions -### %s \
+// RUN:   2>&1 | FileCheck %s --check-prefix=ZIMEMOPS-FEATURE
+// RUN: %clang --target=riscv64 -march=rv64i_zimemops0p1 -menable-experimental-extensions -### %s \
+// RUN:   2>&1 | FileCheck %s --check-prefix=ZIMEMOPS-FEATURE
+// ZIMEMOPS-FEATURE: "-target-feature" "+experimental-zimemops"
+
+// RUN: not %clang --target=riscv64 -march=rv64i_zimemops0p1 -### %s 2>&1 | FileCheck %s --check-prefix=ZIMEMOPS-NOFLAG
+// ZIMEMOPS-NOFLAG: requires '-menable-experimental-extensions' for experimental extension 'zimemops'
+// RUN: not %clang --target=riscv64 -march=rv64i_zimemops -menable-experimental-extensions -### %s \
+// RUN:   2>&1 | FileCheck %s --check-prefix=ZIMEMOPS-NOVERSION
+// ZIMEMOPS-NOVERSION: experimental extension requires explicit version number `zimemops`
+// RUN: not %clang --target=riscv64 -march=rv64i_zimemops0p2 -menable-experimental-extensions -### %s \
+// RUN:   2>&1 | FileCheck %s --check-prefix=ZIMEMOPS-VERSION
+// ZIMEMOPS-VERSION: unsupported version number 0.2 for experimental extension 'zimemops' (this compiler supports 0.1)
+
 // RUN: not %clang --target=riscv32-unknown-elf -march=rv32izbb1p0zbs1p0 -menable-experimental-extensions -### %s \
 // RUN: -fsyntax-only 2>&1 | FileCheck -check-prefix=RV32-EXPERIMENTAL-ZBB-ZBS-UNDERSCORE %s
 // RV32-EXPERIMENTAL-ZBB-ZBS-UNDERSCORE: error: invalid arch name 'rv32izbb1p0zbs1p0', unsupported standard user-level extension 'zbb1p0zbs'

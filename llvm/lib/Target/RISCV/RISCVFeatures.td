@@ -174,6 +174,12 @@ def FeatureStdExtZihpm
                      [FeatureStdExtZicsr]>,
       RISCVExtensionBitmask<1, 16>;
 
+def FeatureStdExtZimemops
+    : RISCVExperimentalExtension<0, 1, "Bulk Memory Operations">;
+def HasStdExtZimemops : Predicate<"Subtarget->hasStdExtZimemops()">,
+                       AssemblerPredicate<(all_of FeatureStdExtZimemops),
+                                          "'Zimemops' (Bulk Memory Operations)">;
+
 def FeatureStdExtZimop : RISCVExtension<1, 0, "May-Be-Operations">,
                          RISCVExtensionBitmask<1, 1>;
 def HasStdExtZimop : Predicate<"Subtarget->hasStdExtZimop()">,
