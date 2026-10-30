@@ -88,11 +88,71 @@ void RISCVSelectionDAGInfo::verifyTargetNode(const SelectionDAG &DAG,
 #endif
 }
 
+static SDValue
+emitZimemops(SelectionDAG &DAG, const SDLoc &DL, unsigned Opcode, SDValue Chain,
+             SDValue Dst, SDValue Src, SDValue Size, Align DstAlign,
+             Align SrcAlign, bool IsVolatile, MachinePointerInfo DstPtrInfo,
+             MachinePointerInfo SrcPtrInfo = MachinePointerInfo()) {
+  LocationSize MemSize = LocationSize::afterPointer();
+  if (auto *C = dyn_cast<ConstantSDNode>(Size))
+    MemSize = LocationSize::precise(C->getZExtValue());
+
+  MachineFunction &MF = DAG.getMachineFunction();
+  auto Volatile =
+      IsVolatile ? MachineMemOperand::MOVolatile : MachineMemOperand::MONone;
+  auto *DstMMO = MF.getMachineMemOperand(
+      DstPtrInfo, MachineMemOperand::MOStore | Volatile, MemSize, DstAlign);
+
+  EVT VT = Dst.getValueType();
+  if (Opcode == RISCVISD::MSET) {
+    // MSET ignores all but the low byte of the fill value.
+    Src = DAG.getAnyExtOrTrunc(Src, DL, VT);
+    SDValue Ops[] = {Chain, Dst, Src, Size};
+    return DAG
+        .getMemIntrinsicNode(Opcode, DL, DAG.getVTList(VT, VT, MVT::Other), Ops,
+                             MVT::i8, DstMMO)
+        .getValue(2);
+  }
+
+  auto *SrcMMO = MF.getMachineMemOperand(
+      SrcPtrInfo, MachineMemOperand::MOLoad | Volatile, MemSize, SrcAlign);
+  SDValue Ops[] = {Chain, Dst, Src, Size};
+  return DAG
+      .getMemIntrinsicNode(Opcode, DL, DAG.getVTList(VT, VT, VT, MVT::Other),
+                           Ops, MVT::i8, {DstMMO, SrcMMO})
+      .getValue(3);
+}
+
+SDValue RISCVSelectionDAGInfo::EmitTargetCodeForMemcpy(
+    SelectionDAG &DAG, const SDLoc &dl, SDValue Chain, SDValue Dst, SDValue Src,
+    SDValue Size, Align DstAlign, Align SrcAlign, bool isVolatile,
+    bool AlwaysInline, MachinePointerInfo DstPtrInfo,
+    MachinePointerInfo SrcPtrInfo) const {
+  if (!DAG.getSubtarget<RISCVSubtarget>().hasStdExtZimemops())
+    return SDValue();
+  return emitZimemops(DAG, dl, RISCVISD::MCOPY, Chain, Dst, Src, Size, DstAlign,
+                      SrcAlign, isVolatile, DstPtrInfo, SrcPtrInfo);
+}
+
+SDValue RISCVSelectionDAGInfo::EmitTargetCodeForMemmove(
+    SelectionDAG &DAG, const SDLoc &dl, SDValue Chain, SDValue Dst, SDValue Src,
+    SDValue Size, Align DstAlign, Align SrcAlign, bool isVolatile,
+    MachinePointerInfo DstPtrInfo, MachinePointerInfo SrcPtrInfo) const {
+  if (!DAG.getSubtarget<RISCVSubtarget>().hasStdExtZimemops())
+    return SDValue();
+  return emitZimemops(DAG, dl, RISCVISD::MMOVE, Chain, Dst, Src, Size, DstAlign,
+                      SrcAlign, isVolatile, DstPtrInfo, SrcPtrInfo);
+}
+
 SDValue RISCVSelectionDAGInfo::EmitTargetCodeForMemset(
     SelectionDAG &DAG, const SDLoc &dl, SDValue Chain, SDValue Dst, SDValue Src,
     SDValue Size, Align Alignment, bool isVolatile, bool AlwaysInline,
     MachinePointerInfo DstPtrInfo) const {
   const auto &Subtarget = DAG.getSubtarget<RISCVSubtarget>();
+  if (Subtarget.hasStdExtZimemops())
+    return emitZimemops(DAG, dl, RISCVISD::MSET, Chain, Dst, Src, Size,
+                        Alignment, Alignment, isVolatile, DstPtrInfo);
+
   // We currently do this only for Xqcilsm
   if (!Subtarget.hasVendorXqcilsm())
     return SDValue();

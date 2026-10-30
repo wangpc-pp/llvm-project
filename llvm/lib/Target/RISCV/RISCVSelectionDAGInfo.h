@@ -34,6 +34,20 @@ public:
   void verifyTargetNode(const SelectionDAG &DAG,
                         const SDNode *N) const override;
 
+  SDValue EmitTargetCodeForMemcpy(SelectionDAG &DAG, const SDLoc &dl,
+                                  SDValue Chain, SDValue Dst, SDValue Src,
+                                  SDValue Size, Align DstAlign, Align SrcAlign,
+                                  bool isVolatile, bool AlwaysInline,
+                                  MachinePointerInfo DstPtrInfo,
+                                  MachinePointerInfo SrcPtrInfo) const override;
+
+  SDValue
+  EmitTargetCodeForMemmove(SelectionDAG &DAG, const SDLoc &dl, SDValue Chain,
+                           SDValue Dst, SDValue Src, SDValue Size,
+                           Align DstAlign, Align SrcAlign, bool isVolatile,
+                           MachinePointerInfo DstPtrInfo,
+                           MachinePointerInfo SrcPtrInfo) const override;
+
   SDValue EmitTargetCodeForMemset(SelectionDAG &DAG, const SDLoc &dl,
                                   SDValue Chain, SDValue Dst, SDValue Src,
                                   SDValue Size, Align Alignment,

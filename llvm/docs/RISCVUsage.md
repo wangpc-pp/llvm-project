@@ -354,6 +354,7 @@ The primary goal of experimental support is to assist in the process of ratifica
 `experimental-zimemops`
 
 : LLVM implements the [0.1 draft specification](https://github.com/wangpc-pp/riscv-isa-manual/blob/dec8093ba2758b096f8844e2df4a443c08e29be7/src/unpriv/zimemops.adoc).
+  Code generation uses `mcopy`, `mmove`, and `mset` for memory intrinsics that exceed the existing inline load/store limits or have a dynamic length.
 
 `experimental-smcsps`, `experimental-sscsps`, `experimental-smijt`, `experimental-ssijt`, `experimental-smehv`, `experimental-ssehv`, `experimental-smip`, `experimental-ssip`, `experimental-smidctrl`, `experimental-ssidctrl`, `experimental-smnip`, `experimental-ssnip`
 
