@@ -926,7 +926,7 @@ def HasStdExtZvdot4a8i : Predicate<"Subtarget->hasStdExtZvdot4a8i()">,
 // Vector Match Against Key Set
 def FeatureStdExtZvmatch
     : RISCVExperimentalExtension<0, 1, "Vector Match Against Key Set",
-                                 [FeatureStdExtV]>;
+                                 [FeatureStdExtZve32x]>;
 def HasStdExtZvmatch : Predicate<"Subtarget->hasStdExtZvmatch()">,
                        AssemblerPredicate<(all_of FeatureStdExtZvmatch),
                            "'Zvmatch' (Vector Match Against Key Set)">;

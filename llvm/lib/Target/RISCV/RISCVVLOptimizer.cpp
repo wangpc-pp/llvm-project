@@ -829,7 +829,7 @@ static std::optional<unsigned> getOperandLog2EEW(const MachineInstr &MI,
 
   // Vector Integer Compare Instructions
   // Dest EEW=1. Source EEW=SEW.
-  case RISCV::VMMATCH_VV:
+  case RISCV::VMMATCH_VS:
   case RISCV::VMMATCH_VX:
   case RISCV::VMSEQ_VI:
   case RISCV::VMSEQ_VV:
@@ -935,6 +935,13 @@ static std::optional<OperandInfo> getOperandInfo(const MachineInstr &MI,
     return std::nullopt;
 
   switch (RVV->BaseInstr) {
+  // The scalar key group has its own register size, independent of query LMUL.
+  case RISCV::VMMATCH_VS:
+    if (OpIdx == static_cast<unsigned>(RISCV::getNamedOperandIdx(
+                     MI.getOpcode(), RISCV::OpName::rs1)))
+      return OperandInfo(*Log2EEW);
+    break;
+
   // Vector Reduction Operations
   // Vector Single-Width Integer Reduction Instructions
   // Vector Widening Integer Reduction Instructions
@@ -1144,12 +1151,15 @@ DemandedVL RISCVVLOptimizerImpl::getMinimumVLForUser(const MachineInstr &UserMI,
   if (auto VL = getMinimumVLForVSLIDEDOWN_VX(UserMI, OpIdx, MRI))
     return *VL;
 
-  if (RISCV::getRVVMCOpcode(UserMI.getOpcode()) == RISCV::VMMATCH_VV) {
+  if (RISCV::getRVVMCOpcode(UserMI.getOpcode()) == RISCV::VMMATCH_VS) {
     int KeyIdx =
         RISCV::getNamedOperandIdx(UserMI.getOpcode(), RISCV::OpName::rs1);
-    assert(KeyIdx >= 0 && "Unexpected vmmatch.vv operand list");
-    if (OpIdx == static_cast<unsigned>(KeyIdx))
-      return DemandedVL::vlmax();
+    assert(KeyIdx >= 0 && "Unexpected vmmatch.vs operand list");
+    // Every query reads the same low 128 bits, independently of its VL.
+    if (OpIdx == static_cast<unsigned>(KeyIdx)) {
+      unsigned Log2SEW = UserMI.getOperand(RISCVII::getSEWOpNum(Desc)).getImm();
+      return MachineOperand::CreateImm(128 >> Log2SEW);
+    }
   }
 
   unsigned RVVOpc = RISCV::getRVVMCOpcode(UserMI.getOpcode());

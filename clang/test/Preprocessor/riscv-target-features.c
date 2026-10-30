@@ -1888,11 +1888,13 @@
 // CHECK-ZVZIP-EXT: __riscv_zvzip 3000{{$}}
 
 // RUN: %clang --target=riscv32 -menable-experimental-extensions \
-// RUN:   -march=rv32iv_zvmatch0p1 -E -dM %s \
+// RUN:   -march=rv32i_zvmatch0p1 -E -dM %s \
 // RUN:   -o - | FileCheck --check-prefix=CHECK-ZVMATCH-EXT %s
 // RUN: %clang --target=riscv64 -menable-experimental-extensions \
-// RUN:   -march=rv64iv_zvmatch0p1 -E -dM %s \
+// RUN:   -march=rv64i_zvmatch0p1 -E -dM %s \
 // RUN:   -o - | FileCheck --check-prefix=CHECK-ZVMATCH-EXT %s
+// CHECK-ZVMATCH-EXT-NOT: __riscv_v 1000000
+// CHECK-ZVMATCH-EXT: __riscv_zve32x 1000000{{$}}
 // CHECK-ZVMATCH-EXT: __riscv_zvmatch 1000{{$}}
 
 // RUN: %clang -target riscv32 -menable-experimental-extensions \

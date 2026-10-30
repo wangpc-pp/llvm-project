@@ -8,13 +8,13 @@
 # RUN:   | llvm-objdump -d --mattr=+experimental-zvmatch --no-print-imm-hex - \
 # RUN:   | FileCheck %s --check-prefix=CHECK-INST
 
-vmmatch.vv v10, v9, v8
-# CHECK-INST: vmmatch.vv v10, v9, v8
+vmmatch.vs v10, v9, v8
+# CHECK-INST: vmmatch.vs v10, v9, v8
 # CHECK-ENCODING: [0x57,0x05,0x94,0xd2]
 # CHECK-ERROR: instruction requires the following: 'Zvmatch' (Vector Match Against Key Set){{$}}
 
-vmmatch.vv v10, v9, v8, v0.t
-# CHECK-INST: vmmatch.vv v10, v9, v8, v0.t
+vmmatch.vs v10, v9, v8, v0.t
+# CHECK-INST: vmmatch.vs v10, v9, v8, v0.t
 # CHECK-ENCODING: [0x57,0x05,0x94,0xd0]
 # CHECK-ERROR: instruction requires the following: 'Zvmatch' (Vector Match Against Key Set){{$}}
 
@@ -29,8 +29,8 @@ vmmatch.vx v10, v9, a6, v0.t
 # CHECK-ERROR: instruction requires the following: 'Zvmatch' (Vector Match Against Key Set){{$}}
 
 # Mask destinations may overlap the query source at its lowest register.
-vmmatch.vv v8, v8, v9
-# CHECK-INST: vmmatch.vv v8, v8, v9
+vmmatch.vs v8, v8, v9
+# CHECK-INST: vmmatch.vs v8, v8, v9
 # CHECK-ENCODING: [0x57,0x84,0x84,0xd2]
 
 vmmatch.vx v8, v8, zero
@@ -38,10 +38,20 @@ vmmatch.vx v8, v8, zero
 # CHECK-ENCODING: [0x57,0x44,0x80,0xd2]
 
 # The masked form permits vd=v0 when neither source group contains v0.
-vmmatch.vv v0, v8, v9, v0.t
-# CHECK-INST: vmmatch.vv v0, v8, v9, v0.t
+vmmatch.vs v0, v8, v9, v0.t
+# CHECK-INST: vmmatch.vs v0, v8, v9, v0.t
 # CHECK-ENCODING: [0x57,0x80,0x84,0xd0]
 
 vmmatch.vx v0, v8, zero, v0.t
 # CHECK-INST: vmmatch.vx v0, v8, zero, v0.t
 # CHECK-ENCODING: [0x57,0x40,0x80,0xd0]
+
+# Key register alignment is independent of the query LMUL at VLEN >= 128.
+# The key and query groups may overlap each other.
+vmmatch.vs v1, v8, v9
+# CHECK-INST: vmmatch.vs v1, v8, v9
+# CHECK-ENCODING: [0xd7,0x80,0x84,0xd2]
+
+vmmatch.vs v1, v8, v8
+# CHECK-INST: vmmatch.vs v1, v8, v8
+# CHECK-ENCODING: [0xd7,0x00,0x84,0xd2]

@@ -1977,21 +1977,21 @@ let TargetPrefix = "riscv" in {
 // Zvmatch - Vector Match Against Key Set
 //===----------------------------------------------------------------------===//
 let TargetPrefix = "riscv" in {
-  multiclass RISCVVMatchVV {
-    // Input: (query, keys, vl)
+  multiclass RISCVVMatchVS {
+    // Input: (query, 128-bit scalar key group, vl)
     def "int_riscv_" # NAME :
       DefaultAttrsIntrinsic<[LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>],
-                            [llvm_anyvector_ty, LLVMMatchType<0>,
+                            [llvm_anyvector_ty, llvm_anyvector_ty,
                              llvm_anyint_ty],
                             [IntrNoMem]>, RISCVVIntrinsic {
       let VLOperand = 2;
     }
 
-    // Input: (maskedoff, query, keys, mask, vl)
+    // Input: (maskedoff, query, 128-bit scalar key group, mask, vl)
     def "int_riscv_" # NAME # "_mask" :
       DefaultAttrsIntrinsic<[LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>],
                             [LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>,
-                             llvm_anyvector_ty, LLVMMatchType<0>,
+                             llvm_anyvector_ty, llvm_anyvector_ty,
                              LLVMScalarOrSameVectorWidth<0, llvm_i1_ty>,
                              llvm_anyint_ty],
                             [IntrNoMem]>, RISCVVIntrinsic {
@@ -2023,7 +2023,7 @@ let TargetPrefix = "riscv" in {
     }
   }
 
-  defm vmmatch_vv : RISCVVMatchVV;
+  defm vmmatch_vs : RISCVVMatchVS;
   defm vmmatch_vx : RISCVVMatchVX;
 } // TargetPrefix = "riscv"
 
