@@ -49,8 +49,7 @@ define half @select_half_eq(i32 %x, half %a, half %b) {
 define half @select_half_ne(i32 %x, half %a, half %b) {
 ; RV32-LABEL: select_half_ne:
 ; RV32:       # %bb.0:
-; RV32-NEXT:    slli a0, a0, 24
-; RV32-NEXT:    bltz a0, .LBB1_2
+; RV32-NEXT:    bbseti a0, 7, .LBB1_2
 ; RV32-NEXT:  # %bb.1:
 ; RV32-NEXT:    fmv.s fa0, fa1
 ; RV32-NEXT:  .LBB1_2:
@@ -58,8 +57,7 @@ define half @select_half_ne(i32 %x, half %a, half %b) {
 ;
 ; RV64-LABEL: select_half_ne:
 ; RV64:       # %bb.0:
-; RV64-NEXT:    slli a0, a0, 56
-; RV64-NEXT:    bltz a0, .LBB1_2
+; RV64-NEXT:    bbseti a0, 7, .LBB1_2
 ; RV64-NEXT:  # %bb.1:
 ; RV64-NEXT:    fmv.s fa0, fa1
 ; RV64-NEXT:  .LBB1_2:
@@ -67,9 +65,9 @@ define half @select_half_ne(i32 %x, half %a, half %b) {
 ;
 ; INX32-LABEL: select_half_ne:
 ; INX32:       # %bb.0:
-; INX32-NEXT:    slli a3, a0, 24
+; INX32-NEXT:    mv a3, a0
 ; INX32-NEXT:    mv a0, a1
-; INX32-NEXT:    bltz a3, .LBB1_2
+; INX32-NEXT:    bbseti a3, 7, .LBB1_2
 ; INX32-NEXT:  # %bb.1:
 ; INX32-NEXT:    mv a0, a2
 ; INX32-NEXT:  .LBB1_2:
@@ -77,9 +75,9 @@ define half @select_half_ne(i32 %x, half %a, half %b) {
 ;
 ; INX64-LABEL: select_half_ne:
 ; INX64:       # %bb.0:
-; INX64-NEXT:    slli a3, a0, 56
+; INX64-NEXT:    mv a3, a0
 ; INX64-NEXT:    mv a0, a1
-; INX64-NEXT:    bltz a3, .LBB1_2
+; INX64-NEXT:    bbseti a3, 7, .LBB1_2
 ; INX64-NEXT:  # %bb.1:
 ; INX64-NEXT:    mv a0, a2
 ; INX64-NEXT:  .LBB1_2:
@@ -135,8 +133,7 @@ define float @select_float_eq(i32 %x, float %a, float %b) {
 define float @select_float_ne(i32 %x, float %a, float %b) {
 ; RV32-LABEL: select_float_ne:
 ; RV32:       # %bb.0:
-; RV32-NEXT:    slli a0, a0, 24
-; RV32-NEXT:    bltz a0, .LBB3_2
+; RV32-NEXT:    bbseti a0, 7, .LBB3_2
 ; RV32-NEXT:  # %bb.1:
 ; RV32-NEXT:    fmv.s fa0, fa1
 ; RV32-NEXT:  .LBB3_2:
@@ -144,8 +141,7 @@ define float @select_float_ne(i32 %x, float %a, float %b) {
 ;
 ; RV64-LABEL: select_float_ne:
 ; RV64:       # %bb.0:
-; RV64-NEXT:    slli a0, a0, 56
-; RV64-NEXT:    bltz a0, .LBB3_2
+; RV64-NEXT:    bbseti a0, 7, .LBB3_2
 ; RV64-NEXT:  # %bb.1:
 ; RV64-NEXT:    fmv.s fa0, fa1
 ; RV64-NEXT:  .LBB3_2:
@@ -153,9 +149,9 @@ define float @select_float_ne(i32 %x, float %a, float %b) {
 ;
 ; INX32-LABEL: select_float_ne:
 ; INX32:       # %bb.0:
-; INX32-NEXT:    slli a3, a0, 24
+; INX32-NEXT:    mv a3, a0
 ; INX32-NEXT:    mv a0, a1
-; INX32-NEXT:    bltz a3, .LBB3_2
+; INX32-NEXT:    bbseti a3, 7, .LBB3_2
 ; INX32-NEXT:  # %bb.1:
 ; INX32-NEXT:    mv a0, a2
 ; INX32-NEXT:  .LBB3_2:
@@ -163,9 +159,9 @@ define float @select_float_ne(i32 %x, float %a, float %b) {
 ;
 ; INX64-LABEL: select_float_ne:
 ; INX64:       # %bb.0:
-; INX64-NEXT:    slli a3, a0, 56
+; INX64-NEXT:    mv a3, a0
 ; INX64-NEXT:    mv a0, a1
-; INX64-NEXT:    bltz a3, .LBB3_2
+; INX64-NEXT:    bbseti a3, 7, .LBB3_2
 ; INX64-NEXT:  # %bb.1:
 ; INX64-NEXT:    mv a0, a2
 ; INX64-NEXT:  .LBB3_2:
@@ -226,8 +222,7 @@ define double @select_double_eq(i32 %x, double %a, double %b) {
 define double @select_double_ne(i32 %x, double %a, double %b) {
 ; RV32-LABEL: select_double_ne:
 ; RV32:       # %bb.0:
-; RV32-NEXT:    slli a0, a0, 24
-; RV32-NEXT:    bltz a0, .LBB5_2
+; RV32-NEXT:    bbseti a0, 7, .LBB5_2
 ; RV32-NEXT:  # %bb.1:
 ; RV32-NEXT:    fmv.d fa0, fa1
 ; RV32-NEXT:  .LBB5_2:
@@ -235,8 +230,7 @@ define double @select_double_ne(i32 %x, double %a, double %b) {
 ;
 ; RV64-LABEL: select_double_ne:
 ; RV64:       # %bb.0:
-; RV64-NEXT:    slli a0, a0, 56
-; RV64-NEXT:    bltz a0, .LBB5_2
+; RV64-NEXT:    bbseti a0, 7, .LBB5_2
 ; RV64-NEXT:  # %bb.1:
 ; RV64-NEXT:    fmv.d fa0, fa1
 ; RV64-NEXT:  .LBB5_2:
@@ -244,8 +238,7 @@ define double @select_double_ne(i32 %x, double %a, double %b) {
 ;
 ; INX32-LABEL: select_double_ne:
 ; INX32:       # %bb.0:
-; INX32-NEXT:    slli a0, a0, 24
-; INX32-NEXT:    bltz a0, .LBB5_2
+; INX32-NEXT:    bbseti a0, 7, .LBB5_2
 ; INX32-NEXT:  # %bb.1:
 ; INX32-NEXT:    mv a7, a4
 ; INX32-NEXT:    mv a6, a3
@@ -260,9 +253,9 @@ define double @select_double_ne(i32 %x, double %a, double %b) {
 ;
 ; INX64-LABEL: select_double_ne:
 ; INX64:       # %bb.0:
-; INX64-NEXT:    slli a3, a0, 56
+; INX64-NEXT:    mv a3, a0
 ; INX64-NEXT:    mv a0, a1
-; INX64-NEXT:    bltz a3, .LBB5_2
+; INX64-NEXT:    bbseti a3, 7, .LBB5_2
 ; INX64-NEXT:  # %bb.1:
 ; INX64-NEXT:    mv a0, a2
 ; INX64-NEXT:  .LBB5_2:

@@ -237,6 +237,18 @@ InstructionCost RISCVTTIImpl::getIntImmCostInst(unsigned Opcode, unsigned Idx,
     // If the address is a constant, use the materialization cost.
     return getIntImmCost(Imm, Ty, CostKind);
   case Instruction::And:
+    // Keep single-bit masks available for folding into Zibs branches/selects.
+    if (ST->hasStdExtZibs() && Imm.getBitWidth() <= ST->getXLen() &&
+        Imm.isPowerOf2() && Inst && Inst->hasOneUse()) {
+      auto *Cmp = dyn_cast<ICmpInst>(*Inst->user_begin());
+      if (Cmp && Cmp->isEquality() && Cmp->hasOneUse()) {
+        auto *C = dyn_cast<ConstantInt>(Cmp->getOperand(1));
+        User *Use = *Cmp->user_begin();
+        if (C && (C->isZero() || C->getValue() == Imm) &&
+            (isa<CondBrInst>(Use) || isa<SelectInst>(Use)))
+          return TTI::TCC_Free;
+      }
+    }
     // zext.h
     if (Imm == UINT64_C(0xffff) && ST->hasStdExtZbb())
       return TTI::TCC_Free;

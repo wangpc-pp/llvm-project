@@ -271,3 +271,25 @@ def : Pat<(riscv_selectcc (XLenVT GPR:$lhs), imm5_zibi:$cimm, ZibiCond:$cc, (XLe
 let Predicates = [HasStdExtZibi, HasConditionalMoveFusion, NoShortForwardBranch] in
 def : Pat<(riscv_selectcc (XLenVT GPR:$lhs), imm5_zibi:$cimm, ZibiCond:$cc, (XLenVT GPRNoX0:$truev), GPRNoX0:$falsev),
           (PseudoCCMOVGPRNoX0 GPRNoX0:$falsev, GPRNoX0:$truev, (CCtoZibiBCC $cc), GPR:$lhs, imm5_zibi:$cimm)>;
+
+def CCtoZibsBCC : SDNodeXForm<cond, [{
+  unsigned Opc = N->get() == ISD::SETEQ ? RISCV::BBSETI : RISCV::BBCLRI;
+  return CurDAG->getTargetConstant(Opc, SDLoc(N), MVT::i32);
+}]>;
+
+// Prefer SFB over the ordinary Zibs select pseudo when both are available.
+let Predicates = [HasStdExtZibs, HasShortForwardBranchIALU],
+    AddedComplexity = 1 in
+def : Pat<(riscv_selectcc (and (XLenVT GPR:$lhs), ZibsMask:$mask), 0,
+                          ZibsCond:$cc, (XLenVT GPR:$truev), GPR:$falsev),
+          (PseudoCCMOVGPR GPR:$falsev, GPR:$truev, (CCtoZibsBCC $cc),
+                         GPR:$lhs, (XLenVT (ZibsBitIndex ZibsMask:$mask)))>;
+
+let Predicates = [HasStdExtZibs, HasConditionalMoveFusion, NoShortForwardBranch],
+    AddedComplexity = 1 in
+def : Pat<(riscv_selectcc (and (XLenVT GPR:$lhs), ZibsMask:$mask), 0,
+                          ZibsCond:$cc, (XLenVT GPRNoX0:$truev),
+                          GPRNoX0:$falsev),
+          (PseudoCCMOVGPRNoX0 GPRNoX0:$falsev, GPRNoX0:$truev,
+                             (CCtoZibsBCC $cc), GPR:$lhs,
+                             (XLenVT (ZibsBitIndex ZibsMask:$mask)))>;

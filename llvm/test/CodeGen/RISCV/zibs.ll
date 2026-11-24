@@ -1010,9 +1010,9 @@ define i32 @select_eq_i32(i32 %x, i32 %a, i32 %b) {
 define i32 @select_ne_i32(i32 %x, i32 %a, i32 %b) {
 ; RV32-LABEL: select_ne_i32:
 ; RV32:       # %bb.0:
-; RV32-NEXT:    slli a3, a0, 24
+; RV32-NEXT:    mv a3, a0
 ; RV32-NEXT:    mv a0, a1
-; RV32-NEXT:    bltz a3, .LBB11_2
+; RV32-NEXT:    bbseti a3, 7, .LBB11_2
 ; RV32-NEXT:  # %bb.1:
 ; RV32-NEXT:    mv a0, a2
 ; RV32-NEXT:  .LBB11_2:
@@ -1020,9 +1020,9 @@ define i32 @select_ne_i32(i32 %x, i32 %a, i32 %b) {
 ;
 ; RV64-LABEL: select_ne_i32:
 ; RV64:       # %bb.0:
-; RV64-NEXT:    slli a3, a0, 56
+; RV64-NEXT:    mv a3, a0
 ; RV64-NEXT:    mv a0, a1
-; RV64-NEXT:    bltz a3, .LBB11_2
+; RV64-NEXT:    bbseti a3, 7, .LBB11_2
 ; RV64-NEXT:  # %bb.1:
 ; RV64-NEXT:    mv a0, a2
 ; RV64-NEXT:  .LBB11_2:
@@ -1050,9 +1050,9 @@ define i32 @select_ne_i32(i32 %x, i32 %a, i32 %b) {
 ;
 ; ZBS-LABEL: select_ne_i32:
 ; ZBS:       # %bb.0:
-; ZBS-NEXT:    slli a3, a0, 56
+; ZBS-NEXT:    mv a3, a0
 ; ZBS-NEXT:    mv a0, a1
-; ZBS-NEXT:    bltz a3, .LBB11_2
+; ZBS-NEXT:    bbseti a3, 7, .LBB11_2
 ; ZBS-NEXT:  # %bb.1:
 ; ZBS-NEXT:    mv a0, a2
 ; ZBS-NEXT:  .LBB11_2:
@@ -2157,26 +2157,26 @@ define i64 @select_eq_i64(i64 %x, i64 %a, i64 %b) {
 define i64 @select_ne_i64(i64 %x, i64 %a, i64 %b) {
 ; RV32-LABEL: select_ne_i64:
 ; RV32:       # %bb.0:
+; RV32-NEXT:    mv a6, a0
 ; RV32-NEXT:    mv a1, a3
-; RV32-NEXT:    srli a3, a0, 7
 ; RV32-NEXT:    mv a0, a2
-; RV32-NEXT:    bbclri a3, 0, .LBB24_3
+; RV32-NEXT:    bbclri a6, 7, .LBB24_3
 ; RV32-NEXT:  # %bb.1:
-; RV32-NEXT:    bbclri a3, 0, .LBB24_4
+; RV32-NEXT:    bbclri a6, 7, .LBB24_4
 ; RV32-NEXT:  .LBB24_2:
 ; RV32-NEXT:    ret
 ; RV32-NEXT:  .LBB24_3:
 ; RV32-NEXT:    mv a0, a4
-; RV32-NEXT:    bbseti a3, 0, .LBB24_2
+; RV32-NEXT:    bbseti a6, 7, .LBB24_2
 ; RV32-NEXT:  .LBB24_4:
 ; RV32-NEXT:    mv a1, a5
 ; RV32-NEXT:    ret
 ;
 ; RV64-LABEL: select_ne_i64:
 ; RV64:       # %bb.0:
-; RV64-NEXT:    slli a3, a0, 56
+; RV64-NEXT:    mv a3, a0
 ; RV64-NEXT:    mv a0, a1
-; RV64-NEXT:    bltz a3, .LBB24_2
+; RV64-NEXT:    bbseti a3, 7, .LBB24_2
 ; RV64-NEXT:  # %bb.1:
 ; RV64-NEXT:    mv a0, a2
 ; RV64-NEXT:  .LBB24_2:
@@ -2207,9 +2207,9 @@ define i64 @select_ne_i64(i64 %x, i64 %a, i64 %b) {
 ;
 ; ZBS-LABEL: select_ne_i64:
 ; ZBS:       # %bb.0:
-; ZBS-NEXT:    slli a3, a0, 56
+; ZBS-NEXT:    mv a3, a0
 ; ZBS-NEXT:    mv a0, a1
-; ZBS-NEXT:    bltz a3, .LBB24_2
+; ZBS-NEXT:    bbseti a3, 7, .LBB24_2
 ; ZBS-NEXT:  # %bb.1:
 ; ZBS-NEXT:    mv a0, a2
 ; ZBS-NEXT:  .LBB24_2:

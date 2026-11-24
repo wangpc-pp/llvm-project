@@ -2641,6 +2641,19 @@ bool RISCVTargetLowering::isCheapToSpeculateCtlz(Type *Ty) const {
 
 bool RISCVTargetLowering::isMaskAndCmp0FoldingBeneficial(
     const Instruction &AndI) const {
+  ConstantInt *Mask = dyn_cast<ConstantInt>(AndI.getOperand(1));
+  if (Subtarget.hasStdExtZibs() && Mask &&
+      Mask->getBitWidth() <= Subtarget.getXLen() &&
+      Mask->getValue().isPowerOf2() &&
+      all_of(AndI.users(), [](const User *U) {
+        const auto *Cmp = dyn_cast<ICmpInst>(U);
+        return Cmp && Cmp->isEquality() &&
+               all_of(Cmp->users(), [](const User *CU) {
+                 return isa<CondBrInst>(CU) || isa<SelectInst>(CU);
+               });
+      }))
+    return true;
+
   // We expect to be able to match a bit extraction instruction if the Zbs
   // extension is supported and the mask is a power of two. However, we
   // conservatively return false if the mask would fit in an ANDI instruction,
@@ -2649,7 +2662,6 @@ bool RISCVTargetLowering::isMaskAndCmp0FoldingBeneficial(
   // count and would increase code size (e.g. ANDI+BNEZ => BEXTI+BNEZ).
   if (!Subtarget.hasBEXTILike())
     return false;
-  ConstantInt *Mask = dyn_cast<ConstantInt>(AndI.getOperand(1));
   if (!Mask)
     return false;
   return !Mask->getValue().isSignedIntN(12) && Mask->getValue().isPowerOf2();
@@ -24398,10 +24410,109 @@ static SDValue tryDemorganOfBooleanCondition(SDValue Cond, SelectionDAG &DAG) {
   return DAG.getNode(Opc, SDLoc(Cond), VT, Setcc, Xor.getOperand(0));
 }
 
+// Expose a single-bit test to Zibs instruction selection, looking through
+// operations that only move or invert the tested bit.
+static bool combineZibsCC(SDValue &LHS, SDValue &RHS, SDValue &CC,
+                          const SDLoc &DL, SelectionDAG &DAG) {
+  ISD::CondCode CCVal = cast<CondCodeSDNode>(CC)->get();
+  EVT VT = LHS.getValueType();
+  unsigned Width = VT.getSizeInBits();
+  SDValue Source = LHS;
+  unsigned Bit;
+  bool IsSet;
+  if (isNullConstant(RHS) && (CCVal == ISD::SETLT || CCVal == ISD::SETGE)) {
+    Bit = Width - 1;
+    IsSet = CCVal == ISD::SETLT;
+  } else if (ISD::isIntEqualitySetCC(CCVal) && LHS.getOpcode() == ISD::AND) {
+    auto *Mask = dyn_cast<ConstantSDNode>(LHS.getOperand(1));
+    auto *Cmp = dyn_cast<ConstantSDNode>(RHS);
+    if (!Mask || !Mask->getAPIntValue().isPowerOf2() || !Cmp ||
+        (!Cmp->isZero() && Cmp->getAPIntValue() != Mask->getAPIntValue()))
+      return false;
+    Bit = Mask->getAPIntValue().logBase2();
+    IsSet = (CCVal == ISD::SETNE) == Cmp->isZero();
+    Source = LHS.getOperand(0);
+  } else if (isNullConstant(RHS) && ISD::isIntEqualitySetCC(CCVal) &&
+             (LHS.getOpcode() == ISD::SRL || LHS.getOpcode() == ISD::SRA) &&
+             isa<ConstantSDNode>(LHS.getOperand(1)) &&
+             LHS.getConstantOperandVal(1) == Width - 1) {
+    Bit = 0;
+    IsSet = CCVal == ISD::SETNE;
+  } else {
+    return false;
+  }
+
+  while (true) {
+    unsigned Opc = Source.getOpcode();
+    if (Opc == ISD::SIGN_EXTEND_INREG) {
+      unsigned SrcWidth =
+          cast<VTSDNode>(Source.getOperand(1))->getVT().getSizeInBits();
+      Bit = std::min(Bit, SrcWidth - 1);
+      Source = Source.getOperand(0);
+      continue;
+    }
+
+    bool IsWord =
+        Opc == RISCVISD::SLLW || Opc == RISCVISD::SRLW || Opc == RISCVISD::SRAW;
+    if (Opc == ISD::SHL || Opc == ISD::SRL || Opc == ISD::SRA || IsWord) {
+      auto *Shift = dyn_cast<ConstantSDNode>(Source.getOperand(1));
+      if (!Shift)
+        break;
+      unsigned OpWidth = IsWord ? 32 : Width;
+      uint64_t Amount = Shift->getZExtValue();
+      if (IsWord) {
+        Amount &= 31;
+        Bit = std::min(Bit, 31U);
+      } else if (Amount >= OpWidth) {
+        break;
+      }
+      if (Opc == ISD::SHL || Opc == RISCVISD::SLLW) {
+        if (Bit < Amount)
+          break;
+        Bit -= Amount;
+      } else if (Opc == ISD::SRL || Opc == RISCVISD::SRLW) {
+        if (Bit + Amount >= OpWidth)
+          break;
+        Bit += Amount;
+      } else {
+        Bit = std::min<uint64_t>(Bit + Amount, OpWidth - 1);
+      }
+      Source = Source.getOperand(0);
+      continue;
+    }
+
+    if (Opc == ISD::AND || Opc == ISD::OR || Opc == ISD::XOR) {
+      auto *C = dyn_cast<ConstantSDNode>(Source.getOperand(1));
+      if (!C || (Opc == ISD::AND && !C->getAPIntValue()[Bit]) ||
+          (Opc == ISD::OR && C->getAPIntValue()[Bit]))
+        break;
+      if (Opc == ISD::XOR && C->getAPIntValue()[Bit])
+        IsSet = !IsSet;
+      Source = Source.getOperand(0);
+      continue;
+    }
+    break;
+  }
+
+  SDValue NewLHS =
+      DAG.getNode(ISD::AND, DL, VT, Source,
+                  DAG.getConstant(APInt::getOneBitSet(Width, Bit), DL, VT));
+  SDValue NewRHS = DAG.getConstant(0, DL, VT);
+  SDValue NewCC = DAG.getCondCode(IsSet ? ISD::SETNE : ISD::SETEQ);
+  if (NewLHS == LHS && NewRHS == RHS && NewCC == CC)
+    return false;
+  LHS = NewLHS;
+  RHS = NewRHS;
+  CC = NewCC;
+  return true;
+}
 // Perform common combines for BR_CC and SELECT_CC conditions.
 static bool combine_CC(SDValue &LHS, SDValue &RHS, SDValue &CC, const SDLoc &DL,
                        SelectionDAG &DAG, const RISCVSubtarget &Subtarget) {
   ISD::CondCode CCVal = cast<CondCodeSDNode>(CC)->get();
+
+  if (Subtarget.hasStdExtZibs() && combineZibsCC(LHS, RHS, CC, DL, DAG))
+    return true;
 
   // As far as arithmetic right shift always saves the sign,
   // shift can be omitted.
@@ -31596,6 +31707,8 @@ RISCVTargetLowering::BuildSDIVPow2(SDNode *N, const APInt &Divisor,
 
 bool RISCVTargetLowering::shouldFoldSelectWithSingleBitTest(
     EVT VT, const APInt &AndMask) const {
+  if (Subtarget.hasStdExtZibs() && AndMask.getBitWidth() <= Subtarget.getXLen())
+    return false;
   if (Subtarget.hasStdExtZicond() || Subtarget.hasVendorXTHeadCondMov())
     return !Subtarget.hasBEXTILike() && AndMask.ugt(1024);
   return TargetLowering::shouldFoldSelectWithSingleBitTest(VT, AndMask);
