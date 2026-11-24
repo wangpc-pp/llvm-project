@@ -164,6 +164,7 @@
 ; RUN: llc -mtriple=riscv32 -mattr=+ssctr  %s -o - | FileCheck --check-prefix=RV32SSCTR %s
 ; RUN: llc -mtriple=riscv32 -mattr=+experimental-p %s -o - | FileCheck --check-prefix=RV32P %s
 ; RUN: llc -mtriple=riscv32 -mattr=+experimental-zibi %s -o - | FileCheck --check-prefix=RV32ZIBI %s
+; RUN: llc -mtriple=riscv32 -mattr=+experimental-zibs %s -o - | FileCheck --check-prefix=RV32ZIBS %s
 ; RUN: llc -mtriple=riscv32 -mattr=+experimental-zilx %s -o - | FileCheck --check-prefix=RV32ZILX %s
 ; RUN: llc -mtriple=riscv32 -mattr=+experimental-zvqwbdota8i %s -o - | FileCheck --check-prefixes=CHECK,RV32ZVQWBDOTA8I %s
 ; RUN: llc -mtriple=riscv32 -mattr=+experimental-zvqwbdota16i %s -o - | FileCheck --check-prefixes=CHECK,RV32ZVQWBDOTA16I %s
@@ -346,6 +347,7 @@
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-y,+experimental-zyhybrid -target-abi lp64 %s -o - | FileCheck --check-prefix=RV64Y-ZYHYBRID %s
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-zyhybrid -target-abi lp64 %s -o - | FileCheck --check-prefix=RV64I-ZYHYBRID %s
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-zibi %s -o - | FileCheck --check-prefix=RV64ZIBI %s
+; RUN: llc -mtriple=riscv64 -mattr=+experimental-zibs %s -o - | FileCheck --check-prefix=RV64ZIBS %s
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-zilx %s -o - | FileCheck --check-prefix=RV64ZILX %s
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-zvqwbdota8i %s -o - | FileCheck --check-prefixes=CHECK,RV64ZVQWBDOTA8I %s
 ; RUN: llc -mtriple=riscv64 -mattr=+experimental-zvqwbdota16i %s -o - | FileCheck --check-prefixes=CHECK,RV64ZVQWBDOTA16I %s
@@ -537,6 +539,7 @@
 ; RV32SSCTR: .attribute 5, "rv32i2p1_sscsrind1p0_ssctr1p0"
 ; RV32P: .attribute 5, "rv32i2p1_p0p21_zicsr2p0_zmmul1p0_zba1p0_zbb1p0"
 ; RV32ZIBI: .attribute 5, "rv32i2p1_zibi0p1"
+; RV32ZIBS: .attribute 5, "rv32i2p1_zibs0p1"
 ; RV32ZVQWBDOTA8I: .attribute 5, "rv32i2p1_zicsr2p0_zve32x1p0_zvl32b1p0_zvqwbdota8i0p2"
 ; RV32ZVQWBDOTA16I: .attribute 5, "rv32i2p1_zicsr2p0_zve32x1p0_zve64x1p0_zvl32b1p0_zvl64b1p0_zvqwbdota16i0p2"
 ; RV32ZVFWBDOTA16BF: .attribute 5, "rv32i2p1_f2p2_zicsr2p0_zve32f1p0_zve32x1p0_zvfwbdota16bf0p2_zvl32b1p0"
@@ -717,6 +720,7 @@
 ; RV64Y-ZYHYBRID: .attribute 5, "rv64y0p910_zyhybrid0p910"
 ; RV64I-ZYHYBRID: .attribute 5, "rv64i2p1_zyhybrid0p910"
 ; RV64ZIBI: .attribute 5, "rv64i2p1_zibi0p1"
+; RV64ZIBS: .attribute 5, "rv64i2p1_zibs0p1"
 ; RV64ZVQWBDOTA8I: .attribute 5, "rv64i2p1_zicsr2p0_zve32x1p0_zvl32b1p0_zvqwbdota8i0p2"
 ; RV64ZVQWBDOTA16I: .attribute 5, "rv64i2p1_zicsr2p0_zve32x1p0_zve64x1p0_zvl32b1p0_zvl64b1p0_zvqwbdota16i0p2"
 ; RV64ZVFWBDOTA16BF: .attribute 5, "rv64i2p1_f2p2_zicsr2p0_zve32f1p0_zve32x1p0_zvfwbdota16bf0p2_zvl32b1p0"

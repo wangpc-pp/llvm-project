@@ -85,6 +85,12 @@ def HasStdExtZibi : Predicate<"Subtarget->hasStdExtZibi()">,
                     AssemblerPredicate<(all_of FeatureStdExtZibi),
                                        "'Zibi' (Branch with Immediate)">;
 
+def FeatureStdExtZibs
+    : RISCVExperimentalExtension<0, 1, "Single-Bit Conditional Branches">;
+def HasStdExtZibs : Predicate<"Subtarget->hasStdExtZibs()">,
+                    AssemblerPredicate<(all_of FeatureStdExtZibs),
+                                       "'Zibs' (Single-Bit Conditional Branches)">;
+
 def FeatureStdExtZic64b
     : RISCVExtension<1, 0, "Cache Block Size Is 64 Bytes">;
 

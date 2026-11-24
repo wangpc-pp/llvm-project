@@ -1771,6 +1771,7 @@ Experimental extensions
     y                    0.910
     p                    0.21
     zibi                 0.1
+    zibs                 0.1
     zicfilp              1.0       This is a long dummy description
     zilx                 0.1
     zyhybrid             0.910
@@ -1877,4 +1878,20 @@ ISA String: rv64i2p1_zicfilp1p0_zicsr2p0
   std::string CapturedOutput = testing::internal::GetCapturedStdout();
 
   EXPECT_EQ(CapturedOutput, ExpectedOutput);
+}
+
+TEST(RISCVISAInfoTest, Zibs) {
+  for (StringRef Arch : {"rv32izibs0p1", "rv64izibs0p1"}) {
+    auto Info = RISCVISAInfo::parseArchString(Arch, true);
+    ASSERT_THAT_EXPECTED(Info, Succeeded());
+    EXPECT_TRUE((*Info)->hasExtension("zibs"));
+    EXPECT_EQ((*Info)->getExtensions().at("zibs").Major, 0U);
+    EXPECT_EQ((*Info)->getExtensions().at("zibs").Minor, 1U);
+  }
+  EXPECT_THAT_EXPECTED(RISCVISAInfo::parseArchString("rv64izibs0p1", false),
+                       Failed());
+  EXPECT_THAT_EXPECTED(RISCVISAInfo::parseArchString("rv64izibs", true),
+                       Failed());
+  EXPECT_THAT_EXPECTED(RISCVISAInfo::parseArchString("rv64izibs0p2", true),
+                       Failed());
 }

@@ -45,6 +45,7 @@
 ; CHECK-NEXT:   experimental-xsfsclic            - 'XSfsclic' (SiFive CLIC Supervisor-mode CSRs).
 ; CHECK-NEXT:   experimental-y                   - 'Y' ('Base Y' (CHERI)).
 ; CHECK-NEXT:   experimental-zibi                - 'Zibi' (Branch with Immediate).
+; CHECK-NEXT:   experimental-zibs                - 'Zibs' (Single-Bit Conditional Branches).
 ; CHECK-NEXT:   experimental-zicfilp             - 'Zicfilp' (Landing pad).
 ; CHECK-NEXT:   experimental-zilx                - 'Zilx' (Indexed Integer Load Instructions).
 ; CHECK-NEXT:   experimental-zvabd               - 'Zvabd' (Vector Absolute Difference).

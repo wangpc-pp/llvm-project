@@ -251,6 +251,7 @@
 // CHECK-NEXT:     y                    0.910     'Y' ('Base Y' (CHERI))
 // CHECK-NEXT:     p                    0.21      'P' ('Base P' (Packed SIMD))
 // CHECK-NEXT:     zibi                 0.1       'Zibi' (Branch with Immediate)
+// CHECK-NEXT:     zibs                 0.1       'Zibs' (Single-Bit Conditional Branches)
 // CHECK-NEXT:     zicfilp              1.0       'Zicfilp' (Landing pad)
 // CHECK-NEXT:     zilx                 0.1       'Zilx' (Indexed Integer Load Instructions)
 // CHECK-NEXT:     zyhybrid             0.910     'Zyhybrid' (Hybrid Extension for RVI Compatibility)

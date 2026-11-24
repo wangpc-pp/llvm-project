@@ -338,6 +338,10 @@ static unsigned getInvertedBranchOp(unsigned BrOp) {
     return RISCV::BNEI;
   case RISCV::PseudoLongBNEI:
     return RISCV::BEQI;
+  case RISCV::PseudoLongBBCLRI:
+    return RISCV::BBSETI;
+  case RISCV::PseudoLongBBSETI:
+    return RISCV::BBCLRI;
   case RISCV::PseudoLongBLT:
     return RISCV::BGE;
   case RISCV::PseudoLongBGE:
@@ -599,6 +603,8 @@ void RISCVMCCodeEmitter::encodeInstruction(const MCInst &MI,
   case RISCV::PseudoLongBNE:
   case RISCV::PseudoLongBEQI:
   case RISCV::PseudoLongBNEI:
+  case RISCV::PseudoLongBBCLRI:
+  case RISCV::PseudoLongBBSETI:
   case RISCV::PseudoLongBLT:
   case RISCV::PseudoLongBGE:
   case RISCV::PseudoLongBLTU:

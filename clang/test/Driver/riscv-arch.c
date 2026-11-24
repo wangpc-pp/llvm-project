@@ -390,6 +390,25 @@
 // RUN: -fsyntax-only 2>&1 | FileCheck -check-prefix=RV32-EXPERIMENTAL-GOODVERS %s
 // RV32-EXPERIMENTAL-GOODVERS: "-target-feature" "+experimental-zibi"
 
+// RUN: not %clang --target=riscv32-unknown-elf -march=rv32izibs -### %s \
+// RUN: -fsyntax-only 2>&1 | FileCheck -check-prefix=RV32-ZIBS-NOFLAG %s
+// RV32-ZIBS-NOFLAG: error: invalid arch name 'rv32izibs'
+// RV32-ZIBS-NOFLAG: requires '-menable-experimental-extensions'
+
+// RUN: not %clang --target=riscv32-unknown-elf -march=rv32izibs -menable-experimental-extensions -### %s \
+// RUN: -fsyntax-only 2>&1 | FileCheck -check-prefix=RV32-ZIBS-NOVERS %s
+// RV32-ZIBS-NOVERS: error: invalid arch name 'rv32izibs'
+// RV32-ZIBS-NOVERS: experimental extension requires explicit version number
+
+// RUN: not %clang --target=riscv32-unknown-elf -march=rv32izibs0p7 -menable-experimental-extensions -### %s \
+// RUN: -fsyntax-only 2>&1 | FileCheck -check-prefix=RV32-ZIBS-BADVERS %s
+// RV32-ZIBS-BADVERS: error: invalid arch name 'rv32izibs0p7'
+// RV32-ZIBS-BADVERS: unsupported version number 0.7 for experimental extension 'zibs' (this compiler supports 0.1)
+
+// RUN: %clang --target=riscv32-unknown-elf -march=rv32izibs0p1 -menable-experimental-extensions -### %s \
+// RUN: -fsyntax-only 2>&1 | FileCheck -check-prefix=RV32-ZIBS-GOODVERS %s
+// RV32-ZIBS-GOODVERS: "-target-feature" "+experimental-zibs"
+
 // RUN: %clang --target=riscv32-unknown-elf -march=rv32izalasr1p0 -### %s \
 // RUN: -fsyntax-only 2>&1 | FileCheck -check-prefix=RV32-ZALASR %s
 // RUN: %clang --target=riscv32-unknown-elf -march=rv32izalasr -### %s \
