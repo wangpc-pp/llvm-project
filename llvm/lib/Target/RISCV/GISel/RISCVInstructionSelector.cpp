@@ -89,6 +89,8 @@ private:
   bool selectAddr(MachineInstr &MI, bool IsLocal = true,
                   bool IsExternWeak = false) const;
   bool selectSelect(MachineInstr &MI) const;
+  bool getZibsBitTest(Register &LHS, Register RHS, RISCVCC::CondCode CC,
+                      unsigned &Bit) const;
   bool selectFPCompare(MachineInstr &MI) const;
   void emitFence(AtomicOrdering FenceOrdering, SyncScope::ID FenceSSID,
                  MachineInstr &MI) const;
@@ -822,6 +824,27 @@ static void getOperandsForBranch(Register CondReg, RISCVCC::CondCode &CC,
   CC = getRISCVCCFromICmp(Pred);
 }
 
+bool RISCVInstructionSelector::getZibsBitTest(Register &LHS, Register RHS,
+                                              RISCVCC::CondCode CC,
+                                              unsigned &Bit) const {
+  if (!STI.hasStdExtZibs() ||
+      (CC != RISCVCC::COND_EQ && CC != RISCVCC::COND_NE))
+    return false;
+  if (RHS != RISCV::X0) {
+    auto C = getIConstantVRegSExtVal(RHS, *MRI);
+    if (!C || *C != 0)
+      return false;
+  }
+  Register Source;
+  APInt Mask;
+  if (!mi_match(LHS, *MRI, m_GAnd(m_Reg(Source), m_ICst(Mask))) ||
+      !Mask.isPowerOf2() || Mask.getBitWidth() > STI.getXLen())
+    return false;
+  LHS = Source;
+  Bit = Mask.logBase2();
+  return true;
+}
+
 /// Select the RISC-V Zalasr opcode for the G_LOAD or G_STORE operation
 /// \p GenericOpc, appropriate for the GPR register bank and of memory access
 /// size \p OpSize.
@@ -1494,12 +1517,19 @@ bool RISCVInstructionSelector::select(MachineInstr &MI) {
     Register LHS, RHS;
     RISCVCC::CondCode CC;
     getOperandsForBranch(MI.getOperand(0).getReg(), CC, LHS, RHS, *MRI);
-
-    MachineInstr *Bcc = BuildMI(*MI.getParent(), MI, MI.getDebugLoc(),
-                                TII.get(RISCVCC::getBrCond(CC)))
-                            .addReg(LHS)
-                            .addReg(RHS)
-                            .addMBB(MI.getOperand(1).getMBB());
+    unsigned Bit;
+    bool IsBitTest = getZibsBitTest(LHS, RHS, CC, Bit);
+    unsigned Opc =
+        IsBitTest ? (CC == RISCVCC::COND_EQ ? RISCV::BBCLRI : RISCV::BBSETI)
+                  : RISCVCC::getBrCond(CC);
+    MachineInstrBuilder Bcc =
+        BuildMI(*MI.getParent(), MI, MI.getDebugLoc(), TII.get(Opc))
+            .addReg(LHS);
+    if (IsBitTest)
+      Bcc.addImm(Bit);
+    else
+      Bcc.addReg(RHS);
+    Bcc.addMBB(MI.getOperand(1).getMBB());
     MI.eraseFromParent();
     constrainSelectedInstRegOperands(*Bcc, TII, TRI, RBI);
     return true;
@@ -2129,24 +2159,34 @@ bool RISCVInstructionSelector::selectSelect(MachineInstr &MI) const {
   Register LHS, RHS;
   RISCVCC::CondCode CC;
   getOperandsForBranch(SelectMI.getCondReg(), CC, LHS, RHS, *MRI);
+  unsigned Bit;
+  bool IsBitTest = getZibsBitTest(LHS, RHS, CC, Bit);
 
   Register DstReg = SelectMI.getReg(0);
 
   unsigned Opc = RISCV::Select_GPR_Using_CC_GPR;
+  if (IsBitTest)
+    Opc = RISCV::Select_GPR_Using_CC_UImmLog2XLen_Zibs;
   if (RBI.getRegBank(DstReg, *MRI, TRI)->getID() == RISCV::FPRBRegBankID) {
     unsigned Size = MRI->getType(DstReg).getSizeInBits();
     Opc = Size == 32 ? RISCV::Select_FPR32_Using_CC_GPR
                      : RISCV::Select_FPR64_Using_CC_GPR;
+    if (IsBitTest)
+      Opc = Size == 32 ? RISCV::Select_FPR32_Using_CC_UImmLog2XLen_Zibs
+                       : RISCV::Select_FPR64_Using_CC_UImmLog2XLen_Zibs;
   }
 
-  MachineInstr *Result =
+  MachineInstrBuilder Result =
       BuildMI(*MI.getParent(), MI, MI.getDebugLoc(), TII.get(Opc))
           .addDef(DstReg)
-          .addReg(LHS)
-          .addReg(RHS)
-          .addImm(CC)
-          .addReg(SelectMI.getTrueReg())
-          .addReg(SelectMI.getFalseReg());
+          .addReg(LHS);
+  if (IsBitTest)
+    Result.addImm(Bit);
+  else
+    Result.addReg(RHS);
+  Result.addImm(CC)
+      .addReg(SelectMI.getTrueReg())
+      .addReg(SelectMI.getFalseReg());
   MI.eraseFromParent();
   constrainSelectedInstRegOperands(*Result, TII, TRI, RBI);
   return true;

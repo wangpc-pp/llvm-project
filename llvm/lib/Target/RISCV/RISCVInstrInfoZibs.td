@@ -45,3 +45,55 @@ let Predicates = [HasStdExtZibs] in {
   def PseudoLongBBCLRI : LongBcciPseudo<uimmlog2xlen, 8>;
   def PseudoLongBBSETI : LongBcciPseudo<uimmlog2xlen, 8>;
 }
+
+def ZibsMask : IntImmLeaf<XLenVT, [{ return Imm.isPowerOf2(); }]>;
+def ZibsBitIndex : SDNodeXForm<imm, [{
+  return CurDAG->getTargetConstant(N->getAPIntValue().logBase2(), SDLoc(N),
+                                   Subtarget->getXLenVT());
+}]>;
+
+def ZibsCond : PatLeaf<(cond), [{
+  return ISD::isIntEqualitySetCC(N->get());
+}]>;
+
+multiclass ZibsSelect<DAGOperand RC, ValueType VT> {
+  let usesCustomInserter = 1 in
+  def _Using_CC_UImmLog2XLen_Zibs
+      : Pseudo<(outs RC:$dst),
+               (ins GPR:$lhs, uimmlog2xlen:$shamt, uimm1:$cc,
+                    RC:$truev, RC:$falsev), []>;
+
+  def : Pat<(riscv_selectcc (and (XLenVT GPR:$lhs), ZibsMask:$mask), 0,
+                            ZibsCond:$cc, (VT RC:$truev), RC:$falsev),
+            (!cast<Instruction>(NAME#"_Using_CC_UImmLog2XLen_Zibs")
+                GPR:$lhs, (ZibsBitIndex ZibsMask:$mask), (CCtoRISCVCC $cc),
+                RC:$truev, RC:$falsev)>;
+}
+
+let Predicates = [HasStdExtZibs] in {
+  def : Pat<(riscv_brcc (and (XLenVT GPR:$rs1), ZibsMask:$mask), 0,
+                         SETEQ, bb:$imm12),
+            (BBCLRI GPR:$rs1, (ZibsBitIndex ZibsMask:$mask),
+                    bare_simm13_lsb0_bb:$imm12)>;
+  def : Pat<(riscv_brcc (and (XLenVT GPR:$rs1), ZibsMask:$mask), 0,
+                         SETNE, bb:$imm12),
+            (BBSETI GPR:$rs1, (ZibsBitIndex ZibsMask:$mask),
+                    bare_simm13_lsb0_bb:$imm12)>;
+
+  defm Select_GPR : ZibsSelect<GPR, XLenVT>;
+}
+
+let Predicates = [HasStdExtZibs, HasStdExtF] in
+defm Select_FPR32 : ZibsSelect<FPR32, f32>;
+let Predicates = [HasStdExtZibs, HasStdExtD] in
+defm Select_FPR64 : ZibsSelect<FPR64, f64>;
+let Predicates = [HasStdExtZibs, HasStdExtZfhmin] in
+defm Select_FPR16 : ZibsSelect<FPR16, f16>;
+let Predicates = [HasStdExtZibs, HasStdExtZfinx] in
+defm Select_FPR32INX : ZibsSelect<FPR32INX, f32>;
+let Predicates = [HasStdExtZibs, HasStdExtZdinx, IsRV64] in
+defm Select_FPR64INX : ZibsSelect<FPR64INX, f64>;
+let Predicates = [HasStdExtZibs, HasStdExtZdinx, IsRV32] in
+defm Select_FPR64IN32X : ZibsSelect<FPR64IN32X, f64>;
+let Predicates = [HasStdExtZibs, HasStdExtZhinxmin] in
+defm Select_FPR16INX : ZibsSelect<FPR16INX, f16>;

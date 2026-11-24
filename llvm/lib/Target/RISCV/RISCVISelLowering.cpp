@@ -2987,7 +2987,9 @@ static void translateSetCCForBranch(const SDLoc &DL, SDValue &LHS, SDValue &RHS,
       // XAndesPerf supports branch on test bit.
       !Subtarget.hasVendorXAndesPerf()) {
     uint64_t Mask = LHS.getConstantOperandVal(1);
-    if ((isPowerOf2_64(Mask) || isMask_64(Mask)) && !isInt<12>(Mask)) {
+    if (((isPowerOf2_64(Mask) && !Subtarget.hasStdExtZibs()) ||
+         isMask_64(Mask)) &&
+        !isInt<12>(Mask)) {
       unsigned ShAmt = 0;
       if (isPowerOf2_64(Mask)) {
         CC = CC == ISD::SETEQ ? ISD::SETGE : ISD::SETLT;
@@ -28829,6 +28831,14 @@ RISCVTargetLowering::EmitInstrWithCustomInserter(MachineInstr &MI,
     return emitReadCounterWidePseudo(MI, BB);
   case RISCV::Select_GPR_Using_CC_GPR:
   case RISCV::Select_GPR_Using_CC_Imm5_Zibi:
+  case RISCV::Select_GPR_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR16_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR16INX_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR32_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR32INX_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR64_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR64INX_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR64IN32X_Using_CC_UImmLog2XLen_Zibs:
   case RISCV::Select_GPR_Using_CC_SImm5_CV:
   case RISCV::Select_GPRNoX0_Using_CC_SImm5NonZero_QC:
   case RISCV::Select_GPRNoX0_Using_CC_UImm5NonZero_QC:

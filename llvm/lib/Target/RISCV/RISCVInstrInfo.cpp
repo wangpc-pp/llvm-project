@@ -1073,6 +1073,10 @@ RISCVCC::CondCode RISCVInstrInfo::getCondFromBranchOpc(unsigned Opc) {
   switch (Opc) {
   default:
     return RISCVCC::COND_INVALID;
+  case RISCV::BBCLRI:
+    return RISCVCC::COND_BIT_CLEAR;
+  case RISCV::BBSETI:
+    return RISCVCC::COND_BIT_SET;
   case RISCV::BEQ:
   case RISCV::BEQI:
   case RISCV::CV_BEQIMM:
@@ -1125,6 +1129,10 @@ bool RISCVInstrInfo::evaluateCondBranch(RISCVCC::CondCode CC, int64_t C0,
     return (uint64_t)C0 < (uint64_t)C1;
   case RISCVCC::COND_GEU:
     return (uint64_t)C0 >= (uint64_t)C1;
+  case RISCVCC::COND_BIT_CLEAR:
+    return (uint64_t(C0) & (uint64_t(1) << C1)) == 0;
+  case RISCVCC::COND_BIT_SET:
+    return (uint64_t(C0) & (uint64_t(1) << C1)) != 0;
   }
 }
 
@@ -1201,6 +1209,23 @@ unsigned RISCVCC::getBrCond(RISCVCC::CondCode CC, unsigned SelectOpc) {
       return RISCV::BEQI;
     case RISCVCC::COND_NE:
       return RISCV::BNEI;
+    }
+    break;
+  case RISCV::Select_GPR_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR16_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR16INX_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR32_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR32INX_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR64_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR64INX_Using_CC_UImmLog2XLen_Zibs:
+  case RISCV::Select_FPR64IN32X_Using_CC_UImmLog2XLen_Zibs:
+    switch (CC) {
+    default:
+      llvm_unreachable("Unexpected condition code!");
+    case RISCVCC::COND_EQ:
+      return RISCV::BBCLRI;
+    case RISCVCC::COND_NE:
+      return RISCV::BBSETI;
     }
     break;
   case RISCV::Select_GPR_Using_CC_SImm5_CV:
@@ -1300,6 +1325,10 @@ RISCVCC::CondCode RISCVCC::getInverseBranchCondition(RISCVCC::CondCode CC) {
     return RISCVCC::COND_GEU;
   case RISCVCC::COND_GEU:
     return RISCVCC::COND_LTU;
+  case RISCVCC::COND_BIT_CLEAR:
+    return RISCVCC::COND_BIT_SET;
+  case RISCVCC::COND_BIT_SET:
+    return RISCVCC::COND_BIT_CLEAR;
   }
 }
 
@@ -1316,6 +1345,10 @@ unsigned RISCVCC::getInverseBranchOpcode(unsigned BCC) {
     return RISCV::BEQ;
   case RISCV::BNEI:
     return RISCV::BEQI;
+  case RISCV::BBCLRI:
+    return RISCV::BBSETI;
+  case RISCV::BBSETI:
+    return RISCV::BBCLRI;
   case RISCV::BLT:
     return RISCV::BGE;
   case RISCV::BGE:
@@ -1778,6 +1811,8 @@ bool RISCVInstrInfo::isBranchOffsetInRange(unsigned BranchOp,
   case RISCV::BGEU:
   case RISCV::BEQI:
   case RISCV::BNEI:
+  case RISCV::BBCLRI:
+  case RISCV::BBSETI:
   case RISCV::CV_BEQIMM:
   case RISCV::CV_BNEIMM:
   case RISCV::QC_BEQI:

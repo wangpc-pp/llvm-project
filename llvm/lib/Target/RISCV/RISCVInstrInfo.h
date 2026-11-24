@@ -59,7 +59,10 @@ enum CondCode {
   COND_GE,
   COND_LTU,
   COND_GEU,
-  COND_INVALID
+  COND_INVALID,
+  // Conditions for bit branches, not select pseudo condition operands.
+  COND_BIT_CLEAR,
+  COND_BIT_SET
 };
 
 CondCode getInverseBranchCondition(CondCode);

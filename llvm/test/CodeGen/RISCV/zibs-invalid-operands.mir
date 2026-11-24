@@ -1,0 +1,16 @@
+# RUN: not --crash llc -mtriple=riscv32 -mattr=+experimental-zibs -run-pass=none -verify-machineinstrs -o /dev/null %s 2>&1 | FileCheck %s
+# RUN: not --crash llc -mtriple=riscv64 -mattr=+experimental-zibs -run-pass=none -verify-machineinstrs -o /dev/null %s 2>&1 | FileCheck %s
+# CHECK-COUNT-3: *** Bad machine code: Invalid immediate ***
+
+--- |
+  define void @invalid() { ret void }
+...
+---
+name: invalid
+body: |
+  bb.0:
+    %0:gpr = Select_GPR_Using_CC_UImmLog2XLen_Zibs $x10, 0, 2, $x11, $x12
+    %1:gpr = Select_GPR_Using_CC_UImmLog2XLen_Zibs $x10, 64, 0, $x11, $x12
+    %2:gpr = Select_GPR_Using_CC_GPR $x10, $x11, 6, $x12, $x13
+    PseudoRET
+...

@@ -2484,8 +2484,6 @@ include "RISCVInstrInfoZicbo.td"
 include "RISCVInstrInfoZicond.td"
 include "RISCVInstrInfoZilsd.td"
 include "RISCVInstrInfoZibi.td"
-
-include "RISCVInstrInfoZibs.td"
 include "RISCVInstrInfoZilx.td"
 
 // Privileged
@@ -2499,6 +2497,9 @@ include "RISCVInstrInfoQ.td"
 include "RISCVInstrInfoZfh.td"
 include "RISCVInstrInfoZfbfmin.td"
 include "RISCVInstrInfoZfa.td"
+
+// Single-bit branches and integer/FP selects.
+include "RISCVInstrInfoZibs.td"
 
 // Scalar bitmanip and cryptography
 include "RISCVInstrInfoZb.td"

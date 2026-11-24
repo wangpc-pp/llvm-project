@@ -62,8 +62,11 @@ static bool runLateBranchOptOnMBB(MachineBasicBlock &MBB,
   // Try and convert a conditional branch that can be evaluated statically
   // into an unconditional branch.
   int64_t C0, C1;
-  if (!RISCVInstrInfo::isFromLoadImm(MRI, Cond[1], C0) ||
-      !RISCVInstrInfo::isFromLoadImm(MRI, Cond[2], C1))
+  if (!RISCVInstrInfo::isFromLoadImm(MRI, Cond[1], C0))
+    return false;
+  if (CC == RISCVCC::COND_BIT_CLEAR || CC == RISCVCC::COND_BIT_SET)
+    C1 = Cond[2].getImm();
+  else if (!RISCVInstrInfo::isFromLoadImm(MRI, Cond[2], C1))
     return false;
 
   MachineBasicBlock *Folded =
